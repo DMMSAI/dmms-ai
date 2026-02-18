@@ -1,0 +1,15 @@
+{
+  "name": "@dmms-ai/slack",
+  "version": "2026.2.18",
+  "private": true,
+  "description": "DMMS AI Slack channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "dmms-ai": "workspace:*"
+  },
+  "dmms-ai": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

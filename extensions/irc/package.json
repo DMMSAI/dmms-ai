@@ -1,0 +1,14 @@
+{
+  "name": "@dmms-ai/irc",
+  "version": "2026.2.18",
+  "description": "DMMS AI IRC channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "dmms-ai": "workspace:*"
+  },
+  "dmms-ai": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

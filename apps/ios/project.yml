@@ -1,0 +1,230 @@
+name: DMMS AI
+options:
+  bundleIdPrefix: ai.dmmsai
+  deploymentTarget:
+    iOS: "18.0"
+  xcodeVersion: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+
+packages:
+  DmmsAiKit:
+    path: ../shared/DmmsAiKit
+  Swabble:
+    path: ../../Swabble
+
+schemes:
+  DMMS AI:
+    shared: true
+    build:
+      targets:
+        DMMS AI: all
+    test:
+      targets:
+        - DmmsAiTests
+
+targets:
+  DMMS AI:
+    type: application
+    platform: iOS
+    configFiles:
+      Debug: Signing.xcconfig
+      Release: Signing.xcconfig
+    sources:
+      - path: Sources
+    dependencies:
+      - target: DmmsAiShareExtension
+        embed: true
+      - target: DmmsAiWatchApp
+      - package: DmmsAiKit
+      - package: DmmsAiKit
+        product: DmmsAiChatUI
+      - package: DmmsAiKit
+        product: DmmsAiProtocol
+      - package: Swabble
+        product: SwabbleKit
+      - sdk: AppIntents.framework
+    preBuildScripts:
+      - name: SwiftFormat (lint)
+        basedOnDependencyAnalysis: false
+        inputFileLists:
+          - $(SRCROOT)/SwiftSources.input.xcfilelist
+        script: |
+          set -euo pipefail
+          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+          if ! command -v swiftformat >/dev/null 2>&1; then
+            echo "error: swiftformat not found (brew install swiftformat)" >&2
+            exit 1
+          fi
+          swiftformat --lint --config "$SRCROOT/../../.swiftformat" \
+            --filelist "$SRCROOT/SwiftSources.input.xcfilelist"
+      - name: SwiftLint
+        basedOnDependencyAnalysis: false
+        inputFileLists:
+          - $(SRCROOT)/SwiftSources.input.xcfilelist
+        script: |
+          set -euo pipefail
+          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+          if ! command -v swiftlint >/dev/null 2>&1; then
+            echo "error: swiftlint not found (brew install swiftlint)" >&2
+            exit 1
+          fi
+          swiftlint lint --config "$SRCROOT/.swiftlint.yml" --use-script-input-file-lists
+    settings:
+      base:
+        CODE_SIGN_IDENTITY: "Apple Development"
+        CODE_SIGN_ENTITLEMENTS: Sources/DMMS AI.entitlements
+        CODE_SIGN_STYLE: "$(DMMS_AI_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(DMMS_AI_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_APP_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(DMMS_AI_APP_PROFILE)"
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        ENABLE_APPINTENTS_METADATA: NO
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: DMMS AI
+        CFBundleIconName: AppIcon
+        CFBundleURLTypes:
+          - CFBundleURLName: ai.dmmsai.ios
+            CFBundleURLSchemes:
+              - dmms-ai
+        CFBundleShortVersionString: "2026.2.18"
+        CFBundleVersion: "20260218"
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UIBackgroundModes:
+          - audio
+          - remote-notification
+        NSLocalNetworkUsageDescription: DMMS AI discovers and connects to your DMMS AI gateway on the local network.
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoadsInWebContent: true
+        NSBonjourServices:
+          - _dmms-ai-gw._tcp
+        NSCameraUsageDescription: DMMS AI can capture photos or short video clips when requested via the gateway.
+        NSLocationWhenInUseUsageDescription: DMMS AI uses your location when you allow location sharing.
+        NSLocationAlwaysAndWhenInUseUsageDescription: DMMS AI can share your location in the background when you enable Always.
+        NSMicrophoneUsageDescription: DMMS AI needs microphone access for voice wake.
+        NSSpeechRecognitionUsageDescription: DMMS AI uses on-device speech recognition for voice wake.
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+
+  DmmsAiShareExtension:
+    type: app-extension
+    platform: iOS
+    configFiles:
+      Debug: Signing.xcconfig
+      Release: Signing.xcconfig
+    sources:
+      - path: ShareExtension
+    dependencies:
+      - package: DmmsAiKit
+    settings:
+      base:
+        CODE_SIGN_IDENTITY: "Apple Development"
+        CODE_SIGN_STYLE: "$(DMMS_AI_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(DMMS_AI_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_SHARE_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(DMMS_AI_SHARE_PROFILE)"
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+    info:
+      path: ShareExtension/Info.plist
+      properties:
+        CFBundleDisplayName: DMMS AI Share
+        CFBundleShortVersionString: "2026.2.18"
+        CFBundleVersion: "20260218"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).ShareViewController"
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsImageWithMaxCount: 10
+              NSExtensionActivationSupportsMovieWithMaxCount: 1
+
+  DmmsAiWatchApp:
+    type: application.watchapp2
+    platform: watchOS
+    deploymentTarget: "11.0"
+    sources:
+      - path: WatchApp
+    dependencies:
+      - target: DmmsAiWatchExtension
+    configFiles:
+      Debug: Config/Signing.xcconfig
+      Release: Config/Signing.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_WATCH_APP_BUNDLE_ID)"
+    info:
+      path: WatchApp/Info.plist
+      properties:
+        CFBundleDisplayName: DMMS AI
+        CFBundleShortVersionString: "2026.2.18"
+        CFBundleVersion: "20260218"
+        WKCompanionAppBundleIdentifier: "$(DMMS_AI_APP_BUNDLE_ID)"
+        WKWatchKitApp: true
+
+  DmmsAiWatchExtension:
+    type: watchkit2-extension
+    platform: watchOS
+    deploymentTarget: "11.0"
+    sources:
+      - path: WatchExtension/Sources
+    dependencies:
+      - sdk: WatchConnectivity.framework
+      - sdk: UserNotifications.framework
+    configFiles:
+      Debug: Config/Signing.xcconfig
+      Release: Config/Signing.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_WATCH_EXTENSION_BUNDLE_ID)"
+    info:
+      path: WatchExtension/Info.plist
+      properties:
+        CFBundleDisplayName: DMMS AI
+        CFBundleShortVersionString: "2026.2.18"
+        CFBundleVersion: "20260218"
+        NSExtension:
+          NSExtensionAttributes:
+            WKAppBundleIdentifier: "$(DMMS_AI_WATCH_APP_BUNDLE_ID)"
+          NSExtensionPointIdentifier: com.apple.watchkit
+
+  DmmsAiTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: DMMS AI
+      - package: Swabble
+        product: SwabbleKit
+      - sdk: AppIntents.framework
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.dmmsai.ios.tests
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DmmsAi.app/DMMS AI"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+    info:
+      path: Tests/Info.plist
+      properties:
+        CFBundleDisplayName: DmmsAiTests
+        CFBundleShortVersionString: "2026.2.18"
+        CFBundleVersion: "20260218"

@@ -1,0 +1,15 @@
+{
+  "name": "@dmms-ai/copilot-proxy",
+  "version": "2026.2.18",
+  "private": true,
+  "description": "DMMS AI Copilot Proxy provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "dmms-ai": "workspace:*"
+  },
+  "dmms-ai": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@dmms-ai/whatsapp",
+  "version": "2026.2.18",
+  "private": true,
+  "description": "DMMS AI WhatsApp channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "dmms-ai": "workspace:*"
+  },
+  "dmms-ai": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

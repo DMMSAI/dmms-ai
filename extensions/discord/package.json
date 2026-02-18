@@ -1,0 +1,14 @@
+{
+  "name": "@dmms-ai/discord",
+  "version": "2026.2.18",
+  "description": "DMMS AI Discord channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "dmms-ai": "workspace:*"
+  },
+  "dmms-ai": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

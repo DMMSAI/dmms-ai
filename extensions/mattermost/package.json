@@ -1,0 +1,29 @@
+{
+  "name": "@dmms-ai/mattermost",
+  "version": "2026.2.18",
+  "private": true,
+  "description": "DMMS AI Mattermost channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "dmms-ai": "workspace:*"
+  },
+  "dmms-ai": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "mattermost",
+      "label": "Mattermost",
+      "selectionLabel": "Mattermost (plugin)",
+      "docsPath": "/channels/mattermost",
+      "docsLabel": "mattermost",
+      "blurb": "self-hosted Slack-style chat; install the plugin to enable.",
+      "order": 65
+    },
+    "install": {
+      "npmSpec": "@dmms-ai/mattermost",
+      "localPath": "extensions/mattermost",
+      "defaultChoice": "npm"
+    }
+  }
+}
