@@ -20,8 +20,10 @@ if [[ ! -d "$A2UI_RENDERER_DIR" || ! -d "$A2UI_APP_DIR" ]]; then
     echo "A2UI sources missing; keeping prebuilt bundle."
     exit 0
   fi
-  echo "A2UI sources missing and no prebuilt bundle found at: $OUTPUT_FILE" >&2
-  exit 1
+  echo "A2UI sources missing; creating empty stub (not needed for server/gateway)."
+  mkdir -p "$(dirname "$OUTPUT_FILE")"
+  echo "/* A2UI bundle stub — native app sources not available */" > "$OUTPUT_FILE"
+  exit 0
 fi
 
 INPUT_PATHS=(
