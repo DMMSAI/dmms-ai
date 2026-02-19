@@ -141,12 +141,7 @@ install_pnpm() {
   fi
 
   info "Installing pnpm..."
-  if command_exists corepack; then
-    sudo corepack enable
-    sudo corepack prepare pnpm@latest --activate 2>/dev/null || sudo npm install -g pnpm
-  else
-    sudo npm install -g pnpm
-  fi
+  sudo npm install -g pnpm
 
   command_exists pnpm || error "pnpm installation failed."
   success "pnpm $(pnpm -v) installed"
