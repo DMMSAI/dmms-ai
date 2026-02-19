@@ -9,7 +9,7 @@ set -euo pipefail
 REPO_URL="https://github.com/DMMSAI/dmms-ai.git"
 INSTALL_DIR="${DMMS_AI_DIR:-$HOME/dmms-ai}"
 MIN_NODE_VERSION=22
-GATEWAY_PORT=18789
+GATEWAY_PORT="${DMMS_AI_GATEWAY_PORT:-18789}"
 
 # Colors
 RED='\033[0;31m'
@@ -57,6 +57,10 @@ detect_os() {
 
 command_exists() {
   command -v "$1" &>/dev/null
+}
+
+get_node_path() {
+  which node 2>/dev/null || echo "/usr/bin/node"
 }
 
 install_node() {
@@ -178,42 +182,38 @@ build_project() {
 }
 
 setup_cli() {
-  # Create a wrapper script in ~/.local/bin
   LOCAL_BIN="$HOME/.local/bin"
   mkdir -p "$LOCAL_BIN"
 
+  # Create CLI wrapper
   cat > "$LOCAL_BIN/dmms-ai" << WRAPPER
 #!/usr/bin/env bash
-exec node "${INSTALL_DIR}/dmms-ai.mjs" "\$@"
+exec $(get_node_path) "${INSTALL_DIR}/dmms-ai.mjs" "\$@"
 WRAPPER
   chmod +x "$LOCAL_BIN/dmms-ai"
 
-  # Add to PATH if not already there
-  if [[ ":$PATH:" != *":$LOCAL_BIN:"* ]]; then
-    SHELL_RC=""
-    if [ -f "$HOME/.zshrc" ]; then
-      SHELL_RC="$HOME/.zshrc"
-    elif [ -f "$HOME/.bashrc" ]; then
-      SHELL_RC="$HOME/.bashrc"
-    elif [ -f "$HOME/.profile" ]; then
-      SHELL_RC="$HOME/.profile"
-    fi
-
-    if [ -n "$SHELL_RC" ]; then
-      if ! grep -q '.local/bin' "$SHELL_RC" 2>/dev/null; then
-        echo '' >> "$SHELL_RC"
-        echo '# DMMS AI' >> "$SHELL_RC"
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$SHELL_RC"
-        info "Added ~/.local/bin to PATH in ${SHELL_RC}"
+  # Add to PATH in all shell config files that exist
+  for rc_file in "$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.profile"; do
+    if [ -f "$rc_file" ]; then
+      if ! grep -q 'DMMS AI' "$rc_file" 2>/dev/null; then
+        echo '' >> "$rc_file"
+        echo '# DMMS AI' >> "$rc_file"
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$rc_file"
       fi
     fi
-    export PATH="$LOCAL_BIN:$PATH"
+  done
+
+  # Also create .bashrc if it doesn't exist (some servers only have .profile)
+  if [ ! -f "$HOME/.bashrc" ] && [ ! -f "$HOME/.zshrc" ]; then
+    echo '# DMMS AI' > "$HOME/.bashrc"
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
   fi
 
+  export PATH="$LOCAL_BIN:$PATH"
   success "CLI installed at ${LOCAL_BIN}/dmms-ai"
 }
 
-create_systemd_service() {
+setup_systemd_service() {
   if [ "$OS" != "linux" ]; then
     return
   fi
@@ -224,30 +224,92 @@ create_systemd_service() {
   fi
 
   info "Setting up systemd service..."
-  sudo tee /etc/systemd/system/dmms-ai.service > /dev/null << SERVICE
+
+  NODE_BIN="$(get_node_path)"
+  CURRENT_USER="$(whoami)"
+
+  sudo tee /etc/systemd/system/dmms-ai.service > /dev/null << EOF
 [Unit]
 Description=DMMS AI Gateway
 After=network.target
 
 [Service]
 Type=simple
-User=$(whoami)
+User=${CURRENT_USER}
 WorkingDirectory=${INSTALL_DIR}
-ExecStart=$(which node) ${INSTALL_DIR}/dmms-ai.mjs gateway
+ExecStart=${NODE_BIN} ${INSTALL_DIR}/dmms-ai.mjs gateway --allow-unconfigured
 Restart=on-failure
 RestartSec=5
 Environment=NODE_ENV=production
+Environment=DMMS_AI_GATEWAY_HOST=0.0.0.0
 Environment=DMMS_AI_GATEWAY_PORT=${GATEWAY_PORT}
+Environment=PATH=${HOME}/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 [Install]
 WantedBy=multi-user.target
-SERVICE
+EOF
 
   sudo systemctl daemon-reload
-  success "Systemd service created (dmms-ai.service)"
+  success "Systemd service created"
+}
+
+start_service() {
+  if [ "$OS" != "linux" ]; then
+    return
+  fi
+
+  if ! command_exists systemctl; then
+    return
+  fi
+
+  info "Starting DMMS AI service..."
+
+  # Stop any existing instance
+  sudo systemctl stop dmms-ai 2>/dev/null || true
+
+  # Start and enable
+  sudo systemctl start dmms-ai
+  sudo systemctl enable dmms-ai 2>/dev/null
+
+  # Verify it's running
+  sleep 2
+  if sudo systemctl is-active --quiet dmms-ai; then
+    success "DMMS AI service is running"
+  else
+    warn "Service may have failed to start. Check: sudo journalctl -u dmms-ai -n 20"
+  fi
+}
+
+open_firewall() {
+  if [ "$OS" != "linux" ]; then
+    return
+  fi
+
+  # UFW (Ubuntu/Debian)
+  if command_exists ufw; then
+    if sudo ufw status 2>/dev/null | grep -q "active"; then
+      sudo ufw allow ${GATEWAY_PORT}/tcp 2>/dev/null && success "Firewall: port ${GATEWAY_PORT} opened (ufw)" || true
+    fi
+  fi
+
+  # firewalld (CentOS/RHEL/Fedora)
+  if command_exists firewall-cmd; then
+    sudo firewall-cmd --permanent --add-port=${GATEWAY_PORT}/tcp 2>/dev/null && \
+    sudo firewall-cmd --reload 2>/dev/null && \
+    success "Firewall: port ${GATEWAY_PORT} opened (firewalld)" || true
+  fi
+}
+
+get_external_ip() {
+  curl -s --max-time 5 ifconfig.me 2>/dev/null || \
+  curl -s --max-time 5 icanhazip.com 2>/dev/null || \
+  curl -s --max-time 5 api.ipify.org 2>/dev/null || \
+  echo "YOUR_SERVER_IP"
 }
 
 print_done() {
+  EXTERNAL_IP="$(get_external_ip)"
+
   echo ""
   echo -e "${GREEN}${BOLD}"
   echo "  ╔══════════════════════════════════════════╗"
@@ -257,27 +319,25 @@ print_done() {
   echo "  ╚══════════════════════════════════════════╝"
   echo -e "${NC}"
   echo ""
-  echo -e "  ${BOLD}Quick start:${NC}"
+  echo -e "  ${GREEN}${BOLD}DMMS AI is now running!${NC}"
   echo ""
-  echo -e "    ${CYAN}dmms-ai gateway${NC}              Start the gateway"
-  echo -e "    ${CYAN}dmms-ai --help${NC}               Show all commands"
+  echo -e "  ${BOLD}Open in your browser:${NC}"
   echo ""
-  echo -e "  ${BOLD}As a service (Linux):${NC}"
+  echo -e "    ${CYAN}http://${EXTERNAL_IP}:${GATEWAY_PORT}${NC}"
   echo ""
-  echo -e "    ${CYAN}sudo systemctl start dmms-ai${NC}     Start"
-  echo -e "    ${CYAN}sudo systemctl enable dmms-ai${NC}    Start on boot"
-  echo -e "    ${CYAN}sudo systemctl status dmms-ai${NC}    Check status"
+  echo -e "  ${BOLD}Service commands:${NC}"
   echo ""
-  echo -e "  ${BOLD}Web UI:${NC}  http://localhost:${GATEWAY_PORT}"
+  echo -e "    ${CYAN}sudo systemctl status dmms-ai${NC}      Check status"
+  echo -e "    ${CYAN}sudo systemctl restart dmms-ai${NC}     Restart"
+  echo -e "    ${CYAN}sudo systemctl stop dmms-ai${NC}        Stop"
+  echo -e "    ${CYAN}sudo journalctl -u dmms-ai -f${NC}      View logs"
+  echo ""
   echo -e "  ${BOLD}Config:${NC}  ~/.dmms-ai/dmms-ai.json"
   echo -e "  ${BOLD}Install:${NC} ${INSTALL_DIR}"
   echo ""
-
-  if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
-    echo -e "  ${YELLOW}NOTE: Run this or open a new terminal to use the 'dmms-ai' command:${NC}"
-    echo -e "    ${CYAN}export PATH=\"\$HOME/.local/bin:\$PATH\"${NC}"
-    echo ""
-  fi
+  echo -e "  ${YELLOW}NOTE: If using Google Cloud, AWS, or Azure, make sure port ${GATEWAY_PORT}${NC}"
+  echo -e "  ${YELLOW}is open in your cloud provider's firewall/security group settings.${NC}"
+  echo ""
 }
 
 # ── Main ──────────────────────────────────────────────────────
@@ -291,7 +351,9 @@ main() {
   clone_repo
   build_project
   setup_cli
-  create_systemd_service
+  setup_systemd_service
+  open_firewall
+  start_service
   print_done
 }
 
