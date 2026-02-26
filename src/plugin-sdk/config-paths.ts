@@ -1,7 +1,7 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 export function resolveChannelAccountConfigBasePath(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channelKey: string;
   accountId: string;
 }): string {

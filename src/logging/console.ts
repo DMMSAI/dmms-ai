@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import util from "node:util";
-import type { DmmsAiConfig } from "../config/types.js";
+import type { DryadsAiConfig } from "../config/types.js";
 import { isVerbose } from "../globals.js";
 import { stripAnsi } from "../terminal/ansi.js";
 import { readLoggingConfig } from "./config.js";
@@ -17,11 +17,11 @@ type ConsoleSettings = {
 export type ConsoleLoggerSettings = ConsoleSettings;
 
 const requireConfig = createRequire(import.meta.url);
-type ConsoleConfigLoader = () => DmmsAiConfig["logging"] | undefined;
+type ConsoleConfigLoader = () => DryadsAiConfig["logging"] | undefined;
 const loadConfigFallbackDefault: ConsoleConfigLoader = () => {
   try {
     const loaded = requireConfig("../config/config.js") as {
-      loadConfig?: () => DmmsAiConfig;
+      loadConfig?: () => DryadsAiConfig;
     };
     return loaded.loadConfig?.().logging;
   } catch {
@@ -38,7 +38,7 @@ function normalizeConsoleLevel(level?: string): LogLevel {
   if (isVerbose()) {
     return "debug";
   }
-  if (!level && process.env.VITEST === "true" && process.env.DMMS_AI_TEST_CONSOLE !== "1") {
+  if (!level && process.env.VITEST === "true" && process.env.DRYADS_AI_TEST_CONSOLE !== "1") {
     return "silent";
   }
   return normalizeLogLevel(level, "info");
@@ -55,7 +55,7 @@ function normalizeConsoleStyle(style?: string): ConsoleStyle {
 }
 
 function resolveConsoleSettings(): ConsoleSettings {
-  let cfg: DmmsAiConfig["logging"] | undefined =
+  let cfg: DryadsAiConfig["logging"] | undefined =
     (loggingState.overrideSettings as LoggerSettings | null) ?? readLoggingConfig();
   if (!cfg) {
     if (loggingState.resolvingConsoleSettings) {

@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/signal",
+  "name": "@dryads-ai/signal",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Signal channel plugin",
+  "description": "Dryads AI Signal channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

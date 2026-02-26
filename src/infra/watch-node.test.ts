@@ -19,7 +19,7 @@ describe("watch-node script", () => {
 
     const runPromise = runWatchMain({
       args: ["gateway", "--force"],
-      cwd: "/tmp/dmms-ai",
+      cwd: "/tmp/dryads-ai",
       env: { PATH: "/usr/bin" },
       now: () => 1700000000000,
       process: fakeProcess,
@@ -41,13 +41,13 @@ describe("watch-node script", () => {
         "--force",
       ],
       expect.objectContaining({
-        cwd: "/tmp/dmms-ai",
+        cwd: "/tmp/dryads-ai",
         stdio: "inherit",
         env: expect.objectContaining({
           PATH: "/usr/bin",
-          DMMS_AI_WATCH_MODE: "1",
-          DMMS_AI_WATCH_SESSION: "1700000000000-4242",
-          DMMS_AI_WATCH_COMMAND: "gateway --force",
+          DRYADS_AI_WATCH_MODE: "1",
+          DRYADS_AI_WATCH_SESSION: "1700000000000-4242",
+          DRYADS_AI_WATCH_COMMAND: "gateway --force",
         }),
       }),
     );

@@ -4,9 +4,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPOSE_FILE="$ROOT_DIR/docker-compose.yml"
 EXTRA_COMPOSE_FILE="$ROOT_DIR/docker-compose.extra.yml"
-IMAGE_NAME="${DMMS_AI_IMAGE:-dmms-ai:local}"
-EXTRA_MOUNTS="${DMMS_AI_EXTRA_MOUNTS:-}"
-HOME_VOLUME_NAME="${DMMS_AI_HOME_VOLUME:-}"
+IMAGE_NAME="${DRYADS_AI_IMAGE:-dryads-ai:local}"
+EXTRA_MOUNTS="${DRYADS_AI_EXTRA_MOUNTS:-}"
+HOME_VOLUME_NAME="${DRYADS_AI_HOME_VOLUME:-}"
 
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -21,34 +21,34 @@ if ! docker compose version >/dev/null 2>&1; then
   exit 1
 fi
 
-DMMS_AI_CONFIG_DIR="${DMMS_AI_CONFIG_DIR:-$HOME/.dmms-ai}"
-DMMS_AI_WORKSPACE_DIR="${DMMS_AI_WORKSPACE_DIR:-$HOME/.dmms-ai/workspace}"
+DRYADS_AI_CONFIG_DIR="${DRYADS_AI_CONFIG_DIR:-$HOME/.dryads-ai}"
+DRYADS_AI_WORKSPACE_DIR="${DRYADS_AI_WORKSPACE_DIR:-$HOME/.dryads-ai/workspace}"
 
-mkdir -p "$DMMS_AI_CONFIG_DIR"
-mkdir -p "$DMMS_AI_WORKSPACE_DIR"
+mkdir -p "$DRYADS_AI_CONFIG_DIR"
+mkdir -p "$DRYADS_AI_WORKSPACE_DIR"
 
-export DMMS_AI_CONFIG_DIR
-export DMMS_AI_WORKSPACE_DIR
-export DMMS_AI_GATEWAY_PORT="${DMMS_AI_GATEWAY_PORT:-18789}"
-export DMMS_AI_BRIDGE_PORT="${DMMS_AI_BRIDGE_PORT:-18790}"
-export DMMS_AI_GATEWAY_BIND="${DMMS_AI_GATEWAY_BIND:-lan}"
-export DMMS_AI_IMAGE="$IMAGE_NAME"
-export DMMS_AI_DOCKER_APT_PACKAGES="${DMMS_AI_DOCKER_APT_PACKAGES:-}"
-export DMMS_AI_EXTRA_MOUNTS="$EXTRA_MOUNTS"
-export DMMS_AI_HOME_VOLUME="$HOME_VOLUME_NAME"
+export DRYADS_AI_CONFIG_DIR
+export DRYADS_AI_WORKSPACE_DIR
+export DRYADS_AI_GATEWAY_PORT="${DRYADS_AI_GATEWAY_PORT:-18789}"
+export DRYADS_AI_BRIDGE_PORT="${DRYADS_AI_BRIDGE_PORT:-18790}"
+export DRYADS_AI_GATEWAY_BIND="${DRYADS_AI_GATEWAY_BIND:-lan}"
+export DRYADS_AI_IMAGE="$IMAGE_NAME"
+export DRYADS_AI_DOCKER_APT_PACKAGES="${DRYADS_AI_DOCKER_APT_PACKAGES:-}"
+export DRYADS_AI_EXTRA_MOUNTS="$EXTRA_MOUNTS"
+export DRYADS_AI_HOME_VOLUME="$HOME_VOLUME_NAME"
 
-if [[ -z "${DMMS_AI_GATEWAY_TOKEN:-}" ]]; then
+if [[ -z "${DRYADS_AI_GATEWAY_TOKEN:-}" ]]; then
   if command -v openssl >/dev/null 2>&1; then
-    DMMS_AI_GATEWAY_TOKEN="$(openssl rand -hex 32)"
+    DRYADS_AI_GATEWAY_TOKEN="$(openssl rand -hex 32)"
   else
-    DMMS_AI_GATEWAY_TOKEN="$(python3 - <<'PY'
+    DRYADS_AI_GATEWAY_TOKEN="$(python3 - <<'PY'
 import secrets
 print(secrets.token_hex(32))
 PY
 )"
   fi
 fi
-export DMMS_AI_GATEWAY_TOKEN
+export DRYADS_AI_GATEWAY_TOKEN
 
 COMPOSE_FILES=("$COMPOSE_FILE")
 COMPOSE_ARGS=()
@@ -60,14 +60,14 @@ write_extra_compose() {
 
   cat >"$EXTRA_COMPOSE_FILE" <<'YAML'
 services:
-  dmms-ai-gateway:
+  dryads-ai-gateway:
     volumes:
 YAML
 
   if [[ -n "$home_volume" ]]; then
     printf '      - %s:/home/node\n' "$home_volume" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.dmms-ai\n' "$DMMS_AI_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.dmms-ai/workspace\n' "$DMMS_AI_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.dryads-ai\n' "$DRYADS_AI_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.dryads-ai/workspace\n' "$DRYADS_AI_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
   fi
 
   for mount in "$@"; do
@@ -75,14 +75,14 @@ YAML
   done
 
   cat >>"$EXTRA_COMPOSE_FILE" <<'YAML'
-  dmms-ai-cli:
+  dryads-ai-cli:
     volumes:
 YAML
 
   if [[ -n "$home_volume" ]]; then
     printf '      - %s:/home/node\n' "$home_volume" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.dmms-ai\n' "$DMMS_AI_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.dmms-ai/workspace\n' "$DMMS_AI_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.dryads-ai\n' "$DRYADS_AI_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.dryads-ai/workspace\n' "$DRYADS_AI_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
   fi
 
   for mount in "$@"; do
@@ -165,20 +165,20 @@ upsert_env() {
 }
 
 upsert_env "$ENV_FILE" \
-  DMMS_AI_CONFIG_DIR \
-  DMMS_AI_WORKSPACE_DIR \
-  DMMS_AI_GATEWAY_PORT \
-  DMMS_AI_BRIDGE_PORT \
-  DMMS_AI_GATEWAY_BIND \
-  DMMS_AI_GATEWAY_TOKEN \
-  DMMS_AI_IMAGE \
-  DMMS_AI_EXTRA_MOUNTS \
-  DMMS_AI_HOME_VOLUME \
-  DMMS_AI_DOCKER_APT_PACKAGES
+  DRYADS_AI_CONFIG_DIR \
+  DRYADS_AI_WORKSPACE_DIR \
+  DRYADS_AI_GATEWAY_PORT \
+  DRYADS_AI_BRIDGE_PORT \
+  DRYADS_AI_GATEWAY_BIND \
+  DRYADS_AI_GATEWAY_TOKEN \
+  DRYADS_AI_IMAGE \
+  DRYADS_AI_EXTRA_MOUNTS \
+  DRYADS_AI_HOME_VOLUME \
+  DRYADS_AI_DOCKER_APT_PACKAGES
 
 echo "==> Building Docker image: $IMAGE_NAME"
 docker build \
-  --build-arg "DMMS_AI_DOCKER_APT_PACKAGES=${DMMS_AI_DOCKER_APT_PACKAGES}" \
+  --build-arg "DRYADS_AI_DOCKER_APT_PACKAGES=${DRYADS_AI_DOCKER_APT_PACKAGES}" \
   -t "$IMAGE_NAME" \
   -f "$ROOT_DIR/Dockerfile" \
   "$ROOT_DIR"
@@ -188,33 +188,33 @@ echo "==> Onboarding (interactive)"
 echo "When prompted:"
 echo "  - Gateway bind: lan"
 echo "  - Gateway auth: token"
-echo "  - Gateway token: $DMMS_AI_GATEWAY_TOKEN"
+echo "  - Gateway token: $DRYADS_AI_GATEWAY_TOKEN"
 echo "  - Tailscale exposure: Off"
 echo "  - Install Gateway daemon: No"
 echo ""
-docker compose "${COMPOSE_ARGS[@]}" run --rm dmms-ai-cli onboard --no-install-daemon
+docker compose "${COMPOSE_ARGS[@]}" run --rm dryads-ai-cli onboard --no-install-daemon
 
 echo ""
 echo "==> Provider setup (optional)"
 echo "WhatsApp (QR):"
-echo "  ${COMPOSE_HINT} run --rm dmms-ai-cli channels login"
+echo "  ${COMPOSE_HINT} run --rm dryads-ai-cli channels login"
 echo "Telegram (bot token):"
-echo "  ${COMPOSE_HINT} run --rm dmms-ai-cli channels add --channel telegram --token <token>"
+echo "  ${COMPOSE_HINT} run --rm dryads-ai-cli channels add --channel telegram --token <token>"
 echo "Discord (bot token):"
-echo "  ${COMPOSE_HINT} run --rm dmms-ai-cli channels add --channel discord --token <token>"
-echo "Docs: https://docs.dmms-ai.com/channels"
+echo "  ${COMPOSE_HINT} run --rm dryads-ai-cli channels add --channel discord --token <token>"
+echo "Docs: https://docs.dryads-ai.com/channels"
 
 echo ""
 echo "==> Starting gateway"
-docker compose "${COMPOSE_ARGS[@]}" up -d dmms-ai-gateway
+docker compose "${COMPOSE_ARGS[@]}" up -d dryads-ai-gateway
 
 echo ""
 echo "Gateway running with host port mapping."
 echo "Access from tailnet devices via the host's tailnet IP."
-echo "Config: $DMMS_AI_CONFIG_DIR"
-echo "Workspace: $DMMS_AI_WORKSPACE_DIR"
-echo "Token: $DMMS_AI_GATEWAY_TOKEN"
+echo "Config: $DRYADS_AI_CONFIG_DIR"
+echo "Workspace: $DRYADS_AI_WORKSPACE_DIR"
+echo "Token: $DRYADS_AI_GATEWAY_TOKEN"
 echo ""
 echo "Commands:"
-echo "  ${COMPOSE_HINT} logs -f dmms-ai-gateway"
-echo "  ${COMPOSE_HINT} exec dmms-ai-gateway node dist/index.js health --token \"$DMMS_AI_GATEWAY_TOKEN\""
+echo "  ${COMPOSE_HINT} logs -f dryads-ai-gateway"
+echo "  ${COMPOSE_HINT} exec dryads-ai-gateway node dist/index.js health --token \"$DRYADS_AI_GATEWAY_TOKEN\""

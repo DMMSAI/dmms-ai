@@ -1,5 +1,5 @@
 ---
-summary: 使用千帆统一 API 在 DMMS AI 中接入多种模型
+summary: 使用千帆统一 API 在 Dryads AI 中接入多种模型
 title: 千帆（Qianfan）
 ---
 

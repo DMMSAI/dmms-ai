@@ -181,7 +181,7 @@ export function registerBrowserDebugCommands(
     .description("Stop trace recording and write a .zip")
     .option(
       "--out <path>",
-      "Output path within dmms-ai temp dir (e.g. trace.zip or /tmp/dmms-ai/trace.zip)",
+      "Output path within dryads-ai temp dir (e.g. trace.zip or /tmp/dryads-ai/trace.zip)",
     )
     .option("--target-id <id>", "CDP target id (or unique prefix)")
     .action(async (opts, cmd) => {

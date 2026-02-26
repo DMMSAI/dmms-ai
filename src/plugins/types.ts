@@ -7,7 +7,7 @@ import type { ReplyPayload } from "../auto-reply/types.js";
 import type { ChannelDock } from "../channels/dock.js";
 import type { ChannelId, ChannelPlugin } from "../channels/plugins/types.js";
 import type { createVpsAwareOAuthHandlers } from "../commands/oauth-flow.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { ModelProviderConfig } from "../config/types.js";
 import type { GatewayRequestHandler } from "../gateway/server-methods/types.js";
 import type { InternalHookHandler } from "../hooks/internal-hooks.js";
@@ -40,7 +40,7 @@ export type PluginConfigValidation =
   | { ok: true; value?: unknown }
   | { ok: false; errors: string[] };
 
-export type DmmsAiPluginConfigSchema = {
+export type DryadsAiPluginConfigSchema = {
   safeParse?: (value: unknown) => {
     success: boolean;
     data?: unknown;
@@ -54,8 +54,8 @@ export type DmmsAiPluginConfigSchema = {
   jsonSchema?: Record<string, unknown>;
 };
 
-export type DmmsAiPluginToolContext = {
-  config?: DmmsAiConfig;
+export type DryadsAiPluginToolContext = {
+  config?: DryadsAiConfig;
   workspaceDir?: string;
   agentDir?: string;
   agentId?: string;
@@ -65,17 +65,17 @@ export type DmmsAiPluginToolContext = {
   sandboxed?: boolean;
 };
 
-export type DmmsAiPluginToolFactory = (
-  ctx: DmmsAiPluginToolContext,
+export type DryadsAiPluginToolFactory = (
+  ctx: DryadsAiPluginToolContext,
 ) => AnyAgentTool | AnyAgentTool[] | null | undefined;
 
-export type DmmsAiPluginToolOptions = {
+export type DryadsAiPluginToolOptions = {
   name?: string;
   names?: string[];
   optional?: boolean;
 };
 
-export type DmmsAiPluginHookOptions = {
+export type DryadsAiPluginHookOptions = {
   entry?: HookEntry;
   name?: string;
   description?: string;
@@ -86,13 +86,13 @@ export type ProviderAuthKind = "oauth" | "api_key" | "token" | "device_code" | "
 
 export type ProviderAuthResult = {
   profiles: Array<{ profileId: string; credential: AuthProfileCredential }>;
-  configPatch?: Partial<DmmsAiConfig>;
+  configPatch?: Partial<DryadsAiConfig>;
   defaultModel?: string;
   notes?: string[];
 };
 
 export type ProviderAuthContext = {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   agentDir?: string;
   workspaceDir?: string;
   prompter: WizardPrompter;
@@ -124,7 +124,7 @@ export type ProviderPlugin = {
   refreshOAuth?: (cred: OAuthCredential) => Promise<OAuthCredential>;
 };
 
-export type DmmsAiPluginGatewayMethod = {
+export type DryadsAiPluginGatewayMethod = {
   method: string;
   handler: GatewayRequestHandler;
 };
@@ -149,8 +149,8 @@ export type PluginCommandContext = {
   args?: string;
   /** The full normalized command body */
   commandBody: string;
-  /** Current DMMS AI configuration */
-  config: DmmsAiConfig;
+  /** Current Dryads AI configuration */
+  config: DryadsAiConfig;
   /** Raw "From" value (channel-scoped id) */
   from?: string;
   /** Raw "To" value (channel-scoped id) */
@@ -176,7 +176,7 @@ export type PluginCommandHandler = (
 /**
  * Definition for a plugin-registered command.
  */
-export type DmmsAiPluginCommandDefinition = {
+export type DryadsAiPluginCommandDefinition = {
   /** Command name without leading slash (e.g., "tts") */
   name: string;
   /** Description shown in /help and command menus */
@@ -189,90 +189,90 @@ export type DmmsAiPluginCommandDefinition = {
   handler: PluginCommandHandler;
 };
 
-export type DmmsAiPluginHttpHandler = (
+export type DryadsAiPluginHttpHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => Promise<boolean> | boolean;
 
-export type DmmsAiPluginHttpRouteHandler = (
+export type DryadsAiPluginHttpRouteHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => Promise<void> | void;
 
-export type DmmsAiPluginCliContext = {
+export type DryadsAiPluginCliContext = {
   program: Command;
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   workspaceDir?: string;
   logger: PluginLogger;
 };
 
-export type DmmsAiPluginCliRegistrar = (ctx: DmmsAiPluginCliContext) => void | Promise<void>;
+export type DryadsAiPluginCliRegistrar = (ctx: DryadsAiPluginCliContext) => void | Promise<void>;
 
-export type DmmsAiPluginServiceContext = {
-  config: DmmsAiConfig;
+export type DryadsAiPluginServiceContext = {
+  config: DryadsAiConfig;
   workspaceDir?: string;
   stateDir: string;
   logger: PluginLogger;
 };
 
-export type DmmsAiPluginService = {
+export type DryadsAiPluginService = {
   id: string;
-  start: (ctx: DmmsAiPluginServiceContext) => void | Promise<void>;
-  stop?: (ctx: DmmsAiPluginServiceContext) => void | Promise<void>;
+  start: (ctx: DryadsAiPluginServiceContext) => void | Promise<void>;
+  stop?: (ctx: DryadsAiPluginServiceContext) => void | Promise<void>;
 };
 
-export type DmmsAiPluginChannelRegistration = {
+export type DryadsAiPluginChannelRegistration = {
   plugin: ChannelPlugin;
   dock?: ChannelDock;
 };
 
-export type DmmsAiPluginDefinition = {
+export type DryadsAiPluginDefinition = {
   id?: string;
   name?: string;
   description?: string;
   version?: string;
   kind?: PluginKind;
-  configSchema?: DmmsAiPluginConfigSchema;
-  register?: (api: DmmsAiPluginApi) => void | Promise<void>;
-  activate?: (api: DmmsAiPluginApi) => void | Promise<void>;
+  configSchema?: DryadsAiPluginConfigSchema;
+  register?: (api: DryadsAiPluginApi) => void | Promise<void>;
+  activate?: (api: DryadsAiPluginApi) => void | Promise<void>;
 };
 
-export type DmmsAiPluginModule =
-  | DmmsAiPluginDefinition
-  | ((api: DmmsAiPluginApi) => void | Promise<void>);
+export type DryadsAiPluginModule =
+  | DryadsAiPluginDefinition
+  | ((api: DryadsAiPluginApi) => void | Promise<void>);
 
-export type DmmsAiPluginApi = {
+export type DryadsAiPluginApi = {
   id: string;
   name: string;
   version?: string;
   description?: string;
   source: string;
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   pluginConfig?: Record<string, unknown>;
   runtime: PluginRuntime;
   logger: PluginLogger;
   registerTool: (
-    tool: AnyAgentTool | DmmsAiPluginToolFactory,
-    opts?: DmmsAiPluginToolOptions,
+    tool: AnyAgentTool | DryadsAiPluginToolFactory,
+    opts?: DryadsAiPluginToolOptions,
   ) => void;
   registerHook: (
     events: string | string[],
     handler: InternalHookHandler,
-    opts?: DmmsAiPluginHookOptions,
+    opts?: DryadsAiPluginHookOptions,
   ) => void;
-  registerHttpHandler: (handler: DmmsAiPluginHttpHandler) => void;
-  registerHttpRoute: (params: { path: string; handler: DmmsAiPluginHttpRouteHandler }) => void;
-  registerChannel: (registration: DmmsAiPluginChannelRegistration | ChannelPlugin) => void;
+  registerHttpHandler: (handler: DryadsAiPluginHttpHandler) => void;
+  registerHttpRoute: (params: { path: string; handler: DryadsAiPluginHttpRouteHandler }) => void;
+  registerChannel: (registration: DryadsAiPluginChannelRegistration | ChannelPlugin) => void;
   registerGatewayMethod: (method: string, handler: GatewayRequestHandler) => void;
-  registerCli: (registrar: DmmsAiPluginCliRegistrar, opts?: { commands?: string[] }) => void;
-  registerService: (service: DmmsAiPluginService) => void;
+  registerCli: (registrar: DryadsAiPluginCliRegistrar, opts?: { commands?: string[] }) => void;
+  registerService: (service: DryadsAiPluginService) => void;
   registerProvider: (provider: ProviderPlugin) => void;
   /**
    * Register a custom command that bypasses the LLM agent.
    * Plugin commands are processed before built-in commands and before agent invocation.
    * Use this for simple state-toggling or status commands that don't need AI reasoning.
    */
-  registerCommand: (command: DmmsAiPluginCommandDefinition) => void;
+  registerCommand: (command: DryadsAiPluginCommandDefinition) => void;
   resolvePath: (input: string) => string;
   /** Register a lifecycle hook handler */
   on: <K extends PluginHookName>(

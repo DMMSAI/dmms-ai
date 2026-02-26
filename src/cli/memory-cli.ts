@@ -521,11 +521,11 @@ export function registerMemoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai memory status", "Show index and provider status."],
-          ["dmms-ai memory index --force", "Force a full reindex."],
-          ['dmms-ai memory search --query "deployment notes"', "Search indexed memory entries."],
-          ["dmms-ai memory status --json", "Output machine-readable JSON."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.dmms-ai.com/cli/memory")}\n`,
+          ["dryads-ai memory status", "Show index and provider status."],
+          ["dryads-ai memory index --force", "Force a full reindex."],
+          ['dryads-ai memory search --query "deployment notes"', "Search indexed memory entries."],
+          ["dryads-ai memory status --json", "Output machine-readable JSON."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.dryads-ai.com/cli/memory")}\n`,
     );
 
   memory

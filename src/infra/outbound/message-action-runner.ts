@@ -12,7 +12,7 @@ import type {
   ChannelMessageActionName,
   ChannelThreadingToolContext,
 } from "../../channels/plugins/types.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import {
   isDeliverableMessageChannel,
   normalizeMessageChannel,
@@ -89,7 +89,7 @@ function resolveAndApplyOutboundThreadId(
 }
 
 export type RunMessageActionParams = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   action: ChannelMessageActionName;
   params: Record<string, unknown>;
   defaultAccountId?: string;
@@ -182,7 +182,7 @@ function applyCrossContextMessageDecoration({
 }
 
 async function maybeApplyCrossContextMarker(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channel: ChannelId;
   action: ChannelMessageActionName;
   target: string;
@@ -213,7 +213,7 @@ async function maybeApplyCrossContextMarker(params: {
   });
 }
 
-async function resolveChannel(cfg: DmmsAiConfig, params: Record<string, unknown>) {
+async function resolveChannel(cfg: DryadsAiConfig, params: Record<string, unknown>) {
   const channelHint = readStringParam(params, "channel");
   const selection = await resolveMessageChannelSelection({
     cfg,
@@ -223,7 +223,7 @@ async function resolveChannel(cfg: DmmsAiConfig, params: Record<string, unknown>
 }
 
 async function resolveActionTarget(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channel: ChannelId;
   action: ChannelMessageActionName;
   args: Record<string, unknown>;
@@ -268,7 +268,7 @@ async function resolveActionTarget(params: {
 }
 
 type ResolvedActionContext = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   params: Record<string, unknown>;
   channel: ChannelId;
   accountId?: string | null;

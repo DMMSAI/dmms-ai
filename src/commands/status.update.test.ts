@@ -141,7 +141,7 @@ describe("formatUpdateAvailableHint", () => {
     });
 
     expect(formatUpdateAvailableHint(update)).toBe(
-      `Update available (git behind 2 · npm ${latestVersion}). Run: dmms-ai update`,
+      `Update available (git behind 2 · npm ${latestVersion}). Run: dryads-ai update`,
     );
   });
 });

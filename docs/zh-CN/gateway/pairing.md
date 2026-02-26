@@ -39,11 +39,11 @@ x-i18n:
 ## CLI 工作流程（支持无头模式）
 
 ```bash
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
-dmms-ai nodes reject <requestId>
-dmms-ai nodes status
-dmms-ai nodes rename --node <id|name|ip> --name "Living Room iPad"
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
+dryads-ai nodes reject <requestId>
+dryads-ai nodes status
+dryads-ai nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` 显示已配对/已连接的节点及其功能。
@@ -80,12 +80,12 @@ dmms-ai nodes rename --node <id|name|ip> --name "Living Room iPad"
 
 ## 存储（本地，私有）
 
-配对状态存储在 Gateway 网关状态目录下（默认 `~/.dmms-ai`）：
+配对状态存储在 Gateway 网关状态目录下（默认 `~/.dryads-ai`）：
 
-- `~/.dmms-ai/nodes/paired.json`
-- `~/.dmms-ai/nodes/pending.json`
+- `~/.dryads-ai/nodes/paired.json`
+- `~/.dryads-ai/nodes/pending.json`
 
-如果你覆盖了 `DMMS_AI_STATE_DIR`，`nodes/` 文件夹会随之移动。
+如果你覆盖了 `DRYADS_AI_STATE_DIR`，`nodes/` 文件夹会随之移动。
 
 安全注意事项：
 

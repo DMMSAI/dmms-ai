@@ -23,16 +23,16 @@ describe("normalizeLegacyConfigValues", () => {
   };
 
   beforeEach(() => {
-    previousOauthDir = process.env.DMMS_AI_OAUTH_DIR;
-    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-oauth-"));
-    process.env.DMMS_AI_OAUTH_DIR = tempOauthDir;
+    previousOauthDir = process.env.DRYADS_AI_OAUTH_DIR;
+    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-oauth-"));
+    process.env.DRYADS_AI_OAUTH_DIR = tempOauthDir;
   });
 
   afterEach(() => {
     if (previousOauthDir === undefined) {
-      delete process.env.DMMS_AI_OAUTH_DIR;
+      delete process.env.DRYADS_AI_OAUTH_DIR;
     } else {
-      process.env.DMMS_AI_OAUTH_DIR = previousOauthDir;
+      process.env.DRYADS_AI_OAUTH_DIR = previousOauthDir;
     }
     if (tempOauthDir) {
       fs.rmSync(tempOauthDir, { recursive: true, force: true });
@@ -87,7 +87,7 @@ describe("normalizeLegacyConfigValues", () => {
   });
 
   it("copies legacy ack reaction when authDir override exists", () => {
-    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-wa-auth-"));
+    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-wa-auth-"));
     try {
       writeCreds(customDir);
 

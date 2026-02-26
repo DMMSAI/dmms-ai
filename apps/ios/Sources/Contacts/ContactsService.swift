@@ -1,6 +1,6 @@
 import Contacts
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 
 final class ContactsService: ContactsServicing {
     private static var payloadKeys: [CNKeyDescriptor] {
@@ -14,7 +14,7 @@ final class ContactsService: ContactsServicing {
         ]
     }
 
-    func search(params: DmmsAiContactsSearchParams) async throws -> DmmsAiContactsSearchPayload {
+    func search(params: DryadsAiContactsSearchParams) async throws -> DryadsAiContactsSearchPayload {
         let store = CNContactStore()
         let status = CNContactStore.authorizationStatus(for: .contacts)
         let authorized = await Self.ensureAuthorization(store: store, status: status)
@@ -43,10 +43,10 @@ final class ContactsService: ContactsServicing {
         let sliced = Array(contacts.prefix(limit))
         let payload = sliced.map { Self.payload(from: $0) }
 
-        return DmmsAiContactsSearchPayload(contacts: payload)
+        return DryadsAiContactsSearchPayload(contacts: payload)
     }
 
-    func add(params: DmmsAiContactsAddParams) async throws -> DmmsAiContactsAddPayload {
+    func add(params: DryadsAiContactsAddParams) async throws -> DryadsAiContactsAddPayload {
         let store = CNContactStore()
         let status = CNContactStore.authorizationStatus(for: .contacts)
         let authorized = await Self.ensureAuthorization(store: store, status: status)
@@ -78,7 +78,7 @@ final class ContactsService: ContactsServicing {
                 phoneNumbers: phoneNumbers,
                 emails: emails)
             {
-                return DmmsAiContactsAddPayload(contact: Self.payload(from: existing))
+                return DryadsAiContactsAddPayload(contact: Self.payload(from: existing))
             }
         }
 
@@ -109,7 +109,7 @@ final class ContactsService: ContactsServicing {
             persisted = contact
         }
 
-        return DmmsAiContactsAddPayload(contact: Self.payload(from: persisted))
+        return DryadsAiContactsAddPayload(contact: Self.payload(from: persisted))
     }
 
     private static func ensureAuthorization(store: CNContactStore, status: CNAuthorizationStatus) async -> Bool {
@@ -192,8 +192,8 @@ final class ContactsService: ContactsServicing {
         return normalized.isEmpty ? trimmed : normalized
     }
 
-    private static func payload(from contact: CNContact) -> DmmsAiContactPayload {
-        DmmsAiContactPayload(
+    private static func payload(from contact: CNContact) -> DryadsAiContactPayload {
+        DryadsAiContactPayload(
             identifier: contact.identifier,
             displayName: CNContactFormatter.string(from: contact, style: .fullName)
                 ?? "\(contact.givenName) \(contact.familyName)".trimmingCharacters(in: .whitespacesAndNewlines),

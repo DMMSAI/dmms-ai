@@ -4,7 +4,7 @@ import {
   GroupPolicySchema,
   MarkdownConfigSchema,
   requireOpenAllowFrom,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import { z } from "zod";
 
 const MattermostAccountSchemaBase = z

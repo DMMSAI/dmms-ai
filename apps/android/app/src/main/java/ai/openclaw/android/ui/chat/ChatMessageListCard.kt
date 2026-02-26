@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui.chat
+package ai.dryadsai.android.ui.chat
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,8 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import ai.dmmsai.android.chat.ChatMessage
-import ai.dmmsai.android.chat.ChatPendingToolCall
+import ai.dryadsai.android.chat.ChatMessage
+import ai.dryadsai.android.chat.ChatPendingToolCall
 
 @Composable
 fun ChatMessageListCard(
@@ -102,7 +102,7 @@ private fun EmptyChatHint(modifier: Modifier = Modifier) {
       tint = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     Text(
-      text = "Message DMMS AI…",
+      text = "Message Dryads AI…",
       style = MaterialTheme.typography.bodyMedium,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

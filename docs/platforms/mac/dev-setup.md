@@ -1,5 +1,5 @@
 ---
-summary: "Setup guide for developers working on the DMMS AI macOS app"
+summary: "Setup guide for developers working on the Dryads AI macOS app"
 read_when:
   - Setting up the macOS development environment
 title: "macOS Dev Setup"
@@ -7,7 +7,7 @@ title: "macOS Dev Setup"
 
 # macOS Developer Setup
 
-This guide covers the necessary steps to build and run the DMMS AI macOS application from source.
+This guide covers the necessary steps to build and run the Dryads AI macOS application from source.
 
 ## Prerequisites
 
@@ -26,7 +26,7 @@ pnpm install
 
 ## 2. Build and Package the App
 
-To build the macOS app and package it into `dist/DmmsAi.app`, run:
+To build the macOS app and package it into `dist/DryadsAi.app`, run:
 
 ```bash
 ./scripts/package-mac-app.sh
@@ -35,24 +35,24 @@ To build the macOS app and package it into `dist/DmmsAi.app`, run:
 If you don't have an Apple Developer ID certificate, the script will automatically use **ad-hoc signing** (`-`).
 
 For dev run modes, signing flags, and Team ID troubleshooting, see the macOS app README:
-[https://github.com/dmms-ai/dmms-ai/blob/main/apps/macos/README.md](https://github.com/dmms-ai/dmms-ai/blob/main/apps/macos/README.md)
+[https://github.com/dryads-ai/dryads-ai/blob/main/apps/macos/README.md](https://github.com/dryads-ai/dryads-ai/blob/main/apps/macos/README.md)
 
 > **Note**: Ad-hoc signed apps may trigger security prompts. If the app crashes immediately with "Abort trap 6", see the [Troubleshooting](#troubleshooting) section.
 
 ## 3. Install the CLI
 
-The macOS app expects a global `dmms-ai` CLI install to manage background tasks.
+The macOS app expects a global `dryads-ai` CLI install to manage background tasks.
 
 **To install it (recommended):**
 
-1. Open the DMMS AI app.
+1. Open the Dryads AI app.
 2. Go to the **General** settings tab.
 3. Click **"Install CLI"**.
 
 Alternatively, install it manually:
 
 ```bash
-npm install -g dmms-ai@<version>
+npm install -g dryads-ai@<version>
 ```
 
 ## Troubleshooting
@@ -87,15 +87,15 @@ If the app crashes when you try to allow **Speech Recognition** or **Microphone*
    tccutil reset All bot.molt.mac.debug
    ```
 
-2. If that fails, change the `BUNDLE_ID` temporarily in [`scripts/package-mac-app.sh`](https://github.com/dmms-ai/dmms-ai/blob/main/scripts/package-mac-app.sh) to force a "clean slate" from macOS.
+2. If that fails, change the `BUNDLE_ID` temporarily in [`scripts/package-mac-app.sh`](https://github.com/dryads-ai/dryads-ai/blob/main/scripts/package-mac-app.sh) to force a "clean slate" from macOS.
 
 ### Gateway "Starting..." indefinitely
 
 If the gateway status stays on "Starting...", check if a zombie process is holding the port:
 
 ```bash
-dmms-ai gateway status
-dmms-ai gateway stop
+dryads-ai gateway status
+dryads-ai gateway stop
 
 # If you’re not using a LaunchAgent (dev mode / manual runs), find the listener:
 lsof -nP -iTCP:18789 -sTCP:LISTEN

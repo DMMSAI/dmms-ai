@@ -1,4 +1,4 @@
-# DMMS AI macOS app (dev + signing)
+# Dryads AI macOS app (dev + signing)
 
 ## Quick dev run
 
@@ -20,7 +20,7 @@ scripts/restart-mac.sh --sign      # force code signing (requires cert)
 scripts/package-mac-app.sh
 ```
 
-Creates `dist/DmmsAi.app` and signs it via `scripts/codesign-mac-app.sh`.
+Creates `dist/DryadsAi.app` and signs it via `scripts/codesign-mac-app.sh`.
 
 ## Signing behavior
 

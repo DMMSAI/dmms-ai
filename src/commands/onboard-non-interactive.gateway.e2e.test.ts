@@ -77,15 +77,15 @@ async function expectGatewayTokenAuth(params: {
 describe("onboard (non-interactive): gateway and remote auth", () => {
   const prev = {
     home: process.env.HOME,
-    stateDir: process.env.DMMS_AI_STATE_DIR,
-    configPath: process.env.DMMS_AI_CONFIG_PATH,
-    skipChannels: process.env.DMMS_AI_SKIP_CHANNELS,
-    skipGmail: process.env.DMMS_AI_SKIP_GMAIL_WATCHER,
-    skipCron: process.env.DMMS_AI_SKIP_CRON,
-    skipCanvas: process.env.DMMS_AI_SKIP_CANVAS_HOST,
-    skipBrowser: process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER,
-    token: process.env.DMMS_AI_GATEWAY_TOKEN,
-    password: process.env.DMMS_AI_GATEWAY_PASSWORD,
+    stateDir: process.env.DRYADS_AI_STATE_DIR,
+    configPath: process.env.DRYADS_AI_CONFIG_PATH,
+    skipChannels: process.env.DRYADS_AI_SKIP_CHANNELS,
+    skipGmail: process.env.DRYADS_AI_SKIP_GMAIL_WATCHER,
+    skipCron: process.env.DRYADS_AI_SKIP_CRON,
+    skipCanvas: process.env.DRYADS_AI_SKIP_CANVAS_HOST,
+    skipBrowser: process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER,
+    token: process.env.DRYADS_AI_GATEWAY_TOKEN,
+    password: process.env.DRYADS_AI_GATEWAY_PASSWORD,
   };
   let tempHome: string | undefined;
 
@@ -94,8 +94,8 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       throw new Error("temp home not initialized");
     }
     const stateDir = await fs.mkdtemp(path.join(tempHome, prefix));
-    process.env.DMMS_AI_STATE_DIR = stateDir;
-    delete process.env.DMMS_AI_CONFIG_PATH;
+    process.env.DRYADS_AI_STATE_DIR = stateDir;
+    delete process.env.DRYADS_AI_CONFIG_PATH;
     return stateDir;
   };
   const withStateDir = async (
@@ -110,15 +110,15 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
     }
   };
   beforeAll(async () => {
-    process.env.DMMS_AI_SKIP_CHANNELS = "1";
-    process.env.DMMS_AI_SKIP_GMAIL_WATCHER = "1";
-    process.env.DMMS_AI_SKIP_CRON = "1";
-    process.env.DMMS_AI_SKIP_CANVAS_HOST = "1";
-    process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
-    delete process.env.DMMS_AI_GATEWAY_TOKEN;
-    delete process.env.DMMS_AI_GATEWAY_PASSWORD;
+    process.env.DRYADS_AI_SKIP_CHANNELS = "1";
+    process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = "1";
+    process.env.DRYADS_AI_SKIP_CRON = "1";
+    process.env.DRYADS_AI_SKIP_CANVAS_HOST = "1";
+    process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
+    delete process.env.DRYADS_AI_GATEWAY_TOKEN;
+    delete process.env.DRYADS_AI_GATEWAY_PASSWORD;
 
-    tempHome = await makeTempWorkspace("dmms-ai-onboard-");
+    tempHome = await makeTempWorkspace("dryads-ai-onboard-");
     process.env.HOME = tempHome;
   });
 
@@ -127,21 +127,21 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       await fs.rm(tempHome, { recursive: true, force: true });
     }
     process.env.HOME = prev.home;
-    process.env.DMMS_AI_STATE_DIR = prev.stateDir;
-    process.env.DMMS_AI_CONFIG_PATH = prev.configPath;
-    process.env.DMMS_AI_SKIP_CHANNELS = prev.skipChannels;
-    process.env.DMMS_AI_SKIP_GMAIL_WATCHER = prev.skipGmail;
-    process.env.DMMS_AI_SKIP_CRON = prev.skipCron;
-    process.env.DMMS_AI_SKIP_CANVAS_HOST = prev.skipCanvas;
-    process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
-    process.env.DMMS_AI_GATEWAY_TOKEN = prev.token;
-    process.env.DMMS_AI_GATEWAY_PASSWORD = prev.password;
+    process.env.DRYADS_AI_STATE_DIR = prev.stateDir;
+    process.env.DRYADS_AI_CONFIG_PATH = prev.configPath;
+    process.env.DRYADS_AI_SKIP_CHANNELS = prev.skipChannels;
+    process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = prev.skipGmail;
+    process.env.DRYADS_AI_SKIP_CRON = prev.skipCron;
+    process.env.DRYADS_AI_SKIP_CANVAS_HOST = prev.skipCanvas;
+    process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+    process.env.DRYADS_AI_GATEWAY_TOKEN = prev.token;
+    process.env.DRYADS_AI_GATEWAY_PASSWORD = prev.password;
   });
 
   it("writes gateway token auth into config and gateway enforces it", async () => {
     await withStateDir("state-noninteractive-", async (stateDir) => {
       const token = "tok_test_123";
-      const workspace = path.join(stateDir, "dmms-ai");
+      const workspace = path.join(stateDir, "dryads-ai");
 
       await runNonInteractiveOnboarding(
         {
@@ -219,11 +219,11 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       return;
     }
     await withStateDir("state-lan-", async (stateDir) => {
-      process.env.DMMS_AI_STATE_DIR = stateDir;
-      process.env.DMMS_AI_CONFIG_PATH = path.join(stateDir, "dmms-ai.json");
+      process.env.DRYADS_AI_STATE_DIR = stateDir;
+      process.env.DRYADS_AI_CONFIG_PATH = path.join(stateDir, "dryads-ai.json");
 
       const port = await getFreeGatewayPort();
-      const workspace = path.join(stateDir, "dmms-ai");
+      const workspace = path.join(stateDir, "dryads-ai");
 
       await runNonInteractiveOnboarding(
         {

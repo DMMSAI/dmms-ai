@@ -36,7 +36,7 @@ This is ideal when your laptop sleeps often but you want the agent always-on.
 
 The laptop does **not** run the agent. It connects remotely:
 
-- Use the macOS app’s **Remote over SSH** mode (Settings → General → “DMMS AI runs”).
+- Use the macOS app’s **Remote over SSH** mode (Settings → General → “Dryads AI runs”).
 - The app opens and manages the tunnel, so WebChat + health checks “just work.”
 
 Runbook: [macOS remote access](/platforms/mac/remote).
@@ -76,10 +76,10 @@ ssh -N -L 18789:127.0.0.1:18789 user@host
 
 With the tunnel up:
 
-- `dmms-ai health` and `dmms-ai status --deep` now reach the remote gateway via `ws://127.0.0.1:18789`.
-- `dmms-ai gateway {status,health,send,agent,call}` can also target the forwarded URL via `--url` when needed.
+- `dryads-ai health` and `dryads-ai status --deep` now reach the remote gateway via `ws://127.0.0.1:18789`.
+- `dryads-ai gateway {status,health,send,agent,call}` can also target the forwarded URL via `--url` when needed.
 
-Note: replace `18789` with your configured `gateway.port` (or `--port`/`DMMS_AI_GATEWAY_PORT`).
+Note: replace `18789` with your configured `gateway.port` (or `--port`/`DRYADS_AI_GATEWAY_PORT`).
 Note: when you pass `--url`, the CLI does not fall back to config or environment credentials.
 Include `--token` or `--password` explicitly. Missing explicit credentials is an error.
 

@@ -1,4 +1,4 @@
-package ai.dmmsai.android.voice
+package ai.dryadsai.android.voice
 
 import android.content.Context
 import android.content.Intent

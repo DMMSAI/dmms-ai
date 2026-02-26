@@ -175,7 +175,7 @@ describe("wrapNoteMessage", () => {
 
   it("preserves long Windows paths without inserting spaces/newlines", () => {
     // No spaces: wrapNoteMessage splits on whitespace, so a "Program Files" style path would wrap.
-    const input = "C:\\\\State\\\\DMMS AI\\\\bin\\\\dmms-ai.exe";
+    const input = "C:\\\\State\\\\Dryads AI\\\\bin\\\\dryads-ai.exe";
     const wrapped = wrapNoteMessage(input, { maxWidth: 10, columns: 80 });
     expect(wrapped).toBe(input);
   });

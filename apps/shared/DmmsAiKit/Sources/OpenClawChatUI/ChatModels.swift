@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 
 // NOTE: keep this file lightweight; decode must be resilient to varying transcript formats.
@@ -6,14 +6,14 @@ import Foundation
 #if canImport(AppKit)
 import AppKit
 
-public typealias DmmsAiPlatformImage = NSImage
+public typealias DryadsAiPlatformImage = NSImage
 #elseif canImport(UIKit)
 import UIKit
 
-public typealias DmmsAiPlatformImage = UIImage
+public typealias DryadsAiPlatformImage = UIImage
 #endif
 
-public struct DmmsAiChatUsageCost: Codable, Hashable, Sendable {
+public struct DryadsAiChatUsageCost: Codable, Hashable, Sendable {
     public let input: Double?
     public let output: Double?
     public let cacheRead: Double?
@@ -21,12 +21,12 @@ public struct DmmsAiChatUsageCost: Codable, Hashable, Sendable {
     public let total: Double?
 }
 
-public struct DmmsAiChatUsage: Codable, Hashable, Sendable {
+public struct DryadsAiChatUsage: Codable, Hashable, Sendable {
     public let input: Int?
     public let output: Int?
     public let cacheRead: Int?
     public let cacheWrite: Int?
-    public let cost: DmmsAiChatUsageCost?
+    public let cost: DryadsAiChatUsageCost?
     public let total: Int?
 
     enum CodingKeys: String, CodingKey {
@@ -45,7 +45,7 @@ public struct DmmsAiChatUsage: Codable, Hashable, Sendable {
         self.output = try container.decodeIfPresent(Int.self, forKey: .output)
         self.cacheRead = try container.decodeIfPresent(Int.self, forKey: .cacheRead)
         self.cacheWrite = try container.decodeIfPresent(Int.self, forKey: .cacheWrite)
-        self.cost = try container.decodeIfPresent(DmmsAiChatUsageCost.self, forKey: .cost)
+        self.cost = try container.decodeIfPresent(DryadsAiChatUsageCost.self, forKey: .cost)
         self.total =
             try container.decodeIfPresent(Int.self, forKey: .total) ??
             container.decodeIfPresent(Int.self, forKey: .totalTokens)
@@ -62,7 +62,7 @@ public struct DmmsAiChatUsage: Codable, Hashable, Sendable {
     }
 }
 
-public struct DmmsAiChatMessageContent: Codable, Hashable, Sendable {
+public struct DryadsAiChatMessageContent: Codable, Hashable, Sendable {
     public let type: String?
     public let text: String?
     public let thinking: String?
@@ -135,14 +135,14 @@ public struct DmmsAiChatMessageContent: Codable, Hashable, Sendable {
     }
 }
 
-public struct DmmsAiChatMessage: Codable, Identifiable, Sendable {
+public struct DryadsAiChatMessage: Codable, Identifiable, Sendable {
     public var id: UUID = .init()
     public let role: String
-    public let content: [DmmsAiChatMessageContent]
+    public let content: [DryadsAiChatMessageContent]
     public let timestamp: Double?
     public let toolCallId: String?
     public let toolName: String?
-    public let usage: DmmsAiChatUsage?
+    public let usage: DryadsAiChatUsage?
     public let stopReason: String?
 
     enum CodingKeys: String, CodingKey {
@@ -160,11 +160,11 @@ public struct DmmsAiChatMessage: Codable, Identifiable, Sendable {
     public init(
         id: UUID = .init(),
         role: String,
-        content: [DmmsAiChatMessageContent],
+        content: [DryadsAiChatMessageContent],
         timestamp: Double?,
         toolCallId: String? = nil,
         toolName: String? = nil,
-        usage: DmmsAiChatUsage? = nil,
+        usage: DryadsAiChatUsage? = nil,
         stopReason: String? = nil)
     {
         self.id = id
@@ -187,10 +187,10 @@ public struct DmmsAiChatMessage: Codable, Identifiable, Sendable {
         self.toolName =
             try container.decodeIfPresent(String.self, forKey: .toolName) ??
             container.decodeIfPresent(String.self, forKey: .tool_name)
-        self.usage = try container.decodeIfPresent(DmmsAiChatUsage.self, forKey: .usage)
+        self.usage = try container.decodeIfPresent(DryadsAiChatUsage.self, forKey: .usage)
         self.stopReason = try container.decodeIfPresent(String.self, forKey: .stopReason)
 
-        if let decoded = try? container.decode([DmmsAiChatMessageContent].self, forKey: .content) {
+        if let decoded = try? container.decode([DryadsAiChatMessageContent].self, forKey: .content) {
             self.content = decoded
             return
         }
@@ -198,7 +198,7 @@ public struct DmmsAiChatMessage: Codable, Identifiable, Sendable {
         // Some session log formats store `content` as a plain string.
         if let text = try? container.decode(String.self, forKey: .content) {
             self.content = [
-                DmmsAiChatMessageContent(
+                DryadsAiChatMessageContent(
                     type: "text",
                     text: text,
                     thinking: nil,
@@ -228,40 +228,40 @@ public struct DmmsAiChatMessage: Codable, Identifiable, Sendable {
     }
 }
 
-public struct DmmsAiChatHistoryPayload: Codable, Sendable {
+public struct DryadsAiChatHistoryPayload: Codable, Sendable {
     public let sessionKey: String
     public let sessionId: String?
     public let messages: [AnyCodable]?
     public let thinkingLevel: String?
 }
 
-public struct DmmsAiSessionPreviewItem: Codable, Hashable, Sendable {
+public struct DryadsAiSessionPreviewItem: Codable, Hashable, Sendable {
     public let role: String
     public let text: String
 }
 
-public struct DmmsAiSessionPreviewEntry: Codable, Sendable {
+public struct DryadsAiSessionPreviewEntry: Codable, Sendable {
     public let key: String
     public let status: String
-    public let items: [DmmsAiSessionPreviewItem]
+    public let items: [DryadsAiSessionPreviewItem]
 }
 
-public struct DmmsAiSessionsPreviewPayload: Codable, Sendable {
+public struct DryadsAiSessionsPreviewPayload: Codable, Sendable {
     public let ts: Int
-    public let previews: [DmmsAiSessionPreviewEntry]
+    public let previews: [DryadsAiSessionPreviewEntry]
 
-    public init(ts: Int, previews: [DmmsAiSessionPreviewEntry]) {
+    public init(ts: Int, previews: [DryadsAiSessionPreviewEntry]) {
         self.ts = ts
         self.previews = previews
     }
 }
 
-public struct DmmsAiChatSendResponse: Codable, Sendable {
+public struct DryadsAiChatSendResponse: Codable, Sendable {
     public let runId: String
     public let status: String
 }
 
-public struct DmmsAiChatEventPayload: Codable, Sendable {
+public struct DryadsAiChatEventPayload: Codable, Sendable {
     public let runId: String?
     public let sessionKey: String?
     public let state: String?
@@ -269,7 +269,7 @@ public struct DmmsAiChatEventPayload: Codable, Sendable {
     public let errorMessage: String?
 }
 
-public struct DmmsAiAgentEventPayload: Codable, Sendable, Identifiable {
+public struct DryadsAiAgentEventPayload: Codable, Sendable, Identifiable {
     public var id: String { "\(self.runId)-\(self.seq ?? -1)" }
     public let runId: String
     public let seq: Int?
@@ -278,7 +278,7 @@ public struct DmmsAiAgentEventPayload: Codable, Sendable, Identifiable {
     public let data: [String: AnyCodable]
 }
 
-public struct DmmsAiChatPendingToolCall: Identifiable, Hashable, Sendable {
+public struct DryadsAiChatPendingToolCall: Identifiable, Hashable, Sendable {
     public var id: String { self.toolCallId }
     public let toolCallId: String
     public let name: String
@@ -287,18 +287,18 @@ public struct DmmsAiChatPendingToolCall: Identifiable, Hashable, Sendable {
     public let isError: Bool?
 }
 
-public struct DmmsAiGatewayHealthOK: Codable, Sendable {
+public struct DryadsAiGatewayHealthOK: Codable, Sendable {
     public let ok: Bool?
 }
 
-public struct DmmsAiPendingAttachment: Identifiable {
+public struct DryadsAiPendingAttachment: Identifiable {
     public let id = UUID()
     public let url: URL?
     public let data: Data
     public let fileName: String
     public let mimeType: String
     public let type: String
-    public let preview: DmmsAiPlatformImage?
+    public let preview: DryadsAiPlatformImage?
 
     public init(
         url: URL?,
@@ -306,7 +306,7 @@ public struct DmmsAiPendingAttachment: Identifiable {
         fileName: String,
         mimeType: String,
         type: String = "file",
-        preview: DmmsAiPlatformImage?)
+        preview: DryadsAiPlatformImage?)
     {
         self.url = url
         self.data = data
@@ -317,7 +317,7 @@ public struct DmmsAiPendingAttachment: Identifiable {
     }
 }
 
-public struct DmmsAiChatAttachmentPayload: Codable, Sendable, Hashable {
+public struct DryadsAiChatAttachmentPayload: Codable, Sendable, Hashable {
     public let type: String
     public let mimeType: String
     public let fileName: String

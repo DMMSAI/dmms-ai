@@ -106,8 +106,8 @@ describe("applyExtraParamsToAgent", () => {
 
     expect(calls).toHaveLength(1);
     expect(calls[0]?.headers).toEqual({
-      "HTTP-Referer": "https://dmms-ai.com",
-      "X-Title": "DMMS AI",
+      "HTTP-Referer": "https://dryads-ai.com",
+      "X-Title": "Dryads AI",
       "X-Custom": "1",
     });
   });

@@ -211,7 +211,7 @@ async function loadValidConfig(runtime: RuntimeEnv = defaultRuntime) {
   for (const issue of snapshot.issues) {
     runtime.error(`- ${issue.path || "<root>"}: ${issue.message}`);
   }
-  runtime.error(`Run \`${formatCliCommand("dmms-ai doctor")}\` to repair, then retry.`);
+  runtime.error(`Run \`${formatCliCommand("dryads-ai doctor")}\` to repair, then retry.`);
   runtime.exit(1);
   return snapshot;
 }
@@ -286,7 +286,7 @@ export function registerConfigCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/config", "docs.dmms-ai.com/cli/config")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/config", "docs.dryads-ai.com/cli/config")}\n`,
     )
     .option(
       "--section <section>",

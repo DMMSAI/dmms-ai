@@ -11,13 +11,13 @@ describe("program routes", () => {
   it("returns false when status timeout flag value is missing", async () => {
     const route = findRoutedCommand(["status"]);
     expect(route).not.toBeNull();
-    await expect(route?.run(["node", "dmms-ai", "status", "--timeout"])).resolves.toBe(false);
+    await expect(route?.run(["node", "dryads-ai", "status", "--timeout"])).resolves.toBe(false);
   });
 
   it("returns false for sessions route when --store value is missing", async () => {
     const route = findRoutedCommand(["sessions"]);
     expect(route).not.toBeNull();
-    await expect(route?.run(["node", "dmms-ai", "sessions", "--store"])).resolves.toBe(false);
+    await expect(route?.run(["node", "dryads-ai", "sessions", "--store"])).resolves.toBe(false);
   });
 
   it("does not match unknown routes", () => {
@@ -27,12 +27,12 @@ describe("program routes", () => {
   it("returns false for config get route when path argument is missing", async () => {
     const route = findRoutedCommand(["config", "get"]);
     expect(route).not.toBeNull();
-    await expect(route?.run(["node", "dmms-ai", "config", "get", "--json"])).resolves.toBe(false);
+    await expect(route?.run(["node", "dryads-ai", "config", "get", "--json"])).resolves.toBe(false);
   });
 
   it("returns false for config unset route when path argument is missing", async () => {
     const route = findRoutedCommand(["config", "unset"]);
     expect(route).not.toBeNull();
-    await expect(route?.run(["node", "dmms-ai", "config", "unset"])).resolves.toBe(false);
+    await expect(route?.run(["node", "dryads-ai", "config", "unset"])).resolves.toBe(false);
   });
 });

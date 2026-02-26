@@ -1,19 +1,19 @@
 ---
-summary: "Move (migrate) a DMMS AI install from one machine to another"
+summary: "Move (migrate) a Dryads AI install from one machine to another"
 read_when:
-  - You are moving DMMS AI to a new laptop/server
+  - You are moving Dryads AI to a new laptop/server
   - You want to preserve sessions, auth, and channel logins (WhatsApp, etc.)
 title: "Migration Guide"
 ---
 
-# Migrating DMMS AI to a new machine
+# Migrating Dryads AI to a new machine
 
-This guide migrates a DMMS AI Gateway from one machine to another **without redoing onboarding**.
+This guide migrates a Dryads AI Gateway from one machine to another **without redoing onboarding**.
 
 The migration is simple conceptually:
 
-- Copy the **state directory** (`$DMMS_AI_STATE_DIR`, default: `~/.dmms-ai/`) — this includes config, auth, sessions, and channel state.
-- Copy your **workspace** (`~/.dmms-ai/workspace/` by default) — this includes your agent files (memory, prompts, etc.).
+- Copy the **state directory** (`$DRYADS_AI_STATE_DIR`, default: `~/.dryads-ai/`) — this includes config, auth, sessions, and channel state.
+- Copy your **workspace** (`~/.dryads-ai/workspace/` by default) — this includes your agent files (memory, prompts, etc.).
 
 But there are common footguns around **profiles**, **permissions**, and **partial copies**.
 
@@ -23,26 +23,26 @@ But there are common footguns around **profiles**, **permissions**, and **partia
 
 Most installs use the default:
 
-- **State dir:** `~/.dmms-ai/`
+- **State dir:** `~/.dryads-ai/`
 
 But it may be different if you use:
 
-- `--profile <name>` (often becomes `~/.dmms-ai-<profile>/`)
-- `DMMS_AI_STATE_DIR=/some/path`
+- `--profile <name>` (often becomes `~/.dryads-ai-<profile>/`)
+- `DRYADS_AI_STATE_DIR=/some/path`
 
 If you’re not sure, run on the **old** machine:
 
 ```bash
-dmms-ai status
+dryads-ai status
 ```
 
-Look for mentions of `DMMS_AI_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
+Look for mentions of `DRYADS_AI_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
 
 ### 2) Identify your workspace
 
 Common defaults:
 
-- `~/.dmms-ai/workspace/` (recommended workspace)
+- `~/.dryads-ai/workspace/` (recommended workspace)
 - a custom folder you created
 
 Your workspace is where files like `MEMORY.md`, `USER.md`, and `memory/*.md` live.
@@ -51,7 +51,7 @@ Your workspace is where files like `MEMORY.md`, `USER.md`, and `memory/*.md` liv
 
 If you copy **both** the state dir and workspace, you keep:
 
-- Gateway configuration (`dmms-ai.json`)
+- Gateway configuration (`dryads-ai.json`)
 - Auth profiles / API keys / OAuth tokens
 - Session history + agent state
 - Channel state (e.g. WhatsApp login/session)
@@ -63,7 +63,7 @@ If you copy **only** the workspace (e.g., via Git), you do **not** preserve:
 - credentials
 - channel logins
 
-Those live under `$DMMS_AI_STATE_DIR`.
+Those live under `$DRYADS_AI_STATE_DIR`.
 
 ## Migration steps (recommended)
 
@@ -72,7 +72,7 @@ Those live under `$DMMS_AI_STATE_DIR`.
 On the **old** machine, stop the gateway first so files aren’t changing mid-copy:
 
 ```bash
-dmms-ai gateway stop
+dryads-ai gateway stop
 ```
 
 (Optional but recommended) archive the state dir and workspace:
@@ -80,27 +80,27 @@ dmms-ai gateway stop
 ```bash
 # Adjust paths if you use a profile or custom locations
 cd ~
-tar -czf dmms-ai-state.tgz .dmms-ai
+tar -czf dryads-ai-state.tgz .dryads-ai
 
-tar -czf dmms-ai-workspace.tgz .dmms-ai/workspace
+tar -czf dryads-ai-workspace.tgz .dryads-ai/workspace
 ```
 
-If you have multiple profiles/state dirs (e.g. `~/.dmms-ai-main`, `~/.dmms-ai-work`), archive each.
+If you have multiple profiles/state dirs (e.g. `~/.dryads-ai-main`, `~/.dryads-ai-work`), archive each.
 
-### Step 1 — Install DMMS AI on the new machine
+### Step 1 — Install Dryads AI on the new machine
 
 On the **new** machine, install the CLI (and Node if needed):
 
 - See: [Install](/install)
 
-At this stage, it’s OK if onboarding creates a fresh `~/.dmms-ai/` — you will overwrite it in the next step.
+At this stage, it’s OK if onboarding creates a fresh `~/.dryads-ai/` — you will overwrite it in the next step.
 
 ### Step 2 — Copy the state dir + workspace to the new machine
 
 Copy **both**:
 
-- `$DMMS_AI_STATE_DIR` (default `~/.dmms-ai/`)
-- your workspace (default `~/.dmms-ai/workspace/`)
+- `$DRYADS_AI_STATE_DIR` (default `~/.dryads-ai/`)
+- your workspace (default `~/.dryads-ai/workspace/`)
 
 Common approaches:
 
@@ -110,7 +110,7 @@ Common approaches:
 
 After copying, ensure:
 
-- Hidden directories were included (e.g. `.dmms-ai/`)
+- Hidden directories were included (e.g. `.dryads-ai/`)
 - File ownership is correct for the user running the gateway
 
 ### Step 3 — Run Doctor (migrations + service repair)
@@ -118,7 +118,7 @@ After copying, ensure:
 On the **new** machine:
 
 ```bash
-dmms-ai doctor
+dryads-ai doctor
 ```
 
 Doctor is the “safe boring” command. It repairs services, applies config migrations, and warns about mismatches.
@@ -126,15 +126,15 @@ Doctor is the “safe boring” command. It repairs services, applies config mig
 Then:
 
 ```bash
-dmms-ai gateway restart
-dmms-ai status
+dryads-ai gateway restart
+dryads-ai status
 ```
 
 ## Common footguns (and how to avoid them)
 
 ### Footgun: profile / state-dir mismatch
 
-If you ran the old gateway with a profile (or `DMMS_AI_STATE_DIR`), and the new gateway uses a different one, you’ll see symptoms like:
+If you ran the old gateway with a profile (or `DRYADS_AI_STATE_DIR`), and the new gateway uses a different one, you’ll see symptoms like:
 
 - config changes not taking effect
 - channels missing / logged out
@@ -143,17 +143,17 @@ If you ran the old gateway with a profile (or `DMMS_AI_STATE_DIR`), and the new 
 Fix: run the gateway/service using the **same** profile/state dir you migrated, then rerun:
 
 ```bash
-dmms-ai doctor
+dryads-ai doctor
 ```
 
-### Footgun: copying only `dmms-ai.json`
+### Footgun: copying only `dryads-ai.json`
 
-`dmms-ai.json` is not enough. Many providers store state under:
+`dryads-ai.json` is not enough. Many providers store state under:
 
-- `$DMMS_AI_STATE_DIR/credentials/`
-- `$DMMS_AI_STATE_DIR/agents/<agentId>/...`
+- `$DRYADS_AI_STATE_DIR/credentials/`
+- `$DRYADS_AI_STATE_DIR/agents/<agentId>/...`
 
-Always migrate the entire `$DMMS_AI_STATE_DIR` folder.
+Always migrate the entire `$DRYADS_AI_STATE_DIR` folder.
 
 ### Footgun: permissions / ownership
 
@@ -170,7 +170,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 ### Footgun: secrets in backups
 
-`$DMMS_AI_STATE_DIR` contains secrets (API keys, OAuth tokens, WhatsApp creds). Treat backups like production secrets:
+`$DRYADS_AI_STATE_DIR` contains secrets (API keys, OAuth tokens, WhatsApp creds). Treat backups like production secrets:
 
 - store encrypted
 - avoid sharing over insecure channels
@@ -180,7 +180,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 On the new machine, confirm:
 
-- `dmms-ai status` shows the gateway running
+- `dryads-ai status` shows the gateway running
 - Your channels are still connected (e.g. WhatsApp doesn’t require re-pair)
 - The dashboard opens and shows existing sessions
 - Your workspace files (memory, configs) are present
@@ -189,4 +189,4 @@ On the new machine, confirm:
 
 - [Doctor](/gateway/doctor)
 - [Gateway troubleshooting](/gateway/troubleshooting)
-- [Where does DMMS AI store its data?](/help/faq#where-does-dmms-ai-store-its-data)
+- [Where does Dryads AI store its data?](/help/faq#where-does-dryads-ai-store-its-data)

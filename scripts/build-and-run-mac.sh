@@ -3,7 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../apps/macos"
 
 BUILD_PATH=".build-local"
-PRODUCT="DMMS AI"
+PRODUCT="Dryads AI"
 BIN="$BUILD_PATH/debug/$PRODUCT"
 
 printf "\n▶️  Building $PRODUCT (debug, build path: $BUILD_PATH)\n"
@@ -13,6 +13,6 @@ printf "\n⏹  Stopping existing $PRODUCT...\n"
 killall -q "$PRODUCT" 2>/dev/null || true
 
 printf "\n🚀 Launching $BIN ...\n"
-nohup "$BIN" >/tmp/dmms-ai.log 2>&1 &
+nohup "$BIN" >/tmp/dryads-ai.log 2>&1 &
 PID=$!
-printf "Started $PRODUCT (PID $PID). Logs: /tmp/dmms-ai.log\n"
+printf "Started $PRODUCT (PID $PID). Logs: /tmp/dryads-ai.log\n"

@@ -1,9 +1,9 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
-private typealias SnapshotAnyCodable = DMMS AI.AnyCodable
+private typealias SnapshotAnyCodable = Dryads AI.AnyCodable
 
 @Suite(.serialized)
 @MainActor
@@ -52,7 +52,7 @@ struct ChannelsSettingsSmokeTests {
                         "ok": true,
                         "status": 200,
                         "elapsedMs": 120,
-                        "bot": ["id": 123, "username": "dmms-aibot"],
+                        "bot": ["id": 123, "username": "dryads-aibot"],
                         "webhook": ["url": "https://example.com/hook", "hasCustomCert": false],
                     ],
                     "lastProbeAt": 1_700_000_050_000,

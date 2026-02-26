@@ -151,7 +151,7 @@ describe("enableConsoleCapture", () => {
 });
 
 function tempLogPath() {
-  return path.join(os.tmpdir(), `dmms-ai-log-${crypto.randomUUID()}.log`);
+  return path.join(os.tmpdir(), `dryads-ai-log-${crypto.randomUUID()}.log`);
 }
 
 function eioError() {

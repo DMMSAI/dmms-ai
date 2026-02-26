@@ -23,7 +23,7 @@ export type AcpServerOptions = {
 };
 
 export const ACP_AGENT_INFO = {
-  name: "dmms-ai-acp",
-  title: "DMMS AI ACP Gateway",
+  name: "dryads-ai-acp",
+  title: "Dryads AI ACP Gateway",
   version: VERSION,
 };

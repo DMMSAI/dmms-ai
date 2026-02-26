@@ -40,11 +40,14 @@ export function registerModelsCli(program: Command) {
     .description("Model discovery, scanning, and configuration")
     .option("--status-json", "Output JSON (alias for `models status --json`)", false)
     .option("--status-plain", "Plain output (alias for `models status --plain`)", false)
-    .option("--agent <id>", "Agent id to inspect (overrides DMMS_AI_AGENT_DIR/PI_CODING_AGENT_DIR)")
+    .option(
+      "--agent <id>",
+      "Agent id to inspect (overrides DRYADS_AI_AGENT_DIR/PI_CODING_AGENT_DIR)",
+    )
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/models", "docs.dmms-ai.com/cli/models")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/models", "docs.dryads-ai.com/cli/models")}\n`,
     );
 
   models
@@ -85,7 +88,10 @@ export function registerModelsCli(program: Command) {
     .option("--probe-timeout <ms>", "Per-probe timeout in ms")
     .option("--probe-concurrency <n>", "Concurrent probes")
     .option("--probe-max-tokens <n>", "Probe max tokens (best-effort)")
-    .option("--agent <id>", "Agent id to inspect (overrides DMMS_AI_AGENT_DIR/PI_CODING_AGENT_DIR)")
+    .option(
+      "--agent <id>",
+      "Agent id to inspect (overrides DRYADS_AI_AGENT_DIR/PI_CODING_AGENT_DIR)",
+    )
     .action(async (opts, command) => {
       const agent =
         resolveOptionFromCommand<string>(command, "agent") ?? (opts.agent as string | undefined);

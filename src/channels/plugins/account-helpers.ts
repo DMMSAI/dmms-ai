@@ -1,8 +1,8 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
 
 export function createAccountListHelpers(channelKey: string) {
-  function listConfiguredAccountIds(cfg: DmmsAiConfig): string[] {
+  function listConfiguredAccountIds(cfg: DryadsAiConfig): string[] {
     const channel = cfg.channels?.[channelKey];
     const accounts = (channel as Record<string, unknown> | undefined)?.accounts;
     if (!accounts || typeof accounts !== "object") {
@@ -11,7 +11,7 @@ export function createAccountListHelpers(channelKey: string) {
     return Object.keys(accounts as Record<string, unknown>).filter(Boolean);
   }
 
-  function listAccountIds(cfg: DmmsAiConfig): string[] {
+  function listAccountIds(cfg: DryadsAiConfig): string[] {
     const ids = listConfiguredAccountIds(cfg);
     if (ids.length === 0) {
       return [DEFAULT_ACCOUNT_ID];
@@ -19,7 +19,7 @@ export function createAccountListHelpers(channelKey: string) {
     return ids.toSorted((a, b) => a.localeCompare(b));
   }
 
-  function resolveDefaultAccountId(cfg: DmmsAiConfig): string {
+  function resolveDefaultAccountId(cfg: DryadsAiConfig): string {
     const ids = listAccountIds(cfg);
     if (ids.includes(DEFAULT_ACCOUNT_ID)) {
       return DEFAULT_ACCOUNT_ID;

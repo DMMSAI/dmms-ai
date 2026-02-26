@@ -76,9 +76,9 @@ async function main() {
     process.exit(1);
   }
 
-  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-zai-fallback-"));
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-zai-fallback-"));
   const stateDir = path.join(baseDir, "state");
-  const configPath = path.join(baseDir, "dmms-ai.json");
+  const configPath = path.join(baseDir, "dryads-ai.json");
   await fs.mkdir(stateDir, { recursive: true });
 
   const config = {
@@ -99,14 +99,14 @@ async function main() {
   await fs.writeFile(configPath, JSON.stringify(config, null, 2), "utf8");
 
   const sessionId =
-    process.env.DMMS_AI_ZAI_FALLBACK_SESSION_ID ??
+    process.env.DRYADS_AI_ZAI_FALLBACK_SESSION_ID ??
     process.env.CLAWDBOT_ZAI_FALLBACK_SESSION_ID ??
     randomUUID();
 
   const baseEnv: NodeJS.ProcessEnv = {
     ...process.env,
-    DMMS_AI_CONFIG_PATH: configPath,
-    DMMS_AI_STATE_DIR: stateDir,
+    DRYADS_AI_CONFIG_PATH: configPath,
+    DRYADS_AI_STATE_DIR: stateDir,
     CLAWDBOT_CONFIG_PATH: configPath,
     CLAWDBOT_STATE_DIR: stateDir,
     ZAI_API_KEY: zaiKey,
@@ -131,7 +131,7 @@ async function main() {
     "Then use the read tool to display the file contents. Reply with just the file contents.";
   const run1 = await runCommand(
     "run1",
-    ["dmms-ai", "agent", "--local", "--session-id", sessionId, "--message", toolPrompt],
+    ["dryads-ai", "agent", "--local", "--session-id", sessionId, "--message", toolPrompt],
     envValidAnthropic,
   );
   if (run1.code !== 0) {
@@ -149,7 +149,7 @@ async function main() {
     "What is the content of zai-fallback-tool.txt? Reply with just the contents.";
   const run2 = await runCommand(
     "run2",
-    ["dmms-ai", "agent", "--local", "--session-id", sessionId, "--message", followupPrompt],
+    ["dryads-ai", "agent", "--local", "--session-id", sessionId, "--message", followupPrompt],
     envInvalidAnthropic,
   );
 

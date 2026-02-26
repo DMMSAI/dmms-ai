@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   estimateUsageCost,
   formatTokenCount,
@@ -35,7 +35,7 @@ describe("usage-format", () => {
           },
         },
       },
-    } as unknown as DmmsAiConfig;
+    } as unknown as DryadsAiConfig;
 
     const cost = resolveModelCostConfig({
       provider: "test",

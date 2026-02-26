@@ -1,6 +1,6 @@
 type CustomEntryLike = { type?: unknown; customType?: unknown; data?: unknown };
 
-export const CACHE_TTL_CUSTOM_TYPE = "dmms-ai.cache-ttl";
+export const CACHE_TTL_CUSTOM_TYPE = "dryads-ai.cache-ttl";
 
 export type CacheTtlEntryData = {
   timestamp: number;

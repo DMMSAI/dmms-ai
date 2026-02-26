@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
-import { resolveDmmsAiPackageRoot, resolveDmmsAiPackageRootSync } from "./dmms-ai-root.js";
+import { resolveDryadsAiPackageRoot, resolveDryadsAiPackageRootSync } from "./dryads-ai-root.js";
 
 const CONTROL_UI_DIST_PATH_SEGMENTS = ["dist", "control-ui", "index.html"] as const;
 
@@ -86,12 +86,12 @@ export async function resolveControlUiDistIndexPath(
     return path.join(distDir, "control-ui", "index.html");
   }
 
-  const packageRoot = await resolveDmmsAiPackageRoot({ argv1: normalized, moduleUrl });
+  const packageRoot = await resolveDryadsAiPackageRoot({ argv1: normalized, moduleUrl });
   if (packageRoot) {
     return path.join(packageRoot, "dist", "control-ui", "index.html");
   }
 
-  // Fallback: traverse up and find package.json with name "dmms-ai" + dist/control-ui/index.html
+  // Fallback: traverse up and find package.json with name "dryads-ai" + dist/control-ui/index.html
   // This handles global installs where path-based resolution might fail.
   let dir = path.dirname(normalized);
   for (let i = 0; i < 8; i++) {
@@ -101,7 +101,7 @@ export async function resolveControlUiDistIndexPath(
       try {
         const raw = fs.readFileSync(pkgJsonPath, "utf-8");
         const parsed = JSON.parse(raw) as { name?: unknown };
-        if (parsed.name === "dmms-ai") {
+        if (parsed.name === "dryads-ai") {
           return fs.existsSync(indexPath) ? indexPath : null;
         }
         // Stop at the first package boundary to avoid resolving through unrelated ancestors.
@@ -166,7 +166,7 @@ export function resolveControlUiRootSync(opts: ControlUiRootResolveOptions = {})
       return null;
     }
   })();
-  const packageRoot = resolveDmmsAiPackageRootSync({
+  const packageRoot = resolveDryadsAiPackageRootSync({
     argv1,
     moduleUrl: opts.moduleUrl,
     cwd,
@@ -183,7 +183,7 @@ export function resolveControlUiRootSync(opts: ControlUiRootResolveOptions = {})
     addCandidate(candidates, path.join(moduleDir, "../../dist/control-ui"));
   }
   if (argv1Dir) {
-    // dmms-ai.mjs or dist/<bundle>.js
+    // dryads-ai.mjs or dist/<bundle>.js
     addCandidate(candidates, path.join(argv1Dir, "dist", "control-ui"));
     addCandidate(candidates, path.join(argv1Dir, "control-ui"));
   }

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>DMMS AI</string>
+	<string>Dryads AI</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconName</key>
@@ -24,10 +24,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>ai.dmmsai.ios</string>
+			<string>ai.dryadsai.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>dmms-ai</string>
+				<string>dryads-ai</string>
 			</array>
 		</dict>
 	</array>
@@ -40,20 +40,20 @@
 	</dict>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_dmms-ai-gw._tcp</string>
+		<string>_dryads-ai-gw._tcp</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>DMMS AI can capture photos or short video clips when requested via the gateway.</string>
+	<string>Dryads AI can capture photos or short video clips when requested via the gateway.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>DMMS AI discovers and connects to your DMMS AI gateway on the local network.</string>
+	<string>Dryads AI discovers and connects to your Dryads AI gateway on the local network.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>DMMS AI can share your location in the background when you enable Always.</string>
+	<string>Dryads AI can share your location in the background when you enable Always.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>DMMS AI uses your location when you allow location sharing.</string>
+	<string>Dryads AI uses your location when you allow location sharing.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>DMMS AI needs microphone access for voice wake.</string>
+	<string>Dryads AI needs microphone access for voice wake.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>DMMS AI uses on-device speech recognition for voice wake.</string>
+	<string>Dryads AI uses on-device speech recognition for voice wake.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

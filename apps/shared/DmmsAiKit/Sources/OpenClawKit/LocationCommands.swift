@@ -1,28 +1,28 @@
 import Foundation
 
-public enum DmmsAiLocationCommand: String, Codable, Sendable {
+public enum DryadsAiLocationCommand: String, Codable, Sendable {
     case get = "location.get"
 }
 
-public enum DmmsAiLocationAccuracy: String, Codable, Sendable {
+public enum DryadsAiLocationAccuracy: String, Codable, Sendable {
     case coarse
     case balanced
     case precise
 }
 
-public struct DmmsAiLocationGetParams: Codable, Sendable, Equatable {
+public struct DryadsAiLocationGetParams: Codable, Sendable, Equatable {
     public var timeoutMs: Int?
     public var maxAgeMs: Int?
-    public var desiredAccuracy: DmmsAiLocationAccuracy?
+    public var desiredAccuracy: DryadsAiLocationAccuracy?
 
-    public init(timeoutMs: Int? = nil, maxAgeMs: Int? = nil, desiredAccuracy: DmmsAiLocationAccuracy? = nil) {
+    public init(timeoutMs: Int? = nil, maxAgeMs: Int? = nil, desiredAccuracy: DryadsAiLocationAccuracy? = nil) {
         self.timeoutMs = timeoutMs
         self.maxAgeMs = maxAgeMs
         self.desiredAccuracy = desiredAccuracy
     }
 }
 
-public struct DmmsAiLocationPayload: Codable, Sendable, Equatable {
+public struct DryadsAiLocationPayload: Codable, Sendable, Equatable {
     public var lat: Double
     public var lon: Double
     public var accuracyMeters: Double

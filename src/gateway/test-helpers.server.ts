@@ -89,34 +89,34 @@ export async function writeSessionStore(params: {
 async function setupGatewayTestHome() {
   previousHome = process.env.HOME;
   previousUserProfile = process.env.USERPROFILE;
-  previousStateDir = process.env.DMMS_AI_STATE_DIR;
-  previousConfigPath = process.env.DMMS_AI_CONFIG_PATH;
-  previousSkipBrowserControl = process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER;
-  previousSkipGmailWatcher = process.env.DMMS_AI_SKIP_GMAIL_WATCHER;
-  previousSkipCanvasHost = process.env.DMMS_AI_SKIP_CANVAS_HOST;
-  previousBundledPluginsDir = process.env.DMMS_AI_BUNDLED_PLUGINS_DIR;
-  previousSkipChannels = process.env.DMMS_AI_SKIP_CHANNELS;
-  previousSkipProviders = process.env.DMMS_AI_SKIP_PROVIDERS;
-  previousSkipCron = process.env.DMMS_AI_SKIP_CRON;
-  previousMinimalGateway = process.env.DMMS_AI_TEST_MINIMAL_GATEWAY;
-  tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gateway-home-"));
+  previousStateDir = process.env.DRYADS_AI_STATE_DIR;
+  previousConfigPath = process.env.DRYADS_AI_CONFIG_PATH;
+  previousSkipBrowserControl = process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER;
+  previousSkipGmailWatcher = process.env.DRYADS_AI_SKIP_GMAIL_WATCHER;
+  previousSkipCanvasHost = process.env.DRYADS_AI_SKIP_CANVAS_HOST;
+  previousBundledPluginsDir = process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR;
+  previousSkipChannels = process.env.DRYADS_AI_SKIP_CHANNELS;
+  previousSkipProviders = process.env.DRYADS_AI_SKIP_PROVIDERS;
+  previousSkipCron = process.env.DRYADS_AI_SKIP_CRON;
+  previousMinimalGateway = process.env.DRYADS_AI_TEST_MINIMAL_GATEWAY;
+  tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gateway-home-"));
   process.env.HOME = tempHome;
   process.env.USERPROFILE = tempHome;
-  process.env.DMMS_AI_STATE_DIR = path.join(tempHome, ".dmms-ai");
-  delete process.env.DMMS_AI_CONFIG_PATH;
+  process.env.DRYADS_AI_STATE_DIR = path.join(tempHome, ".dryads-ai");
+  delete process.env.DRYADS_AI_CONFIG_PATH;
 }
 
 function applyGatewaySkipEnv() {
-  process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
-  process.env.DMMS_AI_SKIP_GMAIL_WATCHER = "1";
-  process.env.DMMS_AI_SKIP_CANVAS_HOST = "1";
-  process.env.DMMS_AI_SKIP_CHANNELS = "1";
-  process.env.DMMS_AI_SKIP_PROVIDERS = "1";
-  process.env.DMMS_AI_SKIP_CRON = "1";
-  process.env.DMMS_AI_TEST_MINIMAL_GATEWAY = "1";
-  process.env.DMMS_AI_BUNDLED_PLUGINS_DIR = tempHome
-    ? path.join(tempHome, "dmms-ai-test-no-bundled-extensions")
-    : "dmms-ai-test-no-bundled-extensions";
+  process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
+  process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = "1";
+  process.env.DRYADS_AI_SKIP_CANVAS_HOST = "1";
+  process.env.DRYADS_AI_SKIP_CHANNELS = "1";
+  process.env.DRYADS_AI_SKIP_PROVIDERS = "1";
+  process.env.DRYADS_AI_SKIP_CRON = "1";
+  process.env.DRYADS_AI_TEST_MINIMAL_GATEWAY = "1";
+  process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR = tempHome
+    ? path.join(tempHome, "dryads-ai-test-no-bundled-extensions")
+    : "dryads-ai-test-no-bundled-extensions";
 }
 
 async function resetGatewayTestState(options: { uniqueConfigRoot: boolean }) {
@@ -128,9 +128,9 @@ async function resetGatewayTestState(options: { uniqueConfigRoot: boolean }) {
   }
   applyGatewaySkipEnv();
   if (options.uniqueConfigRoot) {
-    tempConfigRoot = await fs.mkdtemp(path.join(tempHome, "dmms-ai-test-"));
+    tempConfigRoot = await fs.mkdtemp(path.join(tempHome, "dryads-ai-test-"));
   } else {
-    tempConfigRoot = path.join(tempHome, ".dmms-ai-test");
+    tempConfigRoot = path.join(tempHome, ".dryads-ai-test");
     await fs.rm(tempConfigRoot, { recursive: true, force: true });
     await fs.mkdir(tempConfigRoot, { recursive: true });
   }
@@ -187,54 +187,54 @@ async function cleanupGatewayTestHome(options: { restoreEnv: boolean }) {
       process.env.USERPROFILE = previousUserProfile;
     }
     if (previousStateDir === undefined) {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     } else {
-      process.env.DMMS_AI_STATE_DIR = previousStateDir;
+      process.env.DRYADS_AI_STATE_DIR = previousStateDir;
     }
     if (previousConfigPath === undefined) {
-      delete process.env.DMMS_AI_CONFIG_PATH;
+      delete process.env.DRYADS_AI_CONFIG_PATH;
     } else {
-      process.env.DMMS_AI_CONFIG_PATH = previousConfigPath;
+      process.env.DRYADS_AI_CONFIG_PATH = previousConfigPath;
     }
     if (previousSkipBrowserControl === undefined) {
-      delete process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER;
+      delete process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER;
     } else {
-      process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = previousSkipBrowserControl;
+      process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = previousSkipBrowserControl;
     }
     if (previousSkipGmailWatcher === undefined) {
-      delete process.env.DMMS_AI_SKIP_GMAIL_WATCHER;
+      delete process.env.DRYADS_AI_SKIP_GMAIL_WATCHER;
     } else {
-      process.env.DMMS_AI_SKIP_GMAIL_WATCHER = previousSkipGmailWatcher;
+      process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = previousSkipGmailWatcher;
     }
     if (previousSkipCanvasHost === undefined) {
-      delete process.env.DMMS_AI_SKIP_CANVAS_HOST;
+      delete process.env.DRYADS_AI_SKIP_CANVAS_HOST;
     } else {
-      process.env.DMMS_AI_SKIP_CANVAS_HOST = previousSkipCanvasHost;
+      process.env.DRYADS_AI_SKIP_CANVAS_HOST = previousSkipCanvasHost;
     }
     if (previousBundledPluginsDir === undefined) {
-      delete process.env.DMMS_AI_BUNDLED_PLUGINS_DIR;
+      delete process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR;
     } else {
-      process.env.DMMS_AI_BUNDLED_PLUGINS_DIR = previousBundledPluginsDir;
+      process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR = previousBundledPluginsDir;
     }
     if (previousSkipChannels === undefined) {
-      delete process.env.DMMS_AI_SKIP_CHANNELS;
+      delete process.env.DRYADS_AI_SKIP_CHANNELS;
     } else {
-      process.env.DMMS_AI_SKIP_CHANNELS = previousSkipChannels;
+      process.env.DRYADS_AI_SKIP_CHANNELS = previousSkipChannels;
     }
     if (previousSkipProviders === undefined) {
-      delete process.env.DMMS_AI_SKIP_PROVIDERS;
+      delete process.env.DRYADS_AI_SKIP_PROVIDERS;
     } else {
-      process.env.DMMS_AI_SKIP_PROVIDERS = previousSkipProviders;
+      process.env.DRYADS_AI_SKIP_PROVIDERS = previousSkipProviders;
     }
     if (previousSkipCron === undefined) {
-      delete process.env.DMMS_AI_SKIP_CRON;
+      delete process.env.DRYADS_AI_SKIP_CRON;
     } else {
-      process.env.DMMS_AI_SKIP_CRON = previousSkipCron;
+      process.env.DRYADS_AI_SKIP_CRON = previousSkipCron;
     }
     if (previousMinimalGateway === undefined) {
-      delete process.env.DMMS_AI_TEST_MINIMAL_GATEWAY;
+      delete process.env.DRYADS_AI_TEST_MINIMAL_GATEWAY;
     } else {
-      process.env.DMMS_AI_TEST_MINIMAL_GATEWAY = previousMinimalGateway;
+      process.env.DRYADS_AI_TEST_MINIMAL_GATEWAY = previousMinimalGateway;
     }
   }
   if (options.restoreEnv && tempHome) {
@@ -386,8 +386,8 @@ export async function startServerWithClient(
 ) {
   const { wsHeaders, ...gatewayOpts } = opts ?? {};
   let port = await getFreePort();
-  const envSnapshot = captureEnv(["DMMS_AI_GATEWAY_TOKEN"]);
-  const prev = process.env.DMMS_AI_GATEWAY_TOKEN;
+  const envSnapshot = captureEnv(["DRYADS_AI_GATEWAY_TOKEN"]);
+  const prev = process.env.DRYADS_AI_GATEWAY_TOKEN;
   if (typeof token === "string") {
     testState.gatewayAuth = { mode: "token", token };
   }
@@ -397,9 +397,9 @@ export async function startServerWithClient(
       ? (testState.gatewayAuth as { token?: string }).token
       : undefined);
   if (fallbackToken === undefined) {
-    delete process.env.DMMS_AI_GATEWAY_TOKEN;
+    delete process.env.DRYADS_AI_GATEWAY_TOKEN;
   } else {
-    process.env.DMMS_AI_GATEWAY_TOKEN = fallbackToken;
+    process.env.DRYADS_AI_GATEWAY_TOKEN = fallbackToken;
   }
 
   const started = await startGatewayServerWithRetries({ port, opts: gatewayOpts });
@@ -491,13 +491,13 @@ export async function connectReq(
       ? undefined
       : typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
         ? ((testState.gatewayAuth as { token?: string }).token ?? undefined)
-        : process.env.DMMS_AI_GATEWAY_TOKEN;
+        : process.env.DRYADS_AI_GATEWAY_TOKEN;
   const defaultPassword =
     opts?.skipDefaultAuth === true
       ? undefined
       : typeof (testState.gatewayAuth as { password?: unknown } | undefined)?.password === "string"
         ? ((testState.gatewayAuth as { password?: string }).password ?? undefined)
-        : process.env.DMMS_AI_GATEWAY_PASSWORD;
+        : process.env.DRYADS_AI_GATEWAY_PASSWORD;
   const token = opts?.token ?? defaultToken;
   const password = opts?.password ?? defaultPassword;
   const requestedScopes = Array.isArray(opts?.scopes)

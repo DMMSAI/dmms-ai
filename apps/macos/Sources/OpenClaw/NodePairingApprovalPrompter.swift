@@ -1,10 +1,10 @@
 import AppKit
 import Foundation
 import Observation
-import DmmsAiDiscovery
-import DmmsAiIPC
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiDiscovery
+import DryadsAiIPC
+import DryadsAiKit
+import DryadsAiProtocol
 import OSLog
 import UserNotifications
 
@@ -22,7 +22,7 @@ enum NodePairingReconcilePolicy {
 final class NodePairingApprovalPrompter {
     static let shared = NodePairingApprovalPrompter()
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "node-pairing")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "node-pairing")
     private var task: Task<Void, Never>?
     private var reconcileTask: Task<Void, Never>?
     private var reconcileOnceTask: Task<Void, Never>?

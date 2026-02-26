@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { type DmmsAiConfig, loadConfig } from "../config/config.js";
+import { type DryadsAiConfig, loadConfig } from "../config/config.js";
 import { isRecord } from "../utils.js";
-import { resolveDmmsAiAgentDir } from "./agent-paths.js";
+import { resolveDryadsAiAgentDir } from "./agent-paths.js";
 import {
   normalizeProviders,
   type ProviderConfig,
@@ -11,7 +11,7 @@ import {
   resolveImplicitProviders,
 } from "./models-config.providers.js";
 
-type ModelsConfig = NonNullable<DmmsAiConfig["models"]>;
+type ModelsConfig = NonNullable<DryadsAiConfig["models"]>;
 
 const DEFAULT_MODE: NonNullable<ModelsConfig["mode"]> = "merge";
 
@@ -78,12 +78,12 @@ async function readJson(pathname: string): Promise<unknown> {
   }
 }
 
-export async function ensureDmmsAiModelsJson(
-  config?: DmmsAiConfig,
+export async function ensureDryadsAiModelsJson(
+  config?: DryadsAiConfig,
   agentDirOverride?: string,
 ): Promise<{ agentDir: string; wrote: boolean }> {
   const cfg = config ?? loadConfig();
-  const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveDmmsAiAgentDir();
+  const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveDryadsAiAgentDir();
 
   const explicitProviders = cfg.models?.providers ?? {};
   const implicitProviders = await resolveImplicitProviders({ agentDir, explicitProviders });

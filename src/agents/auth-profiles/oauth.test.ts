@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { resolveApiKeyForProfile } from "./oauth.js";
 import type { AuthProfileStore } from "./types.js";
 
@@ -10,7 +10,7 @@ function cfgFor(profileId: string, provider: string, mode: "api_key" | "token" |
         [profileId]: { provider, mode },
       },
     },
-  } satisfies DmmsAiConfig;
+  } satisfies DryadsAiConfig;
 }
 
 describe("resolveApiKeyForProfile config compatibility", () => {

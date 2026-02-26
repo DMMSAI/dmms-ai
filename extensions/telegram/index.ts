@@ -1,5 +1,5 @@
-import type { ChannelPlugin, DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
-import { emptyPluginConfigSchema } from "dmms-ai/plugin-sdk";
+import type { ChannelPlugin, DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
+import { emptyPluginConfigSchema } from "dryads-ai/plugin-sdk";
 import { telegramPlugin } from "./src/channel.js";
 import { setTelegramRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "Telegram",
   description: "Telegram channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: DmmsAiPluginApi) {
+  register(api: DryadsAiPluginApi) {
     setTelegramRuntime(api.runtime);
     api.registerChannel({ plugin: telegramPlugin as ChannelPlugin });
   },

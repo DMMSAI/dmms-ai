@@ -2,8 +2,8 @@ import type {
   AllowlistMatch,
   ChannelGroupContext,
   GroupToolPolicyConfig,
-} from "dmms-ai/plugin-sdk";
-import { resolveAllowlistMatchSimple } from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
+import { resolveAllowlistMatchSimple } from "dryads-ai/plugin-sdk";
 import type { FeishuConfig, FeishuGroupConfig } from "./types.js";
 
 export type FeishuAllowlistMatch = AllowlistMatch<"wildcard" | "id" | "name">;

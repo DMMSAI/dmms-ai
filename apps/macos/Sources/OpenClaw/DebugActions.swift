@@ -3,9 +3,9 @@ import Foundation
 import SwiftUI
 
 enum DebugActions {
-    private static let verboseDefaultsKey = "dmms-ai.debug.verboseMain"
+    private static let verboseDefaultsKey = "dryads-ai.debug.verboseMain"
     private static let sessionMenuLimit = 12
-    private static let onboardingSeenKey = "dmms-ai.onboardingSeen"
+    private static let onboardingSeenKey = "dryads-ai.onboardingSeen"
 
     @MainActor
     static func openAgentEventsWindow() {
@@ -38,7 +38,7 @@ enum DebugActions {
 
     @MainActor
     static func openConfigFolder() {
-        let url = DmmsAiPaths.stateDirURL
+        let url = DryadsAiPaths.stateDirURL
         NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 
@@ -61,7 +61,7 @@ enum DebugActions {
     }
 
     static func sendTestNotification() async {
-        _ = await NotificationManager().send(title: "DMMS AI", body: "Test notification", sound: nil)
+        _ = await NotificationManager().send(title: "Dryads AI", body: "Test notification", sound: nil)
     }
 
     static func sendDebugVoice() async -> Result<String, DebugActionError> {
@@ -193,7 +193,7 @@ enum DebugActions {
     @MainActor
     private static func resolveSessionStorePath() -> String {
         let defaultPath = SessionLoader.defaultStorePath
-        let configURL = DmmsAiPaths.configURL
+        let configURL = DryadsAiPaths.configURL
         guard
             let data = try? Data(contentsOf: configURL),
             let parsed = try? JSONSerialization.jsonObject(with: data) as? [String: Any],

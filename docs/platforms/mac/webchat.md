@@ -21,7 +21,7 @@ agent (with a session switcher for other sessions).
 - Auto‑open for testing:
 
   ```bash
-  dist/DmmsAi.app/Contents/MacOS/DMMS AI --webchat
+  dist/DryadsAi.app/Contents/MacOS/Dryads AI --webchat
   ```
 
 - Logs: `./scripts/clawlog.sh` (subsystem `bot.molt`, category `WebChatSwiftUI`).

@@ -4,7 +4,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 async function withTempDir<T>(run: (dir: string) => Promise<T>): Promise<T> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-run-node-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-run-node-"));
   try {
     return await run(dir);
   } finally {
@@ -50,8 +50,8 @@ describe("run-node script", () => {
           args: ["--version"],
           env: {
             ...process.env,
-            DMMS_AI_FORCE_BUILD: "1",
-            DMMS_AI_RUNNER_LOG: "0",
+            DRYADS_AI_FORCE_BUILD: "1",
+            DRYADS_AI_RUNNER_LOG: "0",
           },
           spawn,
           execPath: process.execPath,
@@ -61,7 +61,7 @@ describe("run-node script", () => {
         expect(exitCode).toBe(0);
         await expect(fs.readFile(argsPath, "utf-8")).resolves.toContain("exec tsdown --no-clean");
         await expect(fs.readFile(indexPath, "utf-8")).resolves.toContain("sentinel");
-        expect(nodeCalls).toEqual([[process.execPath, "dmms-ai.mjs", "--version"]]);
+        expect(nodeCalls).toEqual([[process.execPath, "dryads-ai.mjs", "--version"]]);
       });
     },
   );

@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { DiscordGuildChannelConfig, DiscordGuildEntry } from "../config/types.js";
 import { isRecord } from "../utils.js";
 import { resolveDiscordAccount } from "./accounts.js";
@@ -66,7 +66,7 @@ function listConfiguredGuildChannelKeys(
 }
 
 export function collectDiscordAuditChannelIds(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId?: string | null;
 }) {
   const account = resolveDiscordAccount({

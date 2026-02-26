@@ -37,11 +37,11 @@ Pending requests expire automatically after **5 minutes**.
 ## CLI workflow (headless friendly)
 
 ```bash
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
-dmms-ai nodes reject <requestId>
-dmms-ai nodes status
-dmms-ai nodes rename --node <id|name|ip> --name "Living Room iPad"
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
+dryads-ai nodes reject <requestId>
+dryads-ai nodes status
+dryads-ai nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.
@@ -80,12 +80,12 @@ If silent approval fails, it falls back to the normal “Approve/Reject” promp
 
 ## Storage (local, private)
 
-Pairing state is stored under the Gateway state directory (default `~/.dmms-ai`):
+Pairing state is stored under the Gateway state directory (default `~/.dryads-ai`):
 
-- `~/.dmms-ai/nodes/paired.json`
-- `~/.dmms-ai/nodes/pending.json`
+- `~/.dryads-ai/nodes/paired.json`
+- `~/.dryads-ai/nodes/pending.json`
 
-If you override `DMMS_AI_STATE_DIR`, the `nodes/` folder moves with it.
+If you override `DRYADS_AI_STATE_DIR`, the `nodes/` folder moves with it.
 
 Security notes:
 

@@ -1,8 +1,8 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Testing
-@testable import DMMS AI
-@testable import DmmsAiIPC
+@testable import Dryads AI
+@testable import DryadsAiIPC
 
 private final class FakeWebSocketTask: WebSocketTasking, @unchecked Sendable {
     var state: URLSessionTask.State = .running

@@ -1,5 +1,5 @@
 ---
-summary: "Model providers (LLMs) supported by DMMS AI"
+summary: "Model providers (LLMs) supported by Dryads AI"
 read_when:
   - You want to choose a model provider
   - You need a quick overview of supported LLM backends
@@ -8,7 +8,7 @@ title: "Model Providers"
 
 # Model Providers
 
-DMMS AI can use many LLM providers. Pick a provider, authenticate, then set the
+Dryads AI can use many LLM providers. Pick a provider, authenticate, then set the
 default model as `provider/model`.
 
 Looking for chat channel docs (WhatsApp/Telegram/Discord/Slack/Mattermost (plugin)/etc.)? See [Channels](/channels).
@@ -24,7 +24,7 @@ See [Venice AI](/providers/venice).
 
 ## Quick start
 
-1. Authenticate with the provider (usually via `dmms-ai onboard`).
+1. Authenticate with the provider (usually via `dryads-ai onboard`).
 2. Set the default model:
 
 ```json5

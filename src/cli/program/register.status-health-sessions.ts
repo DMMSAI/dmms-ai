@@ -39,21 +39,21 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai status", "Show channel health + session summary."],
-          ["dmms-ai status --all", "Full diagnosis (read-only)."],
-          ["dmms-ai status --json", "Machine-readable output."],
-          ["dmms-ai status --usage", "Show model provider usage/quota snapshots."],
+          ["dryads-ai status", "Show channel health + session summary."],
+          ["dryads-ai status --all", "Full diagnosis (read-only)."],
+          ["dryads-ai status --json", "Machine-readable output."],
+          ["dryads-ai status --usage", "Show model provider usage/quota snapshots."],
           [
-            "dmms-ai status --deep",
+            "dryads-ai status --deep",
             "Run channel probes (WA + Telegram + Discord + Slack + Signal).",
           ],
-          ["dmms-ai status --deep --timeout 5000", "Tighten probe timeout."],
+          ["dryads-ai status --deep --timeout 5000", "Tighten probe timeout."],
         ])}`,
     )
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/status", "docs.dmms-ai.com/cli/status")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/status", "docs.dryads-ai.com/cli/status")}\n`,
     )
     .action(async (opts) => {
       const verbose = resolveVerbose(opts);
@@ -87,7 +87,7 @@ export function registerStatusHealthSessionsCommands(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/health", "docs.dmms-ai.com/cli/health")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/health", "docs.dryads-ai.com/cli/health")}\n`,
     )
     .action(async (opts) => {
       const verbose = resolveVerbose(opts);
@@ -119,10 +119,10 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai sessions", "List all sessions."],
-          ["dmms-ai sessions --active 120", "Only last 2 hours."],
-          ["dmms-ai sessions --json", "Machine-readable output."],
-          ["dmms-ai sessions --store ./tmp/sessions.json", "Use a specific session store."],
+          ["dryads-ai sessions", "List all sessions."],
+          ["dryads-ai sessions --active 120", "Only last 2 hours."],
+          ["dryads-ai sessions --json", "Machine-readable output."],
+          ["dryads-ai sessions --store ./tmp/sessions.json", "Use a specific session store."],
         ])}\n\n${theme.muted(
           "Shows token usage per session when the agent reports it; set agents.defaults.contextTokens to cap the window and show %.",
         )}`,
@@ -130,7 +130,7 @@ export function registerStatusHealthSessionsCommands(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sessions", "docs.dmms-ai.com/cli/sessions")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sessions", "docs.dryads-ai.com/cli/sessions")}\n`,
     )
     .action(async (opts) => {
       setVerbose(Boolean(opts.verbose));

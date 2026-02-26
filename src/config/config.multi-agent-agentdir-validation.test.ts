@@ -7,7 +7,7 @@ import { withTempHome } from "./test-helpers.js";
 
 describe("multi-agent agentDir validation", () => {
   it("rejects shared agents.list agentDir", async () => {
-    const shared = path.join(tmpdir(), "dmms-ai-shared-agentdir");
+    const shared = path.join(tmpdir(), "dryads-ai-shared-agentdir");
     const res = validateConfigObject({
       agents: {
         list: [
@@ -25,16 +25,16 @@ describe("multi-agent agentDir validation", () => {
 
   it("throws on shared agentDir during loadConfig()", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".dmms-ai");
+      const configDir = path.join(home, ".dryads-ai");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "dmms-ai.json"),
+        path.join(configDir, "dryads-ai.json"),
         JSON.stringify(
           {
             agents: {
               list: [
-                { id: "a", agentDir: "~/.dmms-ai/agents/shared/agent" },
-                { id: "b", agentDir: "~/.dmms-ai/agents/shared/agent" },
+                { id: "a", agentDir: "~/.dryads-ai/agents/shared/agent" },
+                { id: "b", agentDir: "~/.dryads-ai/agents/shared/agent" },
               ],
             },
             bindings: [{ agentId: "a", match: { channel: "telegram" } }],

@@ -12,7 +12,7 @@ import {
   testState,
 } from "./test-helpers.js";
 
-const { createDmmsAiTools } = await import("../agents/dmms-ai-tools.js");
+const { createDryadsAiTools } = await import("../agents/dryads-ai-tools.js");
 
 installGatewayTestHooks({ scope: "suite" });
 
@@ -22,11 +22,11 @@ const gatewayToken = "test-token";
 let envSnapshot: ReturnType<typeof captureEnv>;
 
 beforeAll(async () => {
-  envSnapshot = captureEnv(["DMMS_AI_GATEWAY_PORT", "DMMS_AI_GATEWAY_TOKEN"]);
+  envSnapshot = captureEnv(["DRYADS_AI_GATEWAY_PORT", "DRYADS_AI_GATEWAY_TOKEN"]);
   gatewayPort = await getFreePort();
   testState.gatewayAuth = { mode: "token", token: gatewayToken };
-  process.env.DMMS_AI_GATEWAY_PORT = String(gatewayPort);
-  process.env.DMMS_AI_GATEWAY_TOKEN = gatewayToken;
+  process.env.DRYADS_AI_GATEWAY_PORT = String(gatewayPort);
+  process.env.DRYADS_AI_GATEWAY_TOKEN = gatewayToken;
   server = await startGatewayServer(gatewayPort);
 });
 
@@ -80,7 +80,7 @@ describe("sessions_send gateway loopback", () => {
       });
     });
 
-    const tool = createDmmsAiTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createDryadsAiTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }
@@ -113,9 +113,9 @@ describe("sessions_send gateway loopback", () => {
 describe("sessions_send label lookup", () => {
   it("finds session by label and sends message", { timeout: 60_000 }, async () => {
     // This is an operator feature; enable broader session tool targeting for this test.
-    const configPath = process.env.DMMS_AI_CONFIG_PATH;
+    const configPath = process.env.DRYADS_AI_CONFIG_PATH;
     if (!configPath) {
-      throw new Error("DMMS_AI_CONFIG_PATH missing in gateway test environment");
+      throw new Error("DRYADS_AI_CONFIG_PATH missing in gateway test environment");
     }
     await fs.mkdir(path.dirname(configPath), { recursive: true });
     await fs.writeFile(
@@ -165,7 +165,7 @@ describe("sessions_send label lookup", () => {
       timeoutMs: 5000,
     });
 
-    const tool = createDmmsAiTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createDryadsAiTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }
@@ -187,7 +187,7 @@ describe("sessions_send label lookup", () => {
   });
 
   it("returns error when label not found", { timeout: 60_000 }, async () => {
-    const tool = createDmmsAiTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createDryadsAiTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }
@@ -203,7 +203,7 @@ describe("sessions_send label lookup", () => {
   });
 
   it("returns error when neither sessionKey nor label provided", { timeout: 60_000 }, async () => {
-    const tool = createDmmsAiTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createDryadsAiTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }

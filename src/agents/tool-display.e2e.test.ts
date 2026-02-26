@@ -81,11 +81,11 @@ describe("tool display details", () => {
     const detail = formatToolDetail(
       resolveToolDisplay({
         name: "web_search",
-        args: { query: "DMMS AI docs", count: 3 },
+        args: { query: "Dryads AI docs", count: 3 },
       }),
     );
 
-    expect(detail).toBe('for "DMMS AI docs" (top 3)');
+    expect(detail).toBe('for "Dryads AI docs" (top 3)');
   });
 
   it("summarizes exec commands with context", () => {
@@ -94,14 +94,14 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command:
-            "set -euo pipefail\ngit -C /Users/adityasingh/.dmms-ai/workspace status --short | head -n 3",
-          workdir: "/Users/adityasingh/.dmms-ai/workspace",
+            "set -euo pipefail\ngit -C /Users/adityasingh/.dryads-ai/workspace status --short | head -n 3",
+          workdir: "/Users/adityasingh/.dryads-ai/workspace",
         },
       }),
     );
 
     expect(detail).toContain("check git status -> show first 3 lines");
-    expect(detail).toContain(".dmms-ai/workspace)");
+    expect(detail).toContain(".dryads-ai/workspace)");
   });
 
   it("recognizes heredoc/inline script exec details", () => {
@@ -110,7 +110,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "python3 <<PY\nprint('x')\nPY",
-          workdir: "/Users/adityasingh/.dmms-ai/workspace",
+          workdir: "/Users/adityasingh/.dryads-ai/workspace",
         },
       }),
     );
@@ -119,7 +119,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "node --check /tmp/test.js",
-          workdir: "/Users/adityasingh/.dmms-ai/workspace",
+          workdir: "/Users/adityasingh/.dryads-ai/workspace",
         },
       }),
     );
@@ -128,7 +128,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "node -c /tmp/test.js",
-          workdir: "/Users/adityasingh/.dmms-ai/workspace",
+          workdir: "/Users/adityasingh/.dryads-ai/workspace",
         },
       }),
     );

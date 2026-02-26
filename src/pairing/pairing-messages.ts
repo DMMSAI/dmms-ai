@@ -8,13 +8,13 @@ export function buildPairingReply(params: {
 }): string {
   const { channel, idLine, code } = params;
   return [
-    "DMMS AI: access not configured.",
+    "Dryads AI: access not configured.",
     "",
     idLine,
     "",
     `Pairing code: ${code}`,
     "",
     "Ask the bot owner to approve with:",
-    formatCliCommand(`dmms-ai pairing approve ${channel} ${code}`),
+    formatCliCommand(`dryads-ai pairing approve ${channel} ${code}`),
   ].join("\n");
 }

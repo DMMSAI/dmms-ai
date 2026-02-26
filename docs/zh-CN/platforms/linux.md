@@ -23,8 +23,8 @@ Gateway 网关在 Linux 上完全支持。**Node 是推荐的运行时**。
 ## 新手快速路径（VPS）
 
 1. 安装 Node 22+
-2. `npm i -g dmms-ai@latest`
-3. `dmms-ai onboard --install-daemon`
+2. `npm i -g dryads-ai@latest`
+3. `dryads-ai onboard --install-daemon`
 4. 从你的笔记本电脑：`ssh -N -L 18789:127.0.0.1:18789 <user>@<host>`
 5. 打开 `http://127.0.0.1:18789/` 并粘贴你的令牌
 
@@ -46,19 +46,19 @@ Gateway 网关在 Linux 上完全支持。**Node 是推荐的运行时**。
 使用以下任一方式：
 
 ```
-dmms-ai onboard --install-daemon
+dryads-ai onboard --install-daemon
 ```
 
 或：
 
 ```
-dmms-ai gateway install
+dryads-ai gateway install
 ```
 
 或：
 
 ```
-dmms-ai configure
+dryads-ai configure
 ```
 
 出现提示时选择 **Gateway service**。
@@ -66,27 +66,27 @@ dmms-ai configure
 修复/迁移：
 
 ```
-dmms-ai doctor
+dryads-ai doctor
 ```
 
 ## 系统控制（systemd 用户单元）
 
-DMMS AI 默认安装 systemd **用户**服务。对于共享或常驻服务器使用**系统**
+Dryads AI 默认安装 systemd **用户**服务。对于共享或常驻服务器使用**系统**
 服务。完整的单元示例和指南
 在 [Gateway 网关运行手册](/gateway) 中。
 
 最小设置：
 
-创建 `~/.config/systemd/user/dmms-ai-gateway[-<profile>].service`：
+创建 `~/.config/systemd/user/dryads-ai-gateway[-<profile>].service`：
 
 ```
 [Unit]
-Description=DMMS AI Gateway (profile: <profile>, v<version>)
+Description=Dryads AI Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/dmms-ai gateway --port 18789
+ExecStart=/usr/local/bin/dryads-ai gateway --port 18789
 Restart=always
 RestartSec=5
 
@@ -97,5 +97,5 @@ WantedBy=default.target
 启用它：
 
 ```
-systemctl --user enable --now dmms-ai-gateway[-<profile>].service
+systemctl --user enable --now dryads-ai-gateway[-<profile>].service
 ```

@@ -12,7 +12,7 @@ vi.mock("./targets.js", async () => {
   };
 });
 
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { resolveAgentDeliveryPlan, resolveAgentOutboundTarget } from "./agent-delivery.js";
 
 describe("agent delivery helpers", () => {
@@ -49,7 +49,7 @@ describe("agent delivery helpers", () => {
     });
 
     const resolved = resolveAgentOutboundTarget({
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
       plan,
       targetMode: "implicit",
     });
@@ -74,7 +74,7 @@ describe("agent delivery helpers", () => {
 
     mocks.resolveOutboundTarget.mockClear();
     const resolved = resolveAgentOutboundTarget({
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
       plan,
       targetMode: "explicit",
       validateExplicitTarget: false,

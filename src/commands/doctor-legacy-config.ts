@@ -1,10 +1,10 @@
-import type { DmmsAiConfig } from "../config/config.js";
-export function normalizeLegacyConfigValues(cfg: DmmsAiConfig): {
-  config: DmmsAiConfig;
+import type { DryadsAiConfig } from "../config/config.js";
+export function normalizeLegacyConfigValues(cfg: DryadsAiConfig): {
+  config: DryadsAiConfig;
   changes: string[];
 } {
   const changes: string[] = [];
-  let next: DmmsAiConfig = cfg;
+  let next: DryadsAiConfig = cfg;
 
   const isRecord = (value: unknown): value is Record<string, unknown> =>
     Boolean(value) && typeof value === "object" && !Array.isArray(value);

@@ -1,11 +1,11 @@
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "dmms-ai/plugin-sdk/account-id";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "dryads-ai/plugin-sdk/account-id";
 import { resolveZaloToken } from "./token.js";
 import type { ResolvedZaloAccount, ZaloAccountConfig, ZaloConfig } from "./types.js";
 
 export type { ResolvedZaloAccount };
 
-function listConfiguredAccountIds(cfg: DmmsAiConfig): string[] {
+function listConfiguredAccountIds(cfg: DryadsAiConfig): string[] {
   const accounts = (cfg.channels?.zalo as ZaloConfig | undefined)?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
@@ -13,7 +13,7 @@ function listConfiguredAccountIds(cfg: DmmsAiConfig): string[] {
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listZaloAccountIds(cfg: DmmsAiConfig): string[] {
+export function listZaloAccountIds(cfg: DryadsAiConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -21,7 +21,7 @@ export function listZaloAccountIds(cfg: DmmsAiConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultZaloAccountId(cfg: DmmsAiConfig): string {
+export function resolveDefaultZaloAccountId(cfg: DryadsAiConfig): string {
   const zaloConfig = cfg.channels?.zalo as ZaloConfig | undefined;
   if (zaloConfig?.defaultAccount?.trim()) {
     return zaloConfig.defaultAccount.trim();
@@ -33,7 +33,10 @@ export function resolveDefaultZaloAccountId(cfg: DmmsAiConfig): string {
   return ids[0] ?? DEFAULT_ACCOUNT_ID;
 }
 
-function resolveAccountConfig(cfg: DmmsAiConfig, accountId: string): ZaloAccountConfig | undefined {
+function resolveAccountConfig(
+  cfg: DryadsAiConfig,
+  accountId: string,
+): ZaloAccountConfig | undefined {
   const accounts = (cfg.channels?.zalo as ZaloConfig | undefined)?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return undefined;
@@ -41,7 +44,7 @@ function resolveAccountConfig(cfg: DmmsAiConfig, accountId: string): ZaloAccount
   return accounts[accountId] as ZaloAccountConfig | undefined;
 }
 
-function mergeZaloAccountConfig(cfg: DmmsAiConfig, accountId: string): ZaloAccountConfig {
+function mergeZaloAccountConfig(cfg: DryadsAiConfig, accountId: string): ZaloAccountConfig {
   const raw = (cfg.channels?.zalo ?? {}) as ZaloConfig;
   const { accounts: _ignored, defaultAccount: _ignored2, ...base } = raw;
   const account = resolveAccountConfig(cfg, accountId) ?? {};
@@ -49,7 +52,7 @@ function mergeZaloAccountConfig(cfg: DmmsAiConfig, accountId: string): ZaloAccou
 }
 
 export function resolveZaloAccount(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId?: string | null;
 }): ResolvedZaloAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -72,7 +75,7 @@ export function resolveZaloAccount(params: {
   };
 }
 
-export function listEnabledZaloAccounts(cfg: DmmsAiConfig): ResolvedZaloAccount[] {
+export function listEnabledZaloAccounts(cfg: DryadsAiConfig): ResolvedZaloAccount[] {
   return listZaloAccountIds(cfg)
     .map((accountId) => resolveZaloAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

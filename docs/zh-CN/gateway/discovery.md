@@ -16,12 +16,12 @@ x-i18n:
 
 # 设备发现 & 传输协议
 
-DMMS AI 有两个表面上看起来相似的不同问题：
+Dryads AI 有两个表面上看起来相似的不同问题：
 
 1. **操作员远程控制**：macOS 菜单栏应用控制运行在其他地方的 Gateway 网关。
 2. **节点配对**：iOS/Android（以及未来的节点）发现 Gateway 网关并安全配对。
 
-设计目标是将所有网络发现/广播保留在 **Node Gateway 网关**（`dmms-ai gateway`）中，并让客户端（mac 应用、iOS）作为消费者。
+设计目标是将所有网络发现/广播保留在 **Node Gateway 网关**（`dryads-ai gateway`）中，并让客户端（mac 应用、iOS）作为消费者。
 
 ## 术语
 
@@ -63,7 +63,7 @@ Bonjour 是尽力而为的，不会跨网络。它仅用于"同一 LAN"的便利
 #### 服务信标详情
 
 - 服务类型：
-  - `_dmms-ai-gw._tcp`（Gateway 网关传输信标）
+  - `_dryads-ai-gw._tcp`（Gateway 网关传输信标）
 - TXT 键（非机密）：
   - `role=gateway`
   - `lanHost=<hostname>.local`
@@ -71,17 +71,17 @@ Bonjour 是尽力而为的，不会跨网络。它仅用于"同一 LAN"的便利
   - `gatewayPort=18789`（Gateway 网关 WS + HTTP）
   - `gatewayTls=1`（仅当启用 TLS 时）
   - `gatewayTlsSha256=<sha256>`（仅当启用 TLS 且指纹可用时）
-  - `canvasPort=18793`（默认画布主机端口；服务于 `/__dmmsai__/canvas/`）
-  - `cliPath=<path>`（可选；可运行的 `dmms-ai` 入口点或二进制文件的绝对路径）
+  - `canvasPort=18793`（默认画布主机端口；服务于 `/__dryadsai__/canvas/`）
+  - `cliPath=<path>`（可选；可运行的 `dryads-ai` 入口点或二进制文件的绝对路径）
   - `tailnetDns=<magicdns>`（可选提示；当 Tailscale 可用时自动检测）
 
 禁用/覆盖：
 
-- `DMMS_AI_DISABLE_BONJOUR=1` 禁用广播。
-- `~/.dmms-ai/dmms-ai.json` 中的 `gateway.bind` 控制 Gateway 网关绑定模式。
-- `DMMS_AI_SSH_PORT` 覆盖 TXT 中广播的 SSH 端口（默认为 22）。
-- `DMMS_AI_TAILNET_DNS` 发布 `tailnetDns` 提示（MagicDNS）。
-- `DMMS_AI_CLI_PATH` 覆盖广播的 CLI 路径。
+- `DRYADS_AI_DISABLE_BONJOUR=1` 禁用广播。
+- `~/.dryads-ai/dryads-ai.json` 中的 `gateway.bind` 控制 Gateway 网关绑定模式。
+- `DRYADS_AI_SSH_PORT` 覆盖 TXT 中广播的 SSH 端口（默认为 22）。
+- `DRYADS_AI_TAILNET_DNS` 发布 `tailnetDns` 提示（MagicDNS）。
+- `DRYADS_AI_CLI_PATH` 覆盖广播的 CLI 路径。
 
 ### 2）Tailnet（跨网络）
 

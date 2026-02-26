@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "dmms-ai/plugin-sdk";
+import { MarkdownConfigSchema, ToolPolicySchema } from "dryads-ai/plugin-sdk";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);

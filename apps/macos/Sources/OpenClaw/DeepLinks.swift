@@ -1,10 +1,10 @@
 import AppKit
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 import OSLog
 import Security
 
-private let deepLinkLogger = Logger(subsystem: "ai.dmmsai", category: "DeepLink")
+private let deepLinkLogger = Logger(subsystem: "ai.dryadsai", category: "DeepLink")
 
 enum DeepLinkAgentPolicy {
     static let maxMessageChars = 20000
@@ -60,7 +60,7 @@ final class DeepLinkHandler {
             return
         }
         guard !AppStateStore.shared.isPaused else {
-            self.presentAlert(title: "DMMS AI is paused", message: "Unpause DMMS AI to run agent actions.")
+            self.presentAlert(title: "Dryads AI is paused", message: "Unpause Dryads AI to run agent actions.")
             return
         }
 
@@ -99,7 +99,7 @@ final class DeepLinkHandler {
             let urlPreview = urlText.count > 500 ? "\(urlText.prefix(500))…" : urlText
             let body =
                 "Run the agent with this message?\n\n\(messagePreview)\n\nURL:\n\(urlPreview)"
-            guard self.confirm(title: "Run DMMS AI agent?", message: body) else { return }
+            guard self.confirm(title: "Run Dryads AI agent?", message: body) else { return }
         }
 
         if AppStateStore.shared.connectionMode == .local {

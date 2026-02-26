@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai logs` (tail gateway logs via RPC)"
+summary: "CLI reference for `dryads-ai logs` (tail gateway logs via RPC)"
 read_when:
   - You need to tail Gateway logs remotely (without SSH)
   - You want JSON log lines for tooling
 title: "logs"
 ---
 
-# `dmms-ai logs`
+# `dryads-ai logs`
 
 Tail Gateway file logs over RPC (works in remote mode).
 
@@ -17,12 +17,12 @@ Related:
 ## Examples
 
 ```bash
-dmms-ai logs
-dmms-ai logs --follow
-dmms-ai logs --json
-dmms-ai logs --limit 500
-dmms-ai logs --local-time
-dmms-ai logs --follow --local-time
+dryads-ai logs
+dryads-ai logs --follow
+dryads-ai logs --json
+dryads-ai logs --limit 500
+dryads-ai logs --local-time
+dryads-ai logs --follow --local-time
 ```
 
 Use `--local-time` to render timestamps in your local timezone.

@@ -6,7 +6,7 @@ import {
   DEFAULT_SANDBOX_IMAGE,
   resolveSandboxScope,
 } from "../agents/sandbox.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { runCommandWithTimeout, runExec } from "../process/exec.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { note } from "../terminal/note.js";
@@ -89,17 +89,17 @@ async function dockerImageExists(image: string): Promise<boolean> {
   }
 }
 
-function resolveSandboxDockerImage(cfg: DmmsAiConfig): string {
+function resolveSandboxDockerImage(cfg: DryadsAiConfig): string {
   const image = cfg.agents?.defaults?.sandbox?.docker?.image?.trim();
   return image ? image : DEFAULT_SANDBOX_IMAGE;
 }
 
-function resolveSandboxBrowserImage(cfg: DmmsAiConfig): string {
+function resolveSandboxBrowserImage(cfg: DryadsAiConfig): string {
   const image = cfg.agents?.defaults?.sandbox?.browser?.image?.trim();
   return image ? image : DEFAULT_SANDBOX_BROWSER_IMAGE;
 }
 
-function updateSandboxDockerImage(cfg: DmmsAiConfig, image: string): DmmsAiConfig {
+function updateSandboxDockerImage(cfg: DryadsAiConfig, image: string): DryadsAiConfig {
   return {
     ...cfg,
     agents: {
@@ -118,7 +118,7 @@ function updateSandboxDockerImage(cfg: DmmsAiConfig, image: string): DmmsAiConfi
   };
 }
 
-function updateSandboxBrowserImage(cfg: DmmsAiConfig, image: string): DmmsAiConfig {
+function updateSandboxBrowserImage(cfg: DryadsAiConfig, image: string): DryadsAiConfig {
   return {
     ...cfg,
     agents: {
@@ -176,10 +176,10 @@ async function handleMissingSandboxImage(
 }
 
 export async function maybeRepairSandboxImages(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   runtime: RuntimeEnv,
   prompter: DoctorPrompter,
-): Promise<DmmsAiConfig> {
+): Promise<DryadsAiConfig> {
   const sandbox = cfg.agents?.defaults?.sandbox;
   const mode = sandbox?.mode ?? "off";
   if (!sandbox || mode === "off") {
@@ -238,7 +238,7 @@ export async function maybeRepairSandboxImages(
   return next;
 }
 
-export function noteSandboxScopeWarnings(cfg: DmmsAiConfig) {
+export function noteSandboxScopeWarnings(cfg: DryadsAiConfig) {
   const globalSandbox = cfg.agents?.defaults?.sandbox;
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents.list : [];
   const warnings: string[] = [];

@@ -2,7 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Api, Model } from "@mariozechner/pi-ai";
 import type { SessionManager } from "@mariozechner/pi-coding-agent";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { resolveContextWindowInfo } from "../context-window-guard.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../defaults.js";
 import { setCompactionSafeguardRuntime } from "../pi-extensions/compaction-safeguard-runtime.js";
@@ -21,7 +21,7 @@ function resolvePiExtensionPath(id: string): string {
 }
 
 function resolveContextWindowTokens(params: {
-  cfg: DmmsAiConfig | undefined;
+  cfg: DryadsAiConfig | undefined;
   provider: string;
   modelId: string;
   model: Model<Api> | undefined;
@@ -36,7 +36,7 @@ function resolveContextWindowTokens(params: {
 }
 
 function buildContextPruningExtension(params: {
-  cfg: DmmsAiConfig | undefined;
+  cfg: DryadsAiConfig | undefined;
   sessionManager: SessionManager;
   provider: string;
   modelId: string;
@@ -67,12 +67,12 @@ function buildContextPruningExtension(params: {
   };
 }
 
-function resolveCompactionMode(cfg?: DmmsAiConfig): "default" | "safeguard" {
+function resolveCompactionMode(cfg?: DryadsAiConfig): "default" | "safeguard" {
   return cfg?.agents?.defaults?.compaction?.mode === "safeguard" ? "safeguard" : "default";
 }
 
 export function buildEmbeddedExtensionPaths(params: {
-  cfg: DmmsAiConfig | undefined;
+  cfg: DryadsAiConfig | undefined;
   sessionManager: SessionManager;
   provider: string;
   modelId: string;

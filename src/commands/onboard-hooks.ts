@@ -1,21 +1,21 @@
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { buildWorkspaceHookStatus } from "../hooks/hooks-status.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
 export async function setupInternalHooks(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   runtime: RuntimeEnv,
   prompter: WizardPrompter,
-): Promise<DmmsAiConfig> {
+): Promise<DryadsAiConfig> {
   await prompter.note(
     [
       "Hooks let you automate actions when agent commands are issued.",
       "Example: Save session context to memory when you issue /new.",
       "",
-      "Learn more: https://docs.dmms-ai.com/automation/hooks",
+      "Learn more: https://docs.dryads-ai.com/automation/hooks",
     ].join("\n"),
     "Hooks",
   );
@@ -58,7 +58,7 @@ export async function setupInternalHooks(
     entries[name] = { enabled: true };
   }
 
-  const next: DmmsAiConfig = {
+  const next: DryadsAiConfig = {
     ...cfg,
     hooks: {
       ...cfg.hooks,
@@ -74,9 +74,9 @@ export async function setupInternalHooks(
       `Enabled ${selected.length} hook${selected.length > 1 ? "s" : ""}: ${selected.join(", ")}`,
       "",
       "You can manage hooks later with:",
-      `  ${formatCliCommand("dmms-ai hooks list")}`,
-      `  ${formatCliCommand("dmms-ai hooks enable <name>")}`,
-      `  ${formatCliCommand("dmms-ai hooks disable <name>")}`,
+      `  ${formatCliCommand("dryads-ai hooks list")}`,
+      `  ${formatCliCommand("dryads-ai hooks enable <name>")}`,
+      `  ${formatCliCommand("dryads-ai hooks disable <name>")}`,
     ].join("\n"),
     "Hooks Configured",
   );

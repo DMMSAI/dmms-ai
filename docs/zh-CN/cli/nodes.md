@@ -2,7 +2,7 @@
 read_when:
   - 你正在管理已配对的节点（摄像头、屏幕、画布）
   - 你需要批准请求或调用节点命令
-summary: "`dmms-ai nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
+summary: "`dryads-ai nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
 title: nodes
 x-i18n:
   generated_at: "2026-02-03T10:04:26Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai nodes`
+# `dryads-ai nodes`
 
 管理已配对的节点（设备）并调用节点功能。
 
@@ -30,14 +30,14 @@ x-i18n:
 ## 常用命令
 
 ```bash
-dmms-ai nodes list
-dmms-ai nodes list --connected
-dmms-ai nodes list --last-connected 24h
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
-dmms-ai nodes status
-dmms-ai nodes status --connected
-dmms-ai nodes status --last-connected 24h
+dryads-ai nodes list
+dryads-ai nodes list --connected
+dryads-ai nodes list --last-connected 24h
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
+dryads-ai nodes status
+dryads-ai nodes status --connected
+dryads-ai nodes status --last-connected 24h
 ```
 
 `nodes list` 打印待处理/已配对表格。已配对行包含最近连接时长（Last Connect）。
@@ -47,10 +47,10 @@ dmms-ai nodes status --last-connected 24h
 ## 调用 / 运行
 
 ```bash
-dmms-ai nodes invoke --node <id|name|ip> --command <command> --params <json>
-dmms-ai nodes run --node <id|name|ip> <command...>
-dmms-ai nodes run --raw "git status"
-dmms-ai nodes run --agent main --node <id|name|ip> --raw "git status"
+dryads-ai nodes invoke --node <id|name|ip> --command <command> --params <json>
+dryads-ai nodes run --node <id|name|ip> <command...>
+dryads-ai nodes run --raw "git status"
+dryads-ai nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 调用标志：

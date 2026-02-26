@@ -1,5 +1,5 @@
-import type { DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
-import { emptyPluginConfigSchema } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
+import { emptyPluginConfigSchema } from "dryads-ai/plugin-sdk";
 import { bluebubblesPlugin } from "./src/channel.js";
 import { handleBlueBubblesWebhookRequest } from "./src/monitor.js";
 import { setBlueBubblesRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "BlueBubbles",
   description: "BlueBubbles channel plugin (macOS app)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: DmmsAiPluginApi) {
+  register(api: DryadsAiPluginApi) {
     setBlueBubblesRuntime(api.runtime);
     api.registerChannel({ plugin: bluebubblesPlugin });
     api.registerHttpHandler(handleBlueBubblesWebhookRequest);

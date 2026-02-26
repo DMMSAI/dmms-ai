@@ -1,5 +1,5 @@
 ---
-summary: "Where DMMS AI loads environment variables and the precedence order"
+summary: "Where Dryads AI loads environment variables and the precedence order"
 read_when:
   - You need to know which env vars are loaded, and in what order
   - You are debugging missing API keys in the Gateway
@@ -9,15 +9,15 @@ title: "Environment Variables"
 
 # Environment variables
 
-DMMS AI pulls environment variables from multiple sources. The rule is **never override existing values**.
+Dryads AI pulls environment variables from multiple sources. The rule is **never override existing values**.
 
 ## Precedence (highest → lowest)
 
 1. **Process environment** (what the Gateway process already has from the parent shell/daemon).
 2. **`.env` in the current working directory** (dotenv default; does not override).
-3. **Global `.env`** at `~/.dmms-ai/.env` (aka `$DMMS_AI_STATE_DIR/.env`; does not override).
-4. **Config `env` block** in `~/.dmms-ai/dmms-ai.json` (applied only if missing).
-5. **Optional login-shell import** (`env.shellEnv.enabled` or `DMMS_AI_LOAD_SHELL_ENV=1`), applied only for missing expected keys.
+3. **Global `.env`** at `~/.dryads-ai/.env` (aka `$DRYADS_AI_STATE_DIR/.env`; does not override).
+4. **Config `env` block** in `~/.dryads-ai/dryads-ai.json` (applied only if missing).
+5. **Optional login-shell import** (`env.shellEnv.enabled` or `DRYADS_AI_LOAD_SHELL_ENV=1`), applied only for missing expected keys.
 
 If the config file is missing entirely, step 4 is skipped; shell import still runs if enabled.
 
@@ -53,8 +53,8 @@ Two equivalent ways to set inline env vars (both are non-overriding):
 
 Env var equivalents:
 
-- `DMMS_AI_LOAD_SHELL_ENV=1`
-- `DMMS_AI_SHELL_ENV_TIMEOUT_MS=15000`
+- `DRYADS_AI_LOAD_SHELL_ENV=1`
+- `DRYADS_AI_SHELL_ENV_TIMEOUT_MS=15000`
 
 ## Env var substitution in config
 
@@ -76,29 +76,29 @@ See [Configuration: Env var substitution](/gateway/configuration#env-var-substit
 
 ## Path-related env vars
 
-| Variable              | Purpose                                                                                                                                                                        |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `DMMS_AI_HOME`        | Override the home directory used for all internal path resolution (`~/.dmms-ai/`, agent dirs, sessions, credentials). Useful when running DMMS AI as a dedicated service user. |
-| `DMMS_AI_STATE_DIR`   | Override the state directory (default `~/.dmms-ai`).                                                                                                                           |
-| `DMMS_AI_CONFIG_PATH` | Override the config file path (default `~/.dmms-ai/dmms-ai.json`).                                                                                                             |
+| Variable                | Purpose                                                                                                                                                                            |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DRYADS_AI_HOME`        | Override the home directory used for all internal path resolution (`~/.dryads-ai/`, agent dirs, sessions, credentials). Useful when running Dryads AI as a dedicated service user. |
+| `DRYADS_AI_STATE_DIR`   | Override the state directory (default `~/.dryads-ai`).                                                                                                                             |
+| `DRYADS_AI_CONFIG_PATH` | Override the config file path (default `~/.dryads-ai/dryads-ai.json`).                                                                                                             |
 
-### `DMMS_AI_HOME`
+### `DRYADS_AI_HOME`
 
-When set, `DMMS_AI_HOME` replaces the system home directory (`$HOME` / `os.homedir()`) for all internal path resolution. This enables full filesystem isolation for headless service accounts.
+When set, `DRYADS_AI_HOME` replaces the system home directory (`$HOME` / `os.homedir()`) for all internal path resolution. This enables full filesystem isolation for headless service accounts.
 
-**Precedence:** `DMMS_AI_HOME` > `$HOME` > `USERPROFILE` > `os.homedir()`
+**Precedence:** `DRYADS_AI_HOME` > `$HOME` > `USERPROFILE` > `os.homedir()`
 
 **Example** (macOS LaunchDaemon):
 
 ```xml
 <key>EnvironmentVariables</key>
 <dict>
-  <key>DMMS_AI_HOME</key>
+  <key>DRYADS_AI_HOME</key>
   <string>/Users/kira</string>
 </dict>
 ```
 
-`DMMS_AI_HOME` can also be set to a tilde path (e.g. `~/svc`), which gets expanded using `$HOME` before use.
+`DRYADS_AI_HOME` can also be set to a tilde path (e.g. `~/svc`), which gets expanded using `$HOME` before use.
 
 ## Related
 

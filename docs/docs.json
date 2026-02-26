@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "DMMS AI",
+  "name": "Dryads AI",
   "description": "Self-hosted gateway that connects WhatsApp, Telegram, Discord, iMessage, and more to AI coding agents. Run a single Gateway process on your own machine and message your AI assistant from anywhere.",
   "theme": "mint",
   "icons": {
@@ -36,12 +36,12 @@
     "links": [
       {
         "label": "GitHub",
-        "href": "https://github.com/dmms-ai/dmms-ai",
+        "href": "https://github.com/dryads-ai/dryads-ai",
         "icon": "github"
       },
       {
         "label": "Releases",
-        "href": "https://github.com/dmms-ai/dmms-ai/releases",
+        "href": "https://github.com/dryads-ai/dryads-ai/releases",
         "icon": "package"
       }
     ]
@@ -261,15 +261,15 @@
     },
     {
       "source": "/clawd",
-      "destination": "/start/dmms-ai"
+      "destination": "/start/dryads-ai"
     },
     {
       "source": "/start/clawd",
-      "destination": "/start/dmms-ai"
+      "destination": "/start/dryads-ai"
     },
     {
       "source": "/start/clawd/",
-      "destination": "/start/dmms-ai"
+      "destination": "/start/dryads-ai"
     },
     {
       "source": "/clawhub",
@@ -827,7 +827,7 @@
               },
               {
                 "group": "Guides",
-                "pages": ["start/dmms-ai"]
+                "pages": ["start/dryads-ai"]
               }
             ]
           },
@@ -1338,7 +1338,7 @@
               },
               {
                 "group": "指南",
-                "pages": ["zh-CN/start/dmms-ai"]
+                "pages": ["zh-CN/start/dryads-ai"]
               }
             ]
           },

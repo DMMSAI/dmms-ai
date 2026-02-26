@@ -6,7 +6,7 @@ import {
   mockDoctorConfigSnapshot,
   note,
   readConfigFileSnapshot,
-  resolveDmmsAiPackageRoot,
+  resolveDryadsAiPackageRoot,
   runCommandWithTimeout,
   runGatewayUpdate,
   serviceInstall,
@@ -86,7 +86,7 @@ describe("doctor command", () => {
     findLegacyGatewayServices.mockResolvedValueOnce([
       {
         platform: "darwin",
-        label: "com.steipete.dmms-ai.gateway",
+        label: "com.steipete.dryads-ai.gateway",
         detail: "loaded",
       },
     ]);
@@ -101,10 +101,10 @@ describe("doctor command", () => {
   });
 
   it("offers to update first for git checkouts", async () => {
-    delete process.env.DMMS_AI_UPDATE_IN_PROGRESS;
+    delete process.env.DRYADS_AI_UPDATE_IN_PROGRESS;
 
-    const root = "/tmp/dmms-ai";
-    resolveDmmsAiPackageRoot.mockResolvedValueOnce(root);
+    const root = "/tmp/dryads-ai";
+    resolveDryadsAiPackageRoot.mockResolvedValueOnce(root);
     runCommandWithTimeout.mockResolvedValueOnce({
       stdout: `${root}\n`,
       stderr: "",

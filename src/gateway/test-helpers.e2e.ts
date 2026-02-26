@@ -170,7 +170,7 @@ export async function startGatewayWithClient(params: {
   clientDisplayName?: string;
 }) {
   await writeFile(params.configPath, `${JSON.stringify(params.cfg, null, 2)}\n`);
-  process.env.DMMS_AI_CONFIG_PATH = params.configPath;
+  process.env.DRYADS_AI_CONFIG_PATH = params.configPath;
 
   const port = await getFreeGatewayPort();
   const server = await startGatewayServer(port, {

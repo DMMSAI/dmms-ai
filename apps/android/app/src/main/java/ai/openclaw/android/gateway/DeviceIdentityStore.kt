@@ -1,4 +1,4 @@
-package ai.dmmsai.android.gateway
+package ai.dryadsai.android.gateway
 
 import android.content.Context
 import android.util.Base64
@@ -21,7 +21,7 @@ data class DeviceIdentity(
 
 class DeviceIdentityStore(context: Context) {
   private val json = Json { ignoreUnknownKeys = true }
-  private val identityFile = File(context.filesDir, "dmms-ai/identity/device.json")
+  private val identityFile = File(context.filesDir, "dryads-ai/identity/device.json")
 
   @Synchronized
   fun loadOrCreate(): DeviceIdentity {

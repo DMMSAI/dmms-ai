@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `dmms-ai browser` (profiles, tabs, actions, extension relay)"
+summary: "CLI reference for `dryads-ai browser` (profiles, tabs, actions, extension relay)"
 read_when:
-  - You use `dmms-ai browser` and want examples for common tasks
+  - You use `dryads-ai browser` and want examples for common tasks
   - You want to control a browser running on another machine via a node host
   - You want to use the Chrome extension relay (attach/detach via toolbar button)
 title: "browser"
 ---
 
-# `dmms-ai browser`
+# `dryads-ai browser`
 
-Manage DMMS AI’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
+Manage Dryads AI’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
 
 Related:
 
@@ -27,38 +27,38 @@ Related:
 ## Quick start (local)
 
 ```bash
-dmms-ai browser --browser-profile chrome tabs
-dmms-ai browser --browser-profile dmms-ai start
-dmms-ai browser --browser-profile dmms-ai open https://example.com
-dmms-ai browser --browser-profile dmms-ai snapshot
+dryads-ai browser --browser-profile chrome tabs
+dryads-ai browser --browser-profile dryads-ai start
+dryads-ai browser --browser-profile dryads-ai open https://example.com
+dryads-ai browser --browser-profile dryads-ai snapshot
 ```
 
 ## Profiles
 
 Profiles are named browser routing configs. In practice:
 
-- `dmms-ai`: launches/attaches to a dedicated DMMS AI-managed Chrome instance (isolated user data dir).
+- `dryads-ai`: launches/attaches to a dedicated Dryads AI-managed Chrome instance (isolated user data dir).
 - `chrome`: controls your existing Chrome tab(s) via the Chrome extension relay.
 
 ```bash
-dmms-ai browser profiles
-dmms-ai browser create-profile --name work --color "#FF5A36"
-dmms-ai browser delete-profile --name work
+dryads-ai browser profiles
+dryads-ai browser create-profile --name work --color "#FF5A36"
+dryads-ai browser delete-profile --name work
 ```
 
 Use a specific profile:
 
 ```bash
-dmms-ai browser --browser-profile work tabs
+dryads-ai browser --browser-profile work tabs
 ```
 
 ## Tabs
 
 ```bash
-dmms-ai browser tabs
-dmms-ai browser open https://docs.dmms-ai.com
-dmms-ai browser focus <targetId>
-dmms-ai browser close <targetId>
+dryads-ai browser tabs
+dryads-ai browser open https://docs.dryads-ai.com
+dryads-ai browser focus <targetId>
+dryads-ai browser close <targetId>
 ```
 
 ## Snapshot / screenshot / actions
@@ -66,21 +66,21 @@ dmms-ai browser close <targetId>
 Snapshot:
 
 ```bash
-dmms-ai browser snapshot
+dryads-ai browser snapshot
 ```
 
 Screenshot:
 
 ```bash
-dmms-ai browser screenshot
+dryads-ai browser screenshot
 ```
 
 Navigate/click/type (ref-based UI automation):
 
 ```bash
-dmms-ai browser navigate https://example.com
-dmms-ai browser click <ref>
-dmms-ai browser type <ref> "hello"
+dryads-ai browser navigate https://example.com
+dryads-ai browser click <ref>
+dryads-ai browser type <ref> "hello"
 ```
 
 ## Chrome extension relay (attach via toolbar button)
@@ -90,8 +90,8 @@ This mode lets the agent control an existing Chrome tab that you attach manually
 Install the unpacked extension to a stable path:
 
 ```bash
-dmms-ai browser extension install
-dmms-ai browser extension path
+dryads-ai browser extension install
+dryads-ai browser extension path
 ```
 
 Then Chrome → `chrome://extensions` → enable “Developer mode” → “Load unpacked” → select the printed folder.

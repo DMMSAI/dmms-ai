@@ -3,7 +3,7 @@ import "./reply.directive.directive-behavior.e2e-mocks.js";
 import { describe, expect, it, vi } from "vitest";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 import { runEmbeddedPiAgent } from "../agents/pi-embedded.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { getReplyFromConfig } from "./reply.js";
 
 function makeResult(text: string) {
@@ -24,9 +24,9 @@ async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
     },
     {
       env: {
-        DMMS_AI_BUNDLED_SKILLS_DIR: (home) => path.join(home, "bundled-skills"),
+        DRYADS_AI_BUNDLED_SKILLS_DIR: (home) => path.join(home, "bundled-skills"),
       },
-      prefix: "dmms-ai-media-note-",
+      prefix: "dryads-ai-media-note-",
     },
   );
 }
@@ -36,12 +36,12 @@ function makeCfg(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "dmms-ai"),
+        workspace: path.join(home, "dryads-ai"),
       },
     },
     channels: { whatsapp: { allowFrom: ["*"] } },
     session: { store: path.join(home, "sessions.json") },
-  } as unknown as DmmsAiConfig;
+  } as unknown as DryadsAiConfig;
 }
 
 describe("getReplyFromConfig media note plumbing", () => {

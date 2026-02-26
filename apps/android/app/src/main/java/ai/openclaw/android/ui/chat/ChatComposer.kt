@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui.chat
+package ai.dryadsai.android.ui.chat
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,7 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import ai.dmmsai.android.chat.ChatSessionEntry
+import ai.dryadsai.android.chat.ChatSessionEntry
 
 @Composable
 fun ChatComposer(
@@ -143,7 +143,7 @@ fun ChatComposer(
         value = input,
         onValueChange = { input = it },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text("Message DMMS AI…") },
+        placeholder = { Text("Message Dryads AI…") },
         minLines = 2,
         maxLines = 6,
       )

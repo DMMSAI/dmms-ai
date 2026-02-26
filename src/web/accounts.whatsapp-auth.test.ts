@@ -15,9 +15,9 @@ describe("hasAnyWhatsAppAuth", () => {
   };
 
   beforeEach(() => {
-    envSnapshot = captureEnv(["DMMS_AI_OAUTH_DIR"]);
-    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-oauth-"));
-    process.env.DMMS_AI_OAUTH_DIR = tempOauthDir;
+    envSnapshot = captureEnv(["DRYADS_AI_OAUTH_DIR"]);
+    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-oauth-"));
+    process.env.DRYADS_AI_OAUTH_DIR = tempOauthDir;
   });
 
   afterEach(() => {
@@ -43,7 +43,7 @@ describe("hasAnyWhatsAppAuth", () => {
   });
 
   it("includes authDir overrides", () => {
-    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-wa-auth-"));
+    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-wa-auth-"));
     try {
       writeCreds(customDir);
       const cfg = {

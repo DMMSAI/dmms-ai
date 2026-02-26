@@ -1,8 +1,8 @@
 ---
 read_when:
-  - 你想将 Gmail Pub/Sub 事件接入 DMMS AI
+  - 你想将 Gmail Pub/Sub 事件接入 Dryads AI
   - 你需要 Webhook 辅助命令
-summary: "`dmms-ai webhooks`（Webhook 辅助工具 + Gmail Pub/Sub）的 CLI 参考"
+summary: "`dryads-ai webhooks`（Webhook 辅助工具 + Gmail Pub/Sub）的 CLI 参考"
 title: webhooks
 x-i18n:
   generated_at: "2026-02-01T20:21:38Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `dmms-ai webhooks`
+# `dryads-ai webhooks`
 
 Webhook 辅助工具和集成（Gmail Pub/Sub、Webhook 辅助工具）。
 
@@ -25,8 +25,8 @@ Webhook 辅助工具和集成（Gmail Pub/Sub、Webhook 辅助工具）。
 ## Gmail
 
 ```bash
-dmms-ai webhooks gmail setup --account you@example.com
-dmms-ai webhooks gmail run
+dryads-ai webhooks gmail setup --account you@example.com
+dryads-ai webhooks gmail run
 ```
 
 详情请参阅 [Gmail Pub/Sub 文档](/automation/gmail-pubsub)。

@@ -1,9 +1,9 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  DmmsAiConfig,
+  DryadsAiConfig,
   WizardPrompter,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
@@ -11,7 +11,7 @@ import {
   normalizeAccountId,
   promptAccountId,
   promptChannelAccessConfig,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   listZalouserAccountIds,
   resolveDefaultZalouserAccountId,
@@ -24,9 +24,9 @@ import { runZca, runZcaInteractive, checkZcaInstalled, parseJsonOutput } from ".
 const channel = "zalouser" as const;
 
 function setZalouserDmPolicy(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   dmPolicy: "pairing" | "allowlist" | "open" | "disabled",
-): DmmsAiConfig {
+): DryadsAiConfig {
   const allowFrom =
     dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.zalouser?.allowFrom) : undefined;
   return {
@@ -39,7 +39,7 @@ function setZalouserDmPolicy(
         ...(allowFrom ? { allowFrom } : {}),
       },
     },
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
 async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
@@ -51,17 +51,17 @@ async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
       "1) Install zca-cli",
       "2) You'll scan a QR code with your Zalo app",
       "",
-      "Docs: https://docs.dmms-ai.com/channels/zalouser",
+      "Docs: https://docs.dryads-ai.com/channels/zalouser",
     ].join("\n"),
     "Zalo Personal Setup",
   );
 }
 
 async function promptZalouserAllowFrom(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   accountId: string;
-}): Promise<DmmsAiConfig> {
+}): Promise<DryadsAiConfig> {
   const { cfg, prompter, accountId } = params;
   const resolved = resolveZalouserAccountSync({ cfg, accountId });
   const existingAllowFrom = resolved.config.allowFrom ?? [];
@@ -135,7 +135,7 @@ async function promptZalouserAllowFrom(params: {
             allowFrom: unique,
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     }
 
     return {
@@ -156,15 +156,15 @@ async function promptZalouserAllowFrom(params: {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
   }
 }
 
 function setZalouserGroupPolicy(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): DmmsAiConfig {
+): DryadsAiConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -176,7 +176,7 @@ function setZalouserGroupPolicy(
           groupPolicy,
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
   }
   return {
     ...cfg,
@@ -195,14 +195,14 @@ function setZalouserGroupPolicy(
         },
       },
     },
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
 function setZalouserGroupAllowlist(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
   groupKeys: string[],
-): DmmsAiConfig {
+): DryadsAiConfig {
   const groups = Object.fromEntries(groupKeys.map((key) => [key, { allow: true }]));
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
@@ -215,7 +215,7 @@ function setZalouserGroupAllowlist(
           groups,
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
   }
   return {
     ...cfg,
@@ -234,11 +234,11 @@ function setZalouserGroupAllowlist(
         },
       },
     },
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
 async function resolveZalouserGroups(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId: string;
   entries: string[];
 }): Promise<Array<{ input: string; resolved: boolean; id?: string }>> {
@@ -337,7 +337,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
           "The `zca` binary was not found in PATH.",
           "",
           "Install zca-cli, then re-run onboarding:",
-          "Docs: https://docs.dmms-ai.com/channels/zalouser",
+          "Docs: https://docs.dryads-ai.com/channels/zalouser",
         ].join("\n"),
         "Missing Dependency",
       );
@@ -414,7 +414,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
             profile: account.profile !== "default" ? account.profile : undefined,
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     } else {
       next = {
         ...next,
@@ -433,7 +433,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
             },
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     }
 
     if (forceAllowFrom) {

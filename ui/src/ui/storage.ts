@@ -1,4 +1,4 @@
-const KEY = "dmms-ai.control.settings.v1";
+const KEY = "dryads-ai.control.settings.v1";
 
 import { isSupportedLocale } from "../i18n/index.ts";
 import type { ThemeMode } from "./theme.ts";

@@ -16,13 +16,13 @@ provider mixes reasoning into normal text.
 
 Use `/debug` in chat to set **runtime-only** config overrides (memory, not disk).
 `/debug` is disabled by default; enable with `commands.debug: true`.
-This is handy when you need to toggle obscure settings without editing `dmms-ai.json`.
+This is handy when you need to toggle obscure settings without editing `dryads-ai.json`.
 
 Examples:
 
 ```
 /debug show
-/debug set messages.responsePrefix="[dmms-ai]"
+/debug set messages.responsePrefix="[dryads-ai]"
 /debug unset messages.responsePrefix
 /debug reset
 ```
@@ -51,7 +51,7 @@ on each restart.
 Use the dev profile to isolate state and spin up a safe, disposable setup for
 debugging. There are **two** `--dev` flags:
 
-- **Global `--dev` (profile):** isolates state under `~/.dmms-ai-dev` and
+- **Global `--dev` (profile):** isolates state under `~/.dryads-ai-dev` and
   defaults the gateway port to `19001` (derived ports shift with it).
 - **`gateway --dev`: tells the Gateway to auto-create a default config +
   workspace** when missing (and skip BOOTSTRAP.md).
@@ -60,18 +60,18 @@ Recommended flow (dev profile + dev bootstrap):
 
 ```bash
 pnpm gateway:dev
-DMMS_AI_PROFILE=dev dmms-ai tui
+DRYADS_AI_PROFILE=dev dryads-ai tui
 ```
 
-If you don’t have a global install yet, run the CLI via `pnpm dmms-ai ...`.
+If you don’t have a global install yet, run the CLI via `pnpm dryads-ai ...`.
 
 What this does:
 
 1. **Profile isolation** (global `--dev`)
-   - `DMMS_AI_PROFILE=dev`
-   - `DMMS_AI_STATE_DIR=~/.dmms-ai-dev`
-   - `DMMS_AI_CONFIG_PATH=~/.dmms-ai-dev/dmms-ai.json`
-   - `DMMS_AI_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
+   - `DRYADS_AI_PROFILE=dev`
+   - `DRYADS_AI_STATE_DIR=~/.dryads-ai-dev`
+   - `DRYADS_AI_CONFIG_PATH=~/.dryads-ai-dev/dryads-ai.json`
+   - `DRYADS_AI_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
 
 2. **Dev bootstrap** (`gateway --dev`)
    - Writes a minimal config if missing (`gateway.mode=local`, bind loopback).
@@ -80,7 +80,7 @@ What this does:
    - Seeds the workspace files if missing:
      `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`.
    - Default identity: **C3‑PO** (protocol droid).
-   - Skips channel providers in dev mode (`DMMS_AI_SKIP_CHANNELS=1`).
+   - Skips channel providers in dev mode (`DRYADS_AI_SKIP_CHANNELS=1`).
 
 Reset flow (fresh start):
 
@@ -92,7 +92,7 @@ Note: `--dev` is a **global** profile flag and gets eaten by some runners.
 If you need to spell it out, use the env var form:
 
 ```bash
-DMMS_AI_PROFILE=dev dmms-ai gateway --dev --reset
+DRYADS_AI_PROFILE=dev dryads-ai gateway --dev --reset
 ```
 
 `--reset` wipes config, credentials, sessions, and the dev workspace (using
@@ -101,12 +101,12 @@ DMMS_AI_PROFILE=dev dmms-ai gateway --dev --reset
 Tip: if a non‑dev gateway is already running (launchd/systemd), stop it first:
 
 ```bash
-dmms-ai gateway stop
+dryads-ai gateway stop
 ```
 
-## Raw stream logging (DMMS AI)
+## Raw stream logging (Dryads AI)
 
-DMMS AI can log the **raw assistant stream** before any filtering/formatting.
+Dryads AI can log the **raw assistant stream** before any filtering/formatting.
 This is the best way to see whether reasoning is arriving as plain text deltas
 (or as separate thinking blocks).
 
@@ -119,19 +119,19 @@ pnpm gateway:watch --raw-stream
 Optional path override:
 
 ```bash
-pnpm gateway:watch --raw-stream --raw-stream-path ~/.dmms-ai/logs/raw-stream.jsonl
+pnpm gateway:watch --raw-stream --raw-stream-path ~/.dryads-ai/logs/raw-stream.jsonl
 ```
 
 Equivalent env vars:
 
 ```bash
-DMMS_AI_RAW_STREAM=1
-DMMS_AI_RAW_STREAM_PATH=~/.dmms-ai/logs/raw-stream.jsonl
+DRYADS_AI_RAW_STREAM=1
+DRYADS_AI_RAW_STREAM_PATH=~/.dryads-ai/logs/raw-stream.jsonl
 ```
 
 Default file:
 
-`~/.dmms-ai/logs/raw-stream.jsonl`
+`~/.dryads-ai/logs/raw-stream.jsonl`
 
 ## Raw chunk logging (pi-mono)
 

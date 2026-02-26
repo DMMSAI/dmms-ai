@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 enum class CameraHudKind {
   Photo,

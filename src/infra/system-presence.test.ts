@@ -12,7 +12,7 @@ describe("system-presence", () => {
     const instanceIdLower = instanceIdUpper.toLowerCase();
 
     upsertPresence(instanceIdUpper, {
-      host: "dmms-ai",
+      host: "dryads-ai",
       mode: "ui",
       instanceId: instanceIdUpper,
       reason: "connect",
@@ -43,7 +43,7 @@ describe("system-presence", () => {
 
     upsertPresence(deviceId, {
       deviceId,
-      host: "dmms-ai",
+      host: "dryads-ai",
       roles: ["operator"],
       scopes: ["operator.admin"],
       reason: "connect",

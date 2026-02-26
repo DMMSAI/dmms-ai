@@ -147,7 +147,7 @@ describe("gateway server hooks", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-dmms-ai-token": "hook-secret",
+          "x-dryads-ai-token": "hook-secret",
         },
         body: JSON.stringify({ text: "Header auth" }),
       });

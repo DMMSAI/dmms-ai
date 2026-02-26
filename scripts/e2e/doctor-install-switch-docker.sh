@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-IMAGE_NAME="dmms-ai-doctor-install-switch-e2e"
+IMAGE_NAME="dryads-ai-doctor-install-switch-e2e"
 
 echo "Building Docker image..."
 docker build -t "$IMAGE_NAME" -f "$ROOT_DIR/scripts/e2e/Dockerfile" "$ROOT_DIR"
@@ -17,10 +17,10 @@ docker run --rm -t "$IMAGE_NAME" bash -lc '
   export npm_config_audit=false
 
   # Stub systemd/loginctl so doctor + daemon flows work in Docker.
-  export PATH="/tmp/dmms-ai-bin:$PATH"
-  mkdir -p /tmp/dmms-ai-bin
+  export PATH="/tmp/dryads-ai-bin:$PATH"
+  mkdir -p /tmp/dryads-ai-bin
 
-  cat > /tmp/dmms-ai-bin/systemctl <<"SYSTEMCTL"
+  cat > /tmp/dryads-ai-bin/systemctl <<"SYSTEMCTL"
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -54,9 +54,9 @@ case "$cmd" in
     ;;
 esac
 SYSTEMCTL
-  chmod +x /tmp/dmms-ai-bin/systemctl
+  chmod +x /tmp/dryads-ai-bin/systemctl
 
-  cat > /tmp/dmms-ai-bin/loginctl <<"LOGINCTL"
+  cat > /tmp/dryads-ai-bin/loginctl <<"LOGINCTL"
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -69,7 +69,7 @@ if [[ "$*" == *"enable-linger"* ]]; then
 fi
 exit 0
 LOGINCTL
-  chmod +x /tmp/dmms-ai-bin/loginctl
+  chmod +x /tmp/dryads-ai-bin/loginctl
 
   # Install the npm-global variant from the local /app source.
   # `npm pack` can emit script output; keep only the tarball name.
@@ -80,8 +80,8 @@ LOGINCTL
   fi
   npm install -g --prefix /tmp/npm-prefix "/app/$pkg_tgz"
 
-	  npm_bin="/tmp/npm-prefix/bin/dmms-ai"
-	  npm_root="/tmp/npm-prefix/lib/node_modules/dmms-ai"
+	  npm_bin="/tmp/npm-prefix/bin/dryads-ai"
+	  npm_root="/tmp/npm-prefix/lib/node_modules/dryads-ai"
 	  if [ -f "$npm_root/dist/index.mjs" ]; then
 	    npm_entry="$npm_root/dist/index.mjs"
 	  else
@@ -93,7 +93,7 @@ LOGINCTL
 	  else
 	    git_entry="/app/dist/index.js"
 	  fi
-	  git_cli="/app/dmms-ai.mjs"
+	  git_cli="/app/dryads-ai.mjs"
 
   assert_entrypoint() {
     local unit_path="$1"
@@ -124,13 +124,13 @@ LOGINCTL
     local doctor_expected="$5"
 
     echo "== Flow: $name =="
-    home_dir=$(mktemp -d "/tmp/dmms-ai-switch-${name}.XXXXXX")
+    home_dir=$(mktemp -d "/tmp/dryads-ai-switch-${name}.XXXXXX")
     export HOME="$home_dir"
     export USER="testuser"
 
     eval "$install_cmd"
 
-    unit_path="$HOME/.config/systemd/user/dmms-ai-gateway.service"
+    unit_path="$HOME/.config/systemd/user/dryads-ai-gateway.service"
     if [ ! -f "$unit_path" ]; then
       echo "Missing unit file: $unit_path"
       exit 1

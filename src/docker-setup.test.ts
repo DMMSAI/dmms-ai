@@ -39,7 +39,7 @@ exit 0
 }
 
 async function createDockerSetupSandbox(): Promise<DockerSetupSandbox> {
-  const rootDir = await mkdtemp(join(tmpdir(), "dmms-ai-docker-setup-"));
+  const rootDir = await mkdtemp(join(tmpdir(), "dryads-ai-docker-setup-"));
   const scriptPath = join(rootDir, "docker-setup.sh");
   const dockerfilePath = join(rootDir, "Dockerfile");
   const composePath = join(rootDir, "docker-compose.yml");
@@ -51,7 +51,7 @@ async function createDockerSetupSandbox(): Promise<DockerSetupSandbox> {
   await writeFile(dockerfilePath, "FROM scratch\n");
   await writeFile(
     composePath,
-    "services:\n  dmms-ai-gateway:\n    image: noop\n  dmms-ai-cli:\n    image: noop\n",
+    "services:\n  dryads-ai-gateway:\n    image: noop\n  dryads-ai-cli:\n    image: noop\n",
   );
   await writeDockerStub(binDir, logPath);
 
@@ -69,9 +69,9 @@ function createEnv(
     LC_ALL: process.env.LC_ALL,
     TMPDIR: process.env.TMPDIR,
     DOCKER_STUB_LOG: sandbox.logPath,
-    DMMS_AI_GATEWAY_TOKEN: "test-token",
-    DMMS_AI_CONFIG_DIR: join(sandbox.rootDir, "config"),
-    DMMS_AI_WORKSPACE_DIR: join(sandbox.rootDir, "dmms-ai"),
+    DRYADS_AI_GATEWAY_TOKEN: "test-token",
+    DRYADS_AI_CONFIG_DIR: join(sandbox.rootDir, "config"),
+    DRYADS_AI_WORKSPACE_DIR: join(sandbox.rootDir, "dryads-ai"),
   };
 
   for (const [key, value] of Object.entries(overrides)) {
@@ -118,23 +118,23 @@ describe("docker-setup.sh", () => {
     const result = spawnSync("bash", [sandbox.scriptPath], {
       cwd: sandbox.rootDir,
       env: createEnv(sandbox, {
-        DMMS_AI_DOCKER_APT_PACKAGES: "ffmpeg build-essential",
-        DMMS_AI_EXTRA_MOUNTS: undefined,
-        DMMS_AI_HOME_VOLUME: "dmms-ai-home",
+        DRYADS_AI_DOCKER_APT_PACKAGES: "ffmpeg build-essential",
+        DRYADS_AI_EXTRA_MOUNTS: undefined,
+        DRYADS_AI_HOME_VOLUME: "dryads-ai-home",
       }),
       stdio: ["ignore", "ignore", "pipe"],
     });
     expect(result.status).toBe(0);
     const envFile = await readFile(join(sandbox.rootDir, ".env"), "utf8");
-    expect(envFile).toContain("DMMS_AI_DOCKER_APT_PACKAGES=ffmpeg build-essential");
-    expect(envFile).toContain("DMMS_AI_EXTRA_MOUNTS=");
-    expect(envFile).toContain("DMMS_AI_HOME_VOLUME=dmms-ai-home");
+    expect(envFile).toContain("DRYADS_AI_DOCKER_APT_PACKAGES=ffmpeg build-essential");
+    expect(envFile).toContain("DRYADS_AI_EXTRA_MOUNTS=");
+    expect(envFile).toContain("DRYADS_AI_HOME_VOLUME=dryads-ai-home");
     const extraCompose = await readFile(join(sandbox.rootDir, "docker-compose.extra.yml"), "utf8");
-    expect(extraCompose).toContain("dmms-ai-home:/home/node");
+    expect(extraCompose).toContain("dryads-ai-home:/home/node");
     expect(extraCompose).toContain("volumes:");
-    expect(extraCompose).toContain("dmms-ai-home:");
+    expect(extraCompose).toContain("dryads-ai-home:");
     const log = await readFile(sandbox.logPath, "utf8");
-    expect(log).toContain("--build-arg DMMS_AI_DOCKER_APT_PACKAGES=ffmpeg build-essential");
+    expect(log).toContain("--build-arg DRYADS_AI_DOCKER_APT_PACKAGES=ffmpeg build-essential");
   });
 
   it("avoids associative arrays so the script remains Bash 3.2-compatible", async () => {

@@ -24,11 +24,11 @@ Use this page for day-1 startup and day-2 operations of the Gateway service.
   <Step title="Start the Gateway">
 
 ```bash
-dmms-ai gateway --port 18789
+dryads-ai gateway --port 18789
 # debug/trace mirrored to stdio
-dmms-ai gateway --port 18789 --verbose
+dryads-ai gateway --port 18789 --verbose
 # force-kill listener on selected port, then start
-dmms-ai gateway --force
+dryads-ai gateway --force
 ```
 
   </Step>
@@ -36,9 +36,9 @@ dmms-ai gateway --force
   <Step title="Verify service health">
 
 ```bash
-dmms-ai gateway status
-dmms-ai status
-dmms-ai logs --follow
+dryads-ai gateway status
+dryads-ai status
+dryads-ai logs --follow
 ```
 
 Healthy baseline: `Runtime: running` and `RPC probe: ok`.
@@ -48,14 +48,14 @@ Healthy baseline: `Runtime: running` and `RPC probe: ok`.
   <Step title="Validate channel readiness">
 
 ```bash
-dmms-ai channels status --probe
+dryads-ai channels status --probe
 ```
 
   </Step>
 </Steps>
 
 <Note>
-Gateway config reload watches the active config file path (resolved from profile/state defaults, or `DMMS_AI_CONFIG_PATH` when set).
+Gateway config reload watches the active config file path (resolved from profile/state defaults, or `DRYADS_AI_CONFIG_PATH` when set).
 Default mode is `gateway.reload.mode="hybrid"`.
 </Note>
 
@@ -67,14 +67,14 @@ Default mode is `gateway.reload.mode="hybrid"`.
   - HTTP APIs (OpenAI-compatible, Responses, tools invoke)
   - Control UI and hooks
 - Default bind mode: `loopback`.
-- Auth is required by default (`gateway.auth.token` / `gateway.auth.password`, or `DMMS_AI_GATEWAY_TOKEN` / `DMMS_AI_GATEWAY_PASSWORD`).
+- Auth is required by default (`gateway.auth.token` / `gateway.auth.password`, or `DRYADS_AI_GATEWAY_TOKEN` / `DRYADS_AI_GATEWAY_PASSWORD`).
 
 ### Port and bind precedence
 
-| Setting      | Resolution order                                             |
-| ------------ | ------------------------------------------------------------ |
-| Gateway port | `--port` → `DMMS_AI_GATEWAY_PORT` → `gateway.port` → `18789` |
-| Bind mode    | CLI/override → `gateway.bind` → `loopback`                   |
+| Setting      | Resolution order                                               |
+| ------------ | -------------------------------------------------------------- |
+| Gateway port | `--port` → `DRYADS_AI_GATEWAY_PORT` → `gateway.port` → `18789` |
+| Bind mode    | CLI/override → `gateway.bind` → `loopback`                     |
 
 ### Hot reload modes
 
@@ -88,14 +88,14 @@ Default mode is `gateway.reload.mode="hybrid"`.
 ## Operator command set
 
 ```bash
-dmms-ai gateway status
-dmms-ai gateway status --deep
-dmms-ai gateway status --json
-dmms-ai gateway install
-dmms-ai gateway restart
-dmms-ai gateway stop
-dmms-ai logs --follow
-dmms-ai doctor
+dryads-ai gateway status
+dryads-ai gateway status --deep
+dryads-ai gateway status --json
+dryads-ai gateway install
+dryads-ai gateway restart
+dryads-ai gateway stop
+dryads-ai logs --follow
+dryads-ai doctor
 ```
 
 ## Remote access
@@ -123,22 +123,22 @@ Use supervised runs for production-like reliability.
   <Tab title="macOS (launchd)">
 
 ```bash
-dmms-ai gateway install
-dmms-ai gateway status
-dmms-ai gateway restart
-dmms-ai gateway stop
+dryads-ai gateway install
+dryads-ai gateway status
+dryads-ai gateway restart
+dryads-ai gateway stop
 ```
 
-LaunchAgent labels are `ai.dmmsai.gateway` (default) or `ai.dmmsai.<profile>` (named profile). `dmms-ai doctor` audits and repairs service config drift.
+LaunchAgent labels are `ai.dryadsai.gateway` (default) or `ai.dryadsai.<profile>` (named profile). `dryads-ai doctor` audits and repairs service config drift.
 
   </Tab>
 
   <Tab title="Linux (systemd user)">
 
 ```bash
-dmms-ai gateway install
-systemctl --user enable --now dmms-ai-gateway[-<profile>].service
-dmms-ai gateway status
+dryads-ai gateway install
+systemctl --user enable --now dryads-ai-gateway[-<profile>].service
+dryads-ai gateway status
 ```
 
 For persistence after logout, enable lingering:
@@ -155,7 +155,7 @@ Use a system unit for multi-user/always-on hosts.
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now dmms-ai-gateway[-<profile>].service
+sudo systemctl enable --now dryads-ai-gateway[-<profile>].service
 ```
 
   </Tab>
@@ -169,15 +169,15 @@ Use multiple only for strict isolation/redundancy (for example a rescue profile)
 Checklist per instance:
 
 - Unique `gateway.port`
-- Unique `DMMS_AI_CONFIG_PATH`
-- Unique `DMMS_AI_STATE_DIR`
+- Unique `DRYADS_AI_CONFIG_PATH`
+- Unique `DRYADS_AI_STATE_DIR`
 - Unique `agents.defaults.workspace`
 
 Example:
 
 ```bash
-DMMS_AI_CONFIG_PATH=~/.dmms-ai/a.json DMMS_AI_STATE_DIR=~/.dmms-ai-a dmms-ai gateway --port 19001
-DMMS_AI_CONFIG_PATH=~/.dmms-ai/b.json DMMS_AI_STATE_DIR=~/.dmms-ai-b dmms-ai gateway --port 19002
+DRYADS_AI_CONFIG_PATH=~/.dryads-ai/a.json DRYADS_AI_STATE_DIR=~/.dryads-ai-a dryads-ai gateway --port 19001
+DRYADS_AI_CONFIG_PATH=~/.dryads-ai/b.json DRYADS_AI_STATE_DIR=~/.dryads-ai-b dryads-ai gateway --port 19002
 ```
 
 See: [Multiple gateways](/gateway/multiple-gateways).
@@ -185,9 +185,9 @@ See: [Multiple gateways](/gateway/multiple-gateways).
 ### Dev profile quick path
 
 ```bash
-dmms-ai --dev setup
-dmms-ai --dev gateway --allow-unconfigured
-dmms-ai --dev status
+dryads-ai --dev setup
+dryads-ai --dev gateway --allow-unconfigured
+dryads-ai --dev status
 ```
 
 Defaults include isolated state/config and base gateway port `19001`.
@@ -216,9 +216,9 @@ See full protocol docs: [Gateway Protocol](/gateway/protocol).
 ### Readiness
 
 ```bash
-dmms-ai gateway status
-dmms-ai channels status --probe
-dmms-ai health
+dryads-ai gateway status
+dryads-ai channels status --probe
+dryads-ai health
 ```
 
 ### Gap recovery

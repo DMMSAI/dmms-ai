@@ -33,22 +33,22 @@ describe("control UI routing", () => {
   });
 
   it("infers nested base paths", async () => {
-    const app = mountApp("/apps/dmms-ai/cron");
+    const app = mountApp("/apps/dryads-ai/cron");
     await app.updateComplete;
 
-    expect(app.basePath).toBe("/apps/dmms-ai");
+    expect(app.basePath).toBe("/apps/dryads-ai");
     expect(app.tab).toBe("cron");
-    expect(window.location.pathname).toBe("/apps/dmms-ai/cron");
+    expect(window.location.pathname).toBe("/apps/dryads-ai/cron");
   });
 
   it("honors explicit base path overrides", async () => {
-    window.__DMMS_AI_CONTROL_UI_BASE_PATH__ = "/dmms-ai";
-    const app = mountApp("/dmms-ai/sessions");
+    window.__DRYADS_AI_CONTROL_UI_BASE_PATH__ = "/dryads-ai";
+    const app = mountApp("/dryads-ai/sessions");
     await app.updateComplete;
 
-    expect(app.basePath).toBe("/dmms-ai");
+    expect(app.basePath).toBe("/dryads-ai");
     expect(app.tab).toBe("sessions");
-    expect(window.location.pathname).toBe("/dmms-ai/sessions");
+    expect(window.location.pathname).toBe("/dryads-ai/sessions");
   });
 
   it("updates the URL when clicking nav items", async () => {
@@ -166,7 +166,7 @@ describe("control UI routing", () => {
 
   it("hydrates token from URL params even when settings already set", async () => {
     localStorage.setItem(
-      "dmms-ai.control.settings.v1",
+      "dryads-ai.control.settings.v1",
       JSON.stringify({ token: "existing-token" }),
     );
     const app = mountApp("/ui/overview?token=abc123");

@@ -15,13 +15,13 @@ For model selection rules, see [/concepts/models](/concepts/models).
 
 - Model refs use `provider/model` (example: `opencode/claude-opus-4-6`).
 - If you set `agents.defaults.models`, it becomes the allowlist.
-- CLI helpers: `dmms-ai onboard`, `dmms-ai models list`, `dmms-ai models set <provider/model>`.
+- CLI helpers: `dryads-ai onboard`, `dryads-ai models list`, `dryads-ai models set <provider/model>`.
 
 ## API key rotation
 
 - Supports generic provider rotation for selected providers.
 - Configure multiple keys via:
-  - `DMMS_AI_LIVE_<PROVIDER>_KEY` (single live override, highest priority)
+  - `DRYADS_AI_LIVE_<PROVIDER>_KEY` (single live override, highest priority)
   - `<PROVIDER>_API_KEYS` (comma or semicolon list)
   - `<PROVIDER>_API_KEY` (primary key)
   - `<PROVIDER>_API_KEY_*` (numbered list, e.g. `<PROVIDER>_API_KEY_1`)
@@ -33,16 +33,16 @@ For model selection rules, see [/concepts/models](/concepts/models).
 
 ## Built-in providers (pi-ai catalog)
 
-DMMS AI ships with the pi‑ai catalog. These providers require **no**
+Dryads AI ships with the pi‑ai catalog. These providers require **no**
 `models.providers` config; just set auth + pick a model.
 
 ### OpenAI
 
 - Provider: `openai`
 - Auth: `OPENAI_API_KEY`
-- Optional rotation: `OPENAI_API_KEYS`, `OPENAI_API_KEY_1`, `OPENAI_API_KEY_2`, plus `DMMS_AI_LIVE_OPENAI_KEY` (single override)
+- Optional rotation: `OPENAI_API_KEYS`, `OPENAI_API_KEY_1`, `OPENAI_API_KEY_2`, plus `DRYADS_AI_LIVE_OPENAI_KEY` (single override)
 - Example model: `openai/gpt-5.1-codex`
-- CLI: `dmms-ai onboard --auth-choice openai-api-key`
+- CLI: `dryads-ai onboard --auth-choice openai-api-key`
 
 ```json5
 {
@@ -54,9 +54,9 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
 
 - Provider: `anthropic`
 - Auth: `ANTHROPIC_API_KEY` or `claude setup-token`
-- Optional rotation: `ANTHROPIC_API_KEYS`, `ANTHROPIC_API_KEY_1`, `ANTHROPIC_API_KEY_2`, plus `DMMS_AI_LIVE_ANTHROPIC_KEY` (single override)
+- Optional rotation: `ANTHROPIC_API_KEYS`, `ANTHROPIC_API_KEY_1`, `ANTHROPIC_API_KEY_2`, plus `DRYADS_AI_LIVE_ANTHROPIC_KEY` (single override)
 - Example model: `anthropic/claude-opus-4-6`
-- CLI: `dmms-ai onboard --auth-choice token` (paste setup-token) or `dmms-ai models auth paste-token --provider anthropic`
+- CLI: `dryads-ai onboard --auth-choice token` (paste setup-token) or `dryads-ai models auth paste-token --provider anthropic`
 
 ```json5
 {
@@ -69,7 +69,7 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
 - Provider: `openai-codex`
 - Auth: OAuth (ChatGPT)
 - Example model: `openai-codex/gpt-5.3-codex`
-- CLI: `dmms-ai onboard --auth-choice openai-codex` or `dmms-ai models auth login --provider openai-codex`
+- CLI: `dryads-ai onboard --auth-choice openai-codex` or `dryads-ai models auth login --provider openai-codex`
 
 ```json5
 {
@@ -82,7 +82,7 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
 - Provider: `opencode`
 - Auth: `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`)
 - Example model: `opencode/claude-opus-4-6`
-- CLI: `dmms-ai onboard --auth-choice opencode-zen`
+- CLI: `dryads-ai onboard --auth-choice opencode-zen`
 
 ```json5
 {
@@ -94,21 +94,21 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
 
 - Provider: `google`
 - Auth: `GEMINI_API_KEY`
-- Optional rotation: `GEMINI_API_KEYS`, `GEMINI_API_KEY_1`, `GEMINI_API_KEY_2`, `GOOGLE_API_KEY` fallback, and `DMMS_AI_LIVE_GEMINI_KEY` (single override)
+- Optional rotation: `GEMINI_API_KEYS`, `GEMINI_API_KEY_1`, `GEMINI_API_KEY_2`, `GOOGLE_API_KEY` fallback, and `DRYADS_AI_LIVE_GEMINI_KEY` (single override)
 - Example model: `google/gemini-3-pro-preview`
-- CLI: `dmms-ai onboard --auth-choice gemini-api-key`
+- CLI: `dryads-ai onboard --auth-choice gemini-api-key`
 
 ### Google Vertex, Antigravity, and Gemini CLI
 
 - Providers: `google-vertex`, `google-antigravity`, `google-gemini-cli`
 - Auth: Vertex uses gcloud ADC; Antigravity/Gemini CLI use their respective auth flows
 - Antigravity OAuth is shipped as a bundled plugin (`google-antigravity-auth`, disabled by default).
-  - Enable: `dmms-ai plugins enable google-antigravity-auth`
-  - Login: `dmms-ai models auth login --provider google-antigravity --set-default`
+  - Enable: `dryads-ai plugins enable google-antigravity-auth`
+  - Login: `dryads-ai models auth login --provider google-antigravity --set-default`
 - Gemini CLI OAuth is shipped as a bundled plugin (`google-gemini-cli-auth`, disabled by default).
-  - Enable: `dmms-ai plugins enable google-gemini-cli-auth`
-  - Login: `dmms-ai models auth login --provider google-gemini-cli --set-default`
-  - Note: you do **not** paste a client id or secret into `dmms-ai.json`. The CLI login flow stores
+  - Enable: `dryads-ai plugins enable google-gemini-cli-auth`
+  - Login: `dryads-ai models auth login --provider google-gemini-cli --set-default`
+  - Note: you do **not** paste a client id or secret into `dryads-ai.json`. The CLI login flow stores
     tokens in auth profiles on the gateway host.
 
 ### Z.AI (GLM)
@@ -116,7 +116,7 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
 - Provider: `zai`
 - Auth: `ZAI_API_KEY`
 - Example model: `zai/glm-4.7`
-- CLI: `dmms-ai onboard --auth-choice zai-api-key`
+- CLI: `dryads-ai onboard --auth-choice zai-api-key`
   - Aliases: `z.ai/*` and `z-ai/*` normalize to `zai/*`
 
 ### Vercel AI Gateway
@@ -124,7 +124,7 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
 - Provider: `vercel-ai-gateway`
 - Auth: `AI_GATEWAY_API_KEY`
 - Example model: `vercel-ai-gateway/anthropic/claude-opus-4.6`
-- CLI: `dmms-ai onboard --auth-choice ai-gateway-api-key`
+- CLI: `dryads-ai onboard --auth-choice ai-gateway-api-key`
 
 ### Other built-in providers
 
@@ -137,7 +137,7 @@ DMMS AI ships with the pi‑ai catalog. These providers require **no**
   - OpenAI-compatible base URL: `https://api.cerebras.ai/v1`.
 - Mistral: `mistral` (`MISTRAL_API_KEY`)
 - GitHub Copilot: `github-copilot` (`COPILOT_GITHUB_TOKEN` / `GH_TOKEN` / `GITHUB_TOKEN`)
-- Hugging Face Inference: `huggingface` (`HUGGINGFACE_HUB_TOKEN` or `HF_TOKEN`) — OpenAI-compatible router; example model: `huggingface/deepseek-ai/DeepSeek-R1`; CLI: `dmms-ai onboard --auth-choice huggingface-api-key`. See [Hugging Face (Inference)](/providers/huggingface).
+- Hugging Face Inference: `huggingface` (`HUGGINGFACE_HUB_TOKEN` or `HF_TOKEN`) — OpenAI-compatible router; example model: `huggingface/deepseek-ai/DeepSeek-R1`; CLI: `dryads-ai onboard --auth-choice huggingface-api-key`. See [Hugging Face (Inference)](/providers/huggingface).
 
 ## Providers via `models.providers` (custom/base URL)
 
@@ -205,8 +205,8 @@ Qwen provides OAuth access to Qwen Coder + Vision via a device-code flow.
 Enable the bundled plugin, then log in:
 
 ```bash
-dmms-ai plugins enable qwen-portal-auth
-dmms-ai models auth login --provider qwen-portal --set-default
+dryads-ai plugins enable qwen-portal-auth
+dryads-ai models auth login --provider qwen-portal --set-default
 ```
 
 Model refs:
@@ -223,7 +223,7 @@ Synthetic provides Anthropic-compatible models behind the `synthetic` provider:
 - Provider: `synthetic`
 - Auth: `SYNTHETIC_API_KEY`
 - Example model: `synthetic/hf:MiniMaxAI/MiniMax-M2.1`
-- CLI: `dmms-ai onboard --auth-choice synthetic-api-key`
+- CLI: `dryads-ai onboard --auth-choice synthetic-api-key`
 
 ```json5
 {
@@ -341,7 +341,7 @@ Example (OpenAI‑compatible):
 Notes:
 
 - For custom providers, `reasoning`, `input`, `cost`, `contextWindow`, and `maxTokens` are optional.
-  When omitted, DMMS AI defaults to:
+  When omitted, Dryads AI defaults to:
   - `reasoning: false`
   - `input: ["text"]`
   - `cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }`
@@ -352,9 +352,9 @@ Notes:
 ## CLI examples
 
 ```bash
-dmms-ai onboard --auth-choice opencode-zen
-dmms-ai models set opencode/claude-opus-4-6
-dmms-ai models list
+dryads-ai onboard --auth-choice opencode-zen
+dryads-ai models set opencode/claude-opus-4-6
+dryads-ai models list
 ```
 
 See also: [/gateway/configuration](/gateway/configuration) for full configuration examples.

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiCanvasA2UIAction: Sendable {
+public enum DryadsAiCanvasA2UIAction: Sendable {
     public struct AgentMessageContext: Sendable {
         public struct Session: Sendable {
             public var key: String
@@ -97,7 +97,7 @@ public enum DmmsAiCanvasA2UIAction: Sendable {
         return """
         (() => {
           const detail = \(json);
-          window.dispatchEvent(new CustomEvent('dmms-ai:a2ui-action-status', { detail }));
+          window.dispatchEvent(new CustomEvent('dryads-ai:a2ui-action-status', { detail }));
         })();
         """
     }

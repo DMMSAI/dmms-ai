@@ -6,7 +6,7 @@ import SwiftUI
 struct AnthropicAuthControls: View {
     let connectionMode: AppState.ConnectionMode
 
-    @State private var oauthStatus: DmmsAiOAuthStore.AnthropicOAuthStatus = DmmsAiOAuthStore.anthropicOAuthStatus()
+    @State private var oauthStatus: DryadsAiOAuthStore.AnthropicOAuthStatus = DryadsAiOAuthStore.anthropicOAuthStatus()
     @State private var pkce: AnthropicOAuth.PKCE?
     @State private var code: String = ""
     @State private var busy = false
@@ -42,10 +42,10 @@ struct AnthropicAuthControls: View {
                     .foregroundStyle(.secondary)
                 Spacer()
                 Button("Reveal") {
-                    NSWorkspace.shared.activateFileViewerSelecting([DmmsAiOAuthStore.oauthURL()])
+                    NSWorkspace.shared.activateFileViewerSelecting([DryadsAiOAuthStore.oauthURL()])
                 }
                 .buttonStyle(.bordered)
-                .disabled(!FileManager().fileExists(atPath: DmmsAiOAuthStore.oauthURL().path))
+                .disabled(!FileManager().fileExists(atPath: DryadsAiOAuthStore.oauthURL().path))
 
                 Button("Refresh") {
                     self.refresh()
@@ -53,7 +53,7 @@ struct AnthropicAuthControls: View {
                 .buttonStyle(.bordered)
             }
 
-            Text(DmmsAiOAuthStore.oauthURL().path)
+            Text(DryadsAiOAuthStore.oauthURL().path)
                 .font(.caption.monospaced())
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
@@ -130,8 +130,8 @@ struct AnthropicAuthControls: View {
     }
 
     private func refresh() {
-        let imported = DmmsAiOAuthStore.importLegacyAnthropicOAuthIfNeeded()
-        self.oauthStatus = DmmsAiOAuthStore.anthropicOAuthStatus()
+        let imported = DryadsAiOAuthStore.importLegacyAnthropicOAuthIfNeeded()
+        self.oauthStatus = DryadsAiOAuthStore.anthropicOAuthStatus()
         if imported != nil {
             self.statusText = "Imported existing OAuth credentials."
         }
@@ -172,11 +172,11 @@ struct AnthropicAuthControls: View {
                 code: parsed.code,
                 state: parsed.state,
                 verifier: pkce.verifier)
-            try DmmsAiOAuthStore.saveAnthropicOAuth(creds)
+            try DryadsAiOAuthStore.saveAnthropicOAuth(creds)
             self.refresh()
             self.pkce = nil
             self.code = ""
-            self.statusText = "Connected. DMMS AI can now use Claude via OAuth."
+            self.statusText = "Connected. Dryads AI can now use Claude via OAuth."
         } catch {
             self.statusText = "OAuth failed: \(error.localizedDescription)"
         }
@@ -212,7 +212,7 @@ struct AnthropicAuthControls: View {
 extension AnthropicAuthControls {
     init(
         connectionMode: AppState.ConnectionMode,
-        oauthStatus: DmmsAiOAuthStore.AnthropicOAuthStatus,
+        oauthStatus: DryadsAiOAuthStore.AnthropicOAuthStatus,
         pkce: AnthropicOAuth.PKCE? = nil,
         code: String = "",
         busy: Bool = false,

@@ -1,25 +1,25 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.SystemClock
 import androidx.core.content.ContextCompat
-import ai.dmmsai.android.chat.ChatController
-import ai.dmmsai.android.chat.ChatMessage
-import ai.dmmsai.android.chat.ChatPendingToolCall
-import ai.dmmsai.android.chat.ChatSessionEntry
-import ai.dmmsai.android.chat.OutgoingAttachment
-import ai.dmmsai.android.gateway.DeviceAuthStore
-import ai.dmmsai.android.gateway.DeviceIdentityStore
-import ai.dmmsai.android.gateway.GatewayDiscovery
-import ai.dmmsai.android.gateway.GatewayEndpoint
-import ai.dmmsai.android.gateway.GatewaySession
-import ai.dmmsai.android.gateway.probeGatewayTlsFingerprint
-import ai.dmmsai.android.node.*
-import ai.dmmsai.android.protocol.DmmsAiCanvasA2UIAction
-import ai.dmmsai.android.voice.TalkModeManager
-import ai.dmmsai.android.voice.VoiceWakeManager
+import ai.dryadsai.android.chat.ChatController
+import ai.dryadsai.android.chat.ChatMessage
+import ai.dryadsai.android.chat.ChatPendingToolCall
+import ai.dryadsai.android.chat.ChatSessionEntry
+import ai.dryadsai.android.chat.OutgoingAttachment
+import ai.dryadsai.android.gateway.DeviceAuthStore
+import ai.dryadsai.android.gateway.DeviceIdentityStore
+import ai.dryadsai.android.gateway.GatewayDiscovery
+import ai.dryadsai.android.gateway.GatewayEndpoint
+import ai.dryadsai.android.gateway.GatewaySession
+import ai.dryadsai.android.gateway.probeGatewayTlsFingerprint
+import ai.dryadsai.android.node.*
+import ai.dryadsai.android.protocol.DryadsAiCanvasA2UIAction
+import ai.dryadsai.android.voice.TalkModeManager
+import ai.dryadsai.android.voice.VoiceWakeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -619,7 +619,7 @@ class NodeRuntime(context: Context) {
       val actionId = (userActionObj["id"] as? JsonPrimitive)?.content?.trim().orEmpty().ifEmpty {
         java.util.UUID.randomUUID().toString()
       }
-      val name = DmmsAiCanvasA2UIAction.extractActionName(userActionObj) ?: return@launch
+      val name = DryadsAiCanvasA2UIAction.extractActionName(userActionObj) ?: return@launch
 
       val surfaceId =
         (userActionObj["surfaceId"] as? JsonPrimitive)?.content?.trim().orEmpty().ifEmpty { "main" }
@@ -629,7 +629,7 @@ class NodeRuntime(context: Context) {
 
       val sessionKey = resolveMainSessionKey()
       val message =
-        DmmsAiCanvasA2UIAction.formatAgentMessage(
+        DryadsAiCanvasA2UIAction.formatAgentMessage(
           actionName = name,
           sessionKey = sessionKey,
           surfaceId = surfaceId,
@@ -663,7 +663,7 @@ class NodeRuntime(context: Context) {
 
       try {
         canvas.eval(
-          DmmsAiCanvasA2UIAction.jsDispatchA2UIActionStatus(
+          DryadsAiCanvasA2UIAction.jsDispatchA2UIActionStatus(
             actionId = actionId,
             ok = connected && error == null,
             error = error,

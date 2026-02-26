@@ -1,4 +1,4 @@
-import { buildChannelConfigSchema } from "dmms-ai/plugin-sdk";
+import { buildChannelConfigSchema } from "dryads-ai/plugin-sdk";
 import { z } from "zod";
 
 const ShipSchema = z.string().min(1);

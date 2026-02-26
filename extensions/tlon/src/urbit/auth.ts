@@ -1,4 +1,4 @@
-import type { LookupFn, SsrFPolicy } from "dmms-ai/plugin-sdk";
+import type { LookupFn, SsrFPolicy } from "dryads-ai/plugin-sdk";
 import { UrbitAuthError } from "./errors.js";
 import { urbitFetch } from "./fetch.js";
 

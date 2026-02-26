@@ -270,7 +270,7 @@ export async function processMessage(params: {
   const responsePrefix =
     prefixOptions.responsePrefix ??
     (configuredResponsePrefix === undefined && isSelfChat
-      ? (resolveIdentityNamePrefix(params.cfg, params.route.agentId) ?? "[dmms-ai]")
+      ? (resolveIdentityNamePrefix(params.cfg, params.route.agentId) ?? "[dryads-ai]")
       : undefined);
 
   const inboundHistory =

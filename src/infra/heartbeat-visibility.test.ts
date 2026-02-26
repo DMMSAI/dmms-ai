@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { resolveHeartbeatVisibility } from "./heartbeat-visibility.js";
 
 describe("resolveHeartbeatVisibility", () => {
-  function createTelegramAccountHeartbeatConfig(): DmmsAiConfig {
+  function createTelegramAccountHeartbeatConfig(): DryadsAiConfig {
     return {
       channels: {
         telegram: {
@@ -19,11 +19,11 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
   }
 
   it("returns default values when no config is provided", () => {
-    const cfg = {} as DmmsAiConfig;
+    const cfg = {} as DryadsAiConfig;
     const result = resolveHeartbeatVisibility({ cfg, channel: "telegram" });
 
     expect(result).toEqual({
@@ -44,7 +44,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "telegram" });
 
@@ -71,7 +71,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "telegram" });
 
@@ -107,7 +107,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({
       cfg,
@@ -139,7 +139,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({
       cfg,
@@ -182,7 +182,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "whatsapp" });
 
@@ -202,7 +202,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "discord" });
 
@@ -224,7 +224,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "slack" });
 
@@ -246,7 +246,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "webchat" });
 
@@ -258,7 +258,7 @@ describe("resolveHeartbeatVisibility", () => {
   });
 
   it("webchat returns defaults when no channel defaults configured", () => {
-    const cfg = {} as DmmsAiConfig;
+    const cfg = {} as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({ cfg, channel: "webchat" });
 
@@ -278,7 +278,7 @@ describe("resolveHeartbeatVisibility", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const result = resolveHeartbeatVisibility({
       cfg,

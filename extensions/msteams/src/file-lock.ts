@@ -1,1 +1,1 @@
-export { withFileLock } from "dmms-ai/plugin-sdk";
+export { withFileLock } from "dryads-ai/plugin-sdk";

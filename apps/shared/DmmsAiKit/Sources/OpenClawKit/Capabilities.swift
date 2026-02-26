@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiCapability: String, Codable, Sendable {
+public enum DryadsAiCapability: String, Codable, Sendable {
     case canvas
     case camera
     case screen

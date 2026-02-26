@@ -8,7 +8,11 @@ import { ensureAuthProfileStore } from "./store.js";
 import type { AuthProfileStore } from "./types.js";
 
 describe("resolveApiKeyForProfile fallback to main agent", () => {
-  const envSnapshot = captureEnv(["DMMS_AI_STATE_DIR", "DMMS_AI_AGENT_DIR", "PI_CODING_AGENT_DIR"]);
+  const envSnapshot = captureEnv([
+    "DRYADS_AI_STATE_DIR",
+    "DRYADS_AI_AGENT_DIR",
+    "PI_CODING_AGENT_DIR",
+  ]);
   let tmpDir: string;
   let mainAgentDir: string;
   let secondaryAgentDir: string;
@@ -20,9 +24,9 @@ describe("resolveApiKeyForProfile fallback to main agent", () => {
     await fs.mkdir(mainAgentDir, { recursive: true });
     await fs.mkdir(secondaryAgentDir, { recursive: true });
 
-    // Set environment variables so resolveDmmsAiAgentDir() returns mainAgentDir
-    process.env.DMMS_AI_STATE_DIR = tmpDir;
-    process.env.DMMS_AI_AGENT_DIR = mainAgentDir;
+    // Set environment variables so resolveDryadsAiAgentDir() returns mainAgentDir
+    process.env.DRYADS_AI_STATE_DIR = tmpDir;
+    process.env.DRYADS_AI_AGENT_DIR = mainAgentDir;
     process.env.PI_CODING_AGENT_DIR = mainAgentDir;
   });
 

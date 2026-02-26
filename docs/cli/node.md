@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai node` (headless node host)"
+summary: "CLI reference for `dryads-ai node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 title: "node"
 ---
 
-# `dmms-ai node`
+# `dryads-ai node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -46,7 +46,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-dmms-ai node run --host <gateway-host> --port 18789
+dryads-ai node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -63,7 +63,7 @@ Options:
 Install a headless node host as a user service.
 
 ```bash
-dmms-ai node install --host <gateway-host> --port 18789
+dryads-ai node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -80,13 +80,13 @@ Options:
 Manage the service:
 
 ```bash
-dmms-ai node status
-dmms-ai node stop
-dmms-ai node restart
-dmms-ai node uninstall
+dryads-ai node status
+dryads-ai node stop
+dryads-ai node restart
+dryads-ai node uninstall
 ```
 
-Use `dmms-ai node run` for a foreground node host (no service).
+Use `dryads-ai node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -96,17 +96,17 @@ The first connection creates a pending node pair request on the Gateway.
 Approve it via:
 
 ```bash
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
-`~/.dmms-ai/node.json`.
+`~/.dryads-ai/node.json`.
 
 ## Exec approvals
 
 `system.run` is gated by local exec approvals:
 
-- `~/.dmms-ai/exec-approvals.json`
+- `~/.dryads-ai/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `dmms-ai approvals --node <id|name|ip>` (edit from the Gateway)
+- `dryads-ai approvals --node <id|name|ip>` (edit from the Gateway)

@@ -1,12 +1,12 @@
 {
-  "name": "@dmms-ai/nextcloud-talk",
+  "name": "@dryads-ai/nextcloud-talk",
   "version": "2026.2.18",
-  "description": "DMMS AI Nextcloud Talk channel plugin",
+  "description": "Dryads AI Nextcloud Talk channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/nextcloud-talk",
+      "npmSpec": "@dryads-ai/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }

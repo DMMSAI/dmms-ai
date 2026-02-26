@@ -43,6 +43,6 @@ export async function stopKnownBrowserProfiles(params: {
       }
     }
   } catch (err) {
-    params.onWarn(`dmms-ai browser stop failed: ${String(err)}`);
+    params.onWarn(`dryads-ai browser stop failed: ${String(err)}`);
   }
 }

@@ -1,4 +1,4 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 
-public typealias AnyCodable = DmmsAiProtocol.AnyCodable
+public typealias AnyCodable = DryadsAiProtocol.AnyCodable
 

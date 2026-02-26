@@ -12,7 +12,7 @@ Status: external CLI integration. Gateway talks to `signal-cli` over HTTP JSON-R
 
 ## Prerequisites
 
-- DMMS AI installed on your server (Linux flow below tested on Ubuntu 24).
+- Dryads AI installed on your server (Linux flow below tested on Ubuntu 24).
 - `signal-cli` available on the host where the gateway runs.
 - A phone number that can receive one verification SMS (for SMS registration path).
 - Browser access for Signal captcha (`signalcaptchas.org`) during registration.
@@ -22,10 +22,10 @@ Status: external CLI integration. Gateway talks to `signal-cli` over HTTP JSON-R
 1. Use a **separate Signal number** for the bot (recommended).
 2. Install `signal-cli` (Java required if you use the JVM build).
 3. Choose one setup path:
-   - **Path A (QR link):** `signal-cli link -n "DMMS AI"` and scan with Signal.
+   - **Path A (QR link):** `signal-cli link -n "Dryads AI"` and scan with Signal.
    - **Path B (SMS register):** register a dedicated number with captcha + SMS verification.
-4. Configure DMMS AI and restart the gateway.
-5. Send a first DM and approve pairing (`dmms-ai pairing approve signal <CODE>`).
+4. Configure Dryads AI and restart the gateway.
+5. Send a first DM and approve pairing (`dryads-ai pairing approve signal <CODE>`).
 
 Minimal config:
 
@@ -80,7 +80,7 @@ Disable with:
 
 1. Install `signal-cli` (JVM or native build).
 2. Link a bot account:
-   - `signal-cli link -n "DMMS AI"` then scan the QR in Signal.
+   - `signal-cli link -n "Dryads AI"` then scan the QR in Signal.
 3. Configure Signal and start the gateway.
 
 Example:
@@ -138,20 +138,20 @@ signal-cli -a +<BOT_PHONE_NUMBER> register --captcha '<SIGNALCAPTCHA_URL>'
 signal-cli -a +<BOT_PHONE_NUMBER> verify <VERIFICATION_CODE>
 ```
 
-4. Configure DMMS AI, restart gateway, verify channel:
+4. Configure Dryads AI, restart gateway, verify channel:
 
 ```bash
 # If you run the gateway as a user systemd service:
-systemctl --user restart dmms-ai-gateway
+systemctl --user restart dryads-ai-gateway
 
 # Then verify:
-dmms-ai doctor
-dmms-ai channels status --probe
+dryads-ai doctor
+dryads-ai channels status --probe
 ```
 
 5. Pair your DM sender:
    - Send any message to the bot number.
-   - Approve code on the server: `dmms-ai pairing approve signal <PAIRING_CODE>`.
+   - Approve code on the server: `dryads-ai pairing approve signal <PAIRING_CODE>`.
    - Save the bot number as a contact on your phone to avoid "Unknown contact".
 
 Important: registering a phone number account with `signal-cli` can de-authenticate the main Signal app session for that number. Prefer a dedicated bot number, or use QR link mode if you need to keep your existing phone app setup.
@@ -164,7 +164,7 @@ Upstream references:
 
 ## External daemon mode (httpUrl)
 
-If you want to manage `signal-cli` yourself (slow JVM cold starts, container init, or shared CPUs), run the daemon separately and point DMMS AI at it:
+If you want to manage `signal-cli` yourself (slow JVM cold starts, container init, or shared CPUs), run the daemon separately and point Dryads AI at it:
 
 ```json5
 {
@@ -177,7 +177,7 @@ If you want to manage `signal-cli` yourself (slow JVM cold starts, container ini
 }
 ```
 
-This skips auto-spawn and the startup wait inside DMMS AI. For slow starts when auto-spawning, set `channels.signal.startupTimeoutMs`.
+This skips auto-spawn and the startup wait inside Dryads AI. For slow starts when auto-spawning, set `channels.signal.startupTimeoutMs`.
 
 ## Access control (DMs + groups)
 
@@ -186,8 +186,8 @@ DMs:
 - Default: `channels.signal.dmPolicy = "pairing"`.
 - Unknown senders receive a pairing code; messages are ignored until approved (codes expire after 1 hour).
 - Approve via:
-  - `dmms-ai pairing list signal`
-  - `dmms-ai pairing approve signal <CODE>`
+  - `dryads-ai pairing list signal`
+  - `dryads-ai pairing approve signal <CODE>`
 - Pairing is the default token exchange for Signal DMs. Details: [Pairing](/channels/pairing)
 - UUID-only senders (from `sourceUuid`) are stored as `uuid:<id>` in `channels.signal.allowFrom`.
 
@@ -213,8 +213,8 @@ Groups:
 
 ## Typing + read receipts
 
-- **Typing indicators**: DMMS AI sends typing signals via `signal-cli sendTyping` and refreshes them while a reply is running.
-- **Read receipts**: when `channels.signal.sendReadReceipts` is true, DMMS AI forwards read receipts for allowed DMs.
+- **Typing indicators**: Dryads AI sends typing signals via `signal-cli sendTyping` and refreshes them while a reply is running.
+- **Read receipts**: when `channels.signal.sendReadReceipts` is true, Dryads AI forwards read receipts for allowed DMs.
 - Signal-cli does not expose read receipts for groups.
 
 ## Reactions (message tool)
@@ -252,17 +252,17 @@ Config:
 Run this ladder first:
 
 ```bash
-dmms-ai status
-dmms-ai gateway status
-dmms-ai logs --follow
-dmms-ai doctor
-dmms-ai channels status --probe
+dryads-ai status
+dryads-ai gateway status
+dryads-ai logs --follow
+dryads-ai doctor
+dryads-ai channels status --probe
 ```
 
 Then confirm DM pairing state if needed:
 
 ```bash
-dmms-ai pairing list signal
+dryads-ai pairing list signal
 ```
 
 Common failures:
@@ -270,15 +270,15 @@ Common failures:
 - Daemon reachable but no replies: verify account/daemon settings (`httpUrl`, `account`) and receive mode.
 - DMs ignored: sender is pending pairing approval.
 - Group messages ignored: group sender/mention gating blocks delivery.
-- Config validation errors after edits: run `dmms-ai doctor --fix`.
+- Config validation errors after edits: run `dryads-ai doctor --fix`.
 - Signal missing from diagnostics: confirm `channels.signal.enabled: true`.
 
 Extra checks:
 
 ```bash
-dmms-ai pairing list signal
+dryads-ai pairing list signal
 pgrep -af signal-cli
-grep -i "signal" "/tmp/dmms-ai/dmms-ai-$(date +%Y-%m-%d).log" | tail -20
+grep -i "signal" "/tmp/dryads-ai/dryads-ai-$(date +%Y-%m-%d).log" | tail -20
 ```
 
 For triage flow: [/channels/troubleshooting](/channels/troubleshooting).

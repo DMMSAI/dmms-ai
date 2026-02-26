@@ -1,4 +1,4 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import ai.dmmsai.android.BuildConfig
+import ai.dryadsai.android.BuildConfig
 import kotlin.coroutines.resume
 
 class CanvasController {
@@ -84,12 +84,12 @@ class CanvasController {
     withWebViewOnMain { wv ->
       if (currentUrl == null) {
         if (BuildConfig.DEBUG) {
-          Log.d("DmmsAiCanvas", "load scaffold: $scaffoldAssetUrl")
+          Log.d("DryadsAiCanvas", "load scaffold: $scaffoldAssetUrl")
         }
         wv.loadUrl(scaffoldAssetUrl)
       } else {
         if (BuildConfig.DEBUG) {
-          Log.d("DmmsAiCanvas", "load url: $currentUrl")
+          Log.d("DryadsAiCanvas", "load url: $currentUrl")
         }
         wv.loadUrl(currentUrl)
       }
@@ -106,7 +106,7 @@ class CanvasController {
       val js = """
         (() => {
           try {
-            const api = globalThis.__dmmsai;
+            const api = globalThis.__dryadsai;
             if (!api) return;
             if (typeof api.setDebugStatusEnabled === 'function') {
               api.setDebugStatusEnabled(${if (enabled) "true" else "false"});

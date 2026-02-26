@@ -31,7 +31,7 @@ export function parseFrontmatterBool(value: string | undefined, fallback: boolea
   return parsed === undefined ? fallback : parsed;
 }
 
-export function resolveDmmsAiManifestBlock(params: {
+export function resolveDryadsAiManifestBlock(params: {
   frontmatter: Record<string, unknown>;
   key?: string;
 }): Record<string, unknown> | undefined {
@@ -59,16 +59,16 @@ export function resolveDmmsAiManifestBlock(params: {
   }
 }
 
-export type DmmsAiManifestRequires = {
+export type DryadsAiManifestRequires = {
   bins: string[];
   anyBins: string[];
   env: string[];
   config: string[];
 };
 
-export function resolveDmmsAiManifestRequires(
+export function resolveDryadsAiManifestRequires(
   metadataObj: Record<string, unknown>,
-): DmmsAiManifestRequires | undefined {
+): DryadsAiManifestRequires | undefined {
   const requiresRaw =
     typeof metadataObj.requires === "object" && metadataObj.requires !== null
       ? (metadataObj.requires as Record<string, unknown>)
@@ -84,7 +84,7 @@ export function resolveDmmsAiManifestRequires(
   };
 }
 
-export function resolveDmmsAiManifestInstall<T>(
+export function resolveDryadsAiManifestInstall<T>(
   metadataObj: Record<string, unknown>,
   parseInstallSpec: (input: unknown) => T | undefined,
 ): T[] {
@@ -94,11 +94,11 @@ export function resolveDmmsAiManifestInstall<T>(
     .filter((entry): entry is T => Boolean(entry));
 }
 
-export function resolveDmmsAiManifestOs(metadataObj: Record<string, unknown>): string[] {
+export function resolveDryadsAiManifestOs(metadataObj: Record<string, unknown>): string[] {
   return normalizeStringList(metadataObj.os);
 }
 
-export type ParsedDmmsAiManifestInstallBase = {
+export type ParsedDryadsAiManifestInstallBase = {
   raw: Record<string, unknown>;
   kind: string;
   id?: string;
@@ -106,10 +106,10 @@ export type ParsedDmmsAiManifestInstallBase = {
   bins?: string[];
 };
 
-export function parseDmmsAiManifestInstallBase(
+export function parseDryadsAiManifestInstallBase(
   input: unknown,
   allowedKinds: readonly string[],
-): ParsedDmmsAiManifestInstallBase | undefined {
+): ParsedDryadsAiManifestInstallBase | undefined {
   if (!input || typeof input !== "object") {
     return undefined;
   }
@@ -121,7 +121,7 @@ export function parseDmmsAiManifestInstallBase(
     return undefined;
   }
 
-  const spec: ParsedDmmsAiManifestInstallBase = {
+  const spec: ParsedDryadsAiManifestInstallBase = {
     raw,
     kind,
   };

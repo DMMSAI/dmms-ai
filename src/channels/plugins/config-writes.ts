@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { normalizeAccountId } from "../../routing/session-key.js";
 import type { ChannelId } from "./types.js";
 
@@ -21,7 +21,7 @@ function resolveAccountConfig(accounts: ChannelConfigWithAccounts["accounts"], a
 }
 
 export function resolveChannelConfigWrites(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channelId?: ChannelId | null;
   accountId?: string | null;
 }): boolean {

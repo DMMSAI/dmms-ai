@@ -80,12 +80,12 @@ describe("legacy config detection", () => {
   });
   it("migrates routing.groupChat.mentionPatterns to messages.groupChat.mentionPatterns", async () => {
     const res = migrateLegacyConfig({
-      routing: { groupChat: { mentionPatterns: ["@dmms-ai"] } },
+      routing: { groupChat: { mentionPatterns: ["@dryads-ai"] } },
     });
     expect(res.changes).toContain(
       "Moved routing.groupChat.mentionPatterns → messages.groupChat.mentionPatterns.",
     );
-    expect(res.config?.messages?.groupChat?.mentionPatterns).toEqual(["@dmms-ai"]);
+    expect(res.config?.messages?.groupChat?.mentionPatterns).toEqual(["@dryads-ai"]);
     expect(getLegacyRouting(res.config)?.groupChat).toBeUndefined();
   });
   it("migrates routing agentToAgent/queue/transcribeAudio to tools/messages/media", async () => {
@@ -287,7 +287,7 @@ describe("legacy config detection", () => {
         list: [
           {
             id: "work",
-            workspace: "~/dmms-ai-work",
+            workspace: "~/dryads-ai-work",
             tools: {
               elevated: {
                 enabled: false,

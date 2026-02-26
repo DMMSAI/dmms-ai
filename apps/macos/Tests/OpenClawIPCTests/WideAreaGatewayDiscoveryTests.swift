@@ -1,11 +1,11 @@
 import Darwin
 import Testing
-@testable import DmmsAiDiscovery
+@testable import DryadsAiDiscovery
 
 @Suite
 struct WideAreaGatewayDiscoveryTests {
     @Test func discoversBeaconFromTailnetDnsSdFallback() {
-        setenv("DMMS_AI_WIDE_AREA_DOMAIN", "dmms-ai.internal", 1)
+        setenv("DRYADS_AI_WIDE_AREA_DOMAIN", "dryads-ai.internal", 1)
         let statusJson = """
         {
           "Self": { "TailscaleIPs": ["100.69.232.64"] },
@@ -22,15 +22,15 @@ struct WideAreaGatewayDiscoveryTests {
                 let nameserver = args.first(where: { $0.hasPrefix("@") }) ?? ""
                 if recordType == "PTR" {
                     if nameserver == "@100.123.224.76" {
-                        return "steipetacstudio-gateway._dmms-ai-gw._tcp.dmms-ai.internal.\n"
+                        return "steipetacstudio-gateway._dryads-ai-gw._tcp.dryads-ai.internal.\n"
                     }
                     return ""
                 }
                 if recordType == "SRV" {
-                    return "0 0 18789 steipetacstudio.dmms-ai.internal."
+                    return "0 0 18789 steipetacstudio.dryads-ai.internal."
                 }
                 if recordType == "TXT" {
-                    return "\"displayName=Peter\\226\\128\\153s Mac Studio (DMMS AI)\" \"gatewayPort=18789\" \"tailnetDns=peters-mac-studio-1.sheep-coho.ts.net\" \"cliPath=/Users/steipete/dmms-ai/src/entry.ts\""
+                    return "\"displayName=Peter\\226\\128\\153s Mac Studio (Dryads AI)\" \"gatewayPort=18789\" \"tailnetDns=peters-mac-studio-1.sheep-coho.ts.net\" \"cliPath=/Users/steipete/dryads-ai/src/entry.ts\""
                 }
                 return ""
             })
@@ -41,11 +41,11 @@ struct WideAreaGatewayDiscoveryTests {
 
         #expect(beacons.count == 1)
         let beacon = beacons[0]
-        let expectedDisplay = "Peter\u{2019}s Mac Studio (DMMS AI)"
+        let expectedDisplay = "Peter\u{2019}s Mac Studio (Dryads AI)"
         #expect(beacon.displayName == expectedDisplay)
         #expect(beacon.port == 18789)
         #expect(beacon.gatewayPort == 18789)
         #expect(beacon.tailnetDns == "peters-mac-studio-1.sheep-coho.ts.net")
-        #expect(beacon.cliPath == "/Users/steipete/dmms-ai/src/entry.ts")
+        #expect(beacon.cliPath == "/Users/steipete/dryads-ai/src/entry.ts")
     }
 }

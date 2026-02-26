@@ -1,5 +1,5 @@
 ---
-summary: "Use OpenCode Zen (curated models) with DMMS AI"
+summary: "Use OpenCode Zen (curated models) with Dryads AI"
 read_when:
   - You want OpenCode Zen for model access
   - You want a curated list of coding-friendly models
@@ -15,9 +15,9 @@ Zen is currently in beta.
 ## CLI setup
 
 ```bash
-dmms-ai onboard --auth-choice opencode-zen
+dryads-ai onboard --auth-choice opencode-zen
 # or non-interactive
-dmms-ai onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
+dryads-ai onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 ```
 
 ## Config snippet

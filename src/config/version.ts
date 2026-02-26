@@ -1,4 +1,4 @@
-export type DmmsAiVersion = {
+export type DryadsAiVersion = {
   major: number;
   minor: number;
   patch: number;
@@ -7,7 +7,7 @@ export type DmmsAiVersion = {
 
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
 
-export function parseDmmsAiVersion(raw: string | null | undefined): DmmsAiVersion | null {
+export function parseDryadsAiVersion(raw: string | null | undefined): DryadsAiVersion | null {
   if (!raw) {
     return null;
   }
@@ -24,12 +24,12 @@ export function parseDmmsAiVersion(raw: string | null | undefined): DmmsAiVersio
   };
 }
 
-export function compareDmmsAiVersions(
+export function compareDryadsAiVersions(
   a: string | null | undefined,
   b: string | null | undefined,
 ): number | null {
-  const parsedA = parseDmmsAiVersion(a);
-  const parsedB = parseDmmsAiVersion(b);
+  const parsedA = parseDryadsAiVersion(a);
+  const parsedB = parseDryadsAiVersion(b);
   if (!parsedA || !parsedB) {
     return null;
   }

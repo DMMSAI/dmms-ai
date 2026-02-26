@@ -6,14 +6,14 @@ function createSandboxContext(overrides?: Partial<SandboxContext>): SandboxConte
   const base = {
     enabled: true,
     sessionKey: "session:test",
-    workspaceDir: "/tmp/dmms-ai-sandbox",
-    agentWorkspaceDir: "/tmp/dmms-ai-workspace",
+    workspaceDir: "/tmp/dryads-ai-sandbox",
+    agentWorkspaceDir: "/tmp/dryads-ai-workspace",
     workspaceAccess: "none",
-    containerName: "dmms-ai-sbx-test",
+    containerName: "dryads-ai-sbx-test",
     containerWorkdir: "/workspace",
     docker: {
-      image: "dmms-ai-sandbox:bookworm-slim",
-      containerPrefix: "dmms-ai-sbx-",
+      image: "dryads-ai-sandbox:bookworm-slim",
+      containerPrefix: "dryads-ai-sbx-",
       workdir: "/workspace",
       readOnlyRoot: true,
       tmpfs: ["/tmp"],
@@ -30,7 +30,7 @@ function createSandboxContext(overrides?: Partial<SandboxContext>): SandboxConte
     browser: {
       bridgeUrl: "http://localhost:9222",
       noVncUrl: "http://localhost:6080",
-      containerName: "dmms-ai-sbx-browser-test",
+      containerName: "dryads-ai-sbx-browser-test",
     },
   } satisfies SandboxContext;
   return { ...base, ...overrides };
@@ -46,7 +46,7 @@ describe("buildEmbeddedSandboxInfo", () => {
 
     expect(buildEmbeddedSandboxInfo(sandbox)).toEqual({
       enabled: true,
-      workspaceDir: "/tmp/dmms-ai-sandbox",
+      workspaceDir: "/tmp/dryads-ai-sandbox",
       containerWorkspaceDir: "/workspace",
       workspaceAccess: "none",
       agentWorkspaceMount: undefined,
@@ -70,7 +70,7 @@ describe("buildEmbeddedSandboxInfo", () => {
       }),
     ).toEqual({
       enabled: true,
-      workspaceDir: "/tmp/dmms-ai-sandbox",
+      workspaceDir: "/tmp/dryads-ai-sandbox",
       containerWorkspaceDir: "/workspace",
       workspaceAccess: "none",
       agentWorkspaceMount: undefined,

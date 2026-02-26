@@ -1,4 +1,4 @@
-package ai.dmmsai.android.voice
+package ai.dryadsai.android.voice
 
 import android.Manifest
 import android.content.Context
@@ -20,9 +20,9 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import androidx.core.content.ContextCompat
-import ai.dmmsai.android.gateway.GatewaySession
-import ai.dmmsai.android.isCanonicalMainSessionKey
-import ai.dmmsai.android.normalizeMainKey
+import ai.dryadsai.android.gateway.GatewaySession
+import ai.dryadsai.android.isCanonicalMainSessionKey
+import ai.dryadsai.android.normalizeMainKey
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.UUID

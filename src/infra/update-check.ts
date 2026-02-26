@@ -302,7 +302,7 @@ export async function fetchNpmTagVersion(params: {
   const tag = params.tag;
   try {
     const res = await fetchWithTimeout(
-      `https://registry.npmjs.org/dmms-ai/${encodeURIComponent(tag)}`,
+      `https://registry.npmjs.org/dryads-ai/${encodeURIComponent(tag)}`,
       {},
       Math.max(250, timeoutMs),
     );

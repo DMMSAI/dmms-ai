@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 object WakeWords {
   const val maxWords: Int = 32

@@ -1,17 +1,17 @@
 ---
-summary: "DMMS AI on Raspberry Pi (budget self-hosted setup)"
+summary: "Dryads AI on Raspberry Pi (budget self-hosted setup)"
 read_when:
-  - Setting up DMMS AI on a Raspberry Pi
-  - Running DMMS AI on ARM devices
+  - Setting up Dryads AI on a Raspberry Pi
+  - Running Dryads AI on ARM devices
   - Building a cheap always-on personal AI
 title: "Raspberry Pi"
 ---
 
-# DMMS AI on Raspberry Pi
+# Dryads AI on Raspberry Pi
 
 ## Goal
 
-Run a persistent, always-on DMMS AI Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
+Run a persistent, always-on Dryads AI Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
 
 Perfect for:
 
@@ -107,19 +107,19 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-## 6) Install DMMS AI
+## 6) Install Dryads AI
 
 ### Option A: Standard Install (Recommended)
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash
+curl -fsSL https://dryads-ai.com/install.sh | bash
 ```
 
 ### Option B: Hackable Install (For tinkering)
 
 ```bash
-git clone https://github.com/dmms-ai/dmms-ai.git
-cd dmms-ai
+git clone https://github.com/dryads-ai/dryads-ai.git
+cd dryads-ai
 npm install
 npm run build
 npm link
@@ -130,7 +130,7 @@ The hackable install gives you direct access to logs and code — useful for deb
 ## 7) Run Onboarding
 
 ```bash
-dmms-ai onboard --install-daemon
+dryads-ai onboard --install-daemon
 ```
 
 Follow the wizard:
@@ -144,13 +144,13 @@ Follow the wizard:
 
 ```bash
 # Check status
-dmms-ai status
+dryads-ai status
 
 # Check service
-sudo systemctl status dmms-ai
+sudo systemctl status dryads-ai
 
 # View logs
-journalctl -u dmms-ai -f
+journalctl -u dryads-ai -f
 ```
 
 ## 9) Access the Dashboard
@@ -173,8 +173,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
 # Update config
-dmms-ai config set gateway.bind tailnet
-sudo systemctl restart dmms-ai
+dryads-ai config set gateway.bind tailnet
+sudo systemctl restart dryads-ai
 ```
 
 ---
@@ -221,7 +221,7 @@ htop
 
 ### Binary Compatibility
 
-Most DMMS AI features work on ARM64, but some external binaries may need ARM builds:
+Most Dryads AI features work on ARM64, but some external binaries may need ARM builds:
 
 | Tool               | ARM64 Status | Notes                               |
 | ------------------ | ------------ | ----------------------------------- |
@@ -271,13 +271,13 @@ The onboarding wizard sets this up, but to verify:
 
 ```bash
 # Check service is enabled
-sudo systemctl is-enabled dmms-ai
+sudo systemctl is-enabled dryads-ai
 
 # Enable if not
-sudo systemctl enable dmms-ai
+sudo systemctl enable dryads-ai
 
 # Start on boot
-sudo systemctl start dmms-ai
+sudo systemctl start dryads-ai
 ```
 
 ---
@@ -304,12 +304,12 @@ free -h
 
 ```bash
 # Check logs
-journalctl -u dmms-ai --no-pager -n 100
+journalctl -u dryads-ai --no-pager -n 100
 
 # Common fix: rebuild
-cd ~/dmms-ai  # if using hackable install
+cd ~/dryads-ai  # if using hackable install
 npm run build
-sudo systemctl restart dmms-ai
+sudo systemctl restart dryads-ai
 ```
 
 ### ARM Binary Issues

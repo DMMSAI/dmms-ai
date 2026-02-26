@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 
 const handleDiscordAction = vi.fn(async (..._args: unknown[]) => ({ details: { ok: true } }));
 const handleTelegramAction = vi.fn(async (..._args: unknown[]) => ({ ok: true }));
@@ -30,12 +30,12 @@ const { telegramMessageActions } = await import("./telegram.js");
 const { signalMessageActions } = await import("./signal.js");
 const { createSlackActions } = await import("../slack.actions.js");
 
-function telegramCfg(): DmmsAiConfig {
-  return { channels: { telegram: { botToken: "tok" } } } as DmmsAiConfig;
+function telegramCfg(): DryadsAiConfig {
+  return { channels: { telegram: { botToken: "tok" } } } as DryadsAiConfig;
 }
 
 function slackHarness() {
-  const cfg = { channels: { slack: { botToken: "tok" } } } as DmmsAiConfig;
+  const cfg = { channels: { slack: { botToken: "tok" } } } as DryadsAiConfig;
   const actions = createSlackActions("slack");
   return { cfg, actions };
 }
@@ -88,7 +88,7 @@ beforeEach(() => {
 
 describe("discord message actions", () => {
   it("lists channel and upload actions by default", async () => {
-    const cfg = { channels: { discord: { token: "d0" } } } as DmmsAiConfig;
+    const cfg = { channels: { discord: { token: "d0" } } } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).toContain("emoji-upload");
@@ -99,7 +99,7 @@ describe("discord message actions", () => {
   it("respects disabled channel actions", async () => {
     const cfg = {
       channels: { discord: { token: "d0", actions: { channels: false } } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).not.toContain("channel-create");
@@ -114,7 +114,7 @@ describe("discord message actions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     expectModerationActions(actions);
@@ -130,7 +130,7 @@ describe("discord message actions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     expectModerationActions(actions);
@@ -146,7 +146,7 @@ describe("discord message actions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     // moderation defaults to false, so without explicit true it stays hidden
@@ -165,7 +165,7 @@ describe("discord message actions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).toContain("timeout");
@@ -182,7 +182,7 @@ describe("discord message actions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = discordMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).toContain("timeout");
@@ -198,7 +198,7 @@ describe("handleDiscordMessageAction", () => {
         to: "channel:123",
         message: "hi",
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
       accountId: "ops",
     });
 
@@ -223,7 +223,7 @@ describe("handleDiscordMessageAction", () => {
         message: "hi",
         embeds,
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
     });
 
     expect(handleDiscordAction).toHaveBeenCalledWith(
@@ -246,7 +246,7 @@ describe("handleDiscordMessageAction", () => {
         pollOption: ["Yes", "No"],
         accountId: "marve",
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
     });
 
     expect(handleDiscordAction).toHaveBeenCalledWith(
@@ -268,7 +268,7 @@ describe("handleDiscordMessageAction", () => {
         channelId: "123",
         message: "hi",
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
       accountId: "ops",
     });
 
@@ -293,7 +293,7 @@ describe("handleDiscordMessageAction", () => {
         channelId: "123",
         message: "hi",
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
       accountId: "ops",
     });
 
@@ -316,7 +316,7 @@ describe("handleDiscordMessageAction", () => {
         threadName: "Forum thread",
         message: "Initial forum post body",
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
     });
 
     expect(handleDiscordAction).toHaveBeenCalledWith(
@@ -339,7 +339,7 @@ describe("handleDiscordMessageAction", () => {
         locked: false,
         autoArchiveDuration: 1440,
       },
-      cfg: {} as DmmsAiConfig,
+      cfg: {} as DryadsAiConfig,
     });
 
     expect(handleDiscordAction).toHaveBeenCalledWith(
@@ -478,7 +478,7 @@ describe("telegramMessageActions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = telegramMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).toContain("sticker");
@@ -495,7 +495,7 @@ describe("telegramMessageActions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = telegramMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).not.toContain("sticker");
@@ -512,7 +512,7 @@ describe("telegramMessageActions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const actions = telegramMessageActions.listActions?.({ cfg }) ?? [];
 
     expect(actions).toContain("sticker");
@@ -577,14 +577,14 @@ describe("telegramMessageActions", () => {
 
 describe("signalMessageActions", () => {
   it("returns no actions when no configured accounts exist", () => {
-    const cfg = {} as DmmsAiConfig;
+    const cfg = {} as DryadsAiConfig;
     expect(signalMessageActions.listActions?.({ cfg }) ?? []).toEqual([]);
   });
 
   it("hides react when reactions are disabled", () => {
     const cfg = {
       channels: { signal: { account: "+15550001111", actions: { reactions: false } } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     expect(signalMessageActions.listActions?.({ cfg }) ?? []).toEqual(["send"]);
   });
 
@@ -598,7 +598,7 @@ describe("signalMessageActions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     expect(signalMessageActions.listActions?.({ cfg }) ?? []).toEqual(["send", "react"]);
   });
 
@@ -610,7 +610,7 @@ describe("signalMessageActions", () => {
   it("blocks reactions when action gate is disabled", async () => {
     const cfg = {
       channels: { signal: { account: "+15550001111", actions: { reactions: false } } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const handleAction = signalMessageActions.handleAction;
     if (!handleAction) {
       throw new Error("signal handleAction unavailable");
@@ -637,7 +637,7 @@ describe("signalMessageActions", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     await signalMessageActions.handleAction?.({
       channel: "signal",
@@ -655,7 +655,7 @@ describe("signalMessageActions", () => {
   it("normalizes uuid recipients", async () => {
     const cfg = {
       channels: { signal: { account: "+15550001111" } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     await signalMessageActions.handleAction?.({
       channel: "signal",
@@ -680,7 +680,7 @@ describe("signalMessageActions", () => {
   it("requires targetAuthor for group reactions", async () => {
     const cfg = {
       channels: { signal: { account: "+15550001111" } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const handleAction = signalMessageActions.handleAction;
     if (!handleAction) {
       throw new Error("signal handleAction unavailable");
@@ -700,7 +700,7 @@ describe("signalMessageActions", () => {
   it("passes groupId and targetAuthor for group reactions", async () => {
     const cfg = {
       channels: { signal: { account: "+15550001111" } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     await signalMessageActions.handleAction?.({
       channel: "signal",

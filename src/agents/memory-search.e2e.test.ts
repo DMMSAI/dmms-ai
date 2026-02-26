@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { resolveMemorySearchConfig } from "./memory-search.js";
 
-const asConfig = (cfg: DmmsAiConfig): DmmsAiConfig => cfg;
+const asConfig = (cfg: DryadsAiConfig): DryadsAiConfig => cfg;
 
 describe("memory search config", () => {
   it("returns null when disabled", () => {

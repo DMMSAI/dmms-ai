@@ -1,5 +1,5 @@
 ---
-summary: "DMMS AI CLI reference for `dmms-ai` commands, subcommands, and options"
+summary: "Dryads AI CLI reference for `dryads-ai` commands, subcommands, and options"
 read_when:
   - Adding or modifying CLI commands or options
   - Documenting new command surfaces
@@ -54,10 +54,10 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Global flags
 
-- `--dev`: isolate state under `~/.dmms-ai-dev` and shift default ports.
-- `--profile <name>`: isolate state under `~/.dmms-ai-<name>`.
+- `--dev`: isolate state under `~/.dryads-ai-dev` and shift default ports.
+- `--profile <name>`: isolate state under `~/.dryads-ai-<name>`.
 - `--no-color`: disable ANSI colors.
-- `--update`: shorthand for `dmms-ai update` (source installs only).
+- `--update`: shorthand for `dryads-ai update` (source installs only).
 - `-V`, `--version`, `-v`: print version and exit.
 
 ## Output styling
@@ -70,7 +70,7 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Color palette
 
-DMMS AI uses a lobster palette for CLI output.
+Dryads AI uses a lobster palette for CLI output.
 
 - `accent` (#FF5A2D): headings, labels, primary highlights.
 - `accentBright` (#FF7A3D): command names, emphasis.
@@ -86,7 +86,7 @@ Palette source of truth: `src/terminal/palette.ts` (aka “lobster seam”).
 ## Command tree
 
 ```
-dmms-ai [--dev] [--profile <name>] <command>
+dryads-ai [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -237,23 +237,23 @@ dmms-ai [--dev] [--profile <name>] <command>
   tui
 ```
 
-Note: plugins can add additional top-level commands (for example `dmms-ai voicecall`).
+Note: plugins can add additional top-level commands (for example `dryads-ai voicecall`).
 
 ## Security
 
-- `dmms-ai security audit` — audit config + local state for common security foot-guns.
-- `dmms-ai security audit --deep` — best-effort live Gateway probe.
-- `dmms-ai security audit --fix` — tighten safe defaults and chmod state/config.
+- `dryads-ai security audit` — audit config + local state for common security foot-guns.
+- `dryads-ai security audit --deep` — best-effort live Gateway probe.
+- `dryads-ai security audit --fix` — tighten safe defaults and chmod state/config.
 
 ## Plugins
 
 Manage extensions and their config:
 
-- `dmms-ai plugins list` — discover plugins (use `--json` for machine output).
-- `dmms-ai plugins info <id>` — show details for a plugin.
-- `dmms-ai plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
-- `dmms-ai plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
-- `dmms-ai plugins doctor` — report plugin load errors.
+- `dryads-ai plugins list` — discover plugins (use `--json` for machine output).
+- `dryads-ai plugins info <id>` — show details for a plugin.
+- `dryads-ai plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
+- `dryads-ai plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
+- `dryads-ai plugins doctor` — report plugin load errors.
 
 Most plugin changes require a gateway restart. See [/plugin](/tools/plugin).
 
@@ -261,9 +261,9 @@ Most plugin changes require a gateway restart. See [/plugin](/tools/plugin).
 
 Vector search over `MEMORY.md` + `memory/*.md`:
 
-- `dmms-ai memory status` — show index stats.
-- `dmms-ai memory index` — reindex memory files.
-- `dmms-ai memory search "<query>"` — semantic search over memory.
+- `dryads-ai memory status` — show index stats.
+- `dryads-ai memory index` — reindex memory files.
+- `dryads-ai memory search "<query>"` — semantic search over memory.
 
 ## Chat slash commands
 
@@ -283,7 +283,7 @@ Initialize config + workspace.
 
 Options:
 
-- `--workspace <dir>`: agent workspace path (default `~/.dmms-ai/workspace`).
+- `--workspace <dir>`: agent workspace path (default `~/.dryads-ai/workspace`).
 - `--wizard`: run the onboarding wizard.
 - `--non-interactive`: run wizard without prompts.
 - `--mode <local|remote>`: wizard mode.
@@ -348,7 +348,7 @@ Interactive configuration wizard (models, channels, skills, gateway).
 
 ### `config`
 
-Non-interactive config helpers (get/set/unset). Running `dmms-ai config` with no
+Non-interactive config helpers (get/set/unset). Running `dryads-ai config` with no
 subcommand launches the wizard.
 
 Subcommands:
@@ -377,8 +377,8 @@ Manage chat channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Matter
 Subcommands:
 
 - `channels list`: show configured channels and auth profiles.
-- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `dmms-ai health` or `dmms-ai status --deep` for gateway health probes).
-- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `dmms-ai doctor`).
+- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `dryads-ai health` or `dryads-ai status --deep` for gateway health probes).
+- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `dryads-ai doctor`).
 - `channels logs`: show recent channel logs from the gateway log file.
 - `channels add`: wizard-style setup when no flags are passed; flags switch to non-interactive mode.
 - `channels remove`: disable by default; pass `--delete` to remove config entries without prompts.
@@ -418,11 +418,11 @@ More detail: [/concepts/oauth](/concepts/oauth)
 Examples:
 
 ```bash
-dmms-ai channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-dmms-ai channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-dmms-ai channels remove --channel discord --account work --delete
-dmms-ai channels status --probe
-dmms-ai status --deep
+dryads-ai channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+dryads-ai channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+dryads-ai channels remove --channel discord --account work --delete
+dryads-ai channels status --probe
+dryads-ai status --deep
 ```
 
 ### `skills`
@@ -491,8 +491,8 @@ Subcommands:
 
 Examples:
 
-- `dmms-ai message send --target +15555550123 --message "Hi"`
-- `dmms-ai message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `dryads-ai message send --target +15555550123 --message "Hi"`
+- `dryads-ai message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 
@@ -577,12 +577,12 @@ Notes:
 
 ### Usage tracking
 
-DMMS AI can surface provider usage/quota when OAuth/API creds are available.
+Dryads AI can surface provider usage/quota when OAuth/API creds are available.
 
 Surfaces:
 
 - `/status` (adds a short provider usage line when available)
-- `dmms-ai status --usage` (prints full provider breakdown)
+- `dryads-ai status --usage` (prints full provider breakdown)
 - macOS menu bar (Usage section under Context)
 
 Notes:
@@ -692,7 +692,7 @@ Notes:
 
 - `gateway status` probes the Gateway RPC by default using the service’s resolved port/config (override with `--url/--token/--password`).
 - `gateway status` supports `--no-probe`, `--deep`, and `--json` for scripting.
-- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named DMMS AI services are treated as first-class and aren't flagged as "extra".
+- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Dryads AI services are treated as first-class and aren't flagged as "extra".
 - `gateway status` prints which config path the CLI uses vs which config the service likely uses (service env), plus the resolved probe target URL.
 - `gateway install|uninstall|start|stop|restart` support `--json` for scripting (default output stays human-friendly).
 - `gateway install` defaults to Node runtime; bun is **not recommended** (WhatsApp/Telegram bugs).
@@ -710,11 +710,11 @@ Notes:
 Examples:
 
 ```bash
-dmms-ai logs --follow
-dmms-ai logs --limit 200
-dmms-ai logs --plain
-dmms-ai logs --json
-dmms-ai logs --no-color
+dryads-ai logs --follow
+dryads-ai logs --limit 200
+dryads-ai logs --plain
+dryads-ai logs --json
+dryads-ai logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -750,13 +750,13 @@ Preferred Anthropic auth (setup-token):
 
 ```bash
 claude setup-token
-dmms-ai models auth setup-token --provider anthropic
-dmms-ai models status
+dryads-ai models auth setup-token --provider anthropic
+dryads-ai models status
 ```
 
 ### `models` (root)
 
-`dmms-ai models` is an alias for `models status`.
+`dryads-ai models` is an alias for `models status`.
 
 Root options:
 
@@ -912,7 +912,7 @@ All `cron` commands accept `--url`, `--token`, `--timeout`, `--expect-final`.
 ## Node host
 
 `node` runs a **headless node host** or manages it as a background service. See
-[`dmms-ai node`](/cli/node).
+[`dryads-ai node`](/cli/node).
 
 Subcommands:
 
@@ -967,7 +967,7 @@ Location:
 
 ## Browser
 
-Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`dmms-ai browser`](/cli/browser) and the [Browser tool](/tools/browser).
+Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`dryads-ai browser`](/cli/browser) and the [Browser tool](/tools/browser).
 
 Common options:
 

@@ -14,7 +14,7 @@ const requiredPathGroups = [
   "dist/plugin-sdk/index.d.ts",
   "dist/build-info.json",
 ];
-const forbiddenPrefixes = ["dist/DmmsAi.app/"];
+const forbiddenPrefixes = ["dist/DryadsAi.app/"];
 
 type PackageJson = {
   name?: string;

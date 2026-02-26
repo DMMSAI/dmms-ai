@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import android.content.Context
 import android.os.Build

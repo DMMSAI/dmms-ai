@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { DmmsAiPluginApi, DmmsAiPluginService } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginApi, DryadsAiPluginService } from "dryads-ai/plugin-sdk";
 
 type ArmGroup = "camera" | "screen" | "writes" | "all";
 
@@ -155,18 +155,18 @@ async function writeArmState(statePath: string, state: ArmStateFile | null): Pro
   await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`, "utf8");
 }
 
-function normalizeDenyList(cfg: DmmsAiPluginApi["config"]): string[] {
+function normalizeDenyList(cfg: DryadsAiPluginApi["config"]): string[] {
   return uniqSorted([...(cfg.gateway?.nodes?.denyCommands ?? [])]);
 }
 
-function normalizeAllowList(cfg: DmmsAiPluginApi["config"]): string[] {
+function normalizeAllowList(cfg: DryadsAiPluginApi["config"]): string[] {
   return uniqSorted([...(cfg.gateway?.nodes?.allowCommands ?? [])]);
 }
 
 function patchConfigNodeLists(
-  cfg: DmmsAiPluginApi["config"],
+  cfg: DryadsAiPluginApi["config"],
   next: { allowCommands: string[]; denyCommands: string[] },
-): DmmsAiPluginApi["config"] {
+): DryadsAiPluginApi["config"] {
   return {
     ...cfg,
     gateway: {
@@ -181,7 +181,7 @@ function patchConfigNodeLists(
 }
 
 async function disarmNow(params: {
-  api: DmmsAiPluginApi;
+  api: DryadsAiPluginApi;
   stateDir: string;
   statePath: string;
   reason: string;
@@ -283,10 +283,10 @@ function formatStatus(state: ArmStateFile | null): string {
   return `Phone control: armed (${until}).\nTemporarily allowed: ${cmdLabel}`;
 }
 
-export default function register(api: DmmsAiPluginApi) {
+export default function register(api: DryadsAiPluginApi) {
   let expiryInterval: ReturnType<typeof setInterval> | null = null;
 
-  const timerService: DmmsAiPluginService = {
+  const timerService: DryadsAiPluginService = {
     id: "phone-control-expiry",
     start: async (ctx) => {
       const statePath = resolveStatePath(ctx.stateDir);

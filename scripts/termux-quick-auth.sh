@@ -5,9 +5,9 @@
 # One-tap: shows status toast
 # If expired: directly opens auth URL
 
-SERVER="${DMMS_AI_SERVER:-${CLAWDBOT_SERVER:-l36}}"
+SERVER="${DRYADS_AI_SERVER:-${CLAWDBOT_SERVER:-l36}}"
 
-STATUS=$(ssh -o ConnectTimeout=5 "$SERVER" '$HOME/dmms-ai/scripts/claude-auth-status.sh simple' 2>&1)
+STATUS=$(ssh -o ConnectTimeout=5 "$SERVER" '$HOME/dryads-ai/scripts/claude-auth-status.sh simple' 2>&1)
 
 case "$STATUS" in
     OK)
@@ -22,7 +22,7 @@ case "$STATUS" in
         termux-toast "Auth expired - opening console..."
         termux-open-url "https://console.anthropic.com/settings/api-keys"
         sleep 2
-        termux-notification -t "DMMS AI Re-Auth" -c "After getting key, run: ssh $SERVER '~/dmms-ai/scripts/mobile-reauth.sh'" --id dmms-ai-auth
+        termux-notification -t "Dryads AI Re-Auth" -c "After getting key, run: ssh $SERVER '~/dryads-ai/scripts/mobile-reauth.sh'" --id dryads-ai-auth
         ;;
     *)
         termux-toast "Connection error"

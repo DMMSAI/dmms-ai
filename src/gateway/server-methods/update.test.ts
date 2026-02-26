@@ -32,8 +32,8 @@ vi.mock("../../config/sessions.js", () => ({
   },
 }));
 
-vi.mock("../../infra/dmms-ai-root.js", () => ({
-  resolveDmmsAiPackageRoot: async () => "/tmp/dmms-ai",
+vi.mock("../../infra/dryads-ai-root.js", () => ({
+  resolveDryadsAiPackageRoot: async () => "/tmp/dryads-ai",
 }));
 
 vi.mock("../../infra/restart-sentinel.js", async (importOriginal) => {

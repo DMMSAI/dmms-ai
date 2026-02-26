@@ -2,7 +2,7 @@
 read_when:
   - ゼロからの初回セットアップ
   - 動作するチャットへの最短ルートを知りたい
-summary: DMMS AIをインストールし、数分で最初のチャットを実行しましょう。
+summary: Dryads AIをインストールし、数分で最初のチャットを実行しましょう。
 title: はじめに
 x-i18n:
   generated_at: "2026-02-08T17:15:16Z"
@@ -18,7 +18,7 @@ x-i18n:
 目標：ゼロから最小限のセットアップで最初の動作するチャットを実現する。
 
 <Info>
-最速のチャット方法：Control UIを開く（チャンネル設定は不要）。`dmms-ai dashboard`を実行してブラウザでチャットするか、<Tooltip headline="Gatewayホスト" tip="DMMS AI Gatewayサービスを実行しているマシン。">Gatewayホスト</Tooltip>で`http://127.0.0.1:18789/`を開きます。
+最速のチャット方法：Control UIを開く（チャンネル設定は不要）。`dryads-ai dashboard`を実行してブラウザでチャットするか、<Tooltip headline="Gatewayホスト" tip="Dryads AI Gatewayサービスを実行しているマシン。">Gatewayホスト</Tooltip>で`http://127.0.0.1:18789/`を開きます。
 ドキュメント：[Dashboard](/web/dashboard)と[Control UI](/web/control-ui)。
 </Info>
 
@@ -33,16 +33,16 @@ x-i18n:
 ## クイックセットアップ（CLI）
 
 <Steps>
-  <Step title="DMMS AIをインストール（推奨）">
+  <Step title="Dryads AIをインストール（推奨）">
     <Tabs>
       <Tab title="macOS/Linux">
         ```bash
-        curl -fsSL https://dmms-ai.com/install.sh | bash
+        curl -fsSL https://dryads-ai.com/install.sh | bash
         ```
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        iwr -useb https://dmms-ai.com/install.ps1 | iex
+        iwr -useb https://dryads-ai.com/install.ps1 | iex
         ```
       </Tab>
     </Tabs>
@@ -54,7 +54,7 @@ x-i18n:
   </Step>
   <Step title="オンボーディングウィザードを実行">
     ```bash
-    dmms-ai onboard --install-daemon
+    dryads-ai onboard --install-daemon
     ```
 
     ウィザードは認証、Gateway設定、およびオプションのチャンネルを構成します。
@@ -65,13 +65,13 @@ x-i18n:
     サービスをインストールした場合、すでに実行されているはずです：
 
     ```bash
-    dmms-ai gateway status
+    dryads-ai gateway status
     ```
 
   </Step>
   <Step title="Control UIを開く">
     ```bash
-    dmms-ai dashboard
+    dryads-ai dashboard
     ```
   </Step>
 </Steps>
@@ -87,7 +87,7 @@ Control UIが読み込まれれば、Gatewayは使用可能な状態です。
     クイックテストやトラブルシューティングに便利です。
 
     ```bash
-    dmms-ai gateway --port 18789
+    dryads-ai gateway --port 18789
     ```
 
   </Accordion>
@@ -95,7 +95,7 @@ Control UIが読み込まれれば、Gatewayは使用可能な状態です。
     構成済みのチャンネルが必要です。
 
     ```bash
-    dmms-ai message send --target +15555550123 --message "Hello from DMMS AI"
+    dryads-ai message send --target +15555550123 --message "Hello from Dryads AI"
     ```
 
   </Accordion>

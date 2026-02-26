@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { resolveMainSessionKey } from "../config/sessions.js";
 import { runHeartbeatOnce, type HeartbeatDeps } from "./heartbeat-runner.js";
 import { installHeartbeatRunnerTestRuntime } from "./heartbeat-runner.test-harness.js";
@@ -18,7 +18,7 @@ describe("resolveHeartbeatIntervalMs", () => {
     heartbeat: Record<string, unknown>;
     channels: Record<string, unknown>;
     messages?: Record<string, unknown>;
-  }): DmmsAiConfig {
+  }): DryadsAiConfig {
     return {
       agents: {
         defaults: {
@@ -34,7 +34,7 @@ describe("resolveHeartbeatIntervalMs", () => {
 
   async function seedMainSession(
     storePath: string,
-    cfg: DmmsAiConfig,
+    cfg: DryadsAiConfig,
     session: {
       sessionId?: string;
       updatedAt?: number;
@@ -221,8 +221,8 @@ describe("resolveHeartbeatIntervalMs", () => {
         tmpDir,
         storePath,
         replySpy,
-        replyText: "[dmms-ai] HEARTBEAT_OK all good",
-        messages: { responsePrefix: "[dmms-ai]" },
+        replyText: "[dryads-ai] HEARTBEAT_OK all good",
+        messages: { responsePrefix: "[dryads-ai]" },
       });
 
       expect(sendTelegram).not.toHaveBeenCalled();

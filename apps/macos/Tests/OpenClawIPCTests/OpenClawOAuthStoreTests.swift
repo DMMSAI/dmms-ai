@@ -1,20 +1,20 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite
-struct DmmsAiOAuthStoreTests {
+struct DryadsAiOAuthStoreTests {
     @Test
     func returnsMissingWhenFileAbsent() {
         let url = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-oauth-\(UUID().uuidString)")
+            .appendingPathComponent("dryads-ai-oauth-\(UUID().uuidString)")
             .appendingPathComponent("oauth.json")
-        #expect(DmmsAiOAuthStore.anthropicOAuthStatus(at: url) == .missingFile)
+        #expect(DryadsAiOAuthStore.anthropicOAuthStatus(at: url) == .missingFile)
     }
 
     @Test
-    func usesEnvOverrideForDmmsAiOAuthDir() throws {
-        let key = "DMMS_AI_OAUTH_DIR"
+    func usesEnvOverrideForDryadsAiOAuthDir() throws {
+        let key = "DRYADS_AI_OAUTH_DIR"
         let previous = ProcessInfo.processInfo.environment[key]
         defer {
             if let previous {
@@ -25,10 +25,10 @@ struct DmmsAiOAuthStoreTests {
         }
 
         let dir = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-oauth-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("dryads-ai-oauth-\(UUID().uuidString)", isDirectory: true)
         setenv(key, dir.path, 1)
 
-        #expect(DmmsAiOAuthStore.oauthDir().standardizedFileURL == dir.standardizedFileURL)
+        #expect(DryadsAiOAuthStore.oauthDir().standardizedFileURL == dir.standardizedFileURL)
     }
 
     @Test
@@ -42,7 +42,7 @@ struct DmmsAiOAuthStoreTests {
             ],
         ])
 
-        #expect(DmmsAiOAuthStore.anthropicOAuthStatus(at: url).isConnected)
+        #expect(DryadsAiOAuthStore.anthropicOAuthStatus(at: url).isConnected)
     }
 
     @Test
@@ -55,7 +55,7 @@ struct DmmsAiOAuthStoreTests {
             ],
         ])
 
-        #expect(DmmsAiOAuthStore.anthropicOAuthStatus(at: url).isConnected)
+        #expect(DryadsAiOAuthStore.anthropicOAuthStatus(at: url).isConnected)
     }
 
     @Test
@@ -68,7 +68,7 @@ struct DmmsAiOAuthStoreTests {
             ],
         ])
 
-        #expect(DmmsAiOAuthStore.anthropicOAuthStatus(at: url) == .missingProviderEntry)
+        #expect(DryadsAiOAuthStore.anthropicOAuthStatus(at: url) == .missingProviderEntry)
     }
 
     @Test
@@ -81,12 +81,12 @@ struct DmmsAiOAuthStoreTests {
             ],
         ])
 
-        #expect(DmmsAiOAuthStore.anthropicOAuthStatus(at: url) == .missingTokens)
+        #expect(DryadsAiOAuthStore.anthropicOAuthStatus(at: url) == .missingTokens)
     }
 
     private func writeOAuthFile(_ json: [String: Any]) throws -> URL {
         let dir = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-oauth-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("dryads-ai-oauth-\(UUID().uuidString)", isDirectory: true)
         try FileManager().createDirectory(at: dir, withIntermediateDirectories: true)
 
         let url = dir.appendingPathComponent("oauth.json")

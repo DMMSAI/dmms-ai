@@ -1,8 +1,8 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Testing
 import UIKit
-@testable import DMMS AI
+@testable import Dryads AI
 
 private func withUserDefaults<T>(_ updates: [String: Any?], _ body: () throws -> T) rethrows -> T {
     let defaults = UserDefaults.standard
@@ -49,49 +49,49 @@ private func withUserDefaults<T>(_ updates: [String: Any?], _ body: () throws ->
             "node.instanceId": "ios-test",
             "node.displayName": "Test Node",
             "camera.enabled": true,
-            "location.enabledMode": DmmsAiLocationMode.always.rawValue,
+            "location.enabledMode": DryadsAiLocationMode.always.rawValue,
             VoiceWakePreferences.enabledKey: true,
         ]) {
             let appModel = NodeAppModel()
             let controller = GatewayConnectionController(appModel: appModel, startDiscovery: false)
             let caps = Set(controller._test_currentCaps())
 
-            #expect(caps.contains(DmmsAiCapability.canvas.rawValue))
-            #expect(caps.contains(DmmsAiCapability.screen.rawValue))
-            #expect(caps.contains(DmmsAiCapability.camera.rawValue))
-            #expect(caps.contains(DmmsAiCapability.location.rawValue))
-            #expect(caps.contains(DmmsAiCapability.voiceWake.rawValue))
+            #expect(caps.contains(DryadsAiCapability.canvas.rawValue))
+            #expect(caps.contains(DryadsAiCapability.screen.rawValue))
+            #expect(caps.contains(DryadsAiCapability.camera.rawValue))
+            #expect(caps.contains(DryadsAiCapability.location.rawValue))
+            #expect(caps.contains(DryadsAiCapability.voiceWake.rawValue))
         }
     }
 
     @Test @MainActor func currentCommandsIncludeLocationWhenEnabled() {
         withUserDefaults([
             "node.instanceId": "ios-test",
-            "location.enabledMode": DmmsAiLocationMode.whileUsing.rawValue,
+            "location.enabledMode": DryadsAiLocationMode.whileUsing.rawValue,
         ]) {
             let appModel = NodeAppModel()
             let controller = GatewayConnectionController(appModel: appModel, startDiscovery: false)
             let commands = Set(controller._test_currentCommands())
 
-            #expect(commands.contains(DmmsAiLocationCommand.get.rawValue))
+            #expect(commands.contains(DryadsAiLocationCommand.get.rawValue))
         }
     }
     @Test @MainActor func currentCommandsExcludeDangerousSystemExecCommands() {
         withUserDefaults([
             "node.instanceId": "ios-test",
             "camera.enabled": true,
-            "location.enabledMode": DmmsAiLocationMode.whileUsing.rawValue,
+            "location.enabledMode": DryadsAiLocationMode.whileUsing.rawValue,
         ]) {
             let appModel = NodeAppModel()
             let controller = GatewayConnectionController(appModel: appModel, startDiscovery: false)
             let commands = Set(controller._test_currentCommands())
 
             // iOS should expose notify, but not host shell/exec-approval commands.
-            #expect(commands.contains(DmmsAiSystemCommand.notify.rawValue))
-            #expect(!commands.contains(DmmsAiSystemCommand.run.rawValue))
-            #expect(!commands.contains(DmmsAiSystemCommand.which.rawValue))
-            #expect(!commands.contains(DmmsAiSystemCommand.execApprovalsGet.rawValue))
-            #expect(!commands.contains(DmmsAiSystemCommand.execApprovalsSet.rawValue))
+            #expect(commands.contains(DryadsAiSystemCommand.notify.rawValue))
+            #expect(!commands.contains(DryadsAiSystemCommand.run.rawValue))
+            #expect(!commands.contains(DryadsAiSystemCommand.which.rawValue))
+            #expect(!commands.contains(DryadsAiSystemCommand.execApprovalsGet.rawValue))
+            #expect(!commands.contains(DryadsAiSystemCommand.execApprovalsSet.rawValue))
         }
     }
 

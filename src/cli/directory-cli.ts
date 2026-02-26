@@ -70,19 +70,19 @@ export function registerDirectoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai directory self --channel slack", "Show the connected account identity."],
+          ["dryads-ai directory self --channel slack", "Show the connected account identity."],
           [
-            'dmms-ai directory peers list --channel slack --query "alice"',
+            'dryads-ai directory peers list --channel slack --query "alice"',
             "Search contact/user IDs by name.",
           ],
-          ["dmms-ai directory groups list --channel discord", "List available groups/channels."],
+          ["dryads-ai directory groups list --channel discord", "List available groups/channels."],
           [
-            "dmms-ai directory groups members --channel discord --group-id <id>",
+            "dryads-ai directory groups members --channel discord --group-id <id>",
             "List members for a specific group.",
           ],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/directory",
-          "docs.dmms-ai.com/cli/directory",
+          "docs.dryads-ai.com/cli/directory",
         )}\n`,
     )
     .action(() => {

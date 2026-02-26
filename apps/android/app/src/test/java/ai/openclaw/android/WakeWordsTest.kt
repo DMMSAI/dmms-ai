@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -7,12 +7,12 @@ import org.junit.Test
 class WakeWordsTest {
   @Test
   fun parseCommaSeparatedTrimsAndDropsEmpty() {
-    assertEquals(listOf("dmms-ai", "claude"), WakeWords.parseCommaSeparated("  dmms-ai , claude, ,  "))
+    assertEquals(listOf("dryads-ai", "claude"), WakeWords.parseCommaSeparated("  dryads-ai , claude, ,  "))
   }
 
   @Test
   fun sanitizeTrimsCapsAndFallsBack() {
-    val defaults = listOf("dmms-ai", "claude")
+    val defaults = listOf("dryads-ai", "claude")
     val long = "x".repeat(WakeWords.maxWordLength + 10)
     val words = listOf(" ", "  hello  ", long)
 
@@ -26,7 +26,7 @@ class WakeWordsTest {
 
   @Test
   fun sanitizeLimitsWordCount() {
-    val defaults = listOf("dmms-ai")
+    val defaults = listOf("dryads-ai")
     val words = (1..(WakeWords.maxWords + 5)).map { "w$it" }
     val sanitized = WakeWords.sanitize(words, defaults)
     assertEquals(WakeWords.maxWords, sanitized.size)
@@ -36,15 +36,15 @@ class WakeWordsTest {
 
   @Test
   fun parseIfChangedSkipsWhenUnchanged() {
-    val current = listOf("dmms-ai", "claude")
-    val parsed = WakeWords.parseIfChanged(" dmms-ai , claude ", current)
+    val current = listOf("dryads-ai", "claude")
+    val parsed = WakeWords.parseIfChanged(" dryads-ai , claude ", current)
     assertNull(parsed)
   }
 
   @Test
   fun parseIfChangedReturnsUpdatedList() {
-    val current = listOf("dmms-ai")
-    val parsed = WakeWords.parseIfChanged(" dmms-ai , jarvis ", current)
-    assertEquals(listOf("dmms-ai", "jarvis"), parsed)
+    val current = listOf("dryads-ai")
+    val parsed = WakeWords.parseIfChanged(" dryads-ai , jarvis ", current)
+    assertEquals(listOf("dryads-ai", "jarvis"), parsed)
   }
 }

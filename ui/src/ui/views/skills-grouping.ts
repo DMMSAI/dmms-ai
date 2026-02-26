@@ -7,10 +7,10 @@ export type SkillGroup = {
 };
 
 const SKILL_SOURCE_GROUPS: Array<{ id: string; label: string; sources: string[] }> = [
-  { id: "workspace", label: "Workspace Skills", sources: ["dmms-ai-workspace"] },
-  { id: "built-in", label: "Built-in Skills", sources: ["dmms-ai-bundled"] },
-  { id: "installed", label: "Installed Skills", sources: ["dmms-ai-managed"] },
-  { id: "extra", label: "Extra Skills", sources: ["dmms-ai-extra"] },
+  { id: "workspace", label: "Workspace Skills", sources: ["dryads-ai-workspace"] },
+  { id: "built-in", label: "Built-in Skills", sources: ["dryads-ai-bundled"] },
+  { id: "installed", label: "Installed Skills", sources: ["dryads-ai-managed"] },
+  { id: "extra", label: "Extra Skills", sources: ["dryads-ai-extra"] },
 ];
 
 export function groupSkills(skills: SkillStatusEntry[]): SkillGroup[] {

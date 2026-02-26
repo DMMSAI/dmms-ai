@@ -8,7 +8,7 @@ title: "Platforms"
 
 # Platforms
 
-DMMS AI core is written in TypeScript. **Node is the recommended runtime**.
+Dryads AI core is written in TypeScript. **Node is the recommended runtime**.
 Bun is not recommended for the Gateway (WhatsApp/Telegram bugs).
 
 Companion apps exist for macOS (menu bar app) and mobile nodes (iOS/Android). Windows and
@@ -36,18 +36,18 @@ Native companion apps for Windows are also planned; the Gateway is recommended v
 - Install guide: [Getting Started](/start/getting-started)
 - Gateway runbook: [Gateway](/gateway)
 - Gateway configuration: [Configuration](/gateway/configuration)
-- Service status: `dmms-ai gateway status`
+- Service status: `dryads-ai gateway status`
 
 ## Gateway service install (CLI)
 
 Use one of these (all supported):
 
-- Wizard (recommended): `dmms-ai onboard --install-daemon`
-- Direct: `dmms-ai gateway install`
-- Configure flow: `dmms-ai configure` → select **Gateway service**
-- Repair/migrate: `dmms-ai doctor` (offers to install or fix the service)
+- Wizard (recommended): `dryads-ai onboard --install-daemon`
+- Direct: `dryads-ai gateway install`
+- Configure flow: `dryads-ai configure` → select **Gateway service**
+- Repair/migrate: `dryads-ai doctor` (offers to install or fix the service)
 
 The service target depends on OS:
 
-- macOS: LaunchAgent (`bot.molt.gateway` or `bot.molt.<profile>`; legacy `com.dmms-ai.*`)
-- Linux/WSL2: systemd user service (`dmms-ai-gateway[-<profile>].service`)
+- macOS: LaunchAgent (`bot.molt.gateway` or `bot.molt.<profile>`; legacy `com.dryads-ai.*`)
+- Linux/WSL2: systemd user service (`dryads-ai-gateway[-<profile>].service`)

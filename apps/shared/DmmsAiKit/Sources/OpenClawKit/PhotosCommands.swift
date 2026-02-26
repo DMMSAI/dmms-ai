@@ -1,10 +1,10 @@
 import Foundation
 
-public enum DmmsAiPhotosCommand: String, Codable, Sendable {
+public enum DryadsAiPhotosCommand: String, Codable, Sendable {
     case latest = "photos.latest"
 }
 
-public struct DmmsAiPhotosLatestParams: Codable, Sendable, Equatable {
+public struct DryadsAiPhotosLatestParams: Codable, Sendable, Equatable {
     public var limit: Int?
     public var maxWidth: Int?
     public var quality: Double?
@@ -16,7 +16,7 @@ public struct DmmsAiPhotosLatestParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiPhotoPayload: Codable, Sendable, Equatable {
+public struct DryadsAiPhotoPayload: Codable, Sendable, Equatable {
     public var format: String
     public var base64: String
     public var width: Int
@@ -32,10 +32,10 @@ public struct DmmsAiPhotoPayload: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiPhotosLatestPayload: Codable, Sendable, Equatable {
-    public var photos: [DmmsAiPhotoPayload]
+public struct DryadsAiPhotosLatestPayload: Codable, Sendable, Equatable {
+    public var photos: [DryadsAiPhotoPayload]
 
-    public init(photos: [DmmsAiPhotoPayload]) {
+    public init(photos: [DryadsAiPhotoPayload]) {
         self.photos = photos
     }
 }

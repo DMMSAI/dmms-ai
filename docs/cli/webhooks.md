@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai webhooks` (webhook helpers + Gmail Pub/Sub)"
+summary: "CLI reference for `dryads-ai webhooks` (webhook helpers + Gmail Pub/Sub)"
 read_when:
-  - You want to wire Gmail Pub/Sub events into DMMS AI
+  - You want to wire Gmail Pub/Sub events into Dryads AI
   - You want webhook helper commands
 title: "webhooks"
 ---
 
-# `dmms-ai webhooks`
+# `dryads-ai webhooks`
 
 Webhook helpers and integrations (Gmail Pub/Sub, webhook helpers).
 
@@ -18,8 +18,8 @@ Related:
 ## Gmail
 
 ```bash
-dmms-ai webhooks gmail setup --account you@example.com
-dmms-ai webhooks gmail run
+dryads-ai webhooks gmail setup --account you@example.com
+dryads-ai webhooks gmail run
 ```
 
 See [Gmail Pub/Sub documentation](/automation/gmail-pubsub) for details.

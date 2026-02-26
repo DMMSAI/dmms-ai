@@ -2,14 +2,14 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import { captureEnv } from "../test-utils/env.js";
-import { resolveDmmsAiAgentDir } from "./agent-paths.js";
+import { resolveDryadsAiAgentDir } from "./agent-paths.js";
 import {
   installModelsConfigTestHooks,
   mockCopilotTokenExchangeSuccess,
   withUnsetCopilotTokenEnv,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureDmmsAiModelsJson } from "./models-config.js";
+import { ensureDryadsAiModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks({ restoreFetch: true });
 
@@ -43,7 +43,7 @@ describe("models-config", () => {
           ),
         );
 
-        await ensureDmmsAiModelsJson({ models: { providers: {} } }, agentDir);
+        await ensureDryadsAiModelsJson({ models: { providers: {} } }, agentDir);
 
         const [, opts] = fetchMock.mock.calls[0] as [string, { headers?: Record<string, string> }];
         expect(opts?.headers?.Authorization).toBe("Bearer alpha-token");
@@ -66,7 +66,7 @@ describe("models-config", () => {
       globalThis.fetch = fetchMock as unknown as typeof fetch;
 
       try {
-        await ensureDmmsAiModelsJson({
+        await ensureDryadsAiModelsJson({
           models: {
             providers: {
               "github-copilot": {
@@ -78,7 +78,7 @@ describe("models-config", () => {
           },
         });
 
-        const agentDir = resolveDmmsAiAgentDir();
+        const agentDir = resolveDryadsAiAgentDir();
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {
           providers: Record<string, { baseUrl?: string }>;

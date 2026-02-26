@@ -5,8 +5,8 @@
  * resolves agent routes, and handles replies.
  */
 
-import type { ReplyPayload, DmmsAiConfig } from "dmms-ai/plugin-sdk";
-import { createReplyPrefixOptions } from "dmms-ai/plugin-sdk";
+import type { ReplyPayload, DryadsAiConfig } from "dryads-ai/plugin-sdk";
+import { createReplyPrefixOptions } from "dryads-ai/plugin-sdk";
 import { checkTwitchAccessControl } from "./access-control.js";
 import { getOrCreateClientManager } from "./client-manager-registry.js";
 import { getTwitchRuntime } from "./runtime.js";
@@ -21,7 +21,7 @@ export type TwitchRuntimeEnv = {
 export type TwitchMonitorOptions = {
   account: TwitchAccountConfig;
   accountId: string;
-  config: unknown; // DmmsAiConfig
+  config: unknown; // DryadsAiConfig
   runtime: TwitchRuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -46,7 +46,7 @@ async function processTwitchMessage(params: {
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
 }): Promise<void> {
   const { message, account, accountId, config, runtime, core, statusSink } = params;
-  const cfg = config as DmmsAiConfig;
+  const cfg = config as DryadsAiConfig;
 
   const route = core.channel.routing.resolveAgentRoute({
     cfg,

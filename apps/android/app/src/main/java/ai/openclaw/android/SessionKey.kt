@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 internal fun normalizeMainKey(raw: String?): String {
   val trimmed = raw?.trim()

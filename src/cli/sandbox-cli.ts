@@ -14,30 +14,33 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["dmms-ai sandbox list", "List all sandbox containers."],
-    ["dmms-ai sandbox list --browser", "List only browser containers."],
-    ["dmms-ai sandbox recreate --all", "Recreate all containers."],
-    ["dmms-ai sandbox recreate --session main", "Recreate a specific session."],
-    ["dmms-ai sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["dmms-ai sandbox explain", "Explain effective sandbox config."],
+    ["dryads-ai sandbox list", "List all sandbox containers."],
+    ["dryads-ai sandbox list --browser", "List only browser containers."],
+    ["dryads-ai sandbox recreate --all", "Recreate all containers."],
+    ["dryads-ai sandbox recreate --session main", "Recreate a specific session."],
+    ["dryads-ai sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["dryads-ai sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["dmms-ai sandbox list", "List all sandbox containers."],
-    ["dmms-ai sandbox list --browser", "List only browser containers."],
-    ["dmms-ai sandbox list --json", "JSON output."],
+    ["dryads-ai sandbox list", "List all sandbox containers."],
+    ["dryads-ai sandbox list --browser", "List only browser containers."],
+    ["dryads-ai sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["dmms-ai sandbox recreate --all", "Recreate all containers."],
-    ["dmms-ai sandbox recreate --session main", "Recreate a specific session."],
-    ["dmms-ai sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-    ["dmms-ai sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["dmms-ai sandbox recreate --all --force", "Skip confirmation."],
+    ["dryads-ai sandbox recreate --all", "Recreate all containers."],
+    ["dryads-ai sandbox recreate --session main", "Recreate a specific session."],
+    [
+      "dryads-ai sandbox recreate --agent mybot",
+      "Recreate a specific agent (includes sub-agents).",
+    ],
+    ["dryads-ai sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["dryads-ai sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["dmms-ai sandbox explain", "Show effective sandbox config."],
-    ["dmms-ai sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["dmms-ai sandbox explain --agent work", "Explain an agent sandbox."],
-    ["dmms-ai sandbox explain --json", "JSON output."],
+    ["dryads-ai sandbox explain", "Show effective sandbox config."],
+    ["dryads-ai sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["dryads-ai sandbox explain --agent work", "Explain an agent sandbox."],
+    ["dryads-ai sandbox explain --json", "JSON output."],
   ],
 } as const;
 
@@ -67,7 +70,7 @@ export function registerSandboxCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sandbox", "docs.dmms-ai.com/cli/sandbox")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sandbox", "docs.dryads-ai.com/cli/sandbox")}\n`,
     )
     .action(() => {
       sandbox.help({ error: true });

@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
 import { afterEach, beforeEach, vi } from "vitest";
 
 export const BASE_TWITCH_TEST_ACCOUNT = {
@@ -7,7 +7,7 @@ export const BASE_TWITCH_TEST_ACCOUNT = {
   channel: "#testchannel",
 };
 
-export function makeTwitchTestConfig(account: Record<string, unknown>): DmmsAiConfig {
+export function makeTwitchTestConfig(account: Record<string, unknown>): DryadsAiConfig {
   return {
     channels: {
       twitch: {
@@ -16,7 +16,7 @@ export function makeTwitchTestConfig(account: Record<string, unknown>): DmmsAiCo
         },
       },
     },
-  } as unknown as DmmsAiConfig;
+  } as unknown as DryadsAiConfig;
 }
 
 export function installTwitchTestHooks() {

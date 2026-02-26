@@ -1,0 +1,40 @@
+module.exports = {
+  apps: [
+    {
+      name: "dryads-bot",
+      cwd: "/opt/dryads-bot",
+      script: "dryads-ai.mjs",
+      args: "gateway --yes",
+      node_args: "--env-file=.env",
+      max_memory_restart: "400M",
+      exp_backoff_restart_delay: 100,
+      max_restarts: 10,
+      restart_delay: 1000,
+      out_file: "/opt/dryads-bot/logs/bot-out.log",
+      error_file: "/opt/dryads-bot/logs/bot-err.log",
+      merge_logs: true,
+      env: {
+        NODE_ENV: "production",
+        DRYADS_AI_PORT: "3001",
+      },
+    },
+    {
+      name: "dryads-web",
+      cwd: "/opt/dryads-bot",
+      script: "dryads-ai.mjs",
+      args: "gateway --yes --port 3000",
+      node_args: "--env-file=.env",
+      max_memory_restart: "300M",
+      exp_backoff_restart_delay: 100,
+      max_restarts: 10,
+      restart_delay: 1000,
+      out_file: "/opt/dryads-bot/logs/web-out.log",
+      error_file: "/opt/dryads-bot/logs/web-err.log",
+      merge_logs: true,
+      env: {
+        NODE_ENV: "production",
+        DRYADS_AI_PORT: "3000",
+      },
+    },
+  ],
+};

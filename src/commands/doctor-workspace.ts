@@ -8,8 +8,8 @@ export const MEMORY_SYSTEM_PROMPT = [
   "Paste this into your agent:",
   "",
   "Install the memory system by applying:",
-  "https://github.com/dmms-ai/dmms-ai/commit/9ffea23f31ca1df5183b25668f8f814bee0fb34e",
-  "https://github.com/dmms-ai/dmms-ai/commit/7d1fee70e76f2f634f1b41fca927ee663914183a",
+  "https://github.com/dryads-ai/dryads-ai/commit/9ffea23f31ca1df5183b25668f8f814bee0fb34e",
+  "https://github.com/dryads-ai/dryads-ai/commit/7d1fee70e76f2f634f1b41fca927ee663914183a",
 ].join("\n");
 
 export async function shouldSuggestMemorySystem(workspaceDir: string): Promise<boolean> {

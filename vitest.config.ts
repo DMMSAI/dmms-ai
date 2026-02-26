@@ -11,14 +11,14 @@ const ciWorkers = isWindows ? 2 : 3;
 
 export default defineConfig({
   resolve: {
-    // Keep this ordered: the base `dmms-ai/plugin-sdk` alias is a prefix match.
+    // Keep this ordered: the base `dryads-ai/plugin-sdk` alias is a prefix match.
     alias: [
       {
-        find: "dmms-ai/plugin-sdk/account-id",
+        find: "dryads-ai/plugin-sdk/account-id",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "account-id.ts"),
       },
       {
-        find: "dmms-ai/plugin-sdk",
+        find: "dryads-ai/plugin-sdk",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "index.ts"),
       },
     ],
@@ -46,7 +46,7 @@ export default defineConfig({
       "apps/macos/.build/**",
       "**/node_modules/**",
       "**/vendor/**",
-      "dist/DmmsAi.app/**",
+      "dist/DryadsAi.app/**",
       "**/*.live.test.ts",
       "**/*.e2e.test.ts",
     ],

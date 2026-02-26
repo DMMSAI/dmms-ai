@@ -15,7 +15,7 @@ describe("web auto-reply monitor logging", () => {
 
   it("emits heartbeat logs with connection metadata", async () => {
     vi.useFakeTimers();
-    const logPath = `/tmp/dmms-ai-heartbeat-${crypto.randomUUID()}.log`;
+    const logPath = `/tmp/dryads-ai-heartbeat-${crypto.randomUUID()}.log`;
     setLoggerOverride({ level: "trace", file: logPath });
 
     const runtime = {
@@ -57,7 +57,7 @@ describe("web auto-reply monitor logging", () => {
   });
 
   it("logs outbound replies to file", async () => {
-    const logPath = `/tmp/dmms-ai-log-test-${crypto.randomUUID()}.log`;
+    const logPath = `/tmp/dryads-ai-log-test-${crypto.randomUUID()}.log`;
     setLoggerOverride({ level: "trace", file: logPath });
 
     let capturedOnMessage:

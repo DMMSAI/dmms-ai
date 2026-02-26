@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import {
   evaluateSessionFreshness,
   loadSessionStore,
@@ -9,7 +9,7 @@ import {
 } from "../../config/sessions.js";
 
 export function resolveCronSession(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   sessionKey: string;
   nowMs: number;
   agentId: string;

@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { createDmmsAiTools } from "../agents/dmms-ai-tools.js";
+import { createDryadsAiTools } from "../agents/dryads-ai-tools.js";
 import {
   resolveEffectiveToolPolicy,
   resolveGroupToolPolicy,
@@ -200,8 +200,10 @@ export async function handleToolsInvokeHttpRequest(
     !rawSessionKey || rawSessionKey === "main" ? resolveMainSessionKey(cfg) : rawSessionKey;
 
   // Resolve message channel/account hints (optional headers) for policy inheritance.
-  const messageChannel = normalizeMessageChannel(getHeader(req, "x-dmms-ai-message-channel") ?? "");
-  const accountId = getHeader(req, "x-dmms-ai-account-id")?.trim() || undefined;
+  const messageChannel = normalizeMessageChannel(
+    getHeader(req, "x-dryads-ai-message-channel") ?? "",
+  );
+  const accountId = getHeader(req, "x-dryads-ai-account-id")?.trim() || undefined;
 
   const {
     agentId,
@@ -233,7 +235,7 @@ export async function handleToolsInvokeHttpRequest(
     : undefined;
 
   // Build tool list (core + plugin tools).
-  const allTools = createDmmsAiTools({
+  const allTools = createDryadsAiTools({
     agentSessionKey: sessionKey,
     agentChannel: messageChannel ?? undefined,
     agentAccountId: accountId,

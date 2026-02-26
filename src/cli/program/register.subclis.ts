@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { isTruthyEnvValue } from "../../infra/env.js";
 import { getPrimaryCommand, hasHelpOrVersion } from "../argv.js";
 import { reparseProgramFromActionArgs } from "./action-reparse.js";
@@ -14,7 +14,7 @@ type SubCliEntry = {
 };
 
 const shouldRegisterPrimaryOnly = (argv: string[]) => {
-  if (isTruthyEnvValue(process.env.DMMS_AI_DISABLE_LAZY_SUBCOMMANDS)) {
+  if (isTruthyEnvValue(process.env.DRYADS_AI_DISABLE_LAZY_SUBCOMMANDS)) {
     return false;
   }
   if (hasHelpOrVersion(argv)) {
@@ -24,10 +24,10 @@ const shouldRegisterPrimaryOnly = (argv: string[]) => {
 };
 
 const shouldEagerRegisterSubcommands = (_argv: string[]) => {
-  return isTruthyEnvValue(process.env.DMMS_AI_DISABLE_LAZY_SUBCOMMANDS);
+  return isTruthyEnvValue(process.env.DRYADS_AI_DISABLE_LAZY_SUBCOMMANDS);
 };
 
-const loadConfig = async (): Promise<DmmsAiConfig> => {
+const loadConfig = async (): Promise<DryadsAiConfig> => {
   const mod = await import("../../config/config.js");
   return mod.loadConfig();
 };
@@ -164,7 +164,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "docs",
-    description: "Search the live DMMS AI docs",
+    description: "Search the live Dryads AI docs",
     hasSubcommands: false,
     register: async (program) => {
       const mod = await import("../docs-cli.js");
@@ -223,7 +223,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "plugins",
-    description: "Manage DMMS AI plugins and extensions",
+    description: "Manage Dryads AI plugins and extensions",
     hasSubcommands: true,
     register: async (program) => {
       const mod = await import("../plugins-cli.js");
@@ -270,7 +270,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "update",
-    description: "Update DMMS AI and inspect update channel status",
+    description: "Update Dryads AI and inspect update channel status",
     hasSubcommands: true,
     register: async (program) => {
       const mod = await import("../update-cli.js");

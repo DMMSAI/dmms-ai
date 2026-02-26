@@ -3,8 +3,8 @@ import Foundation
 import os
 import UIKit
 
-final class DmmsAiAppDelegate: NSObject, UIApplicationDelegate {
-    private let logger = Logger(subsystem: "ai.dmmsai.ios", category: "Push")
+final class DryadsAiAppDelegate: NSObject, UIApplicationDelegate {
+    private let logger = Logger(subsystem: "ai.dryadsai.ios", category: "Push")
     private var pendingAPNsDeviceToken: Data?
     weak var appModel: NodeAppModel? {
         didSet {
@@ -60,10 +60,10 @@ final class DmmsAiAppDelegate: NSObject, UIApplicationDelegate {
 }
 
 @main
-struct DmmsAiApp: App {
+struct DryadsAiApp: App {
     @State private var appModel: NodeAppModel
     @State private var gatewayController: GatewayConnectionController
-    @UIApplicationDelegateAdaptor(DmmsAiAppDelegate.self) private var appDelegate
+    @UIApplicationDelegateAdaptor(DryadsAiAppDelegate.self) private var appDelegate
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -94,9 +94,9 @@ struct DmmsAiApp: App {
     }
 }
 
-extension DmmsAiApp {
+extension DryadsAiApp {
     private static func installUncaughtExceptionLogger() {
-        NSLog("DMMS AI: installing uncaught exception handler")
+        NSLog("Dryads AI: installing uncaught exception handler")
         NSSetUncaughtExceptionHandler { exception in
             // Useful when the app hits NSExceptions from SwiftUI/WebKit internals; these do not
             // produce a normal Swift error backtrace.

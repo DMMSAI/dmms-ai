@@ -1,13 +1,13 @@
 import Foundation
 
-public enum DmmsAiTalkCommand: String, Codable, Sendable {
+public enum DryadsAiTalkCommand: String, Codable, Sendable {
     case pttStart = "talk.ptt.start"
     case pttStop = "talk.ptt.stop"
     case pttCancel = "talk.ptt.cancel"
     case pttOnce = "talk.ptt.once"
 }
 
-public struct DmmsAiTalkPTTStartPayload: Codable, Sendable, Equatable {
+public struct DryadsAiTalkPTTStartPayload: Codable, Sendable, Equatable {
     public var captureId: String
 
     public init(captureId: String) {
@@ -15,7 +15,7 @@ public struct DmmsAiTalkPTTStartPayload: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiTalkPTTStopPayload: Codable, Sendable, Equatable {
+public struct DryadsAiTalkPTTStopPayload: Codable, Sendable, Equatable {
     public var captureId: String
     public var transcript: String?
     public var status: String

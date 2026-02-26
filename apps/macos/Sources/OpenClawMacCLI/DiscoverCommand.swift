@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiDiscovery
+import DryadsAiDiscovery
 
 struct DiscoveryOptions {
     var timeoutMs: Int = 2000
@@ -58,10 +58,10 @@ func runDiscover(_ args: [String]) async {
     let opts = DiscoveryOptions.parse(args)
     if opts.help {
         print("""
-        dmms-ai-mac discover
+        dryads-ai-mac discover
 
         Usage:
-          dmms-ai-mac discover [--timeout <ms>] [--json] [--include-local]
+          dryads-ai-mac discover [--timeout <ms>] [--json] [--include-local]
 
         Options:
           --timeout <ms>     Discovery window in milliseconds (default: 2000)

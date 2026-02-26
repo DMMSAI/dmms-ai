@@ -2,17 +2,17 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { Logger as TsLogger } from "tslog";
-import type { DmmsAiConfig } from "../config/types.js";
-import { resolvePreferredDmmsAiTmpDir } from "../infra/tmp-dmms-ai-dir.js";
+import type { DryadsAiConfig } from "../config/types.js";
+import { resolvePreferredDryadsAiTmpDir } from "../infra/tmp-dryads-ai-dir.js";
 import { readLoggingConfig } from "./config.js";
 import type { ConsoleStyle } from "./console.js";
 import { type LogLevel, levelToMinLevel, normalizeLogLevel } from "./levels.js";
 import { loggingState } from "./state.js";
 
-export const DEFAULT_LOG_DIR = resolvePreferredDmmsAiTmpDir();
-export const DEFAULT_LOG_FILE = path.join(DEFAULT_LOG_DIR, "dmms-ai.log"); // legacy single-file path
+export const DEFAULT_LOG_DIR = resolvePreferredDryadsAiTmpDir();
+export const DEFAULT_LOG_FILE = path.join(DEFAULT_LOG_DIR, "dryads-ai.log"); // legacy single-file path
 
-const LOG_PREFIX = "dmms-ai";
+const LOG_PREFIX = "dryads-ai";
 const LOG_SUFFIX = ".log";
 const MAX_LOG_AGE_MS = 24 * 60 * 60 * 1000; // 24h
 
@@ -51,12 +51,12 @@ function attachExternalTransport(logger: TsLogger<LogObj>, transport: LogTranspo
 }
 
 function resolveSettings(): ResolvedSettings {
-  let cfg: DmmsAiConfig["logging"] | undefined =
+  let cfg: DryadsAiConfig["logging"] | undefined =
     (loggingState.overrideSettings as LoggerSettings | null) ?? readLoggingConfig();
   if (!cfg) {
     try {
       const loaded = requireConfig("../config/config.js") as {
-        loadConfig?: () => DmmsAiConfig;
+        loadConfig?: () => DryadsAiConfig;
       };
       cfg = loaded.loadConfig?.().logging;
     } catch {
@@ -64,7 +64,9 @@ function resolveSettings(): ResolvedSettings {
     }
   }
   const defaultLevel =
-    process.env.VITEST === "true" && process.env.DMMS_AI_TEST_FILE_LOG !== "1" ? "silent" : "info";
+    process.env.VITEST === "true" && process.env.DRYADS_AI_TEST_FILE_LOG !== "1"
+      ? "silent"
+      : "info";
   const level = normalizeLogLevel(cfg?.level, defaultLevel);
   const file = cfg?.file ?? defaultRollingPathForToday();
   return { level, file };
@@ -95,7 +97,7 @@ function buildLogger(settings: ResolvedSettings): TsLogger<LogObj> {
     pruneOldRollingLogs(path.dirname(settings.file));
   }
   const logger = new TsLogger<LogObj>({
-    name: "dmms-ai",
+    name: "dryads-ai",
     minLevel: levelToMinLevel(settings.level),
     type: "hidden", // no ansi formatting
   });

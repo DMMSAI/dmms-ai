@@ -1,12 +1,12 @@
 {
-  "name": "@dmms-ai/discord",
+  "name": "@dryads-ai/discord",
   "version": "2026.2.18",
-  "description": "DMMS AI Discord channel plugin",
+  "description": "Dryads AI Discord channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

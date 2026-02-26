@@ -9,7 +9,7 @@ title: "Web Tools"
 
 # Web tools
 
-DMMS AI ships two lightweight web tools:
+Dryads AI ships two lightweight web tools:
 
 - `web_search` — Search the web via Brave Search API (default) or Perplexity Sonar (direct or via OpenRouter).
 - `web_fetch` — HTTP fetch + readable extraction (HTML → markdown/text).
@@ -73,19 +73,19 @@ Example: switch to Perplexity Sonar (direct API):
 
 1. Create a Brave Search API account at [https://brave.com/search/api/](https://brave.com/search/api/)
 2. In the dashboard, choose the **Data for Search** plan (not “Data for AI”) and generate an API key.
-3. Run `dmms-ai configure --section web` to store the key in config (recommended), or set `BRAVE_API_KEY` in your environment.
+3. Run `dryads-ai configure --section web` to store the key in config (recommended), or set `BRAVE_API_KEY` in your environment.
 
 Brave provides a free tier plus paid plans; check the Brave API portal for the
 current limits and pricing.
 
 ### Where to set the key (recommended)
 
-**Recommended:** run `dmms-ai configure --section web`. It stores the key in
-`~/.dmms-ai/dmms-ai.json` under `tools.web.search.apiKey`.
+**Recommended:** run `dryads-ai configure --section web`. It stores the key in
+`~/.dryads-ai/dryads-ai.json` under `tools.web.search.apiKey`.
 
 **Environment alternative:** set `BRAVE_API_KEY` in the Gateway process
-environment. For a gateway install, put it in `~/.dmms-ai/.env` (or your
-service environment). See [Env vars](/help/faq#how-does-dmms-ai-load-environment-variables).
+environment. For a gateway install, put it in `~/.dryads-ai/.env` (or your
+service environment). See [Env vars](/help/faq#how-does-dryads-ai-load-environment-variables).
 
 ## Using Perplexity (direct or via OpenRouter)
 
@@ -123,9 +123,9 @@ crypto/prepaid).
 ```
 
 **Environment alternative:** set `OPENROUTER_API_KEY` or `PERPLEXITY_API_KEY` in the Gateway
-environment. For a gateway install, put it in `~/.dmms-ai/.env`.
+environment. For a gateway install, put it in `~/.dryads-ai/.env`.
 
-If no base URL is set, DMMS AI chooses a default based on the API key source:
+If no base URL is set, Dryads AI chooses a default based on the API key source:
 
 - `PERPLEXITY_API_KEY` or `pplx-...` → `https://api.perplexity.ai`
 - `OPENROUTER_API_KEY` or `sk-or-...` → `https://openrouter.ai/api/v1`

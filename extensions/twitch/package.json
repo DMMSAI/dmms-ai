@@ -1,8 +1,8 @@
 {
-  "name": "@dmms-ai/twitch",
+  "name": "@dryads-ai/twitch",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Twitch channel plugin",
+  "description": "Dryads AI Twitch channel plugin",
   "type": "module",
   "dependencies": {
     "@twurple/api": "^8.0.3",
@@ -11,9 +11,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

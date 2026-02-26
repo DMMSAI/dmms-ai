@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai cron` (schedule and run background jobs)"
+summary: "CLI reference for `dryads-ai cron` (schedule and run background jobs)"
 read_when:
   - You want scheduled jobs and wakeups
   - You’re debugging cron execution and logs
 title: "cron"
 ---
 
-# `dmms-ai cron`
+# `dryads-ai cron`
 
 Manage cron jobs for the Gateway scheduler.
 
@@ -14,7 +14,7 @@ Related:
 
 - Cron jobs: [Cron jobs](/automation/cron-jobs)
 
-Tip: run `dmms-ai cron --help` for the full command surface.
+Tip: run `dryads-ai cron --help` for the full command surface.
 
 Note: isolated `cron add` jobs default to `--announce` delivery. Use `--no-deliver` to keep
 output internal. `--deliver` remains as a deprecated alias for `--announce`.
@@ -28,17 +28,17 @@ Note: recurring jobs now use exponential retry backoff after consecutive errors 
 Update delivery settings without changing the message:
 
 ```bash
-dmms-ai cron edit <job-id> --announce --channel telegram --to "123456789"
+dryads-ai cron edit <job-id> --announce --channel telegram --to "123456789"
 ```
 
 Disable delivery for an isolated job:
 
 ```bash
-dmms-ai cron edit <job-id> --no-deliver
+dryads-ai cron edit <job-id> --no-deliver
 ```
 
 Announce to a specific channel:
 
 ```bash
-dmms-ai cron edit <job-id> --announce --channel slack --to "channel:C1234567890"
+dryads-ai cron edit <job-id> --announce --channel slack --to "channel:C1234567890"
 ```

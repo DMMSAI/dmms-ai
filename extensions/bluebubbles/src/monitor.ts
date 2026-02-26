@@ -1,11 +1,11 @@
 import { timingSafeEqual } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
 import {
   registerWebhookTarget,
   rejectNonPostWebhookRequest,
   resolveWebhookTargets,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   normalizeWebhookMessage,
   normalizeWebhookReaction,
@@ -122,7 +122,10 @@ type BlueBubblesDebouncer = {
  */
 const targetDebouncers = new Map<WebhookTarget, BlueBubblesDebouncer>();
 
-function resolveBlueBubblesDebounceMs(config: DmmsAiConfig, core: BlueBubblesCoreRuntime): number {
+function resolveBlueBubblesDebounceMs(
+  config: DryadsAiConfig,
+  core: BlueBubblesCoreRuntime,
+): number {
   const inbound = config.messages?.inbound;
   const hasExplicitDebounce =
     typeof inbound?.debounceMs === "number" || typeof inbound?.byChannel?.bluebubbles === "number";

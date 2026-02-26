@@ -1,38 +1,38 @@
 import Foundation
 
-public enum DmmsAiCameraCommand: String, Codable, Sendable {
+public enum DryadsAiCameraCommand: String, Codable, Sendable {
     case list = "camera.list"
     case snap = "camera.snap"
     case clip = "camera.clip"
 }
 
-public enum DmmsAiCameraFacing: String, Codable, Sendable {
+public enum DryadsAiCameraFacing: String, Codable, Sendable {
     case back
     case front
 }
 
-public enum DmmsAiCameraImageFormat: String, Codable, Sendable {
+public enum DryadsAiCameraImageFormat: String, Codable, Sendable {
     case jpg
     case jpeg
 }
 
-public enum DmmsAiCameraVideoFormat: String, Codable, Sendable {
+public enum DryadsAiCameraVideoFormat: String, Codable, Sendable {
     case mp4
 }
 
-public struct DmmsAiCameraSnapParams: Codable, Sendable, Equatable {
-    public var facing: DmmsAiCameraFacing?
+public struct DryadsAiCameraSnapParams: Codable, Sendable, Equatable {
+    public var facing: DryadsAiCameraFacing?
     public var maxWidth: Int?
     public var quality: Double?
-    public var format: DmmsAiCameraImageFormat?
+    public var format: DryadsAiCameraImageFormat?
     public var deviceId: String?
     public var delayMs: Int?
 
     public init(
-        facing: DmmsAiCameraFacing? = nil,
+        facing: DryadsAiCameraFacing? = nil,
         maxWidth: Int? = nil,
         quality: Double? = nil,
-        format: DmmsAiCameraImageFormat? = nil,
+        format: DryadsAiCameraImageFormat? = nil,
         deviceId: String? = nil,
         delayMs: Int? = nil)
     {
@@ -45,18 +45,18 @@ public struct DmmsAiCameraSnapParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCameraClipParams: Codable, Sendable, Equatable {
-    public var facing: DmmsAiCameraFacing?
+public struct DryadsAiCameraClipParams: Codable, Sendable, Equatable {
+    public var facing: DryadsAiCameraFacing?
     public var durationMs: Int?
     public var includeAudio: Bool?
-    public var format: DmmsAiCameraVideoFormat?
+    public var format: DryadsAiCameraVideoFormat?
     public var deviceId: String?
 
     public init(
-        facing: DmmsAiCameraFacing? = nil,
+        facing: DryadsAiCameraFacing? = nil,
         durationMs: Int? = nil,
         includeAudio: Bool? = nil,
-        format: DmmsAiCameraVideoFormat? = nil,
+        format: DryadsAiCameraVideoFormat? = nil,
         deviceId: String? = nil)
     {
         self.facing = facing

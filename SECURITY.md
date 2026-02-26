@@ -1,21 +1,21 @@
 # Security Policy
 
-If you believe you've found a security issue in DMMS AI, please report it privately.
+If you believe you've found a security issue in Dryads AI, please report it privately.
 
 ## Reporting
 
 Report vulnerabilities directly to the repository where the issue lives:
 
-- **Core CLI and gateway** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai)
-- **macOS desktop app** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai) (apps/macos)
-- **iOS app** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai) (apps/ios)
-- **Android app** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai) (apps/android)
-- **ClawHub** — [dmms-ai/clawhub](https://github.com/dmms-ai/clawhub)
-- **Trust and threat model** — [dmms-ai/trust](https://github.com/dmms-ai/trust)
+- **Core CLI and gateway** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai)
+- **macOS desktop app** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai) (apps/macos)
+- **iOS app** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai) (apps/ios)
+- **Android app** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai) (apps/android)
+- **ClawHub** — [dryads-ai/clawhub](https://github.com/dryads-ai/clawhub)
+- **Trust and threat model** — [dryads-ai/trust](https://github.com/dryads-ai/trust)
 
-For issues that don't fit a specific repo, or if you're unsure, email **security@dmms-ai.com** and we'll route it.
+For issues that don't fit a specific repo, or if you're unsure, email **security@dryads-ai.com** and we'll route it.
 
-For full reporting instructions see our [Trust page](https://trust.dmms-ai.com).
+For full reporting instructions see our [Trust page](https://trust.dryads-ai.com).
 
 ### Required in Reports
 
@@ -32,11 +32,11 @@ Reports without reproduction steps, demonstrated impact, and remediation advice 
 
 ## Security & Trust
 
-**Jamieson O'Reilly** ([@theonejvo](https://twitter.com/theonejvo)) is Security & Trust at DMMS AI. Jamieson is the founder of [Dvuln](https://dvuln.com) and brings extensive experience in offensive security, penetration testing, and security program development.
+**Jamieson O'Reilly** ([@theonejvo](https://twitter.com/theonejvo)) is Security & Trust at Dryads AI. Jamieson is the founder of [Dvuln](https://dvuln.com) and brings extensive experience in offensive security, penetration testing, and security program development.
 
 ## Bug Bounties
 
-DMMS AI is a labor of love. There is no bug bounty program and no budget for paid reports. Please still disclose responsibly so we can fix issues quickly.
+Dryads AI is a labor of love. There is no bug bounty program and no budget for paid reports. Please still disclose responsibly so we can fix issues quickly.
 The best way to help the project right now is by sending PRs.
 
 ## Maintainers: GHSA Updates via CLI
@@ -46,14 +46,14 @@ When patching a GHSA via `gh api`, include `X-GitHub-Api-Version: 2022-11-28` (o
 ## Out of Scope
 
 - Public Internet Exposure
-- Using DMMS AI in ways that the docs recommend not to
+- Using Dryads AI in ways that the docs recommend not to
 - Prompt injection attacks
 
 ## Operational Guidance
 
-For threat model + hardening guidance (including `dmms-ai security audit --deep` and `--fix`), see:
+For threat model + hardening guidance (including `dryads-ai security audit --deep` and `--fix`), see:
 
-- `https://docs.dmms-ai.com/gateway/security`
+- `https://docs.dryads-ai.com/gateway/security`
 
 ### Tool filesystem hardening
 
@@ -63,20 +63,20 @@ For threat model + hardening guidance (including `dmms-ai security audit --deep`
 
 ### Web Interface Safety
 
-DMMS AI's web interface (Gateway Control UI + HTTP endpoints) is intended for **local use only**.
+Dryads AI's web interface (Gateway Control UI + HTTP endpoints) is intended for **local use only**.
 
 - Recommended: keep the Gateway **loopback-only** (`127.0.0.1` / `::1`).
   - Config: `gateway.bind="loopback"` (default).
-  - CLI: `dmms-ai gateway run --bind loopback`.
+  - CLI: `dryads-ai gateway run --bind loopback`.
 - Do **not** expose it to the public internet (no direct bind to `0.0.0.0`, no public reverse proxy). It is not hardened for public exposure.
 - If you need remote access, prefer an SSH tunnel or Tailscale serve/funnel (so the Gateway still binds to loopback), plus strong Gateway auth.
-- The Gateway HTTP surface includes the canvas host (`/__dmmsai__/canvas/`, `/__dmmsai__/a2ui/`). Treat canvas content as sensitive/untrusted and avoid exposing it beyond loopback unless you understand the risk.
+- The Gateway HTTP surface includes the canvas host (`/__dryadsai__/canvas/`, `/__dryadsai__/a2ui/`). Treat canvas content as sensitive/untrusted and avoid exposing it beyond loopback unless you understand the risk.
 
 ## Runtime Requirements
 
 ### Node.js Version
 
-DMMS AI requires **Node.js 22.12.0 or later** (LTS). This version includes important security patches:
+Dryads AI requires **Node.js 22.12.0 or later** (LTS). This version includes important security patches:
 
 - CVE-2025-59466: async_hooks DoS vulnerability
 - CVE-2026-21636: Permission model bypass vulnerability
@@ -89,7 +89,7 @@ node --version  # Should be v22.12.0 or later
 
 ### Docker Security
 
-When running DMMS AI in Docker:
+When running Dryads AI in Docker:
 
 1. The official image runs as a non-root user (`node`) for reduced attack surface
 2. Use `--read-only` flag when possible for additional filesystem protection
@@ -99,8 +99,8 @@ Example secure Docker run:
 
 ```bash
 docker run --read-only --cap-drop=ALL \
-  -v dmms-ai-data:/app/data \
-  dmms-ai/dmms-ai:latest
+  -v dryads-ai-data:/app/data \
+  dryads-ai/dryads-ai:latest
 ```
 
 ## Security Scanning

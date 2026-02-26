@@ -6,8 +6,8 @@ describe("buildPairingReply", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeEach(() => {
-    envSnapshot = captureEnv(["DMMS_AI_PROFILE"]);
-    process.env.DMMS_AI_PROFILE = "isolated";
+    envSnapshot = captureEnv(["DRYADS_AI_PROFILE"]);
+    process.env.DRYADS_AI_PROFILE = "isolated";
   });
 
   afterEach(() => {
@@ -52,9 +52,9 @@ describe("buildPairingReply", () => {
       const text = buildPairingReply(testCase);
       expect(text).toContain(testCase.idLine);
       expect(text).toContain(`Pairing code: ${testCase.code}`);
-      // CLI commands should respect DMMS_AI_PROFILE when set (most tests run with isolated profile)
+      // CLI commands should respect DRYADS_AI_PROFILE when set (most tests run with isolated profile)
       const commandRe = new RegExp(
-        `(?:dmms-ai|dmms-ai) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
+        `(?:dryads-ai|dryads-ai) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
       );
       expect(text).toMatch(commandRe);
     });

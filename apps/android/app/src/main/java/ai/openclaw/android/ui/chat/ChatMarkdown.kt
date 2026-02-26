@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui.chat
+package ai.dryadsai.android.ui.chat
 
 import android.graphics.BitmapFactory
 import android.util.Base64

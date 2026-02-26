@@ -2,7 +2,7 @@
 read_when:
   - 你想添加/删除渠道账户（WhatsApp/Telegram/Discord/Google Chat/Slack/Mattermost（插件）/Signal/iMessage）
   - 你想检查渠道状态或跟踪渠道日志
-summary: "`dmms-ai channels` 的 CLI 参考（账户、状态、登录/登出、日志）"
+summary: "`dryads-ai channels` 的 CLI 参考（账户、状态、登录/登出、日志）"
 title: channels
 x-i18n:
   generated_at: "2026-02-03T07:44:51Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai channels`
+# `dryads-ai channels`
 
 管理 Gateway 网关上的聊天渠道账户及其运行时状态。
 
@@ -25,43 +25,43 @@ x-i18n:
 ## 常用命令
 
 ```bash
-dmms-ai channels list
-dmms-ai channels status
-dmms-ai channels capabilities
-dmms-ai channels capabilities --channel discord --target channel:123
-dmms-ai channels resolve --channel slack "#general" "@jane"
-dmms-ai channels logs --channel all
+dryads-ai channels list
+dryads-ai channels status
+dryads-ai channels capabilities
+dryads-ai channels capabilities --channel discord --target channel:123
+dryads-ai channels resolve --channel slack "#general" "@jane"
+dryads-ai channels logs --channel all
 ```
 
 ## 添加/删除账户
 
 ```bash
-dmms-ai channels add --channel telegram --token <bot-token>
-dmms-ai channels remove --channel telegram --delete
+dryads-ai channels add --channel telegram --token <bot-token>
+dryads-ai channels remove --channel telegram --delete
 ```
 
-提示：`dmms-ai channels add --help` 显示每个渠道的标志（token、app token、signal-cli 路径等）。
+提示：`dryads-ai channels add --help` 显示每个渠道的标志（token、app token、signal-cli 路径等）。
 
 ## 登录/登出（交互式）
 
 ```bash
-dmms-ai channels login --channel whatsapp
-dmms-ai channels logout --channel whatsapp
+dryads-ai channels login --channel whatsapp
+dryads-ai channels logout --channel whatsapp
 ```
 
 ## 故障排除
 
-- 运行 `dmms-ai status --deep` 进行全面探测。
-- 使用 `dmms-ai doctor` 获取引导式修复。
-- `dmms-ai channels list` 输出 `Claude: HTTP 403 ... user:profile` → 用量快照需要 `user:profile` 权限范围。使用 `--no-usage`，或提供 claude.ai 会话密钥（`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`），或通过 Claude Code CLI 重新授权。
+- 运行 `dryads-ai status --deep` 进行全面探测。
+- 使用 `dryads-ai doctor` 获取引导式修复。
+- `dryads-ai channels list` 输出 `Claude: HTTP 403 ... user:profile` → 用量快照需要 `user:profile` 权限范围。使用 `--no-usage`，或提供 claude.ai 会话密钥（`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`），或通过 Claude Code CLI 重新授权。
 
 ## 能力探测
 
 获取提供商能力提示（可用的 intents/scopes）以及静态功能支持：
 
 ```bash
-dmms-ai channels capabilities
-dmms-ai channels capabilities --channel discord --target channel:123
+dryads-ai channels capabilities
+dryads-ai channels capabilities --channel discord --target channel:123
 ```
 
 说明：
@@ -75,9 +75,9 @@ dmms-ai channels capabilities --channel discord --target channel:123
 使用提供商目录将渠道/用户名称解析为 ID：
 
 ```bash
-dmms-ai channels resolve --channel slack "#general" "@jane"
-dmms-ai channels resolve --channel discord "My Server/#support" "@someone"
-dmms-ai channels resolve --channel matrix "Project Room"
+dryads-ai channels resolve --channel slack "#general" "@jane"
+dryads-ai channels resolve --channel discord "My Server/#support" "@someone"
+dryads-ai channels resolve --channel matrix "Project Room"
 ```
 
 说明：

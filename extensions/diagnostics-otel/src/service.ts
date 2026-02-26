@@ -9,10 +9,10 @@ import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { ParentBasedSampler, TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import type { DiagnosticEventPayload, DmmsAiPluginService } from "dmms-ai/plugin-sdk";
-import { onDiagnosticEvent, registerLogTransport } from "dmms-ai/plugin-sdk";
+import type { DiagnosticEventPayload, DryadsAiPluginService } from "dryads-ai/plugin-sdk";
+import { onDiagnosticEvent, registerLogTransport } from "dryads-ai/plugin-sdk";
 
-const DEFAULT_SERVICE_NAME = "dmms-ai";
+const DEFAULT_SERVICE_NAME = "dryads-ai";
 
 function normalizeEndpoint(endpoint?: string): string | undefined {
   const trimmed = endpoint?.trim();
@@ -39,7 +39,7 @@ function resolveSampleRate(value: number | undefined): number | undefined {
   return value;
 }
 
-export function createDiagnosticsOtelService(): DmmsAiPluginService {
+export function createDiagnosticsOtelService(): DryadsAiPluginService {
   let sdk: NodeSDK | null = null;
   let logProvider: LoggerProvider | null = null;
   let stopLogTransport: (() => void) | null = null;
@@ -129,78 +129,78 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         FATAL: 21 as SeverityNumber,
       };
 
-      const meter = metrics.getMeter("dmms-ai");
-      const tracer = trace.getTracer("dmms-ai");
+      const meter = metrics.getMeter("dryads-ai");
+      const tracer = trace.getTracer("dryads-ai");
 
-      const tokensCounter = meter.createCounter("dmms-ai.tokens", {
+      const tokensCounter = meter.createCounter("dryads-ai.tokens", {
         unit: "1",
         description: "Token usage by type",
       });
-      const costCounter = meter.createCounter("dmms-ai.cost.usd", {
+      const costCounter = meter.createCounter("dryads-ai.cost.usd", {
         unit: "1",
         description: "Estimated model cost (USD)",
       });
-      const durationHistogram = meter.createHistogram("dmms-ai.run.duration_ms", {
+      const durationHistogram = meter.createHistogram("dryads-ai.run.duration_ms", {
         unit: "ms",
         description: "Agent run duration",
       });
-      const contextHistogram = meter.createHistogram("dmms-ai.context.tokens", {
+      const contextHistogram = meter.createHistogram("dryads-ai.context.tokens", {
         unit: "1",
         description: "Context window size and usage",
       });
-      const webhookReceivedCounter = meter.createCounter("dmms-ai.webhook.received", {
+      const webhookReceivedCounter = meter.createCounter("dryads-ai.webhook.received", {
         unit: "1",
         description: "Webhook requests received",
       });
-      const webhookErrorCounter = meter.createCounter("dmms-ai.webhook.error", {
+      const webhookErrorCounter = meter.createCounter("dryads-ai.webhook.error", {
         unit: "1",
         description: "Webhook processing errors",
       });
-      const webhookDurationHistogram = meter.createHistogram("dmms-ai.webhook.duration_ms", {
+      const webhookDurationHistogram = meter.createHistogram("dryads-ai.webhook.duration_ms", {
         unit: "ms",
         description: "Webhook processing duration",
       });
-      const messageQueuedCounter = meter.createCounter("dmms-ai.message.queued", {
+      const messageQueuedCounter = meter.createCounter("dryads-ai.message.queued", {
         unit: "1",
         description: "Messages queued for processing",
       });
-      const messageProcessedCounter = meter.createCounter("dmms-ai.message.processed", {
+      const messageProcessedCounter = meter.createCounter("dryads-ai.message.processed", {
         unit: "1",
         description: "Messages processed by outcome",
       });
-      const messageDurationHistogram = meter.createHistogram("dmms-ai.message.duration_ms", {
+      const messageDurationHistogram = meter.createHistogram("dryads-ai.message.duration_ms", {
         unit: "ms",
         description: "Message processing duration",
       });
-      const queueDepthHistogram = meter.createHistogram("dmms-ai.queue.depth", {
+      const queueDepthHistogram = meter.createHistogram("dryads-ai.queue.depth", {
         unit: "1",
         description: "Queue depth on enqueue/dequeue",
       });
-      const queueWaitHistogram = meter.createHistogram("dmms-ai.queue.wait_ms", {
+      const queueWaitHistogram = meter.createHistogram("dryads-ai.queue.wait_ms", {
         unit: "ms",
         description: "Queue wait time before execution",
       });
-      const laneEnqueueCounter = meter.createCounter("dmms-ai.queue.lane.enqueue", {
+      const laneEnqueueCounter = meter.createCounter("dryads-ai.queue.lane.enqueue", {
         unit: "1",
         description: "Command queue lane enqueue events",
       });
-      const laneDequeueCounter = meter.createCounter("dmms-ai.queue.lane.dequeue", {
+      const laneDequeueCounter = meter.createCounter("dryads-ai.queue.lane.dequeue", {
         unit: "1",
         description: "Command queue lane dequeue events",
       });
-      const sessionStateCounter = meter.createCounter("dmms-ai.session.state", {
+      const sessionStateCounter = meter.createCounter("dryads-ai.session.state", {
         unit: "1",
         description: "Session state transitions",
       });
-      const sessionStuckCounter = meter.createCounter("dmms-ai.session.stuck", {
+      const sessionStuckCounter = meter.createCounter("dryads-ai.session.stuck", {
         unit: "1",
         description: "Sessions stuck in processing",
       });
-      const sessionStuckAgeHistogram = meter.createHistogram("dmms-ai.session.stuck_age_ms", {
+      const sessionStuckAgeHistogram = meter.createHistogram("dryads-ai.session.stuck_age_ms", {
         unit: "ms",
         description: "Age of stuck sessions",
       });
-      const runAttemptCounter = meter.createCounter("dmms-ai.run.attempt", {
+      const runAttemptCounter = meter.createCounter("dryads-ai.run.attempt", {
         unit: "1",
         description: "Run attempts",
       });
@@ -217,7 +217,7 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
             : {},
         );
         logProvider = new LoggerProvider({ resource, processors: [processor] });
-        const otelLogger = logProvider.getLogger("dmms-ai");
+        const otelLogger = logProvider.getLogger("dryads-ai");
 
         stopLogTransport = registerLogTransport((logObj) => {
           const safeStringify = (value: unknown) => {
@@ -275,13 +275,13 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
           }
 
           const attributes: Record<string, string | number | boolean> = {
-            "dmms-ai.log.level": logLevelName,
+            "dryads-ai.log.level": logLevelName,
           };
           if (meta?.name) {
-            attributes["dmms-ai.logger"] = meta.name;
+            attributes["dryads-ai.logger"] = meta.name;
           }
           if (meta?.parentNames?.length) {
-            attributes["dmms-ai.logger.parents"] = meta.parentNames.join(".");
+            attributes["dryads-ai.logger.parents"] = meta.parentNames.join(".");
           }
           if (bindings) {
             for (const [key, value] of Object.entries(bindings)) {
@@ -290,14 +290,14 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
                 typeof value === "number" ||
                 typeof value === "boolean"
               ) {
-                attributes[`dmms-ai.${key}`] = value;
+                attributes[`dryads-ai.${key}`] = value;
               } else if (value != null) {
-                attributes[`dmms-ai.${key}`] = safeStringify(value);
+                attributes[`dryads-ai.${key}`] = safeStringify(value);
               }
             }
           }
           if (numericArgs.length > 0) {
-            attributes["dmms-ai.log.args"] = safeStringify(numericArgs);
+            attributes["dryads-ai.log.args"] = safeStringify(numericArgs);
           }
           if (meta?.path?.filePath) {
             attributes["code.filepath"] = meta.path.filePath;
@@ -309,7 +309,7 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
             attributes["code.function"] = meta.path.method;
           }
           if (meta?.path?.filePathWithLine) {
-            attributes["dmms-ai.code.location"] = meta.path.filePathWithLine;
+            attributes["dryads-ai.code.location"] = meta.path.filePathWithLine;
           }
 
           otelLogger.emit({
@@ -338,29 +338,29 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
 
       const recordModelUsage = (evt: Extract<DiagnosticEventPayload, { type: "model.usage" }>) => {
         const attrs = {
-          "dmms-ai.channel": evt.channel ?? "unknown",
-          "dmms-ai.provider": evt.provider ?? "unknown",
-          "dmms-ai.model": evt.model ?? "unknown",
+          "dryads-ai.channel": evt.channel ?? "unknown",
+          "dryads-ai.provider": evt.provider ?? "unknown",
+          "dryads-ai.model": evt.model ?? "unknown",
         };
 
         const usage = evt.usage;
         if (usage.input) {
-          tokensCounter.add(usage.input, { ...attrs, "dmms-ai.token": "input" });
+          tokensCounter.add(usage.input, { ...attrs, "dryads-ai.token": "input" });
         }
         if (usage.output) {
-          tokensCounter.add(usage.output, { ...attrs, "dmms-ai.token": "output" });
+          tokensCounter.add(usage.output, { ...attrs, "dryads-ai.token": "output" });
         }
         if (usage.cacheRead) {
-          tokensCounter.add(usage.cacheRead, { ...attrs, "dmms-ai.token": "cache_read" });
+          tokensCounter.add(usage.cacheRead, { ...attrs, "dryads-ai.token": "cache_read" });
         }
         if (usage.cacheWrite) {
-          tokensCounter.add(usage.cacheWrite, { ...attrs, "dmms-ai.token": "cache_write" });
+          tokensCounter.add(usage.cacheWrite, { ...attrs, "dryads-ai.token": "cache_write" });
         }
         if (usage.promptTokens) {
-          tokensCounter.add(usage.promptTokens, { ...attrs, "dmms-ai.token": "prompt" });
+          tokensCounter.add(usage.promptTokens, { ...attrs, "dryads-ai.token": "prompt" });
         }
         if (usage.total) {
-          tokensCounter.add(usage.total, { ...attrs, "dmms-ai.token": "total" });
+          tokensCounter.add(usage.total, { ...attrs, "dryads-ai.token": "total" });
         }
 
         if (evt.costUsd) {
@@ -372,13 +372,13 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         if (evt.context?.limit) {
           contextHistogram.record(evt.context.limit, {
             ...attrs,
-            "dmms-ai.context": "limit",
+            "dryads-ai.context": "limit",
           });
         }
         if (evt.context?.used) {
           contextHistogram.record(evt.context.used, {
             ...attrs,
-            "dmms-ai.context": "used",
+            "dryads-ai.context": "used",
           });
         }
 
@@ -387,16 +387,16 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         }
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "dmms-ai.sessionKey": evt.sessionKey ?? "",
-          "dmms-ai.sessionId": evt.sessionId ?? "",
-          "dmms-ai.tokens.input": usage.input ?? 0,
-          "dmms-ai.tokens.output": usage.output ?? 0,
-          "dmms-ai.tokens.cache_read": usage.cacheRead ?? 0,
-          "dmms-ai.tokens.cache_write": usage.cacheWrite ?? 0,
-          "dmms-ai.tokens.total": usage.total ?? 0,
+          "dryads-ai.sessionKey": evt.sessionKey ?? "",
+          "dryads-ai.sessionId": evt.sessionId ?? "",
+          "dryads-ai.tokens.input": usage.input ?? 0,
+          "dryads-ai.tokens.output": usage.output ?? 0,
+          "dryads-ai.tokens.cache_read": usage.cacheRead ?? 0,
+          "dryads-ai.tokens.cache_write": usage.cacheWrite ?? 0,
+          "dryads-ai.tokens.total": usage.total ?? 0,
         };
 
-        const span = spanWithDuration("dmms-ai.model.usage", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("dryads-ai.model.usage", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -404,8 +404,8 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.received" }>,
       ) => {
         const attrs = {
-          "dmms-ai.channel": evt.channel ?? "unknown",
-          "dmms-ai.webhook": evt.updateType ?? "unknown",
+          "dryads-ai.channel": evt.channel ?? "unknown",
+          "dryads-ai.webhook": evt.updateType ?? "unknown",
         };
         webhookReceivedCounter.add(1, attrs);
       };
@@ -414,8 +414,8 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.processed" }>,
       ) => {
         const attrs = {
-          "dmms-ai.channel": evt.channel ?? "unknown",
-          "dmms-ai.webhook": evt.updateType ?? "unknown",
+          "dryads-ai.channel": evt.channel ?? "unknown",
+          "dryads-ai.webhook": evt.updateType ?? "unknown",
         };
         if (typeof evt.durationMs === "number") {
           webhookDurationHistogram.record(evt.durationMs, attrs);
@@ -425,9 +425,9 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.chatId !== undefined) {
-          spanAttrs["dmms-ai.chatId"] = String(evt.chatId);
+          spanAttrs["dryads-ai.chatId"] = String(evt.chatId);
         }
-        const span = spanWithDuration("dmms-ai.webhook.processed", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("dryads-ai.webhook.processed", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -435,8 +435,8 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.error" }>,
       ) => {
         const attrs = {
-          "dmms-ai.channel": evt.channel ?? "unknown",
-          "dmms-ai.webhook": evt.updateType ?? "unknown",
+          "dryads-ai.channel": evt.channel ?? "unknown",
+          "dryads-ai.webhook": evt.updateType ?? "unknown",
         };
         webhookErrorCounter.add(1, attrs);
         if (!tracesEnabled) {
@@ -444,12 +444,12 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         }
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "dmms-ai.error": evt.error,
+          "dryads-ai.error": evt.error,
         };
         if (evt.chatId !== undefined) {
-          spanAttrs["dmms-ai.chatId"] = String(evt.chatId);
+          spanAttrs["dryads-ai.chatId"] = String(evt.chatId);
         }
-        const span = tracer.startSpan("dmms-ai.webhook.error", {
+        const span = tracer.startSpan("dryads-ai.webhook.error", {
           attributes: spanAttrs,
         });
         span.setStatus({ code: SpanStatusCode.ERROR, message: evt.error });
@@ -460,8 +460,8 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.queued" }>,
       ) => {
         const attrs = {
-          "dmms-ai.channel": evt.channel ?? "unknown",
-          "dmms-ai.source": evt.source ?? "unknown",
+          "dryads-ai.channel": evt.channel ?? "unknown",
+          "dryads-ai.source": evt.source ?? "unknown",
         };
         messageQueuedCounter.add(1, attrs);
         if (typeof evt.queueDepth === "number") {
@@ -473,8 +473,8 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.processed" }>,
       ) => {
         const attrs = {
-          "dmms-ai.channel": evt.channel ?? "unknown",
-          "dmms-ai.outcome": evt.outcome ?? "unknown",
+          "dryads-ai.channel": evt.channel ?? "unknown",
+          "dryads-ai.outcome": evt.outcome ?? "unknown",
         };
         messageProcessedCounter.add(1, attrs);
         if (typeof evt.durationMs === "number") {
@@ -485,21 +485,21 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.sessionKey) {
-          spanAttrs["dmms-ai.sessionKey"] = evt.sessionKey;
+          spanAttrs["dryads-ai.sessionKey"] = evt.sessionKey;
         }
         if (evt.sessionId) {
-          spanAttrs["dmms-ai.sessionId"] = evt.sessionId;
+          spanAttrs["dryads-ai.sessionId"] = evt.sessionId;
         }
         if (evt.chatId !== undefined) {
-          spanAttrs["dmms-ai.chatId"] = String(evt.chatId);
+          spanAttrs["dryads-ai.chatId"] = String(evt.chatId);
         }
         if (evt.messageId !== undefined) {
-          spanAttrs["dmms-ai.messageId"] = String(evt.messageId);
+          spanAttrs["dryads-ai.messageId"] = String(evt.messageId);
         }
         if (evt.reason) {
-          spanAttrs["dmms-ai.reason"] = evt.reason;
+          spanAttrs["dryads-ai.reason"] = evt.reason;
         }
-        const span = spanWithDuration("dmms-ai.message.processed", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("dryads-ai.message.processed", spanAttrs, evt.durationMs);
         if (evt.outcome === "error") {
           span.setStatus({ code: SpanStatusCode.ERROR, message: evt.error });
         }
@@ -509,7 +509,7 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
       const recordLaneEnqueue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.enqueue" }>,
       ) => {
-        const attrs = { "dmms-ai.lane": evt.lane };
+        const attrs = { "dryads-ai.lane": evt.lane };
         laneEnqueueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
       };
@@ -517,7 +517,7 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
       const recordLaneDequeue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.dequeue" }>,
       ) => {
-        const attrs = { "dmms-ai.lane": evt.lane };
+        const attrs = { "dryads-ai.lane": evt.lane };
         laneDequeueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
         if (typeof evt.waitMs === "number") {
@@ -528,9 +528,9 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
       const recordSessionState = (
         evt: Extract<DiagnosticEventPayload, { type: "session.state" }>,
       ) => {
-        const attrs: Record<string, string> = { "dmms-ai.state": evt.state };
+        const attrs: Record<string, string> = { "dryads-ai.state": evt.state };
         if (evt.reason) {
-          attrs["dmms-ai.reason"] = evt.reason;
+          attrs["dryads-ai.reason"] = evt.reason;
         }
         sessionStateCounter.add(1, attrs);
       };
@@ -538,7 +538,7 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
       const recordSessionStuck = (
         evt: Extract<DiagnosticEventPayload, { type: "session.stuck" }>,
       ) => {
-        const attrs: Record<string, string> = { "dmms-ai.state": evt.state };
+        const attrs: Record<string, string> = { "dryads-ai.state": evt.state };
         sessionStuckCounter.add(1, attrs);
         if (typeof evt.ageMs === "number") {
           sessionStuckAgeHistogram.record(evt.ageMs, attrs);
@@ -548,26 +548,26 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.sessionKey) {
-          spanAttrs["dmms-ai.sessionKey"] = evt.sessionKey;
+          spanAttrs["dryads-ai.sessionKey"] = evt.sessionKey;
         }
         if (evt.sessionId) {
-          spanAttrs["dmms-ai.sessionId"] = evt.sessionId;
+          spanAttrs["dryads-ai.sessionId"] = evt.sessionId;
         }
-        spanAttrs["dmms-ai.queueDepth"] = evt.queueDepth ?? 0;
-        spanAttrs["dmms-ai.ageMs"] = evt.ageMs;
-        const span = tracer.startSpan("dmms-ai.session.stuck", { attributes: spanAttrs });
+        spanAttrs["dryads-ai.queueDepth"] = evt.queueDepth ?? 0;
+        spanAttrs["dryads-ai.ageMs"] = evt.ageMs;
+        const span = tracer.startSpan("dryads-ai.session.stuck", { attributes: spanAttrs });
         span.setStatus({ code: SpanStatusCode.ERROR, message: "session stuck" });
         span.end();
       };
 
       const recordRunAttempt = (evt: Extract<DiagnosticEventPayload, { type: "run.attempt" }>) => {
-        runAttemptCounter.add(1, { "dmms-ai.attempt": evt.attempt });
+        runAttemptCounter.add(1, { "dryads-ai.attempt": evt.attempt });
       };
 
       const recordHeartbeat = (
         evt: Extract<DiagnosticEventPayload, { type: "diagnostic.heartbeat" }>,
       ) => {
-        queueDepthHistogram.record(evt.queued, { "dmms-ai.channel": "heartbeat" });
+        queueDepthHistogram.record(evt.queued, { "dryads-ai.channel": "heartbeat" });
       };
 
       unsubscribe = onDiagnosticEvent((evt: DiagnosticEventPayload) => {
@@ -629,5 +629,5 @@ export function createDiagnosticsOtelService(): DmmsAiPluginService {
         sdk = null;
       }
     },
-  } satisfies DmmsAiPluginService;
+  } satisfies DryadsAiPluginService;
 }

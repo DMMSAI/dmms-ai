@@ -1,11 +1,11 @@
-import type { DmmsAiConfig, DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
 
 type ThreadOwnershipConfig = {
   forwarderUrl?: string;
   abTestChannels?: string[];
 };
 
-type AgentEntry = NonNullable<NonNullable<DmmsAiConfig["agents"]>["list"]>[number];
+type AgentEntry = NonNullable<NonNullable<DryadsAiConfig["agents"]>["list"]>[number];
 
 // In-memory set of {channel}:{thread} keys where this agent was @-mentioned.
 // Entries expire after 5 minutes.
@@ -21,7 +21,7 @@ function cleanExpiredMentions(): void {
   }
 }
 
-function resolveOwnershipAgent(config: DmmsAiConfig): { id: string; name: string } {
+function resolveOwnershipAgent(config: DryadsAiConfig): { id: string; name: string } {
   const list = Array.isArray(config.agents?.list)
     ? config.agents.list.filter((entry): entry is AgentEntry =>
         Boolean(entry && typeof entry === "object"),
@@ -39,7 +39,7 @@ function resolveOwnershipAgent(config: DmmsAiConfig): { id: string; name: string
   return { id, name };
 }
 
-export default function register(api: DmmsAiPluginApi) {
+export default function register(api: DryadsAiPluginApi) {
   const pluginCfg = (api.pluginConfig ?? {}) as ThreadOwnershipConfig;
   const forwarderUrl = (
     pluginCfg.forwarderUrl ??

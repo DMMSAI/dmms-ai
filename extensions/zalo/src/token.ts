@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { type BaseTokenResolution, DEFAULT_ACCOUNT_ID } from "dmms-ai/plugin-sdk";
+import { type BaseTokenResolution, DEFAULT_ACCOUNT_ID } from "dryads-ai/plugin-sdk";
 import type { ZaloConfig } from "./types.js";
 
 export type ZaloTokenResolution = BaseTokenResolution & {

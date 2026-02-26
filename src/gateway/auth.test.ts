@@ -28,8 +28,8 @@ describe("gateway auth", () => {
       resolveGatewayAuth({
         authConfig: {},
         env: {
-          DMMS_AI_GATEWAY_TOKEN: "env-token",
-          DMMS_AI_GATEWAY_PASSWORD: "env-password",
+          DRYADS_AI_GATEWAY_TOKEN: "env-token",
+          DRYADS_AI_GATEWAY_PASSWORD: "env-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({

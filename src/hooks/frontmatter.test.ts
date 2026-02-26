@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   parseFrontmatter,
-  resolveDmmsAiMetadata,
+  resolveDryadsAiMetadata,
   resolveHookInvocationPolicy,
 } from "./frontmatter.js";
 
@@ -41,7 +41,7 @@ name: session-memory
 description: "Save session context"
 metadata:
   {
-    "dmms-ai": {
+    "dryads-ai": {
       "emoji": "💾",
       "events": ["command:new"]
     }
@@ -58,8 +58,8 @@ metadata:
 
     // Verify the metadata is valid JSON
     const parsed = JSON.parse(result.metadata);
-    expect(parsed["dmms-ai"].emoji).toBe("💾");
-    expect(parsed["dmms-ai"].events).toEqual(["command:new"]);
+    expect(parsed["dryads-ai"].emoji).toBe("💾");
+    expect(parsed["dryads-ai"].events).toEqual(["command:new"]);
   });
 
   it("parses multi-line metadata with complex nested structure", () => {
@@ -68,7 +68,7 @@ name: command-logger
 description: "Log all command events"
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "📝",
         "events": ["command"],
@@ -83,21 +83,21 @@ metadata:
     expect(result.metadata).toBeDefined();
 
     const parsed = JSON.parse(result.metadata);
-    expect(parsed["dmms-ai"].emoji).toBe("📝");
-    expect(parsed["dmms-ai"].events).toEqual(["command"]);
-    expect(parsed["dmms-ai"].requires.config).toEqual(["workspace.dir"]);
-    expect(parsed["dmms-ai"].install[0].kind).toBe("bundled");
+    expect(parsed["dryads-ai"].emoji).toBe("📝");
+    expect(parsed["dryads-ai"].events).toEqual(["command"]);
+    expect(parsed["dryads-ai"].requires.config).toEqual(["workspace.dir"]);
+    expect(parsed["dryads-ai"].install[0].kind).toBe("bundled");
   });
 
   it("handles single-line metadata (inline JSON)", () => {
     const content = `---
 name: simple-hook
-metadata: {"dmms-ai": {"events": ["test"]}}
+metadata: {"dryads-ai": {"events": ["test"]}}
 ---
 `;
     const result = parseFrontmatter(content);
     expect(result.name).toBe("simple-hook");
-    expect(result.metadata).toBe('{"dmms-ai": {"events": ["test"]}}');
+    expect(result.metadata).toBe('{"dryads-ai": {"events": ["test"]}}');
   });
 
   it("handles mixed single-line and multi-line values", () => {
@@ -107,7 +107,7 @@ description: "A hook with mixed values"
 homepage: https://example.com
 metadata:
   {
-    "dmms-ai": {
+    "dryads-ai": {
       "events": ["command:new"]
     }
   }
@@ -148,12 +148,12 @@ description: 'single-quoted'
   });
 });
 
-describe("resolveDmmsAiMetadata", () => {
-  it("extracts dmms-ai metadata from parsed frontmatter", () => {
+describe("resolveDryadsAiMetadata", () => {
+  it("extracts dryads-ai metadata from parsed frontmatter", () => {
     const frontmatter = {
       name: "test-hook",
       metadata: JSON.stringify({
-        "dmms-ai": {
+        "dryads-ai": {
           emoji: "🔥",
           events: ["command:new", "command:reset"],
           requires: {
@@ -164,7 +164,7 @@ describe("resolveDmmsAiMetadata", () => {
       }),
     };
 
-    const result = resolveDmmsAiMetadata(frontmatter);
+    const result = resolveDryadsAiMetadata(frontmatter);
     expect(result).toBeDefined();
     expect(result?.emoji).toBe("🔥");
     expect(result?.events).toEqual(["command:new", "command:reset"]);
@@ -174,15 +174,15 @@ describe("resolveDmmsAiMetadata", () => {
 
   it("returns undefined when metadata is missing", () => {
     const frontmatter = { name: "no-metadata" };
-    const result = resolveDmmsAiMetadata(frontmatter);
+    const result = resolveDryadsAiMetadata(frontmatter);
     expect(result).toBeUndefined();
   });
 
-  it("returns undefined when dmms-ai key is missing", () => {
+  it("returns undefined when dryads-ai key is missing", () => {
     const frontmatter = {
       metadata: JSON.stringify({ other: "data" }),
     };
-    const result = resolveDmmsAiMetadata(frontmatter);
+    const result = resolveDryadsAiMetadata(frontmatter);
     expect(result).toBeUndefined();
   });
 
@@ -190,41 +190,41 @@ describe("resolveDmmsAiMetadata", () => {
     const frontmatter = {
       metadata: "not valid json {",
     };
-    const result = resolveDmmsAiMetadata(frontmatter);
+    const result = resolveDryadsAiMetadata(frontmatter);
     expect(result).toBeUndefined();
   });
 
   it("handles install specs", () => {
     const frontmatter = {
       metadata: JSON.stringify({
-        "dmms-ai": {
+        "dryads-ai": {
           events: ["command"],
           install: [
-            { id: "bundled", kind: "bundled", label: "Bundled with DMMS AI" },
-            { id: "npm", kind: "npm", package: "@dmms-ai/hook" },
+            { id: "bundled", kind: "bundled", label: "Bundled with Dryads AI" },
+            { id: "npm", kind: "npm", package: "@dryads-ai/hook" },
           ],
         },
       }),
     };
 
-    const result = resolveDmmsAiMetadata(frontmatter);
+    const result = resolveDryadsAiMetadata(frontmatter);
     expect(result?.install).toHaveLength(2);
     expect(result?.install?.[0].kind).toBe("bundled");
     expect(result?.install?.[1].kind).toBe("npm");
-    expect(result?.install?.[1].package).toBe("@dmms-ai/hook");
+    expect(result?.install?.[1].package).toBe("@dryads-ai/hook");
   });
 
   it("handles os restrictions", () => {
     const frontmatter = {
       metadata: JSON.stringify({
-        "dmms-ai": {
+        "dryads-ai": {
           events: ["command"],
           os: ["darwin", "linux"],
         },
       }),
     };
 
-    const result = resolveDmmsAiMetadata(frontmatter);
+    const result = resolveDryadsAiMetadata(frontmatter);
     expect(result?.os).toEqual(["darwin", "linux"]);
   });
 
@@ -233,15 +233,15 @@ describe("resolveDmmsAiMetadata", () => {
     const content = `---
 name: session-memory
 description: "Save session context to memory when /new command is issued"
-homepage: https://docs.dmms-ai.com/automation/hooks#session-memory
+homepage: https://docs.dryads-ai.com/automation/hooks#session-memory
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "💾",
         "events": ["command:new"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with DMMS AI" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Dryads AI" }],
       },
   }
 ---
@@ -253,28 +253,28 @@ metadata:
     expect(frontmatter.name).toBe("session-memory");
     expect(frontmatter.metadata).toBeDefined();
 
-    const dmmsAi = resolveDmmsAiMetadata(frontmatter);
-    expect(dmmsAi).toBeDefined();
-    expect(dmmsAi?.emoji).toBe("💾");
-    expect(dmmsAi?.events).toEqual(["command:new"]);
-    expect(dmmsAi?.requires?.config).toEqual(["workspace.dir"]);
-    expect(dmmsAi?.install?.[0].kind).toBe("bundled");
+    const dryadsAi = resolveDryadsAiMetadata(frontmatter);
+    expect(dryadsAi).toBeDefined();
+    expect(dryadsAi?.emoji).toBe("💾");
+    expect(dryadsAi?.events).toEqual(["command:new"]);
+    expect(dryadsAi?.requires?.config).toEqual(["workspace.dir"]);
+    expect(dryadsAi?.install?.[0].kind).toBe("bundled");
   });
 
   it("parses YAML metadata map", () => {
     const content = `---
 name: yaml-metadata
 metadata:
-  "dmms-ai":
+  "dryads-ai":
     emoji: disk
     events:
       - command:new
 ---
 `;
     const frontmatter = parseFrontmatter(content);
-    const dmmsAi = resolveDmmsAiMetadata(frontmatter);
-    expect(dmmsAi?.emoji).toBe("disk");
-    expect(dmmsAi?.events).toEqual(["command:new"]);
+    const dryadsAi = resolveDryadsAiMetadata(frontmatter);
+    expect(dryadsAi?.emoji).toBe("disk");
+    expect(dryadsAi?.events).toEqual(["command:new"]);
   });
 });
 

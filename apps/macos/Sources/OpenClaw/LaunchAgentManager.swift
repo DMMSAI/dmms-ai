@@ -3,7 +3,7 @@ import Foundation
 enum LaunchAgentManager {
     private static var plistURL: URL {
         FileManager().homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/LaunchAgents/ai.dmmsai.mac.plist")
+            .appendingPathComponent("Library/LaunchAgents/ai.dryadsai.mac.plist")
     }
 
     static func status() async -> Bool {
@@ -32,10 +32,10 @@ enum LaunchAgentManager {
         <plist version="1.0">
         <dict>
           <key>Label</key>
-          <string>ai.dmmsai.mac</string>
+          <string>ai.dryadsai.mac</string>
           <key>ProgramArguments</key>
           <array>
-            <string>\(bundlePath)/Contents/MacOS/DMMS AI</string>
+            <string>\(bundlePath)/Contents/MacOS/Dryads AI</string>
           </array>
           <key>WorkingDirectory</key>
           <string>\(FileManager().homeDirectoryForCurrentUser.path)</string>

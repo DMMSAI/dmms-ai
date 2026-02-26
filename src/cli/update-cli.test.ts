@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig, ConfigFileSnapshot } from "../config/types.dmms-ai.js";
+import type { DryadsAiConfig, ConfigFileSnapshot } from "../config/types.dryads-ai.js";
 import type { UpdateRunResult } from "../infra/update-runner.js";
 import { captureEnv } from "../test-utils/env.js";
 
@@ -30,8 +30,8 @@ vi.mock("../infra/update-runner.js", () => ({
   runGatewayUpdate: vi.fn(),
 }));
 
-vi.mock("../infra/dmms-ai-root.js", () => ({
-  resolveDmmsAiPackageRoot: vi.fn(),
+vi.mock("../infra/dryads-ai-root.js", () => ({
+  resolveDryadsAiPackageRoot: vi.fn(),
 }));
 
 vi.mock("../config/config.js", () => ({
@@ -108,7 +108,7 @@ vi.mock("../runtime.js", () => ({
 }));
 
 const { runGatewayUpdate } = await import("../infra/update-runner.js");
-const { resolveDmmsAiPackageRoot } = await import("../infra/dmms-ai-root.js");
+const { resolveDryadsAiPackageRoot } = await import("../infra/dryads-ai-root.js");
 const { readConfigFileSnapshot, writeConfigFile } = await import("../config/config.js");
 const { checkUpdateStatus, fetchNpmTagVersion, resolveNpmChannelTag } =
   await import("../infra/update-check.js");
@@ -130,16 +130,16 @@ describe("update-cli", () => {
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-update-tests-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-update-tests-"));
   });
 
   afterAll(async () => {
     await fs.rm(fixtureRoot, { recursive: true, force: true });
   });
 
-  const baseConfig = {} as DmmsAiConfig;
+  const baseConfig = {} as DryadsAiConfig;
   const baseSnapshot: ConfigFileSnapshot = {
-    path: "/tmp/dmms-ai-config.json",
+    path: "/tmp/dryads-ai-config.json",
     exists: true,
     raw: "{}",
     parsed: {},
@@ -166,7 +166,7 @@ describe("update-cli", () => {
   };
 
   const mockPackageInstallStatus = (root: string) => {
-    vi.mocked(resolveDmmsAiPackageRoot).mockResolvedValue(root);
+    vi.mocked(resolveDryadsAiPackageRoot).mockResolvedValue(root);
     vi.mocked(checkUpdateStatus).mockResolvedValue({
       root,
       installKind: "package",
@@ -187,7 +187,7 @@ describe("update-cli", () => {
   };
 
   const setupNonInteractiveDowngrade = async () => {
-    const tempDir = await createCaseDir("dmms-ai-update");
+    const tempDir = await createCaseDir("dryads-ai-update");
     setTty(false);
     readPackageVersion.mockResolvedValue("2.0.0");
 
@@ -212,7 +212,7 @@ describe("update-cli", () => {
     confirm.mockReset();
     select.mockReset();
     vi.mocked(runGatewayUpdate).mockReset();
-    vi.mocked(resolveDmmsAiPackageRoot).mockReset();
+    vi.mocked(resolveDryadsAiPackageRoot).mockReset();
     vi.mocked(readConfigFileSnapshot).mockReset();
     vi.mocked(writeConfigFile).mockReset();
     vi.mocked(checkUpdateStatus).mockReset();
@@ -230,7 +230,7 @@ describe("update-cli", () => {
     serviceLoaded.mockReset();
     prepareRestartScript.mockReset();
     runRestartScript.mockReset();
-    vi.mocked(resolveDmmsAiPackageRoot).mockResolvedValue(process.cwd());
+    vi.mocked(resolveDryadsAiPackageRoot).mockResolvedValue(process.cwd());
     vi.mocked(readConfigFileSnapshot).mockResolvedValue(baseSnapshot);
     vi.mocked(fetchNpmTagVersion).mockResolvedValue({
       tag: "latest",
@@ -273,11 +273,11 @@ describe("update-cli", () => {
       killed: false,
       termination: "exit",
     });
-    readPackageName.mockResolvedValue("dmms-ai");
+    readPackageName.mockResolvedValue("dryads-ai");
     readPackageVersion.mockResolvedValue("1.0.0");
     resolveGlobalManager.mockResolvedValue("npm");
     serviceLoaded.mockResolvedValue(false);
-    prepareRestartScript.mockResolvedValue("/tmp/dmms-ai-restart-test.sh");
+    prepareRestartScript.mockResolvedValue("/tmp/dryads-ai-restart-test.sh");
     runRestartScript.mockResolvedValue(undefined);
     setTty(false);
     setStdoutTty(false);
@@ -320,7 +320,7 @@ describe("update-cli", () => {
     await updateStatusCommand({ json: false });
 
     const logs = vi.mocked(defaultRuntime.log).mock.calls.map((call) => call[0]);
-    expect(logs.join("\n")).toContain("DMMS AI update status");
+    expect(logs.join("\n")).toContain("Dryads AI update status");
   });
 
   it("updateStatusCommand emits JSON", async () => {
@@ -346,7 +346,7 @@ describe("update-cli", () => {
   });
 
   it("defaults to stable channel for package installs when unset", async () => {
-    const tempDir = await createCaseDir("dmms-ai-update");
+    const tempDir = await createCaseDir("dryads-ai-update");
 
     mockPackageInstallStatus(tempDir);
     vi.mocked(runGatewayUpdate).mockResolvedValue({
@@ -365,7 +365,7 @@ describe("update-cli", () => {
   it("uses stored beta channel when configured", async () => {
     vi.mocked(readConfigFileSnapshot).mockResolvedValue({
       ...baseSnapshot,
-      config: { update: { channel: "beta" } } as DmmsAiConfig,
+      config: { update: { channel: "beta" } } as DryadsAiConfig,
     });
     vi.mocked(runGatewayUpdate).mockResolvedValue({
       status: "ok",
@@ -380,12 +380,12 @@ describe("update-cli", () => {
   });
 
   it("falls back to latest when beta tag is older than release", async () => {
-    const tempDir = await createCaseDir("dmms-ai-update");
+    const tempDir = await createCaseDir("dryads-ai-update");
 
     mockPackageInstallStatus(tempDir);
     vi.mocked(readConfigFileSnapshot).mockResolvedValue({
       ...baseSnapshot,
-      config: { update: { channel: "beta" } } as DmmsAiConfig,
+      config: { update: { channel: "beta" } } as DryadsAiConfig,
     });
     vi.mocked(resolveNpmChannelTag).mockResolvedValue({
       tag: "latest",
@@ -405,9 +405,9 @@ describe("update-cli", () => {
   });
 
   it("honors --tag override", async () => {
-    const tempDir = await createCaseDir("dmms-ai-update");
+    const tempDir = await createCaseDir("dryads-ai-update");
 
-    vi.mocked(resolveDmmsAiPackageRoot).mockResolvedValue(tempDir);
+    vi.mocked(resolveDryadsAiPackageRoot).mockResolvedValue(tempDir);
     vi.mocked(runGatewayUpdate).mockResolvedValue({
       status: "ok",
       mode: "npm",
@@ -487,10 +487,10 @@ describe("update-cli", () => {
       durationMs: 100,
     };
 
-    const envSnapshot = captureEnv(["DMMS_AI_UPDATE_IN_PROGRESS"]);
+    const envSnapshot = captureEnv(["DRYADS_AI_UPDATE_IN_PROGRESS"]);
     const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0);
     try {
-      delete process.env.DMMS_AI_UPDATE_IN_PROGRESS;
+      delete process.env.DRYADS_AI_UPDATE_IN_PROGRESS;
       vi.mocked(runGatewayUpdate).mockResolvedValue(mockResult);
       vi.mocked(runDaemonRestart).mockResolvedValue(true);
       vi.mocked(doctorCommand).mockResolvedValue(undefined);
@@ -502,7 +502,7 @@ describe("update-cli", () => {
         defaultRuntime,
         expect.objectContaining({ nonInteractive: true }),
       );
-      expect(process.env.DMMS_AI_UPDATE_IN_PROGRESS).toBeUndefined();
+      expect(process.env.DRYADS_AI_UPDATE_IN_PROGRESS).toBeUndefined();
 
       const logLines = vi.mocked(defaultRuntime.log).mock.calls.map((call) => String(call[0]));
       expect(
@@ -633,11 +633,11 @@ describe("update-cli", () => {
   });
 
   it("updateWizardCommand offers dev checkout and forwards selections", async () => {
-    const tempDir = await createCaseDir("dmms-ai-update-wizard");
-    const envSnapshot = captureEnv(["DMMS_AI_GIT_DIR"]);
+    const tempDir = await createCaseDir("dryads-ai-update-wizard");
+    const envSnapshot = captureEnv(["DRYADS_AI_GIT_DIR"]);
     try {
       setTty(true);
-      process.env.DMMS_AI_GIT_DIR = tempDir;
+      process.env.DRYADS_AI_GIT_DIR = tempDir;
 
       vi.mocked(checkUpdateStatus).mockResolvedValue({
         root: "/test/path",

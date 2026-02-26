@@ -1,13 +1,13 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite
 struct AnthropicAuthResolverTests {
     @Test
     func prefersOAuthFileOverEnv() throws {
         let dir = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-oauth-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("dryads-ai-oauth-\(UUID().uuidString)", isDirectory: true)
         try FileManager().createDirectory(at: dir, withIntermediateDirectories: true)
         let oauthFile = dir.appendingPathComponent("oauth.json")
         let payload = [
@@ -21,7 +21,7 @@ struct AnthropicAuthResolverTests {
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.prettyPrinted, .sortedKeys])
         try data.write(to: oauthFile, options: [.atomic])
 
-        let status = DmmsAiOAuthStore.anthropicOAuthStatus(at: oauthFile)
+        let status = DryadsAiOAuthStore.anthropicOAuthStatus(at: oauthFile)
         let mode = AnthropicAuthResolver.resolve(environment: [
             "ANTHROPIC_API_KEY": "sk-ant-ignored",
         ], oauthStatus: status)

@@ -144,9 +144,9 @@ if (candidatePids.length > 0) {
 const includePattern = /codex|claude/i;
 
 const excludePatterns = [
-  /dmms-ai-gateway/i,
+  /dryads-ai-gateway/i,
   /signal-cli/i,
-  /node_modules\/\.bin\/dmms-ai/i,
+  /node_modules\/\.bin\/dryads-ai/i,
   /recover-orphaned-processes\.sh/i,
 ];
 

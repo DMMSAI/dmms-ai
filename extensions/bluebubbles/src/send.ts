@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
-import { stripMarkdown } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
+import { stripMarkdown } from "dryads-ai/plugin-sdk";
 import { resolveBlueBubblesAccount } from "./accounts.js";
 import { getCachedBlueBubblesPrivateApiStatus } from "./probe.js";
 import { extractBlueBubblesMessageId, resolveBlueBubblesSendTarget } from "./send-helpers.js";
@@ -16,7 +16,7 @@ export type BlueBubblesSendOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   /** Message GUID to reply to (reply threading) */
   replyToMessageGuid?: string;
   /** Part index for reply (default: 0) */

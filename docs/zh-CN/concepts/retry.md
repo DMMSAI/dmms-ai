@@ -45,7 +45,7 @@ x-i18n:
 
 ## 配置
 
-在 `~/.dmms-ai/dmms-ai.json` 中按提供商设置重试策略：
+在 `~/.dryads-ai/dryads-ai.json` 中按提供商设置重试策略：
 
 ```json5
 {

@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import DmmsAiProtocol
+import DryadsAiProtocol
 
 struct AnyCodableTests {
     @Test

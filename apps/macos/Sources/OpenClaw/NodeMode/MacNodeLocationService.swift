@@ -1,6 +1,6 @@
 import CoreLocation
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 
 @MainActor
 final class MacNodeLocationService: NSObject, CLLocationManagerDelegate {
@@ -30,7 +30,7 @@ final class MacNodeLocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func currentLocation(
-        desiredAccuracy: DmmsAiLocationAccuracy,
+        desiredAccuracy: DryadsAiLocationAccuracy,
         maxAgeMs: Int?,
         timeoutMs: Int?) async throws -> CLLocation
     {
@@ -103,7 +103,7 @@ final class MacNodeLocationService: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    private static func accuracyValue(_ accuracy: DmmsAiLocationAccuracy) -> CLLocationAccuracy {
+    private static func accuracyValue(_ accuracy: DryadsAiLocationAccuracy) -> CLLocationAccuracy {
         switch accuracy {
         case .coarse:
             kCLLocationAccuracyKilometer

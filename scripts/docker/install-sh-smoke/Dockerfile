@@ -15,7 +15,7 @@ RUN set -eux; \
     sudo \
   && rm -rf /var/lib/apt/lists/*
 
-COPY run.sh /usr/local/bin/dmms-ai-install-smoke
-RUN chmod +x /usr/local/bin/dmms-ai-install-smoke
+COPY run.sh /usr/local/bin/dryads-ai-install-smoke
+RUN chmod +x /usr/local/bin/dryads-ai-install-smoke
 
-ENTRYPOINT ["/usr/local/bin/dmms-ai-install-smoke"]
+ENTRYPOINT ["/usr/local/bin/dryads-ai-install-smoke"]

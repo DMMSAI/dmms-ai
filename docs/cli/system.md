@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `dmms-ai system` (system events, heartbeat, presence)"
+summary: "CLI reference for `dryads-ai system` (system events, heartbeat, presence)"
 read_when:
   - You want to enqueue a system event without creating a cron job
   - You need to enable or disable heartbeats
@@ -7,7 +7,7 @@ read_when:
 title: "system"
 ---
 
-# `dmms-ai system`
+# `dryads-ai system`
 
 System-level helpers for the Gateway: enqueue system events, control heartbeats,
 and view presence.
@@ -15,10 +15,10 @@ and view presence.
 ## Common commands
 
 ```bash
-dmms-ai system event --text "Check for urgent follow-ups" --mode now
-dmms-ai system heartbeat enable
-dmms-ai system heartbeat last
-dmms-ai system presence
+dryads-ai system event --text "Check for urgent follow-ups" --mode now
+dryads-ai system heartbeat enable
+dryads-ai system heartbeat last
+dryads-ai system presence
 ```
 
 ## `system event`

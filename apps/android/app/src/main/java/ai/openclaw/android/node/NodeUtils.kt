@@ -1,4 +1,4 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull

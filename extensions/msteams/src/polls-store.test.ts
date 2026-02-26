@@ -6,7 +6,7 @@ import { createMSTeamsPollStoreMemory } from "./polls-store-memory.js";
 import { createMSTeamsPollStoreFs } from "./polls.js";
 
 const createFsStore = async () => {
-  const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dmms-ai-msteams-polls-"));
+  const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dryads-ai-msteams-polls-"));
   return createMSTeamsPollStoreFs({ stateDir });
 };
 

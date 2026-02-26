@@ -1,7 +1,7 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 export type ResolveSenderCommandAuthorizationParams = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   rawBody: string;
   isGroup: boolean;
   dmPolicy: string;
@@ -9,7 +9,7 @@ export type ResolveSenderCommandAuthorizationParams = {
   senderId: string;
   isSenderAllowed: (senderId: string, allowFrom: string[]) => boolean;
   readAllowFromStore: () => Promise<string[]>;
-  shouldComputeCommandAuthorized: (rawBody: string, cfg: DmmsAiConfig) => boolean;
+  shouldComputeCommandAuthorized: (rawBody: string, cfg: DryadsAiConfig) => boolean;
   resolveCommandAuthorizedFromAuthorizers: (params: {
     useAccessGroups: boolean;
     authorizers: Array<{ configured: boolean; allowed: boolean }>;

@@ -1,7 +1,7 @@
 ---
 read_when:
-  - 你想从终端搜索实时 DMMS AI 文档
-summary: "`dmms-ai docs` 的 CLI 参考（搜索实时文档索引）"
+  - 你想从终端搜索实时 Dryads AI 文档
+summary: "`dryads-ai docs` 的 CLI 参考（搜索实时文档索引）"
 title: docs
 x-i18n:
   generated_at: "2026-02-03T07:44:50Z"
@@ -12,11 +12,11 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai docs`
+# `dryads-ai docs`
 
 搜索实时文档索引。
 
 ```bash
-dmms-ai docs browser extension
-dmms-ai docs sandbox allowHostControl
+dryads-ai docs browser extension
+dryads-ai docs sandbox allowHostControl
 ```

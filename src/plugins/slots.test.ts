@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { applyExclusiveSlotSelection } from "./slots.js";
 
 describe("applyExclusiveSlotSelection", () => {
   it("selects the slot and disables other entries for the same kind", () => {
-    const config: DmmsAiConfig = {
+    const config: DryadsAiConfig = {
       plugins: {
         slots: { memory: "memory-core" },
         entries: {
@@ -36,7 +36,7 @@ describe("applyExclusiveSlotSelection", () => {
   });
 
   it("does nothing when the slot already matches", () => {
-    const config: DmmsAiConfig = {
+    const config: DryadsAiConfig = {
       plugins: {
         slots: { memory: "memory" },
         entries: {
@@ -58,7 +58,7 @@ describe("applyExclusiveSlotSelection", () => {
   });
 
   it("warns when the slot falls back to a default", () => {
-    const config: DmmsAiConfig = {
+    const config: DryadsAiConfig = {
       plugins: {
         entries: {
           memory: { enabled: true },
@@ -80,7 +80,7 @@ describe("applyExclusiveSlotSelection", () => {
   });
 
   it("skips changes when no exclusive slot applies", () => {
-    const config: DmmsAiConfig = {};
+    const config: DryadsAiConfig = {};
     const result = applyExclusiveSlotSelection({
       config,
       selectedId: "custom",

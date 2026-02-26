@@ -1,8 +1,8 @@
 import Cocoa
 import Foundation
 import Observation
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiKit
+import DryadsAiProtocol
 import OSLog
 
 struct InstanceInfo: Identifiable, Codable {
@@ -41,7 +41,7 @@ final class InstancesStore {
     var statusMessage: String?
     var isLoading = false
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "instances")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "instances")
     private var task: Task<Void, Never>?
     private let interval: TimeInterval = 30
     private var eventTask: Task<Void, Never>?
@@ -248,7 +248,7 @@ final class InstancesStore {
         }
     }
 
-    func handlePresenceEventPayload(_ payload: DmmsAiProtocol.AnyCodable) {
+    func handlePresenceEventPayload(_ payload: DryadsAiProtocol.AnyCodable) {
         do {
             let wrapper = try GatewayPayloadDecoding.decode(payload, as: PresenceEventPayload.self)
             self.applyPresence(wrapper.presence)

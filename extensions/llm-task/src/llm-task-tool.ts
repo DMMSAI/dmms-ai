@@ -3,11 +3,11 @@ import os from "node:os";
 import path from "node:path";
 import { Type } from "@sinclair/typebox";
 import Ajv from "ajv";
-// NOTE: This extension is intended to be bundled with DMMS AI.
-// When running from source (tests/dev), DMMS AI internals live under src/.
+// NOTE: This extension is intended to be bundled with Dryads AI.
+// When running from source (tests/dev), Dryads AI internals live under src/.
 // When running from a built install, internals live under dist/ (no src/ tree).
 // So we resolve internal imports dynamically with src-first, dist-fallback.
-import type { DmmsAiPluginApi } from "../../../src/plugins/types.js";
+import type { DryadsAiPluginApi } from "../../../src/plugins/types.js";
 
 type RunEmbeddedPiAgentFn = (params: Record<string, unknown>) => Promise<unknown>;
 
@@ -66,12 +66,12 @@ type PluginCfg = {
   timeoutMs?: number;
 };
 
-export function createLlmTaskTool(api: DmmsAiPluginApi) {
+export function createLlmTaskTool(api: DryadsAiPluginApi) {
   return {
     name: "llm-task",
     label: "LLM Task",
     description:
-      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via dmms-ai.invoke.",
+      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via dryads-ai.invoke.",
     parameters: Type.Object({
       prompt: Type.String({ description: "Task instruction for the LLM." }),
       input: Type.Optional(Type.Unknown({ description: "Optional input payload for the task." })),
@@ -176,7 +176,7 @@ export function createLlmTaskTool(api: DmmsAiPluginApi) {
 
       let tmpDir: string | null = null;
       try {
-        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-llm-task-"));
+        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-llm-task-"));
         const sessionId = `llm-task-${Date.now()}`;
         const sessionFile = path.join(tmpDir, "session.json");
 

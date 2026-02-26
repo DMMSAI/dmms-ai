@@ -4,7 +4,7 @@ import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { telegramPlugin } from "../../../extensions/telegram/src/channel.js";
 import { whatsappPlugin } from "../../../extensions/whatsapp/src/channel.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createTestRegistry } from "../../test-utils/channel-plugins.js";
 import {
@@ -42,7 +42,7 @@ describe("delivery-queue", () => {
   let tmpDir: string;
 
   beforeEach(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-dq-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-dq-test-"));
   });
 
   afterEach(() => {
@@ -400,7 +400,7 @@ describe("delivery-queue", () => {
 });
 
 describe("DirectoryCache", () => {
-  const cfg = {} as DmmsAiConfig;
+  const cfg = {} as DryadsAiConfig;
 
   afterEach(() => {
     vi.useRealTimers();
@@ -612,13 +612,13 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as DmmsAiConfig;
+} as DryadsAiConfig;
 
 const discordConfig = {
   channels: {
     discord: {},
   },
-} as DmmsAiConfig;
+} as DryadsAiConfig;
 
 describe("outbound policy", () => {
   it("blocks cross-provider sends by default", () => {
@@ -639,7 +639,7 @@ describe("outbound policy", () => {
       tools: {
         message: { crossContext: { allowAcrossProviders: true } },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     expect(() =>
       enforceCrossContextPolicy({
@@ -656,7 +656,7 @@ describe("outbound policy", () => {
     const cfg = {
       ...slackConfig,
       tools: { message: { crossContext: { allowWithinProvider: false } } },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     expect(() =>
       enforceCrossContextPolicy({
@@ -692,7 +692,7 @@ describe("outbound policy", () => {
 });
 
 describe("resolveOutboundSessionRoute", () => {
-  const baseConfig = {} as DmmsAiConfig;
+  const baseConfig = {} as DryadsAiConfig;
 
   it("builds Slack thread session keys", async () => {
     const route = await resolveOutboundSessionRoute({
@@ -724,7 +724,7 @@ describe("resolveOutboundSessionRoute", () => {
   });
 
   it("treats Telegram usernames as DMs when unresolved", async () => {
-    const cfg = { session: { dmScope: "per-channel-peer" } } as DmmsAiConfig;
+    const cfg = { session: { dmScope: "per-channel-peer" } } as DryadsAiConfig;
     const route = await resolveOutboundSessionRoute({
       cfg,
       channel: "telegram",
@@ -744,7 +744,7 @@ describe("resolveOutboundSessionRoute", () => {
           alice: ["discord:123"],
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const route = await resolveOutboundSessionRoute({
       cfg,
@@ -769,7 +769,7 @@ describe("resolveOutboundSessionRoute", () => {
   });
 
   it("treats Zalo Personal DM targets as direct sessions", async () => {
-    const cfg = { session: { dmScope: "per-channel-peer" } } as DmmsAiConfig;
+    const cfg = { session: { dmScope: "per-channel-peer" } } as DryadsAiConfig;
     const route = await resolveOutboundSessionRoute({
       cfg,
       channel: "zalouser",
@@ -790,7 +790,7 @@ describe("resolveOutboundSessionRoute", () => {
           },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     const route = await resolveOutboundSessionRoute({
       cfg,
@@ -890,7 +890,7 @@ describe("resolveOutboundTarget", () => {
   });
 
   it("rejects whatsapp with empty target even when allowFrom configured", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       channels: { whatsapp: { allowFrom: ["+1555"] } },
     };
     const res = resolveOutboundTarget({

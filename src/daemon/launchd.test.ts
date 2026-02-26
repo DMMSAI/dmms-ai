@@ -90,9 +90,9 @@ describe("launchd runtime parsing", () => {
 
 describe("launchctl list detection", () => {
   it("detects the resolved label in launchctl list", async () => {
-    state.listOutput = "123 0 ai.dmmsai.gateway\n";
+    state.listOutput = "123 0 ai.dryadsai.gateway\n";
     const listed = await isLaunchAgentListed({
-      env: { HOME: "/Users/test", DMMS_AI_PROFILE: "default" },
+      env: { HOME: "/Users/test", DRYADS_AI_PROFILE: "default" },
     });
     expect(listed).toBe(true);
   });
@@ -100,7 +100,7 @@ describe("launchctl list detection", () => {
   it("returns false when the label is missing", async () => {
     state.listOutput = "123 0 com.other.service\n";
     const listed = await isLaunchAgentListed({
-      env: { HOME: "/Users/test", DMMS_AI_PROFILE: "default" },
+      env: { HOME: "/Users/test", DRYADS_AI_PROFILE: "default" },
     });
     expect(listed).toBe(false);
   });
@@ -110,13 +110,13 @@ describe("launchd bootstrap repair", () => {
   it("bootstraps and kickstarts the resolved label", async () => {
     const env: Record<string, string | undefined> = {
       HOME: "/Users/test",
-      DMMS_AI_PROFILE: "default",
+      DRYADS_AI_PROFILE: "default",
     };
     const repair = await repairLaunchAgentBootstrap({ env });
     expect(repair.ok).toBe(true);
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.dmmsai.gateway";
+    const label = "ai.dryadsai.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
 
     expect(state.launchctlCalls).toContainEqual(["bootstrap", domain, plistPath]);
@@ -128,7 +128,7 @@ describe("launchd install", () => {
   it("enables service before bootstrap (clears persisted disabled state)", async () => {
     const env: Record<string, string | undefined> = {
       HOME: "/Users/test",
-      DMMS_AI_PROFILE: "default",
+      DRYADS_AI_PROFILE: "default",
     };
     await installLaunchAgent({
       env,
@@ -137,7 +137,7 @@ describe("launchd install", () => {
     });
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.dmmsai.gateway";
+    const label = "ai.dryadsai.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
     const serviceId = `${domain}/${label}`;
 
@@ -154,49 +154,49 @@ describe("launchd install", () => {
 });
 
 describe("resolveLaunchAgentPlistPath", () => {
-  it("uses default label when DMMS_AI_PROFILE is unset", () => {
+  it("uses default label when DRYADS_AI_PROFILE is unset", () => {
     const env = { HOME: "/Users/test" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.dmmsai.gateway.plist",
+      "/Users/test/Library/LaunchAgents/ai.dryadsai.gateway.plist",
     );
   });
 
-  it("uses profile-specific label when DMMS_AI_PROFILE is set to a custom value", () => {
-    const env = { HOME: "/Users/test", DMMS_AI_PROFILE: "jbphoenix" };
+  it("uses profile-specific label when DRYADS_AI_PROFILE is set to a custom value", () => {
+    const env = { HOME: "/Users/test", DRYADS_AI_PROFILE: "jbphoenix" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.dmmsai.jbphoenix.plist",
+      "/Users/test/Library/LaunchAgents/ai.dryadsai.jbphoenix.plist",
     );
   });
 
-  it("prefers DMMS_AI_LAUNCHD_LABEL over DMMS_AI_PROFILE", () => {
+  it("prefers DRYADS_AI_LAUNCHD_LABEL over DRYADS_AI_PROFILE", () => {
     const env = {
       HOME: "/Users/test",
-      DMMS_AI_PROFILE: "jbphoenix",
-      DMMS_AI_LAUNCHD_LABEL: "com.custom.label",
+      DRYADS_AI_PROFILE: "jbphoenix",
+      DRYADS_AI_LAUNCHD_LABEL: "com.custom.label",
     };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
       "/Users/test/Library/LaunchAgents/com.custom.label.plist",
     );
   });
 
-  it("trims whitespace from DMMS_AI_LAUNCHD_LABEL", () => {
+  it("trims whitespace from DRYADS_AI_LAUNCHD_LABEL", () => {
     const env = {
       HOME: "/Users/test",
-      DMMS_AI_LAUNCHD_LABEL: "  com.custom.label  ",
+      DRYADS_AI_LAUNCHD_LABEL: "  com.custom.label  ",
     };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
       "/Users/test/Library/LaunchAgents/com.custom.label.plist",
     );
   });
 
-  it("ignores empty DMMS_AI_LAUNCHD_LABEL and falls back to profile", () => {
+  it("ignores empty DRYADS_AI_LAUNCHD_LABEL and falls back to profile", () => {
     const env = {
       HOME: "/Users/test",
-      DMMS_AI_PROFILE: "myprofile",
-      DMMS_AI_LAUNCHD_LABEL: "   ",
+      DRYADS_AI_PROFILE: "myprofile",
+      DRYADS_AI_LAUNCHD_LABEL: "   ",
     };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.dmmsai.myprofile.plist",
+      "/Users/test/Library/LaunchAgents/ai.dryadsai.myprofile.plist",
     );
   });
 });

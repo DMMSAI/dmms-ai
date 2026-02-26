@@ -20,12 +20,12 @@ describe("waitForever", () => {
 
 describe("shouldSkipRespawnForArgv", () => {
   it("skips respawn for help/version calls", () => {
-    expect(shouldSkipRespawnForArgv(["node", "dmms-ai", "--help"])).toBe(true);
-    expect(shouldSkipRespawnForArgv(["node", "dmms-ai", "-V"])).toBe(true);
+    expect(shouldSkipRespawnForArgv(["node", "dryads-ai", "--help"])).toBe(true);
+    expect(shouldSkipRespawnForArgv(["node", "dryads-ai", "-V"])).toBe(true);
   });
 
   it("keeps respawn path for normal commands", () => {
-    expect(shouldSkipRespawnForArgv(["node", "dmms-ai", "status"])).toBe(false);
+    expect(shouldSkipRespawnForArgv(["node", "dryads-ai", "status"])).toBe(false);
   });
 });
 
@@ -50,10 +50,12 @@ describe("dns cli", () => {
     try {
       const program = new Command();
       registerDnsCli(program);
-      await program.parseAsync(["dns", "setup", "--domain", "dmms-ai.internal"], { from: "user" });
+      await program.parseAsync(["dns", "setup", "--domain", "dryads-ai.internal"], {
+        from: "user",
+      });
       const output = log.mock.calls.map((call) => call.join(" ")).join("\\n");
       expect(output).toContain("DNS setup");
-      expect(output).toContain("dmms-ai.internal");
+      expect(output).toContain("dryads-ai.internal");
     } finally {
       log.mockRestore();
     }

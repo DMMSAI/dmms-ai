@@ -14,13 +14,13 @@ function withNodeServiceEnv(
 ): Record<string, string | undefined> {
   return {
     ...env,
-    DMMS_AI_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    DMMS_AI_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    DMMS_AI_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    DMMS_AI_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    DMMS_AI_LOG_PREFIX: "node",
-    DMMS_AI_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    DMMS_AI_SERVICE_KIND: NODE_SERVICE_KIND,
+    DRYADS_AI_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    DRYADS_AI_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    DRYADS_AI_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    DRYADS_AI_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    DRYADS_AI_LOG_PREFIX: "node",
+    DRYADS_AI_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    DRYADS_AI_SERVICE_KIND: NODE_SERVICE_KIND,
   };
 }
 
@@ -30,13 +30,13 @@ function withNodeInstallEnv(args: GatewayServiceInstallArgs): GatewayServiceInst
     env: withNodeServiceEnv(args.env),
     environment: {
       ...args.environment,
-      DMMS_AI_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-      DMMS_AI_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-      DMMS_AI_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-      DMMS_AI_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-      DMMS_AI_LOG_PREFIX: "node",
-      DMMS_AI_SERVICE_MARKER: NODE_SERVICE_MARKER,
-      DMMS_AI_SERVICE_KIND: NODE_SERVICE_KIND,
+      DRYADS_AI_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+      DRYADS_AI_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+      DRYADS_AI_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+      DRYADS_AI_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+      DRYADS_AI_LOG_PREFIX: "node",
+      DRYADS_AI_SERVICE_MARKER: NODE_SERVICE_MARKER,
+      DRYADS_AI_SERVICE_KIND: NODE_SERVICE_KIND,
     },
   };
 }

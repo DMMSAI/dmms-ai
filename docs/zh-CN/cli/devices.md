@@ -2,7 +2,7 @@
 read_when:
   - 你正在批准设备配对请求
   - 你需要轮换或撤销设备 token
-summary: "`dmms-ai devices` 的 CLI 参考（设备配对 + token 轮换/撤销）"
+summary: "`dryads-ai devices` 的 CLI 参考（设备配对 + token 轮换/撤销）"
 title: devices
 x-i18n:
   generated_at: "2026-02-03T07:44:52Z"
@@ -13,51 +13,51 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai devices`
+# `dryads-ai devices`
 
 管理设备配对请求和设备范围的 token。
 
 ## 命令
 
-### `dmms-ai devices list`
+### `dryads-ai devices list`
 
 列出待处理的配对请求和已配对的设备。
 
 ```
-dmms-ai devices list
-dmms-ai devices list --json
+dryads-ai devices list
+dryads-ai devices list --json
 ```
 
-### `dmms-ai devices approve <requestId>`
+### `dryads-ai devices approve <requestId>`
 
 批准待处理的设备配对请求。
 
 ```
-dmms-ai devices approve <requestId>
+dryads-ai devices approve <requestId>
 ```
 
-### `dmms-ai devices reject <requestId>`
+### `dryads-ai devices reject <requestId>`
 
 拒绝待处理的设备配对请求。
 
 ```
-dmms-ai devices reject <requestId>
+dryads-ai devices reject <requestId>
 ```
 
-### `dmms-ai devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `dryads-ai devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 为特定角色轮换设备 token（可选更新 scope）。
 
 ```
-dmms-ai devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+dryads-ai devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `dmms-ai devices revoke --device <id> --role <role>`
+### `dryads-ai devices revoke --device <id> --role <role>`
 
 为特定角色撤销设备 token。
 
 ```
-dmms-ai devices revoke --device <deviceId> --role node
+dryads-ai devices revoke --device <deviceId> --role node
 ```
 
 ## 通用选项

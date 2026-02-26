@@ -271,25 +271,25 @@ describe("buildServiceEnvironment", () => {
     } else {
       expect(env.PATH).toContain("/usr/bin");
     }
-    expect(env.DMMS_AI_GATEWAY_PORT).toBe("18789");
-    expect(env.DMMS_AI_GATEWAY_TOKEN).toBe("secret");
-    expect(env.DMMS_AI_SERVICE_MARKER).toBe("dmms-ai");
-    expect(env.DMMS_AI_SERVICE_KIND).toBe("gateway");
-    expect(typeof env.DMMS_AI_SERVICE_VERSION).toBe("string");
-    expect(env.DMMS_AI_SYSTEMD_UNIT).toBe("dmms-ai-gateway.service");
+    expect(env.DRYADS_AI_GATEWAY_PORT).toBe("18789");
+    expect(env.DRYADS_AI_GATEWAY_TOKEN).toBe("secret");
+    expect(env.DRYADS_AI_SERVICE_MARKER).toBe("dryads-ai");
+    expect(env.DRYADS_AI_SERVICE_KIND).toBe("gateway");
+    expect(typeof env.DRYADS_AI_SERVICE_VERSION).toBe("string");
+    expect(env.DRYADS_AI_SYSTEMD_UNIT).toBe("dryads-ai-gateway.service");
     if (process.platform === "darwin") {
-      expect(env.DMMS_AI_LAUNCHD_LABEL).toBe("ai.dmmsai.gateway");
+      expect(env.DRYADS_AI_LAUNCHD_LABEL).toBe("ai.dryadsai.gateway");
     }
   });
 
   it("uses profile-specific unit and label", () => {
     const env = buildServiceEnvironment({
-      env: { HOME: "/home/user", DMMS_AI_PROFILE: "work" },
+      env: { HOME: "/home/user", DRYADS_AI_PROFILE: "work" },
       port: 18789,
     });
-    expect(env.DMMS_AI_SYSTEMD_UNIT).toBe("dmms-ai-gateway-work.service");
+    expect(env.DRYADS_AI_SYSTEMD_UNIT).toBe("dryads-ai-gateway-work.service");
     if (process.platform === "darwin") {
-      expect(env.DMMS_AI_LAUNCHD_LABEL).toBe("ai.dmmsai.work");
+      expect(env.DRYADS_AI_LAUNCHD_LABEL).toBe("ai.dryadsai.work");
     }
   });
 });
@@ -306,31 +306,31 @@ describe("buildNodeServiceEnvironment", () => {
 describe("resolveGatewayStateDir", () => {
   it("uses the default state dir when no overrides are set", () => {
     const env = { HOME: "/Users/test" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".dmms-ai"));
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".dryads-ai"));
   });
 
   it("appends the profile suffix when set", () => {
-    const env = { HOME: "/Users/test", DMMS_AI_PROFILE: "rescue" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".dmms-ai-rescue"));
+    const env = { HOME: "/Users/test", DRYADS_AI_PROFILE: "rescue" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".dryads-ai-rescue"));
   });
 
   it("treats default profiles as the base state dir", () => {
-    const env = { HOME: "/Users/test", DMMS_AI_PROFILE: "Default" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".dmms-ai"));
+    const env = { HOME: "/Users/test", DRYADS_AI_PROFILE: "Default" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".dryads-ai"));
   });
 
-  it("uses DMMS_AI_STATE_DIR when provided", () => {
-    const env = { HOME: "/Users/test", DMMS_AI_STATE_DIR: "/var/lib/dmms-ai" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/dmms-ai"));
+  it("uses DRYADS_AI_STATE_DIR when provided", () => {
+    const env = { HOME: "/Users/test", DRYADS_AI_STATE_DIR: "/var/lib/dryads-ai" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/dryads-ai"));
   });
 
-  it("expands ~ in DMMS_AI_STATE_DIR", () => {
-    const env = { HOME: "/Users/test", DMMS_AI_STATE_DIR: "~/dmms-ai-state" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/dmms-ai-state"));
+  it("expands ~ in DRYADS_AI_STATE_DIR", () => {
+    const env = { HOME: "/Users/test", DRYADS_AI_STATE_DIR: "~/dryads-ai-state" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/dryads-ai-state"));
   });
 
   it("preserves Windows absolute paths without HOME", () => {
-    const env = { DMMS_AI_STATE_DIR: "C:\\State\\dmms-ai" };
-    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\dmms-ai");
+    const env = { DRYADS_AI_STATE_DIR: "C:\\State\\dryads-ai" };
+    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\dryads-ai");
   });
 });

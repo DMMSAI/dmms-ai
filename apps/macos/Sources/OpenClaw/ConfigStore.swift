@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiProtocol
+import DryadsAiProtocol
 
 enum ConfigStore {
     struct Overrides: Sendable {
@@ -44,7 +44,7 @@ enum ConfigStore {
         if let gateway = await self.loadFromGateway() {
             return gateway
         }
-        return DmmsAiConfigFile.loadDict()
+        return DryadsAiConfigFile.loadDict()
     }
 
     @MainActor
@@ -63,7 +63,7 @@ enum ConfigStore {
                 do {
                     try await self.saveToGateway(root)
                 } catch {
-                    DmmsAiConfigFile.saveDict(root)
+                    DryadsAiConfigFile.saveDict(root)
                 }
             }
         }

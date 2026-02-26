@@ -5,7 +5,7 @@ import {
   readNumberParam,
   readReactionParams,
   readStringParam,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   deleteMatrixMessage,
   editMatrixMessage,

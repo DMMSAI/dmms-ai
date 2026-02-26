@@ -1,8 +1,8 @@
-# DMMS AI iOS (Super Alpha)
+# Dryads AI iOS (Super Alpha)
 
 NO TEST FLIGHT AVAILABLE AT THIS POINT
 
-This iPhone app is super-alpha and internal-use only. It connects to an DMMS AI Gateway as a `role: node`.
+This iPhone app is super-alpha and internal-use only. It connects to an Dryads AI Gateway as a `role: node`.
 
 ## Distribution Status
 
@@ -32,11 +32,11 @@ pnpm install
 ./scripts/ios-configure-signing.sh
 cd apps/ios
 xcodegen generate
-open DmmsAi.xcodeproj
+open DryadsAi.xcodeproj
 ```
 
 3. In Xcode:
-   - Scheme: `DMMS AI`
+   - Scheme: `Dryads AI`
    - Destination: connected iPhone (recommended for real behavior)
    - Build configuration: `Debug`
    - Run (`Product` -> `Run`)
@@ -53,7 +53,7 @@ pnpm ios:open
 ## APNs Expectations For Local/Manual Builds
 
 - The app calls `registerForRemoteNotifications()` at launch.
-- `apps/ios/Sources/DMMS AI.entitlements` sets `aps-environment` to `development`.
+- `apps/ios/Sources/Dryads AI.entitlements` sets `aps-environment` to `development`.
 - APNs token registration to gateway happens only after gateway connection (`push.apns.register`).
 - Your selected team/profile must support Push Notifications for the app bundle ID you are signing.
 - If push capability or provisioning is wrong, APNs registration fails at runtime (check Xcode logs for `APNs registration failed`).
@@ -102,7 +102,7 @@ Automatic wake/reconnect hardening:
 5. If network path is unclear:
    - switch to manual host/port + TLS in Gateway Advanced settings
 6. In Xcode console, filter for subsystem/category signals:
-   - `ai.dmmsai.ios`
+   - `ai.dryadsai.ios`
    - `GatewayDiag`
    - `APNs registration failed`
 7. Validate background expectations:

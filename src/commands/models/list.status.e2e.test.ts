@@ -30,8 +30,8 @@ const mocks = vi.hoisted(() => {
 
   return {
     store,
-    resolveDmmsAiAgentDir: vi.fn().mockReturnValue("/tmp/dmms-ai-agent"),
-    resolveAgentDir: vi.fn().mockReturnValue("/tmp/dmms-ai-agent"),
+    resolveDryadsAiAgentDir: vi.fn().mockReturnValue("/tmp/dryads-ai-agent"),
+    resolveAgentDir: vi.fn().mockReturnValue("/tmp/dryads-ai-agent"),
     resolveAgentModelPrimary: vi.fn().mockReturnValue(undefined),
     resolveAgentModelFallbacksOverride: vi.fn().mockReturnValue(undefined),
     listAgentIds: vi.fn().mockReturnValue(["main", "jeremiah"]),
@@ -44,7 +44,7 @@ const mocks = vi.hoisted(() => {
     resolveAuthProfileDisplayLabel: vi.fn(({ profileId }: { profileId: string }) => profileId),
     resolveAuthStorePathForDisplay: vi
       .fn()
-      .mockReturnValue("/tmp/dmms-ai-agent/auth-profiles.json"),
+      .mockReturnValue("/tmp/dryads-ai-agent/auth-profiles.json"),
     resolveEnvApiKey: vi.fn((provider: string) => {
       if (provider === "openai") {
         return {
@@ -77,7 +77,7 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock("../../agents/agent-paths.js", () => ({
-  resolveDmmsAiAgentDir: mocks.resolveDmmsAiAgentDir,
+  resolveDryadsAiAgentDir: mocks.resolveDryadsAiAgentDir,
 }));
 
 vi.mock("../../agents/agent-scope.js", () => ({
@@ -166,7 +166,7 @@ async function withAgentScopeOverrides<T>(
     if (originalAgentDir) {
       mocks.resolveAgentDir.mockImplementation(originalAgentDir);
     } else {
-      mocks.resolveAgentDir.mockReturnValue("/tmp/dmms-ai-agent");
+      mocks.resolveAgentDir.mockReturnValue("/tmp/dryads-ai-agent");
     }
   }
 }
@@ -176,9 +176,9 @@ describe("modelsStatusCommand auth overview", () => {
     await modelsStatusCommand({ json: true }, runtime as never);
     const payload = JSON.parse(String((runtime.log as Mock).mock.calls[0]?.[0]));
 
-    expect(mocks.resolveDmmsAiAgentDir).toHaveBeenCalled();
+    expect(mocks.resolveDryadsAiAgentDir).toHaveBeenCalled();
     expect(payload.defaultModel).toBe("anthropic/claude-opus-4-5");
-    expect(payload.auth.storePath).toBe("/tmp/dmms-ai-agent/auth-profiles.json");
+    expect(payload.auth.storePath).toBe("/tmp/dryads-ai-agent/auth-profiles.json");
     expect(payload.auth.shellEnvFallback.enabled).toBe(true);
     expect(payload.auth.shellEnvFallback.appliedKeys).toContain("OPENAI_API_KEY");
     expect(payload.auth.missingProvidersInUse).toEqual([]);
@@ -213,14 +213,14 @@ describe("modelsStatusCommand auth overview", () => {
       {
         primary: "openai/gpt-4",
         fallbacks: ["openai/gpt-3.5"],
-        agentDir: "/tmp/dmms-ai-agent-custom",
+        agentDir: "/tmp/dryads-ai-agent-custom",
       },
       async () => {
         await modelsStatusCommand({ json: true, agent: "Jeremiah" }, localRuntime as never);
         expect(mocks.resolveAgentDir).toHaveBeenCalledWith(expect.anything(), "jeremiah");
         const payload = JSON.parse(String((localRuntime.log as Mock).mock.calls[0]?.[0]));
         expect(payload.agentId).toBe("jeremiah");
-        expect(payload.agentDir).toBe("/tmp/dmms-ai-agent-custom");
+        expect(payload.agentDir).toBe("/tmp/dryads-ai-agent-custom");
         expect(payload.defaultModel).toBe("openai/gpt-4");
         expect(payload.fallbacks).toEqual(["openai/gpt-3.5"]);
         expect(payload.modelConfig).toEqual({

@@ -1,17 +1,17 @@
 import Darwin
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct LogLocatorTests {
     @Test func launchdGatewayLogPathEnsuresTmpDirExists() throws {
         let fm = FileManager()
         let baseDir = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let logDir = baseDir.appendingPathComponent("dmms-ai-tests-\(UUID().uuidString)")
+        let logDir = baseDir.appendingPathComponent("dryads-ai-tests-\(UUID().uuidString)")
 
-        setenv("DMMS_AI_LOG_DIR", logDir.path, 1)
+        setenv("DRYADS_AI_LOG_DIR", logDir.path, 1)
         defer {
-            unsetenv("DMMS_AI_LOG_DIR")
+            unsetenv("DRYADS_AI_LOG_DIR")
             try? fm.removeItem(at: logDir)
         }
 

@@ -5,7 +5,7 @@ import CoreMotion
 import CryptoKit
 import EventKit
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 import Network
 import Observation
 import Photos
@@ -682,7 +682,7 @@ final class GatewayConnectionController {
         if manualClientId?.isEmpty == false {
             return manualClientId!
         }
-        return "dmms-ai-ios"
+        return "dryads-ai-ios"
     }
 
     private func resolveManualPort(host: String, port: Int, useTLS: Bool) -> Int? {
@@ -712,32 +712,32 @@ final class GatewayConnectionController {
     }
 
     private func currentCaps() -> [String] {
-        var caps = [DmmsAiCapability.canvas.rawValue, DmmsAiCapability.screen.rawValue]
+        var caps = [DryadsAiCapability.canvas.rawValue, DryadsAiCapability.screen.rawValue]
 
         // Default-on: if the key doesn't exist yet, treat it as enabled.
         let cameraEnabled =
             UserDefaults.standard.object(forKey: "camera.enabled") == nil
                 ? true
                 : UserDefaults.standard.bool(forKey: "camera.enabled")
-        if cameraEnabled { caps.append(DmmsAiCapability.camera.rawValue) }
+        if cameraEnabled { caps.append(DryadsAiCapability.camera.rawValue) }
 
         let voiceWakeEnabled = UserDefaults.standard.bool(forKey: VoiceWakePreferences.enabledKey)
-        if voiceWakeEnabled { caps.append(DmmsAiCapability.voiceWake.rawValue) }
+        if voiceWakeEnabled { caps.append(DryadsAiCapability.voiceWake.rawValue) }
 
         let locationModeRaw = UserDefaults.standard.string(forKey: "location.enabledMode") ?? "off"
-        let locationMode = DmmsAiLocationMode(rawValue: locationModeRaw) ?? .off
-        if locationMode != .off { caps.append(DmmsAiCapability.location.rawValue) }
+        let locationMode = DryadsAiLocationMode(rawValue: locationModeRaw) ?? .off
+        if locationMode != .off { caps.append(DryadsAiCapability.location.rawValue) }
 
-        caps.append(DmmsAiCapability.device.rawValue)
+        caps.append(DryadsAiCapability.device.rawValue)
         if WatchMessagingService.isSupportedOnDevice() {
-            caps.append(DmmsAiCapability.watch.rawValue)
+            caps.append(DryadsAiCapability.watch.rawValue)
         }
-        caps.append(DmmsAiCapability.photos.rawValue)
-        caps.append(DmmsAiCapability.contacts.rawValue)
-        caps.append(DmmsAiCapability.calendar.rawValue)
-        caps.append(DmmsAiCapability.reminders.rawValue)
+        caps.append(DryadsAiCapability.photos.rawValue)
+        caps.append(DryadsAiCapability.contacts.rawValue)
+        caps.append(DryadsAiCapability.calendar.rawValue)
+        caps.append(DryadsAiCapability.reminders.rawValue)
         if Self.motionAvailable() {
-            caps.append(DmmsAiCapability.motion.rawValue)
+            caps.append(DryadsAiCapability.motion.rawValue)
         }
 
         return caps
@@ -745,58 +745,58 @@ final class GatewayConnectionController {
 
     private func currentCommands() -> [String] {
         var commands: [String] = [
-            DmmsAiCanvasCommand.present.rawValue,
-            DmmsAiCanvasCommand.hide.rawValue,
-            DmmsAiCanvasCommand.navigate.rawValue,
-            DmmsAiCanvasCommand.evalJS.rawValue,
-            DmmsAiCanvasCommand.snapshot.rawValue,
-            DmmsAiCanvasA2UICommand.push.rawValue,
-            DmmsAiCanvasA2UICommand.pushJSONL.rawValue,
-            DmmsAiCanvasA2UICommand.reset.rawValue,
-            DmmsAiScreenCommand.record.rawValue,
-            DmmsAiSystemCommand.notify.rawValue,
-            DmmsAiChatCommand.push.rawValue,
-            DmmsAiTalkCommand.pttStart.rawValue,
-            DmmsAiTalkCommand.pttStop.rawValue,
-            DmmsAiTalkCommand.pttCancel.rawValue,
-            DmmsAiTalkCommand.pttOnce.rawValue,
+            DryadsAiCanvasCommand.present.rawValue,
+            DryadsAiCanvasCommand.hide.rawValue,
+            DryadsAiCanvasCommand.navigate.rawValue,
+            DryadsAiCanvasCommand.evalJS.rawValue,
+            DryadsAiCanvasCommand.snapshot.rawValue,
+            DryadsAiCanvasA2UICommand.push.rawValue,
+            DryadsAiCanvasA2UICommand.pushJSONL.rawValue,
+            DryadsAiCanvasA2UICommand.reset.rawValue,
+            DryadsAiScreenCommand.record.rawValue,
+            DryadsAiSystemCommand.notify.rawValue,
+            DryadsAiChatCommand.push.rawValue,
+            DryadsAiTalkCommand.pttStart.rawValue,
+            DryadsAiTalkCommand.pttStop.rawValue,
+            DryadsAiTalkCommand.pttCancel.rawValue,
+            DryadsAiTalkCommand.pttOnce.rawValue,
         ]
 
         let caps = Set(self.currentCaps())
-        if caps.contains(DmmsAiCapability.camera.rawValue) {
-            commands.append(DmmsAiCameraCommand.list.rawValue)
-            commands.append(DmmsAiCameraCommand.snap.rawValue)
-            commands.append(DmmsAiCameraCommand.clip.rawValue)
+        if caps.contains(DryadsAiCapability.camera.rawValue) {
+            commands.append(DryadsAiCameraCommand.list.rawValue)
+            commands.append(DryadsAiCameraCommand.snap.rawValue)
+            commands.append(DryadsAiCameraCommand.clip.rawValue)
         }
-        if caps.contains(DmmsAiCapability.location.rawValue) {
-            commands.append(DmmsAiLocationCommand.get.rawValue)
+        if caps.contains(DryadsAiCapability.location.rawValue) {
+            commands.append(DryadsAiLocationCommand.get.rawValue)
         }
-        if caps.contains(DmmsAiCapability.device.rawValue) {
-            commands.append(DmmsAiDeviceCommand.status.rawValue)
-            commands.append(DmmsAiDeviceCommand.info.rawValue)
+        if caps.contains(DryadsAiCapability.device.rawValue) {
+            commands.append(DryadsAiDeviceCommand.status.rawValue)
+            commands.append(DryadsAiDeviceCommand.info.rawValue)
         }
-        if caps.contains(DmmsAiCapability.watch.rawValue) {
-            commands.append(DmmsAiWatchCommand.status.rawValue)
-            commands.append(DmmsAiWatchCommand.notify.rawValue)
+        if caps.contains(DryadsAiCapability.watch.rawValue) {
+            commands.append(DryadsAiWatchCommand.status.rawValue)
+            commands.append(DryadsAiWatchCommand.notify.rawValue)
         }
-        if caps.contains(DmmsAiCapability.photos.rawValue) {
-            commands.append(DmmsAiPhotosCommand.latest.rawValue)
+        if caps.contains(DryadsAiCapability.photos.rawValue) {
+            commands.append(DryadsAiPhotosCommand.latest.rawValue)
         }
-        if caps.contains(DmmsAiCapability.contacts.rawValue) {
-            commands.append(DmmsAiContactsCommand.search.rawValue)
-            commands.append(DmmsAiContactsCommand.add.rawValue)
+        if caps.contains(DryadsAiCapability.contacts.rawValue) {
+            commands.append(DryadsAiContactsCommand.search.rawValue)
+            commands.append(DryadsAiContactsCommand.add.rawValue)
         }
-        if caps.contains(DmmsAiCapability.calendar.rawValue) {
-            commands.append(DmmsAiCalendarCommand.events.rawValue)
-            commands.append(DmmsAiCalendarCommand.add.rawValue)
+        if caps.contains(DryadsAiCapability.calendar.rawValue) {
+            commands.append(DryadsAiCalendarCommand.events.rawValue)
+            commands.append(DryadsAiCalendarCommand.add.rawValue)
         }
-        if caps.contains(DmmsAiCapability.reminders.rawValue) {
-            commands.append(DmmsAiRemindersCommand.list.rawValue)
-            commands.append(DmmsAiRemindersCommand.add.rawValue)
+        if caps.contains(DryadsAiCapability.reminders.rawValue) {
+            commands.append(DryadsAiRemindersCommand.list.rawValue)
+            commands.append(DryadsAiRemindersCommand.add.rawValue)
         }
-        if caps.contains(DmmsAiCapability.motion.rawValue) {
-            commands.append(DmmsAiMotionCommand.activity.rawValue)
-            commands.append(DmmsAiMotionCommand.pedometer.rawValue)
+        if caps.contains(DryadsAiCapability.motion.rawValue) {
+            commands.append(DryadsAiMotionCommand.activity.rawValue)
+            commands.append(DryadsAiMotionCommand.pedometer.rawValue)
         }
 
         return commands

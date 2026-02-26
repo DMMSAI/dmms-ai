@@ -1,4 +1,4 @@
-import type { DmmsAiApp } from "./app.ts";
+import type { DryadsAiApp } from "./app.ts";
 import {
   loadChannels,
   logoutWhatsApp,
@@ -9,28 +9,28 @@ import { loadConfig, saveConfig } from "./controllers/config.ts";
 import type { NostrProfile } from "./types.ts";
 import { createNostrProfileFormState } from "./views/channels.nostr-profile-form.ts";
 
-export async function handleWhatsAppStart(host: DmmsAiApp, force: boolean) {
+export async function handleWhatsAppStart(host: DryadsAiApp, force: boolean) {
   await startWhatsAppLogin(host, force);
   await loadChannels(host, true);
 }
 
-export async function handleWhatsAppWait(host: DmmsAiApp) {
+export async function handleWhatsAppWait(host: DryadsAiApp) {
   await waitWhatsAppLogin(host);
   await loadChannels(host, true);
 }
 
-export async function handleWhatsAppLogout(host: DmmsAiApp) {
+export async function handleWhatsAppLogout(host: DryadsAiApp) {
   await logoutWhatsApp(host);
   await loadChannels(host, true);
 }
 
-export async function handleChannelConfigSave(host: DmmsAiApp) {
+export async function handleChannelConfigSave(host: DryadsAiApp) {
   await saveConfig(host);
   await loadConfig(host);
   await loadChannels(host, true);
 }
 
-export async function handleChannelConfigReload(host: DmmsAiApp) {
+export async function handleChannelConfigReload(host: DryadsAiApp) {
   await loadConfig(host);
   await loadChannels(host, true);
 }
@@ -57,7 +57,7 @@ function parseValidationErrors(details: unknown): Record<string, string> {
   return errors;
 }
 
-function resolveNostrAccountId(host: DmmsAiApp): string {
+function resolveNostrAccountId(host: DryadsAiApp): string {
   const accounts = host.channelsSnapshot?.channelAccounts?.nostr ?? [];
   return accounts[0]?.accountId ?? host.nostrProfileAccountId ?? "default";
 }
@@ -66,7 +66,7 @@ function buildNostrProfileUrl(accountId: string, suffix = ""): string {
   return `/api/channels/nostr/${encodeURIComponent(accountId)}/profile${suffix}`;
 }
 
-function resolveGatewayHttpAuthHeader(host: DmmsAiApp): string | null {
+function resolveGatewayHttpAuthHeader(host: DryadsAiApp): string | null {
   const deviceToken = host.hello?.auth?.deviceToken?.trim();
   if (deviceToken) {
     return `Bearer ${deviceToken}`;
@@ -82,13 +82,13 @@ function resolveGatewayHttpAuthHeader(host: DmmsAiApp): string | null {
   return null;
 }
 
-function buildGatewayHttpHeaders(host: DmmsAiApp): Record<string, string> {
+function buildGatewayHttpHeaders(host: DryadsAiApp): Record<string, string> {
   const authorization = resolveGatewayHttpAuthHeader(host);
   return authorization ? { Authorization: authorization } : {};
 }
 
 export function handleNostrProfileEdit(
-  host: DmmsAiApp,
+  host: DryadsAiApp,
   accountId: string,
   profile: NostrProfile | null,
 ) {
@@ -96,13 +96,13 @@ export function handleNostrProfileEdit(
   host.nostrProfileFormState = createNostrProfileFormState(profile ?? undefined);
 }
 
-export function handleNostrProfileCancel(host: DmmsAiApp) {
+export function handleNostrProfileCancel(host: DryadsAiApp) {
   host.nostrProfileFormState = null;
   host.nostrProfileAccountId = null;
 }
 
 export function handleNostrProfileFieldChange(
-  host: DmmsAiApp,
+  host: DryadsAiApp,
   field: keyof NostrProfile,
   value: string,
 ) {
@@ -123,7 +123,7 @@ export function handleNostrProfileFieldChange(
   };
 }
 
-export function handleNostrProfileToggleAdvanced(host: DmmsAiApp) {
+export function handleNostrProfileToggleAdvanced(host: DryadsAiApp) {
   const state = host.nostrProfileFormState;
   if (!state) {
     return;
@@ -134,7 +134,7 @@ export function handleNostrProfileToggleAdvanced(host: DmmsAiApp) {
   };
 }
 
-export async function handleNostrProfileSave(host: DmmsAiApp) {
+export async function handleNostrProfileSave(host: DryadsAiApp) {
   const state = host.nostrProfileFormState;
   if (!state || state.saving) {
     return;
@@ -206,7 +206,7 @@ export async function handleNostrProfileSave(host: DmmsAiApp) {
   }
 }
 
-export async function handleNostrProfileImport(host: DmmsAiApp) {
+export async function handleNostrProfileImport(host: DryadsAiApp) {
   const state = host.nostrProfileFormState;
   if (!state || state.importing) {
     return;

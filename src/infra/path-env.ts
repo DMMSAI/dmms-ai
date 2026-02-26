@@ -4,7 +4,7 @@ import path from "node:path";
 import { resolveBrewPathDirs } from "./brew.js";
 import { isTruthyEnvValue } from "./env.js";
 
-type EnsureDmmsAiPathOpts = {
+type EnsureDryadsAiPathOpts = {
   execPath?: string;
   cwd?: string;
   homeDir?: string;
@@ -49,7 +49,7 @@ function mergePath(params: { existing: string; prepend?: string[]; append?: stri
   return merged.join(path.delimiter);
 }
 
-function candidateBinDirs(opts: EnsureDmmsAiPathOpts): { prepend: string[]; append: string[] } {
+function candidateBinDirs(opts: EnsureDryadsAiPathOpts): { prepend: string[]; append: string[] } {
   const execPath = opts.execPath ?? process.execPath;
   const cwd = opts.cwd ?? process.cwd();
   const homeDir = opts.homeDir ?? os.homedir();
@@ -58,10 +58,10 @@ function candidateBinDirs(opts: EnsureDmmsAiPathOpts): { prepend: string[]; appe
   const prepend: string[] = [];
   const append: string[] = [];
 
-  // Bundled macOS app: `dmms-ai` lives next to the executable (process.execPath).
+  // Bundled macOS app: `dryads-ai` lives next to the executable (process.execPath).
   try {
     const execDir = path.dirname(execPath);
-    const siblingCli = path.join(execDir, "dmms-ai");
+    const siblingCli = path.join(execDir, "dryads-ai");
     if (isExecutable(siblingCli)) {
       prepend.push(execDir);
     }
@@ -73,10 +73,10 @@ function candidateBinDirs(opts: EnsureDmmsAiPathOpts): { prepend: string[]; appe
   // disabled by default; if an operator explicitly enables it, only append (never prepend).
   const allowProjectLocalBin =
     opts.allowProjectLocalBin === true ||
-    isTruthyEnvValue(process.env.DMMS_AI_ALLOW_PROJECT_LOCAL_BIN);
+    isTruthyEnvValue(process.env.DRYADS_AI_ALLOW_PROJECT_LOCAL_BIN);
   if (allowProjectLocalBin) {
     const localBinDir = path.join(cwd, "node_modules", ".bin");
-    if (isExecutable(path.join(localBinDir, "dmms-ai"))) {
+    if (isExecutable(path.join(localBinDir, "dryads-ai"))) {
       append.push(localBinDir);
     }
   }
@@ -106,14 +106,14 @@ function candidateBinDirs(opts: EnsureDmmsAiPathOpts): { prepend: string[]; appe
 }
 
 /**
- * Best-effort PATH bootstrap so skills that require the `dmms-ai` CLI can run
+ * Best-effort PATH bootstrap so skills that require the `dryads-ai` CLI can run
  * under launchd/minimal environments (and inside the macOS app bundle).
  */
-export function ensureDmmsAiCliOnPath(opts: EnsureDmmsAiPathOpts = {}) {
-  if (isTruthyEnvValue(process.env.DMMS_AI_PATH_BOOTSTRAPPED)) {
+export function ensureDryadsAiCliOnPath(opts: EnsureDryadsAiPathOpts = {}) {
+  if (isTruthyEnvValue(process.env.DRYADS_AI_PATH_BOOTSTRAPPED)) {
     return;
   }
-  process.env.DMMS_AI_PATH_BOOTSTRAPPED = "1";
+  process.env.DRYADS_AI_PATH_BOOTSTRAPPED = "1";
 
   const existing = opts.pathEnv ?? process.env.PATH ?? "";
   const { prepend, append } = candidateBinDirs(opts);

@@ -17,7 +17,7 @@ let fixtureRoot = "";
 let caseId = 0;
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-pairing-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-pairing-"));
 });
 
 afterAll(async () => {
@@ -27,10 +27,10 @@ afterAll(async () => {
 });
 
 async function withTempStateDir<T>(fn: (stateDir: string) => Promise<T>) {
-  const envSnapshot = captureEnv(["DMMS_AI_STATE_DIR"]);
+  const envSnapshot = captureEnv(["DRYADS_AI_STATE_DIR"]);
   const dir = path.join(fixtureRoot, `case-${caseId++}`);
   await fs.mkdir(dir, { recursive: true });
-  process.env.DMMS_AI_STATE_DIR = dir;
+  process.env.DRYADS_AI_STATE_DIR = dir;
   try {
     return await fn(dir);
   } finally {

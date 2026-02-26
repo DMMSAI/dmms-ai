@@ -1,4 +1,4 @@
-import type { DmmsAiConfig, RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, RuntimeEnv } from "dryads-ai/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import { msteamsPlugin } from "./channel.js";
 
@@ -27,7 +27,7 @@ describe("msteams directory", () => {
           },
         },
       },
-    } as unknown as DmmsAiConfig;
+    } as unknown as DryadsAiConfig;
 
     expect(msteamsPlugin.directory).toBeTruthy();
     expect(msteamsPlugin.directory?.listPeers).toBeTruthy();

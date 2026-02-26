@@ -1,10 +1,10 @@
 import Foundation
 
-public enum DmmsAiScreenCommand: String, Codable, Sendable {
+public enum DryadsAiScreenCommand: String, Codable, Sendable {
     case record = "screen.record"
 }
 
-public struct DmmsAiScreenRecordParams: Codable, Sendable, Equatable {
+public struct DryadsAiScreenRecordParams: Codable, Sendable, Equatable {
     public var screenIndex: Int?
     public var durationMs: Int?
     public var fps: Double?

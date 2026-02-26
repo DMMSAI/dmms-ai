@@ -2,11 +2,11 @@ import { CHANNEL_IDS } from "../channels/registry.js";
 import { VERSION } from "../version.js";
 import type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 import { applySensitiveHints, buildBaseHints, mapSensitivePaths } from "./schema.hints.js";
-import { DmmsAiSchema } from "./zod-schema.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 export type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 
-export type ConfigSchema = ReturnType<typeof DmmsAiSchema.toJSONSchema>;
+export type ConfigSchema = ReturnType<typeof DryadsAiSchema.toJSONSchema>;
 
 type JsonSchemaNode = Record<string, unknown>;
 
@@ -322,12 +322,12 @@ function buildBaseConfigSchema(): ConfigSchemaResponse {
   if (cachedBase) {
     return cachedBase;
   }
-  const schema = DmmsAiSchema.toJSONSchema({
+  const schema = DryadsAiSchema.toJSONSchema({
     target: "draft-07",
     unrepresentable: "any",
   });
-  schema.title = "DmmsAiConfig";
-  const hints = mapSensitivePaths(DmmsAiSchema, "", buildBaseHints());
+  schema.title = "DryadsAiConfig";
+  const hints = mapSensitivePaths(DryadsAiSchema, "", buildBaseHints());
   const next = {
     schema: stripChannelSchema(schema),
     uiHints: hints,

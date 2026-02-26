@@ -1,5 +1,5 @@
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized) struct GatewayDiscoveryModelTests {
     @Test @MainActor func debugLoggingCapturesLifecycleAndResets() {

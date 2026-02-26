@@ -1,13 +1,13 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { ensurePluginAllowlisted } from "../config/plugins-allowlist.js";
 
 export type PluginEnableResult = {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   enabled: boolean;
   reason?: string;
 };
 
-export function enablePluginInConfig(cfg: DmmsAiConfig, pluginId: string): PluginEnableResult {
+export function enablePluginInConfig(cfg: DryadsAiConfig, pluginId: string): PluginEnableResult {
   if (cfg.plugins?.enabled === false) {
     return { config: cfg, enabled: false, reason: "plugins disabled" };
   }
@@ -22,7 +22,7 @@ export function enablePluginInConfig(cfg: DmmsAiConfig, pluginId: string): Plugi
       enabled: true,
     },
   };
-  let next: DmmsAiConfig = {
+  let next: DryadsAiConfig = {
     ...cfg,
     plugins: {
       ...cfg.plugins,

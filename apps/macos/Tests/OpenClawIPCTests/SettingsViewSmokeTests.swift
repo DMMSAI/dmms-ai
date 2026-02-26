@@ -1,6 +1,6 @@
 import SwiftUI
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
 @MainActor
@@ -8,7 +8,7 @@ struct SettingsViewSmokeTests {
     @Test func cronSettingsBuildsBody() {
         let store = CronJobsStore(isPreview: true)
         store.schedulerEnabled = false
-        store.schedulerStorePath = "/tmp/dmms-ai-cron-store.json"
+        store.schedulerStorePath = "/tmp/dryads-ai-cron-store.json"
 
         let job1 = CronJob(
             id: "job-1",

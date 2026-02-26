@@ -17,28 +17,28 @@ x-i18n:
 
 工作区是智能体的家。它是文件工具和工作区上下文使用的唯一工作目录。请保持其私密性并将其视为记忆。
 
-这与 `~/.dmms-ai/` 是分开的，后者存储配置、凭证和会话。
+这与 `~/.dryads-ai/` 是分开的，后者存储配置、凭证和会话。
 
 **重要：** 工作区是**默认 cwd**，而不是硬性沙箱。工具会根据工作区解析相对路径，但绝对路径仍然可以访问主机上的其他位置，除非启用了沙箱隔离。如果你需要隔离，请使用
 [`agents.defaults.sandbox`](/gateway/sandboxing)（和/或每智能体沙箱配置）。
-当启用沙箱隔离且 `workspaceAccess` 不是 `"rw"` 时，工具在 `~/.dmms-ai/sandboxes` 下的沙箱工作区内操作，而不是你的主机工作区。
+当启用沙箱隔离且 `workspaceAccess` 不是 `"rw"` 时，工具在 `~/.dryads-ai/sandboxes` 下的沙箱工作区内操作，而不是你的主机工作区。
 
 ## 默认位置
 
-- 默认：`~/.dmms-ai/workspace`
-- 如果设置了 `DMMS_AI_PROFILE` 且不是 `"default"`，默认值变为
-  `~/.dmms-ai/workspace-<profile>`。
-- 在 `~/.dmms-ai/dmms-ai.json` 中覆盖：
+- 默认：`~/.dryads-ai/workspace`
+- 如果设置了 `DRYADS_AI_PROFILE` 且不是 `"default"`，默认值变为
+  `~/.dryads-ai/workspace-<profile>`。
+- 在 `~/.dryads-ai/dryads-ai.json` 中覆盖：
 
 ```json5
 {
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
   },
 }
 ```
 
-`dmms-ai onboard`、`dmms-ai configure` 或 `dmms-ai setup` 将创建工作区并在缺失时填充引导文件。
+`dryads-ai onboard`、`dryads-ai configure` 或 `dryads-ai setup` 将创建工作区并在缺失时填充引导文件。
 
 如果你已经自己管理工作区文件，可以禁用引导文件创建：
 
@@ -48,16 +48,16 @@ x-i18n:
 
 ## 额外的工作区文件夹
 
-旧版安装可能创建了 `~/dmms-ai`。保留多个工作区目录可能会导致混乱的认证或状态漂移，因为同一时间只有一个工作区是活动的。
+旧版安装可能创建了 `~/dryads-ai`。保留多个工作区目录可能会导致混乱的认证或状态漂移，因为同一时间只有一个工作区是活动的。
 
-**建议：** 保持单个活动工作区。如果你不再使用额外的文件夹，请归档或移至废纸篓（例如 `trash ~/dmms-ai`）。
+**建议：** 保持单个活动工作区。如果你不再使用额外的文件夹，请归档或移至废纸篓（例如 `trash ~/dryads-ai`）。
 如果你有意保留多个工作区，请确保 `agents.defaults.workspace` 指向活动的那个。
 
-`dmms-ai doctor` 在检测到额外工作区目录时会发出警告。
+`dryads-ai doctor` 在检测到额外工作区目录时会发出警告。
 
 ## 工作区文件映射（每个文件的含义）
 
-这些是 DMMS AI 在工作区内期望的标准文件：
+这些是 Dryads AI 在工作区内期望的标准文件：
 
 - `AGENTS.md`
   - 智能体的操作指南以及它应该如何使用记忆。
@@ -110,17 +110,17 @@ x-i18n:
 - `canvas/`（可选）
   - 用于节点显示的 Canvas UI 文件（例如 `canvas/index.html`）。
 
-如果任何引导文件缺失，DMMS AI 会在会话中注入"缺失文件"标记并继续。大型引导文件在注入时会被截断；使用 `agents.defaults.bootstrapMaxChars` 调整限制（默认：20000）。
-`dmms-ai setup` 可以重新创建缺失的默认值而不覆盖现有文件。
+如果任何引导文件缺失，Dryads AI 会在会话中注入"缺失文件"标记并继续。大型引导文件在注入时会被截断；使用 `agents.defaults.bootstrapMaxChars` 调整限制（默认：20000）。
+`dryads-ai setup` 可以重新创建缺失的默认值而不覆盖现有文件。
 
 ## 工作区中不包含的内容
 
-这些位于 `~/.dmms-ai/` 下，不应提交到工作区仓库：
+这些位于 `~/.dryads-ai/` 下，不应提交到工作区仓库：
 
-- `~/.dmms-ai/dmms-ai.json`（配置）
-- `~/.dmms-ai/credentials/`（OAuth token、API 密钥）
-- `~/.dmms-ai/agents/<agentId>/sessions/`（会话记录 + 元数据）
-- `~/.dmms-ai/skills/`（托管的 Skills）
+- `~/.dryads-ai/dryads-ai.json`（配置）
+- `~/.dryads-ai/credentials/`（OAuth token、API 密钥）
+- `~/.dryads-ai/agents/<agentId>/sessions/`（会话记录 + 元数据）
+- `~/.dryads-ai/skills/`（托管的 Skills）
 
 如果你需要迁移会话或配置，请单独复制它们并将它们排除在版本控制之外。
 
@@ -135,7 +135,7 @@ x-i18n:
 如果安装了 git，全新工作区会自动初始化。如果此工作区还不是仓库，请运行：
 
 ```bash
-cd ~/.dmms-ai/workspace
+cd ~/.dryads-ai/workspace
 git init
 git add AGENTS.md SOUL.md TOOLS.md IDENTITY.md USER.md HEARTBEAT.md memory/
 git commit -m "Add agent workspace"
@@ -160,7 +160,7 @@ git push -u origin main
 
 ```bash
 gh auth login
-gh repo create dmms-ai-workspace --private --source . --remote origin --push
+gh repo create dryads-ai-workspace --private --source . --remote origin --push
 ```
 
 选项 C：GitLab 网页界面
@@ -190,10 +190,10 @@ git push
 即使在私有仓库中，也要避免在工作区中存储密钥：
 
 - API 密钥、OAuth token、密码或私有凭证。
-- `~/.dmms-ai/` 下的任何内容。
+- `~/.dryads-ai/` 下的任何内容。
 - 聊天的原始转储或敏感附件。
 
-如果你必须存储敏感引用，请使用占位符并将真正的密钥保存在其他地方（密码管理器、环境变量或 `~/.dmms-ai/`）。
+如果你必须存储敏感引用，请使用占位符并将真正的密钥保存在其他地方（密码管理器、环境变量或 `~/.dryads-ai/`）。
 
 建议的 `.gitignore` 起始配置：
 
@@ -207,10 +207,10 @@ git push
 
 ## 将工作区迁移到新机器
 
-1. 将仓库克隆到所需路径（默认 `~/.dmms-ai/workspace`）。
-2. 在 `~/.dmms-ai/dmms-ai.json` 中将 `agents.defaults.workspace` 设置为该路径。
-3. 运行 `dmms-ai setup --workspace <path>` 来填充任何缺失的文件。
-4. 如果你需要会话，请单独从旧机器复制 `~/.dmms-ai/agents/<agentId>/sessions/`。
+1. 将仓库克隆到所需路径（默认 `~/.dryads-ai/workspace`）。
+2. 在 `~/.dryads-ai/dryads-ai.json` 中将 `agents.defaults.workspace` 设置为该路径。
+3. 运行 `dryads-ai setup --workspace <path>` 来填充任何缺失的文件。
+4. 如果你需要会话，请单独从旧机器复制 `~/.dryads-ai/agents/<agentId>/sessions/`。
 
 ## 高级注意事项
 

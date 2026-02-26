@@ -6,10 +6,10 @@ enum ModelCatalogLoader {
         self.resolveDefaultPath()
     }
 
-    private static let logger = Logger(subsystem: "ai.dmmsai", category: "models")
+    private static let logger = Logger(subsystem: "ai.dryadsai", category: "models")
     private nonisolated static let appSupportDir: URL = {
         let base = FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return base.appendingPathComponent("DMMS AI", isDirectory: true)
+        return base.appendingPathComponent("Dryads AI", isDirectory: true)
     }()
 
     private static var cachePath: URL {

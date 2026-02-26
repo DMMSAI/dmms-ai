@@ -1,5 +1,5 @@
 import XCTest
-@testable import DmmsAiKit
+@testable import DryadsAiKit
 
 final class TalkHistoryTimestampTests: XCTestCase {
     func testSecondsTimestampsAreAcceptedWithSmallTolerance() {

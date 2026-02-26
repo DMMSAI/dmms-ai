@@ -88,8 +88,8 @@ const DEFAULT_SECURITY: ExecSecurity = "deny";
 const DEFAULT_ASK: ExecAsk = "on-miss";
 const DEFAULT_ASK_FALLBACK: ExecSecurity = "deny";
 const DEFAULT_AUTO_ALLOW_SKILLS = false;
-const DEFAULT_SOCKET = "~/.dmms-ai/exec-approvals.sock";
-const DEFAULT_FILE = "~/.dmms-ai/exec-approvals.json";
+const DEFAULT_SOCKET = "~/.dryads-ai/exec-approvals.sock";
+const DEFAULT_FILE = "~/.dryads-ai/exec-approvals.json";
 
 function hashExecApprovalsRaw(raw: string | null): string {
   return crypto

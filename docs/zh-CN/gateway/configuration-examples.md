@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 学习如何配置 DMMS AI
+  - 学习如何配置 Dryads AI
   - 寻找配置示例
-  - 首次设置 DMMS AI
-summary: 符合模式的常见 DMMS AI 设置配置示例
+  - 首次设置 Dryads AI
+summary: 符合模式的常见 Dryads AI 设置配置示例
 title: 配置示例
 x-i18n:
   generated_at: "2026-02-03T07:48:39Z"
@@ -24,12 +24,12 @@ x-i18n:
 
 ```json5
 {
-  agent: { workspace: "~/.dmms-ai/workspace" },
+  agent: { workspace: "~/.dryads-ai/workspace" },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
 
-保存到 `~/.dmms-ai/dmms-ai.json`，你就可以从该号码私信机器人了。
+保存到 `~/.dryads-ai/dryads-ai.json`，你就可以从该号码私信机器人了。
 
 ### 推荐的入门配置
 
@@ -41,7 +41,7 @@ x-i18n:
     emoji: "🦞",
   },
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: { primary: "anthropic/claude-sonnet-4-5" },
   },
   channels: {
@@ -96,7 +96,7 @@ x-i18n:
   // 日志
   logging: {
     level: "info",
-    file: "/tmp/dmms-ai/dmms-ai.log",
+    file: "/tmp/dryads-ai/dryads-ai.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -104,7 +104,7 @@ x-i18n:
 
   // 消息格式
   messages: {
-    messagePrefix: "[dmms-ai]",
+    messagePrefix: "[dryads-ai]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -113,7 +113,7 @@ x-i18n:
   // 路由 + 队列
   routing: {
     groupChat: {
-      mentionPatterns: ["@dmms-ai", "dmms-ai"],
+      mentionPatterns: ["@dryads-ai", "dryads-ai"],
       historyLimit: 50,
     },
     queue: {
@@ -166,7 +166,7 @@ x-i18n:
       discord: { mode: "idle", idleMinutes: 10080 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.dmms-ai/agents/default/sessions/sessions.json",
+    store: "~/.dryads-ai/agents/default/sessions/sessions.json",
     typingIntervalSeconds: 5,
     sendPolicy: {
       default: "allow",
@@ -199,7 +199,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["steipete"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-dmms-ai",
+          slug: "friends-of-dryads-ai",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -219,7 +219,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "dmms-ai",
+        name: "dryads-ai",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -229,7 +229,7 @@ x-i18n:
   // 智能体运行时
   agents: {
     defaults: {
-      workspace: "~/.dmms-ai/workspace",
+      workspace: "~/.dryads-ai/workspace",
       userTimezone: "America/Chicago",
       model: {
         primary: "anthropic/claude-sonnet-4-5",
@@ -282,9 +282,9 @@ x-i18n:
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.dmms-ai/sandboxes",
+        workspaceRoot: "~/.dryads-ai/sandboxes",
         docker: {
-          image: "dmms-ai-sandbox:bookworm-slim",
+          image: "dryads-ai-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -349,7 +349,7 @@ x-i18n:
   // Cron 作业
   cron: {
     enabled: true,
-    store: "~/.dmms-ai/cron/cron.json",
+    store: "~/.dryads-ai/cron/cron.json",
     maxConcurrentRuns: 2,
   },
 
@@ -359,7 +359,7 @@ x-i18n:
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.dmms-ai/hooks",
+    transformsDir: "~/.dryads-ai/hooks",
     mappings: [
       {
         id: "gmail-hook",
@@ -379,7 +379,7 @@ x-i18n:
       },
     ],
     gmail: {
-      account: "dmms-ai@gmail.com",
+      account: "dryads-ai@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -398,7 +398,7 @@ x-i18n:
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/dmms-ai" },
+    controlUi: { enabled: true, basePath: "/dryads-ai" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -436,7 +436,7 @@ x-i18n:
 
 ```json5
 {
-  agent: { workspace: "~/.dmms-ai/workspace" },
+  agent: { workspace: "~/.dryads-ai/workspace" },
   channels: {
     whatsapp: { allowFrom: ["+15555550123"] },
     telegram: {
@@ -474,7 +474,7 @@ x-i18n:
     },
   },
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: {
       primary: "anthropic/claude-sonnet-4-5",
       fallbacks: ["anthropic/claude-opus-4-5"],
@@ -513,7 +513,7 @@ x-i18n:
     },
   },
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: {
       primary: "anthropic/claude-opus-4-5",
       fallbacks: ["minimax/MiniMax-M2.1"],
@@ -531,7 +531,7 @@ x-i18n:
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-dmms-ai",
+    workspace: "~/work-dryads-ai",
     elevated: { enabled: false },
   },
   channels: {
@@ -552,7 +552,7 @@ x-i18n:
 ```json5
 {
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: { primary: "lmstudio/minimax-m2.1-gs32" },
   },
   models: {

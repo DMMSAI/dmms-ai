@@ -7,19 +7,19 @@ title: "Groups"
 
 # Groups
 
-DMMS AI treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams.
+Dryads AI treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams.
 
 ## Beginner intro (2 minutes)
 
-DMMS AI “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
-If **you** are in a group, DMMS AI can see that group and respond there.
+Dryads AI “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
+If **you** are in a group, Dryads AI can see that group and respond there.
 
 Default behavior:
 
 - Groups are restricted (`groupPolicy: "allowlist"`).
 - Replies require a mention unless you explicitly disable mention gating.
 
-Translation: allowlisted senders can trigger DMMS AI by mentioning it.
+Translation: allowlisted senders can trigger Dryads AI by mentioning it.
 
 > TL;DR
 >
@@ -230,7 +230,7 @@ Replying to a bot message counts as an implicit mention (when the channel suppor
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@dmms-ai", "dmms-ai", "\\+15555550123"],
+          mentionPatterns: ["@dryads-ai", "dryads-ai", "\\+15555550123"],
           historyLimit: 50,
         },
       },

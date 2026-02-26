@@ -1,7 +1,7 @@
 {
-  "name": "@dmms-ai/diagnostics-otel",
+  "name": "@dryads-ai/diagnostics-otel",
   "version": "2026.2.18",
-  "description": "DMMS AI diagnostics OpenTelemetry exporter",
+  "description": "Dryads AI diagnostics OpenTelemetry exporter",
   "type": "module",
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
@@ -17,9 +17,9 @@
     "@opentelemetry/semantic-conventions": "^1.39.0"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,4 +1,4 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.Manifest
 import android.content.Context

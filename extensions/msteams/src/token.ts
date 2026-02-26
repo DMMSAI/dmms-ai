@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "dmms-ai/plugin-sdk";
+import type { MSTeamsConfig } from "dryads-ai/plugin-sdk";
 
 export type MSTeamsCredentials = {
   appId: string;

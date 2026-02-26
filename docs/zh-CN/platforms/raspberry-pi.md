@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 在 Raspberry Pi 上设置 DMMS AI 时
-  - 在 ARM 设备上运行 DMMS AI 时
+  - 在 Raspberry Pi 上设置 Dryads AI 时
+  - 在 ARM 设备上运行 Dryads AI 时
   - 构建低成本常驻个人 AI 时
-summary: 在 Raspberry Pi 上运行 DMMS AI（低成本自托管设置）
+summary: 在 Raspberry Pi 上运行 Dryads AI（低成本自托管设置）
 title: Raspberry Pi
 x-i18n:
   generated_at: "2026-02-03T07:53:30Z"
@@ -14,11 +14,11 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 Raspberry Pi 上运行 DMMS AI
+# 在 Raspberry Pi 上运行 Dryads AI
 
 ## 目标
 
-在 Raspberry Pi 上运行持久、常驻的 DMMS AI Gateway 网关，**一次性成本约 $35-80**（无月费）。
+在 Raspberry Pi 上运行持久、常驻的 Dryads AI Gateway 网关，**一次性成本约 $35-80**（无月费）。
 
 适用于：
 
@@ -114,19 +114,19 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-## 6) 安装 DMMS AI
+## 6) 安装 Dryads AI
 
 ### 选项 A：标准安装（推荐）
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash
+curl -fsSL https://dryads-ai.com/install.sh | bash
 ```
 
 ### 选项 B：可修改安装（用于调试）
 
 ```bash
-git clone https://github.com/dmms-ai/dmms-ai.git
-cd dmms-ai
+git clone https://github.com/dryads-ai/dryads-ai.git
+cd dryads-ai
 npm install
 npm run build
 npm link
@@ -137,7 +137,7 @@ npm link
 ## 7) 运行新手引导
 
 ```bash
-dmms-ai onboard --install-daemon
+dryads-ai onboard --install-daemon
 ```
 
 按照向导操作：
@@ -151,13 +151,13 @@ dmms-ai onboard --install-daemon
 
 ```bash
 # 检查状态
-dmms-ai status
+dryads-ai status
 
 # 检查服务
-sudo systemctl status dmms-ai
+sudo systemctl status dryads-ai
 
 # 查看日志
-journalctl -u dmms-ai -f
+journalctl -u dryads-ai -f
 ```
 
 ## 9) 访问仪表板
@@ -180,8 +180,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
 # 更新配置
-dmms-ai config set gateway.bind tailnet
-sudo systemctl restart dmms-ai
+dryads-ai config set gateway.bind tailnet
+sudo systemctl restart dryads-ai
 ```
 
 ---
@@ -228,7 +228,7 @@ htop
 
 ### 二进制兼容性
 
-大多数 DMMS AI 功能在 ARM64 上可用，但某些外部二进制文件可能需要 ARM 构建：
+大多数 Dryads AI 功能在 ARM64 上可用，但某些外部二进制文件可能需要 ARM 构建：
 
 | 工具               | ARM64 状态 | 说明                                |
 | ------------------ | ---------- | ----------------------------------- |
@@ -278,13 +278,13 @@ uname -m
 
 ```bash
 # 检查服务是否已启用
-sudo systemctl is-enabled dmms-ai
+sudo systemctl is-enabled dryads-ai
 
 # 如果没有则启用
-sudo systemctl enable dmms-ai
+sudo systemctl enable dryads-ai
 
 # 开机启动
-sudo systemctl start dmms-ai
+sudo systemctl start dryads-ai
 ```
 
 ---
@@ -311,12 +311,12 @@ free -h
 
 ```bash
 # 检查日志
-journalctl -u dmms-ai --no-pager -n 100
+journalctl -u dryads-ai --no-pager -n 100
 
 # 常见修复：重新构建
-cd ~/dmms-ai  # 如果使用可修改安装
+cd ~/dryads-ai  # 如果使用可修改安装
 npm run build
-sudo systemctl restart dmms-ai
+sudo systemctl restart dryads-ai
 ```
 
 ### ARM 二进制问题

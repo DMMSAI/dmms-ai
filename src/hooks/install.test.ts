@@ -9,7 +9,7 @@ import {
 } from "../test-utils/exec-assertions.js";
 import { isAddressInUseError } from "./gmail-watcher.js";
 
-const fixtureRoot = path.join(os.tmpdir(), `dmms-ai-hook-install-${randomUUID()}`);
+const fixtureRoot = path.join(os.tmpdir(), `dryads-ai-hook-install-${randomUUID()}`);
 let tempDirIndex = 0;
 
 const fixturesDir = path.resolve(process.cwd(), "test", "fixtures", "hooks-install");
@@ -156,9 +156,9 @@ describe("installHooksFromPath", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@dmms-ai/test-hooks",
+        name: "@dryads-ai/test-hooks",
         version: "0.0.1",
-        "dmms-ai": { hooks: ["./hooks/one-hook"] },
+        "dryads-ai": { hooks: ["./hooks/one-hook"] },
         dependencies: { "left-pad": "1.3.0" },
       }),
       "utf-8",
@@ -169,7 +169,7 @@ describe("installHooksFromPath", () => {
         "---",
         "name: one-hook",
         "description: One hook",
-        'metadata: {"dmms-ai":{"events":["command:new"]}}',
+        'metadata: {"dryads-ai":{"events":["command:new"]}}',
         "---",
         "",
         "# One Hook",
@@ -217,7 +217,7 @@ describe("installHooksFromPath", () => {
         "---",
         "name: my-hook",
         "description: My hook",
-        'metadata: {"dmms-ai":{"events":["command:new"]}}',
+        'metadata: {"dryads-ai":{"events":["command:new"]}}',
         "---",
         "",
         "# My Hook",
@@ -265,7 +265,7 @@ describe("installHooksFromNpmSpec", () => {
 
     const hooksDir = path.join(stateDir, "hooks");
     const result = await installHooksFromNpmSpec({
-      spec: "@dmms-ai/test-hooks@0.0.1",
+      spec: "@dryads-ai/test-hooks@0.0.1",
       hooksDir,
       logger: { info: () => {}, warn: () => {} },
     });
@@ -278,7 +278,7 @@ describe("installHooksFromNpmSpec", () => {
 
     expectSingleNpmPackIgnoreScriptsCall({
       calls: run.mock.calls,
-      expectedSpec: "@dmms-ai/test-hooks@0.0.1",
+      expectedSpec: "@dryads-ai/test-hooks@0.0.1",
     });
 
     expect(packTmpDir).not.toBe("");

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import type { PluginRuntime } from "dmms-ai/plugin-sdk";
+import type { PluginRuntime } from "dryads-ai/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import {
   readNostrBusState,
@@ -11,19 +11,20 @@ import {
 import { setNostrRuntime } from "./runtime.js";
 
 async function withTempStateDir<T>(fn: (dir: string) => Promise<T>) {
-  const previous = process.env.DMMS_AI_STATE_DIR;
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-nostr-"));
-  process.env.DMMS_AI_STATE_DIR = dir;
+  const previous = process.env.DRYADS_AI_STATE_DIR;
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-nostr-"));
+  process.env.DRYADS_AI_STATE_DIR = dir;
   setNostrRuntime({
     state: {
       resolveStateDir: (env, homedir) => {
         const stateEnv = env ?? process.env;
-        const override = stateEnv.DMMS_AI_STATE_DIR?.trim() || stateEnv.CLAWDBOT_STATE_DIR?.trim();
+        const override =
+          stateEnv.DRYADS_AI_STATE_DIR?.trim() || stateEnv.CLAWDBOT_STATE_DIR?.trim();
         if (override) {
           return override;
         }
         const resolveHome = homedir ?? os.homedir;
-        return path.join(resolveHome(), ".dmms-ai");
+        return path.join(resolveHome(), ".dryads-ai");
       },
     },
   } as PluginRuntime);
@@ -31,9 +32,9 @@ async function withTempStateDir<T>(fn: (dir: string) => Promise<T>) {
     return await fn(dir);
   } finally {
     if (previous === undefined) {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     } else {
-      process.env.DMMS_AI_STATE_DIR = previous;
+      process.env.DRYADS_AI_STATE_DIR = previous;
     }
     await fs.rm(dir, { recursive: true, force: true });
   }

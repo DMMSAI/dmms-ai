@@ -26,7 +26,7 @@ describe("msteams polls", () => {
   it("extracts poll votes from activity values", () => {
     const vote = extractMSTeamsPollVote({
       value: {
-        dmmsAiPollId: "poll-1",
+        dryadsAiPollId: "poll-1",
         choices: "0,1",
       },
     });
@@ -38,7 +38,7 @@ describe("msteams polls", () => {
   });
 
   it("stores and records poll votes", async () => {
-    const home = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dmms-ai-msteams-polls-"));
+    const home = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dryads-ai-msteams-polls-"));
     const store = createMSTeamsPollStoreFs({ homedir: () => home });
     await store.createPoll({
       id: "poll-2",

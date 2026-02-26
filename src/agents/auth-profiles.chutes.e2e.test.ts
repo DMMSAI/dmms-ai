@@ -26,15 +26,15 @@ describe("auth-profiles (chutes)", () => {
 
   it("refreshes expired Chutes OAuth credentials", async () => {
     envSnapshot = captureEnv([
-      "DMMS_AI_STATE_DIR",
-      "DMMS_AI_AGENT_DIR",
+      "DRYADS_AI_STATE_DIR",
+      "DRYADS_AI_AGENT_DIR",
       "PI_CODING_AGENT_DIR",
       "CHUTES_CLIENT_ID",
     ]);
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-chutes-"));
-    process.env.DMMS_AI_STATE_DIR = tempDir;
-    process.env.DMMS_AI_AGENT_DIR = path.join(tempDir, "agents", "main", "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.DMMS_AI_AGENT_DIR;
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-chutes-"));
+    process.env.DRYADS_AI_STATE_DIR = tempDir;
+    process.env.DRYADS_AI_AGENT_DIR = path.join(tempDir, "agents", "main", "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.DRYADS_AI_AGENT_DIR;
 
     const authProfilePath = path.join(tempDir, "agents", "main", "agent", "auth-profiles.json");
     await fs.mkdir(path.dirname(authProfilePath), { recursive: true });

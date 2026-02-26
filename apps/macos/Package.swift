@@ -1,18 +1,18 @@
 // swift-tools-version: 6.2
-// Package manifest for the DMMS AI macOS companion (menu bar app + IPC library).
+// Package manifest for the Dryads AI macOS companion (menu bar app + IPC library).
 
 import PackageDescription
 
 let package = Package(
-    name: "DMMS AI",
+    name: "Dryads AI",
     platforms: [
         .macOS(.v15),
     ],
     products: [
-        .library(name: "DmmsAiIPC", targets: ["DmmsAiIPC"]),
-        .library(name: "DmmsAiDiscovery", targets: ["DmmsAiDiscovery"]),
-        .executable(name: "DMMS AI", targets: ["DMMS AI"]),
-        .executable(name: "dmms-ai-mac", targets: ["DmmsAiMacCLI"]),
+        .library(name: "DryadsAiIPC", targets: ["DryadsAiIPC"]),
+        .library(name: "DryadsAiDiscovery", targets: ["DryadsAiDiscovery"]),
+        .executable(name: "Dryads AI", targets: ["Dryads AI"]),
+        .executable(name: "dryads-ai-mac", targets: ["DryadsAiMacCLI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/orchetect/MenuBarExtraAccess", exact: "1.2.2"),
@@ -20,33 +20,33 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", from: "1.8.0"),
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.8.1"),
         .package(url: "https://github.com/steipete/Peekaboo.git", branch: "main"),
-        .package(path: "../shared/DmmsAiKit"),
+        .package(path: "../shared/DryadsAiKit"),
         .package(path: "../../Swabble"),
     ],
     targets: [
         .target(
-            name: "DmmsAiIPC",
+            name: "DryadsAiIPC",
             dependencies: [],
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .target(
-            name: "DmmsAiDiscovery",
+            name: "DryadsAiDiscovery",
             dependencies: [
-                .product(name: "DmmsAiKit", package: "DmmsAiKit"),
+                .product(name: "DryadsAiKit", package: "DryadsAiKit"),
             ],
-            path: "Sources/DmmsAiDiscovery",
+            path: "Sources/DryadsAiDiscovery",
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .executableTarget(
-            name: "DMMS AI",
+            name: "Dryads AI",
             dependencies: [
-                "DmmsAiIPC",
-                "DmmsAiDiscovery",
-                .product(name: "DmmsAiKit", package: "DmmsAiKit"),
-                .product(name: "DmmsAiChatUI", package: "DmmsAiKit"),
-                .product(name: "DmmsAiProtocol", package: "DmmsAiKit"),
+                "DryadsAiIPC",
+                "DryadsAiDiscovery",
+                .product(name: "DryadsAiKit", package: "DryadsAiKit"),
+                .product(name: "DryadsAiChatUI", package: "DryadsAiKit"),
+                .product(name: "DryadsAiProtocol", package: "DryadsAiKit"),
                 .product(name: "SwabbleKit", package: "swabble"),
                 .product(name: "MenuBarExtraAccess", package: "MenuBarExtraAccess"),
                 .product(name: "Subprocess", package: "swift-subprocess"),
@@ -59,30 +59,30 @@ let package = Package(
                 "Resources/Info.plist",
             ],
             resources: [
-                .copy("Resources/DMMS AI.icns"),
+                .copy("Resources/Dryads AI.icns"),
                 .copy("Resources/DeviceModels"),
             ],
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .executableTarget(
-            name: "DmmsAiMacCLI",
+            name: "DryadsAiMacCLI",
             dependencies: [
-                "DmmsAiDiscovery",
-                .product(name: "DmmsAiKit", package: "DmmsAiKit"),
-                .product(name: "DmmsAiProtocol", package: "DmmsAiKit"),
+                "DryadsAiDiscovery",
+                .product(name: "DryadsAiKit", package: "DryadsAiKit"),
+                .product(name: "DryadsAiProtocol", package: "DryadsAiKit"),
             ],
-            path: "Sources/DmmsAiMacCLI",
+            path: "Sources/DryadsAiMacCLI",
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .testTarget(
-            name: "DmmsAiIPCTests",
+            name: "DryadsAiIPCTests",
             dependencies: [
-                "DmmsAiIPC",
-                "DMMS AI",
-                "DmmsAiDiscovery",
-                .product(name: "DmmsAiProtocol", package: "DmmsAiKit"),
+                "DryadsAiIPC",
+                "Dryads AI",
+                "DryadsAiDiscovery",
+                .product(name: "DryadsAiProtocol", package: "DryadsAiKit"),
                 .product(name: "SwabbleKit", package: "swabble"),
             ],
             swiftSettings: [

@@ -1,12 +1,12 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
-import ai.dmmsai.android.LocationMode
-import ai.dmmsai.android.gateway.GatewaySession
+import ai.dryadsai.android.LocationMode
+import ai.dryadsai.android.gateway.GatewaySession
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject

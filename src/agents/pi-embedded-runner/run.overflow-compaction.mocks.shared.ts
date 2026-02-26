@@ -91,7 +91,7 @@ vi.mock("../model-auth.js", () => ({
 }));
 
 vi.mock("../models-config.js", () => ({
-  ensureDmmsAiModelsJson: vi.fn(async () => {}),
+  ensureDryadsAiModelsJson: vi.fn(async () => {}),
 }));
 
 vi.mock("../context-window-guard.js", () => ({
@@ -118,7 +118,7 @@ vi.mock("../../utils/message-channel.js", () => ({
 }));
 
 vi.mock("../agent-paths.js", () => ({
-  resolveDmmsAiAgentDir: vi.fn(() => "/tmp/agent-dir"),
+  resolveDryadsAiAgentDir: vi.fn(() => "/tmp/agent-dir"),
 }));
 
 vi.mock("../defaults.js", () => ({

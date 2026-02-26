@@ -61,7 +61,7 @@ export function registerBrowserFilesAndDownloadsCommands(
     .description("Arm file upload for the next file chooser")
     .argument(
       "<paths...>",
-      "File paths to upload (must be within DMMS AI temp uploads dir, e.g. /tmp/dmms-ai/uploads/file.pdf)",
+      "File paths to upload (must be within Dryads AI temp uploads dir, e.g. /tmp/dryads-ai/uploads/file.pdf)",
     )
     .option("--ref <ref>", "Ref id from snapshot to click after arming")
     .option("--input-ref <ref>", "Ref id for <input type=file> to set directly")
@@ -110,7 +110,7 @@ export function registerBrowserFilesAndDownloadsCommands(
     .description("Wait for the next download (and save it)")
     .argument(
       "[path]",
-      "Save path within dmms-ai temp downloads dir (default: /tmp/dmms-ai/downloads/...; fallback: os.tmpdir()/dmms-ai/downloads/...)",
+      "Save path within dryads-ai temp downloads dir (default: /tmp/dryads-ai/downloads/...; fallback: os.tmpdir()/dryads-ai/downloads/...)",
     )
     .option("--target-id <id>", "CDP target id (or unique prefix)")
     .option(
@@ -133,7 +133,7 @@ export function registerBrowserFilesAndDownloadsCommands(
     .argument("<ref>", "Ref id from snapshot to click")
     .argument(
       "<path>",
-      "Save path within dmms-ai temp downloads dir (e.g. report.pdf or /tmp/dmms-ai/downloads/report.pdf)",
+      "Save path within dryads-ai temp downloads dir (e.g. report.pdf or /tmp/dryads-ai/downloads/report.pdf)",
     )
     .option("--target-id <id>", "CDP target id (or unique prefix)")
     .option(

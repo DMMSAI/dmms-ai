@@ -154,7 +154,7 @@ export function registerQrCli(program: Command) {
 
         const lines: string[] = [
           theme.heading("Pairing QR"),
-          "Scan this with the DMMS AI iOS app (Onboarding -> Scan QR).",
+          "Scan this with the Dryads AI iOS app (Onboarding -> Scan QR).",
           "",
         ];
 
@@ -170,8 +170,8 @@ export function registerQrCli(program: Command) {
           `${theme.muted("Source:")} ${resolved.urlSource}`,
           "",
           "Approve after scan with:",
-          `  ${theme.command("dmms-ai devices list")}`,
-          `  ${theme.command("dmms-ai devices approve <requestId>")}`,
+          `  ${theme.command("dryads-ai devices list")}`,
+          `  ${theme.command("dryads-ai devices approve <requestId>")}`,
         );
 
         defaultRuntime.log(lines.join("\n"));

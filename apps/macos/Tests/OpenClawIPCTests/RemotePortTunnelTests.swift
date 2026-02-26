@@ -1,5 +1,5 @@
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 #if canImport(Darwin)
 import Darwin

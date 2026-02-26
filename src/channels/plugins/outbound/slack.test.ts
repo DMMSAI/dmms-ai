@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 
 vi.mock("../../../slack/send.js", () => ({
   sendMessageSlack: vi.fn().mockResolvedValue({ messageId: "1234.5678", channelId: "C123" }),
@@ -26,7 +26,7 @@ const sendSlackText = async (ctx: {
 }) => {
   const sendText = slackOutbound.sendText as NonNullable<typeof slackOutbound.sendText>;
   return await sendText({
-    cfg: {} as DmmsAiConfig,
+    cfg: {} as DryadsAiConfig,
     ...ctx,
   });
 };

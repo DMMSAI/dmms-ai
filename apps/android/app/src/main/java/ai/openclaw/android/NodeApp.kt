@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import android.app.Application
 import android.os.StrictMode

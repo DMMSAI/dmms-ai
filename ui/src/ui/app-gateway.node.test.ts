@@ -71,7 +71,7 @@ function createHost() {
     agentsList: null,
     agentsError: null,
     debugHealth: null,
-    assistantName: "DMMS AI",
+    assistantName: "Dryads AI",
     assistantAvatar: null,
     assistantAgentId: null,
     sessionKey: "main",

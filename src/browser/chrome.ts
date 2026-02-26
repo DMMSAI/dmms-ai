@@ -13,14 +13,14 @@ import {
   resolveBrowserExecutableForPlatform,
 } from "./chrome.executables.js";
 import {
-  decorateDmmsAiProfile,
+  decorateDryadsAiProfile,
   ensureProfileCleanExit,
   isProfileDecorated,
 } from "./chrome.profile-decoration.js";
 import type { ResolvedBrowserConfig, ResolvedBrowserProfile } from "./config.js";
 import {
-  DEFAULT_DMMS_AI_BROWSER_COLOR,
-  DEFAULT_DMMS_AI_BROWSER_PROFILE_NAME,
+  DEFAULT_DRYADS_AI_BROWSER_COLOR,
+  DEFAULT_DRYADS_AI_BROWSER_PROFILE_NAME,
 } from "./constants.js";
 
 const log = createSubsystemLogger("browser").child("chrome");
@@ -33,7 +33,7 @@ export {
   resolveBrowserExecutableForPlatform,
 } from "./chrome.executables.js";
 export {
-  decorateDmmsAiProfile,
+  decorateDryadsAiProfile,
   ensureProfileCleanExit,
   isProfileDecorated,
 } from "./chrome.profile-decoration.js";
@@ -59,7 +59,7 @@ function resolveBrowserExecutable(resolved: ResolvedBrowserConfig): BrowserExecu
   return resolveBrowserExecutableForPlatform(resolved, process.platform);
 }
 
-export function resolveDmmsAiUserDataDir(profileName = DEFAULT_DMMS_AI_BROWSER_PROFILE_NAME) {
+export function resolveDryadsAiUserDataDir(profileName = DEFAULT_DRYADS_AI_BROWSER_PROFILE_NAME) {
   return path.join(CONFIG_DIR, "browser", profileName, "user-data");
 }
 
@@ -160,7 +160,7 @@ export async function isChromeCdpReady(
   return await canOpenWebSocket(wsUrl, handshakeTimeoutMs);
 }
 
-export async function launchDmmsAiChrome(
+export async function launchDryadsAiChrome(
   resolved: ResolvedBrowserConfig,
   profile: ResolvedBrowserProfile,
 ): Promise<RunningChrome> {
@@ -176,13 +176,13 @@ export async function launchDmmsAiChrome(
     );
   }
 
-  const userDataDir = resolveDmmsAiUserDataDir(profile.name);
+  const userDataDir = resolveDryadsAiUserDataDir(profile.name);
   fs.mkdirSync(userDataDir, { recursive: true });
 
   const needsDecorate = !isProfileDecorated(
     userDataDir,
     profile.name,
-    (profile.color ?? DEFAULT_DMMS_AI_BROWSER_COLOR).toUpperCase(),
+    (profile.color ?? DEFAULT_DRYADS_AI_BROWSER_COLOR).toUpperCase(),
   );
 
   // First launch to create preference files if missing, then decorate and relaunch.
@@ -268,20 +268,20 @@ export async function launchDmmsAiChrome(
 
   if (needsDecorate) {
     try {
-      decorateDmmsAiProfile(userDataDir, {
+      decorateDryadsAiProfile(userDataDir, {
         name: profile.name,
         color: profile.color,
       });
-      log.info(`🦞 dmms-ai browser profile decorated (${profile.color})`);
+      log.info(`🦞 dryads-ai browser profile decorated (${profile.color})`);
     } catch (err) {
-      log.warn(`dmms-ai browser profile decoration failed: ${String(err)}`);
+      log.warn(`dryads-ai browser profile decoration failed: ${String(err)}`);
     }
   }
 
   try {
     ensureProfileCleanExit(userDataDir);
   } catch (err) {
-    log.warn(`dmms-ai browser clean-exit prefs failed: ${String(err)}`);
+    log.warn(`dryads-ai browser clean-exit prefs failed: ${String(err)}`);
   }
 
   const proc = spawnOnce();
@@ -307,7 +307,7 @@ export async function launchDmmsAiChrome(
 
   const pid = proc.pid ?? -1;
   log.info(
-    `🦞 dmms-ai browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
+    `🦞 dryads-ai browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
   );
 
   return {
@@ -320,7 +320,7 @@ export async function launchDmmsAiChrome(
   };
 }
 
-export async function stopDmmsAiChrome(running: RunningChrome, timeoutMs = 2500) {
+export async function stopDryadsAiChrome(running: RunningChrome, timeoutMs = 2500) {
   const proc = running.proc;
   if (proc.killed) {
     return;

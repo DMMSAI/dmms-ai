@@ -1,11 +1,11 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.content.Context
-import ai.dmmsai.android.CameraHudKind
-import ai.dmmsai.android.BuildConfig
-import ai.dmmsai.android.SecurePrefs
-import ai.dmmsai.android.gateway.GatewayEndpoint
-import ai.dmmsai.android.gateway.GatewaySession
+import ai.dryadsai.android.CameraHudKind
+import ai.dryadsai.android.BuildConfig
+import ai.dryadsai.android.SecurePrefs
+import ai.dryadsai.android.gateway.GatewayEndpoint
+import ai.dryadsai.android.gateway.GatewaySession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
@@ -29,7 +29,7 @@ class CameraHandler(
       if (!BuildConfig.DEBUG) return
       val ts = java.text.SimpleDateFormat("HH:mm:ss.SSS", java.util.Locale.US).format(java.util.Date())
       logFile?.appendText("[$ts] $msg\n")
-      android.util.Log.w("dmms-ai", "camera.snap: $msg")
+      android.util.Log.w("dryads-ai", "camera.snap: $msg")
     }
     try {
       logFile?.writeText("") // clear
@@ -67,7 +67,7 @@ class CameraHandler(
       if (!BuildConfig.DEBUG) return
       val ts = java.text.SimpleDateFormat("HH:mm:ss.SSS", java.util.Locale.US).format(java.util.Date())
       clipLogFile?.appendText("[CLIP $ts] $msg\n")
-      android.util.Log.w("dmms-ai", "camera.clip: $msg")
+      android.util.Log.w("dryads-ai", "camera.clip: $msg")
     }
     val includeAudio = paramsJson?.contains("\"includeAudio\":true") != false
     if (includeAudio) externalAudioCaptureActive.value = true

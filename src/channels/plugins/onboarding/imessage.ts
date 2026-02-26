@@ -1,5 +1,5 @@
 import { detectBinary } from "../../../commands/onboard-helpers.js";
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 import type { DmPolicy } from "../../../config/types.js";
 import {
   listIMessageAccountIds,
@@ -15,7 +15,7 @@ import { addWildcardAllowFrom, mergeAllowFromEntries, promptAccountId } from "./
 
 const channel = "imessage" as const;
 
-function setIMessageDmPolicy(cfg: DmmsAiConfig, dmPolicy: DmPolicy) {
+function setIMessageDmPolicy(cfg: DryadsAiConfig, dmPolicy: DmPolicy) {
   const allowFrom =
     dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.imessage?.allowFrom) : undefined;
   return {
@@ -32,10 +32,10 @@ function setIMessageDmPolicy(cfg: DmmsAiConfig, dmPolicy: DmPolicy) {
 }
 
 function setIMessageAllowFrom(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
   allowFrom: string[],
-): DmmsAiConfig {
+): DryadsAiConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -74,10 +74,10 @@ function parseIMessageAllowFromInput(raw: string): string[] {
 }
 
 async function promptIMessageAllowFrom(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<DmmsAiConfig> {
+}): Promise<DryadsAiConfig> {
   const accountId =
     params.accountId && normalizeAccountId(params.accountId)
       ? (normalizeAccountId(params.accountId) ?? DEFAULT_ACCOUNT_ID)
@@ -252,7 +252,7 @@ export const imessageOnboardingAdapter: ChannelOnboardingAdapter = {
     await prompter.note(
       [
         "This is still a work in progress.",
-        "Ensure DMMS AI has Full Disk Access to Messages DB.",
+        "Ensure Dryads AI has Full Disk Access to Messages DB.",
         "Grant Automation permission for Messages when prompted.",
         "List chats with: imsg chats --limit 20",
         `Docs: ${formatDocsLink("/imessage", "imessage")}`,

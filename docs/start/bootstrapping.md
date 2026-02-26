@@ -16,8 +16,8 @@ for the first time.
 
 ## What bootstrapping does
 
-On the first agent run, DMMS AI bootstraps the workspace (default
-`~/.dmms-ai/workspace`):
+On the first agent run, Dryads AI bootstraps the workspace (default
+`~/.dryads-ai/workspace`):
 
 - Seeds `AGENTS.md`, `BOOTSTRAP.md`, `IDENTITY.md`, `USER.md`.
 - Runs a short Q&A ritual (one question at a time).
@@ -32,7 +32,7 @@ machine.
 
 <Note>
 When the Gateway runs on another machine, edit workspace files on the gateway
-host (for example, `user@gateway-host:~/.dmms-ai/workspace`).
+host (for example, `user@gateway-host:~/.dryads-ai/workspace`).
 </Note>
 
 ## Related docs

@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import CoreLocation
 import Foundation
 
@@ -34,7 +34,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         return .fullAccuracy
     }
 
-    func ensureAuthorization(mode: DmmsAiLocationMode) async -> CLAuthorizationStatus {
+    func ensureAuthorization(mode: DryadsAiLocationMode) async -> CLAuthorizationStatus {
         guard CLLocationManager.locationServicesEnabled() else { return .denied }
 
         let status = self.manager.authorizationStatus
@@ -57,8 +57,8 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func currentLocation(
-        params: DmmsAiLocationGetParams,
-        desiredAccuracy: DmmsAiLocationAccuracy,
+        params: DryadsAiLocationGetParams,
+        desiredAccuracy: DryadsAiLocationAccuracy,
         maxAgeMs: Int?,
         timeoutMs: Int?) async throws -> CLLocation
     {
@@ -97,7 +97,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         try await AsyncTimeout.withTimeoutMs(timeoutMs: timeoutMs, onTimeout: { Error.timeout }, operation: operation)
     }
 
-    private static func accuracyValue(_ accuracy: DmmsAiLocationAccuracy) -> CLLocationAccuracy {
+    private static func accuracyValue(_ accuracy: DryadsAiLocationAccuracy) -> CLLocationAccuracy {
         switch accuracy {
         case .coarse:
             kCLLocationAccuracyKilometer
@@ -109,7 +109,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func startLocationUpdates(
-        desiredAccuracy: DmmsAiLocationAccuracy,
+        desiredAccuracy: DryadsAiLocationAccuracy,
         significantChangesOnly: Bool) -> AsyncStream<CLLocation>
     {
         self.stopLocationUpdates()

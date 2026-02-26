@@ -21,7 +21,7 @@ struct GatewayEndpoint {
 func loadGatewayConfig() -> GatewayConfig {
     let home = FileManager().homeDirectoryForCurrentUser
     let candidates = [
-        home.appendingPathComponent(".dmms-ai/dmms-ai.json"),
+        home.appendingPathComponent(".dryads-ai/dryads-ai.json"),
     ]
     let url = candidates.first { FileManager().isReadableFile(atPath: $0.path) } ?? candidates[0]
     guard let data = try? Data(contentsOf: url) else { return GatewayConfig() }

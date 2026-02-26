@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { monitorLineProvider } from "./monitor.js";
 
@@ -9,7 +9,7 @@ describe("monitorLineProvider fail-closed webhook auth", () => {
       monitorLineProvider({
         channelAccessToken: "token",
         channelSecret: "   ",
-        config: {} as DmmsAiConfig,
+        config: {} as DryadsAiConfig,
         runtime: {} as RuntimeEnv,
       }),
     ).rejects.toThrow("LINE webhook mode requires a non-empty channel secret.");
@@ -20,7 +20,7 @@ describe("monitorLineProvider fail-closed webhook auth", () => {
       monitorLineProvider({
         channelAccessToken: "   ",
         channelSecret: "secret",
-        config: {} as DmmsAiConfig,
+        config: {} as DryadsAiConfig,
         runtime: {} as RuntimeEnv,
       }),
     ).rejects.toThrow("LINE webhook mode requires a non-empty channel access token.");

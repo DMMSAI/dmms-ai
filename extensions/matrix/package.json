@@ -1,7 +1,7 @@
 {
-  "name": "@dmms-ai/matrix",
+  "name": "@dryads-ai/matrix",
   "version": "2026.2.18",
-  "description": "DMMS AI Matrix channel plugin",
+  "description": "Dryads AI Matrix channel plugin",
   "type": "module",
   "dependencies": {
     "@matrix-org/matrix-sdk-crypto-nodejs": "^0.4.0",
@@ -11,9 +11,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -28,7 +28,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/matrix",
+      "npmSpec": "@dryads-ai/matrix",
       "localPath": "extensions/matrix",
       "defaultChoice": "npm"
     }

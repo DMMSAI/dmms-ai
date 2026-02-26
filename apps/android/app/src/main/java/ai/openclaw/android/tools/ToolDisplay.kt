@@ -1,4 +1,4 @@
-package ai.dmmsai.android.tools
+package ai.dryadsai.android.tools
 
 import android.content.Context
 import kotlinx.serialization.Serializable

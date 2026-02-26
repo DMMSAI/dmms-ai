@@ -61,45 +61,45 @@ describe("systemd runtime parsing", () => {
 });
 
 describe("resolveSystemdUserUnitPath", () => {
-  it("uses default service name when DMMS_AI_PROFILE is unset", () => {
+  it("uses default service name when DRYADS_AI_PROFILE is unset", () => {
     const env = { HOME: "/home/test" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/dmms-ai-gateway.service",
+      "/home/test/.config/systemd/user/dryads-ai-gateway.service",
     );
   });
 
-  it("uses profile-specific service name when DMMS_AI_PROFILE is set to a custom value", () => {
-    const env = { HOME: "/home/test", DMMS_AI_PROFILE: "jbphoenix" };
+  it("uses profile-specific service name when DRYADS_AI_PROFILE is set to a custom value", () => {
+    const env = { HOME: "/home/test", DRYADS_AI_PROFILE: "jbphoenix" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/dmms-ai-gateway-jbphoenix.service",
+      "/home/test/.config/systemd/user/dryads-ai-gateway-jbphoenix.service",
     );
   });
 
-  it("prefers DMMS_AI_SYSTEMD_UNIT over DMMS_AI_PROFILE", () => {
+  it("prefers DRYADS_AI_SYSTEMD_UNIT over DRYADS_AI_PROFILE", () => {
     const env = {
       HOME: "/home/test",
-      DMMS_AI_PROFILE: "jbphoenix",
-      DMMS_AI_SYSTEMD_UNIT: "custom-unit",
+      DRYADS_AI_PROFILE: "jbphoenix",
+      DRYADS_AI_SYSTEMD_UNIT: "custom-unit",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
     );
   });
 
-  it("handles DMMS_AI_SYSTEMD_UNIT with .service suffix", () => {
+  it("handles DRYADS_AI_SYSTEMD_UNIT with .service suffix", () => {
     const env = {
       HOME: "/home/test",
-      DMMS_AI_SYSTEMD_UNIT: "custom-unit.service",
+      DRYADS_AI_SYSTEMD_UNIT: "custom-unit.service",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
     );
   });
 
-  it("trims whitespace from DMMS_AI_SYSTEMD_UNIT", () => {
+  it("trims whitespace from DRYADS_AI_SYSTEMD_UNIT", () => {
     const env = {
       HOME: "/home/test",
-      DMMS_AI_SYSTEMD_UNIT: "  custom-unit  ",
+      DRYADS_AI_SYSTEMD_UNIT: "  custom-unit  ",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
@@ -109,8 +109,8 @@ describe("resolveSystemdUserUnitPath", () => {
 
 describe("splitArgsPreservingQuotes", () => {
   it("splits on whitespace outside quotes", () => {
-    expect(splitArgsPreservingQuotes('/usr/bin/dmms-ai gateway start --name "My Bot"')).toEqual([
-      "/usr/bin/dmms-ai",
+    expect(splitArgsPreservingQuotes('/usr/bin/dryads-ai gateway start --name "My Bot"')).toEqual([
+      "/usr/bin/dryads-ai",
       "gateway",
       "start",
       "--name",
@@ -120,32 +120,32 @@ describe("splitArgsPreservingQuotes", () => {
 
   it("supports systemd-style backslash escaping", () => {
     expect(
-      splitArgsPreservingQuotes('dmms-ai --name "My \\"Bot\\"" --foo bar', {
+      splitArgsPreservingQuotes('dryads-ai --name "My \\"Bot\\"" --foo bar', {
         escapeMode: "backslash",
       }),
-    ).toEqual(["dmms-ai", "--name", 'My "Bot"', "--foo", "bar"]);
+    ).toEqual(["dryads-ai", "--name", 'My "Bot"', "--foo", "bar"]);
   });
 
   it("supports schtasks-style escaped quotes while preserving other backslashes", () => {
     expect(
-      splitArgsPreservingQuotes('dmms-ai --path "C:\\\\Program Files\\\\DMMS AI"', {
+      splitArgsPreservingQuotes('dryads-ai --path "C:\\\\Program Files\\\\Dryads AI"', {
         escapeMode: "backslash-quote-only",
       }),
-    ).toEqual(["dmms-ai", "--path", "C:\\\\Program Files\\\\DMMS AI"]);
+    ).toEqual(["dryads-ai", "--path", "C:\\\\Program Files\\\\Dryads AI"]);
 
     expect(
-      splitArgsPreservingQuotes('dmms-ai --label "My \\"Quoted\\" Name"', {
+      splitArgsPreservingQuotes('dryads-ai --label "My \\"Quoted\\" Name"', {
         escapeMode: "backslash-quote-only",
       }),
-    ).toEqual(["dmms-ai", "--label", 'My "Quoted" Name']);
+    ).toEqual(["dryads-ai", "--label", 'My "Quoted" Name']);
   });
 });
 
 describe("parseSystemdExecStart", () => {
   it("preserves quoted arguments", () => {
-    const execStart = '/usr/bin/dmms-ai gateway start --name "My Bot"';
+    const execStart = '/usr/bin/dryads-ai gateway start --name "My Bot"';
     expect(parseSystemdExecStart(execStart)).toEqual([
-      "/usr/bin/dmms-ai",
+      "/usr/bin/dryads-ai",
       "gateway",
       "start",
       "--name",
@@ -163,7 +163,7 @@ describe("systemd service control", () => {
     execFileMock
       .mockImplementationOnce((_cmd, _args, _opts, cb) => cb(null, "", ""))
       .mockImplementationOnce((_cmd, args, _opts, cb) => {
-        expect(args).toEqual(["--user", "stop", "dmms-ai-gateway.service"]);
+        expect(args).toEqual(["--user", "stop", "dryads-ai-gateway.service"]);
         cb(null, "", "");
       });
     const write = vi.fn();
@@ -179,13 +179,13 @@ describe("systemd service control", () => {
     execFileMock
       .mockImplementationOnce((_cmd, _args, _opts, cb) => cb(null, "", ""))
       .mockImplementationOnce((_cmd, args, _opts, cb) => {
-        expect(args).toEqual(["--user", "restart", "dmms-ai-gateway-work.service"]);
+        expect(args).toEqual(["--user", "restart", "dryads-ai-gateway-work.service"]);
         cb(null, "", "");
       });
     const write = vi.fn();
     const stdout = { write } as unknown as NodeJS.WritableStream;
 
-    await restartSystemdService({ stdout, env: { DMMS_AI_PROFILE: "work" } });
+    await restartSystemdService({ stdout, env: { DRYADS_AI_PROFILE: "work" } });
 
     expect(write).toHaveBeenCalledTimes(1);
     expect(String(write.mock.calls[0]?.[0])).toContain("Restarted systemd service");

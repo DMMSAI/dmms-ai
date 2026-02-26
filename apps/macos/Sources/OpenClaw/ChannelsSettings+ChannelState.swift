@@ -1,4 +1,4 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 
 extension ChannelsSettings {

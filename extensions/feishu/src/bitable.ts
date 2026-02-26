@@ -1,5 +1,5 @@
 import { Type } from "@sinclair/typebox";
-import type { DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
 import { createFeishuClient } from "./client.js";
 import type { FeishuConfig } from "./types.js";
 
@@ -531,7 +531,7 @@ const UpdateRecordSchema = Type.Object({
 
 // ============ Tool Registration ============
 
-export function registerFeishuBitableTools(api: DmmsAiPluginApi) {
+export function registerFeishuBitableTools(api: DryadsAiPluginApi) {
   const feishuCfg = api.config?.channels?.feishu as FeishuConfig | undefined;
   if (!feishuCfg?.appId || !feishuCfg?.appSecret) {
     api.logger.debug?.("feishu_bitable: Feishu credentials not configured, skipping bitable tools");

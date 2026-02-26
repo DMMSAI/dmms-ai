@@ -3,34 +3,34 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { discoverDmmsAiPlugins } from "./discovery.js";
+import { discoverDryadsAiPlugins } from "./discovery.js";
 
 const tempDirs: string[] = [];
 
 function makeTempDir() {
-  const dir = path.join(os.tmpdir(), `dmms-ai-plugins-${randomUUID()}`);
+  const dir = path.join(os.tmpdir(), `dryads-ai-plugins-${randomUUID()}`);
   fs.mkdirSync(dir, { recursive: true });
   tempDirs.push(dir);
   return dir;
 }
 
 async function withStateDir<T>(stateDir: string, fn: () => Promise<T>) {
-  const prev = process.env.DMMS_AI_STATE_DIR;
-  const prevBundled = process.env.DMMS_AI_BUNDLED_PLUGINS_DIR;
-  process.env.DMMS_AI_STATE_DIR = stateDir;
-  process.env.DMMS_AI_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+  const prev = process.env.DRYADS_AI_STATE_DIR;
+  const prevBundled = process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR;
+  process.env.DRYADS_AI_STATE_DIR = stateDir;
+  process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
   try {
     return await fn();
   } finally {
     if (prev === undefined) {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     } else {
-      process.env.DMMS_AI_STATE_DIR = prev;
+      process.env.DRYADS_AI_STATE_DIR = prev;
     }
     if (prevBundled === undefined) {
-      delete process.env.DMMS_AI_BUNDLED_PLUGINS_DIR;
+      delete process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR;
     } else {
-      process.env.DMMS_AI_BUNDLED_PLUGINS_DIR = prevBundled;
+      process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR = prevBundled;
     }
   }
 }
@@ -45,7 +45,7 @@ afterEach(() => {
   }
 });
 
-describe("discoverDmmsAiPlugins", () => {
+describe("discoverDryadsAiPlugins", () => {
   it("discovers global and workspace extensions", async () => {
     const stateDir = makeTempDir();
     const workspaceDir = path.join(stateDir, "workspace");
@@ -54,12 +54,12 @@ describe("discoverDmmsAiPlugins", () => {
     fs.mkdirSync(globalExt, { recursive: true });
     fs.writeFileSync(path.join(globalExt, "alpha.ts"), "export default function () {}", "utf-8");
 
-    const workspaceExt = path.join(workspaceDir, ".dmms-ai", "extensions");
+    const workspaceExt = path.join(workspaceDir, ".dryads-ai", "extensions");
     fs.mkdirSync(workspaceExt, { recursive: true });
     fs.writeFileSync(path.join(workspaceExt, "beta.ts"), "export default function () {}", "utf-8");
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverDmmsAiPlugins({ workspaceDir });
+      return discoverDryadsAiPlugins({ workspaceDir });
     });
 
     const ids = candidates.map((c) => c.idHint);
@@ -76,7 +76,7 @@ describe("discoverDmmsAiPlugins", () => {
       path.join(globalExt, "package.json"),
       JSON.stringify({
         name: "pack",
-        "dmms-ai": { extensions: ["./src/one.ts", "./src/two.ts"] },
+        "dryads-ai": { extensions: ["./src/one.ts", "./src/two.ts"] },
       }),
       "utf-8",
     );
@@ -92,7 +92,7 @@ describe("discoverDmmsAiPlugins", () => {
     );
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverDmmsAiPlugins({});
+      return discoverDryadsAiPlugins({});
     });
 
     const ids = candidates.map((c) => c.idHint);
@@ -108,8 +108,8 @@ describe("discoverDmmsAiPlugins", () => {
     fs.writeFileSync(
       path.join(globalExt, "package.json"),
       JSON.stringify({
-        name: "@dmms-ai/voice-call",
-        "dmms-ai": { extensions: ["./src/index.ts"] },
+        name: "@dryads-ai/voice-call",
+        "dryads-ai": { extensions: ["./src/index.ts"] },
       }),
       "utf-8",
     );
@@ -120,7 +120,7 @@ describe("discoverDmmsAiPlugins", () => {
     );
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverDmmsAiPlugins({});
+      return discoverDryadsAiPlugins({});
     });
 
     const ids = candidates.map((c) => c.idHint);
@@ -135,15 +135,15 @@ describe("discoverDmmsAiPlugins", () => {
     fs.writeFileSync(
       path.join(packDir, "package.json"),
       JSON.stringify({
-        name: "@dmms-ai/demo-plugin-dir",
-        "dmms-ai": { extensions: ["./index.js"] },
+        name: "@dryads-ai/demo-plugin-dir",
+        "dryads-ai": { extensions: ["./index.js"] },
       }),
       "utf-8",
     );
     fs.writeFileSync(path.join(packDir, "index.js"), "module.exports = {}", "utf-8");
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverDmmsAiPlugins({ extraPaths: [packDir] });
+      return discoverDryadsAiPlugins({ extraPaths: [packDir] });
     });
 
     const ids = candidates.map((c) => c.idHint);

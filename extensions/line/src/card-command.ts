@@ -1,4 +1,4 @@
-import type { LineChannelData, DmmsAiPluginApi, ReplyPayload } from "dmms-ai/plugin-sdk";
+import type { LineChannelData, DryadsAiPluginApi, ReplyPayload } from "dryads-ai/plugin-sdk";
 import {
   createActionCard,
   createImageCard,
@@ -7,7 +7,7 @@ import {
   createReceiptCard,
   type CardAction,
   type ListItem,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 
 const CARD_USAGE = `Usage: /card <type> "title" "body" [options]
 
@@ -154,7 +154,7 @@ function parseCardArgs(argsStr: string): {
   return result;
 }
 
-export function registerLineCardCommand(api: DmmsAiPluginApi): void {
+export function registerLineCardCommand(api: DryadsAiPluginApi): void {
   api.registerCommand({
     name: "card",
     description: "Send a rich card message (LINE).",

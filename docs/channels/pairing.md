@@ -3,13 +3,13 @@ summary: "Pairing overview: approve who can DM you + which nodes can join"
 read_when:
   - Setting up DM access control
   - Pairing a new iOS/Android node
-  - Reviewing DMMS AI security posture
+  - Reviewing Dryads AI security posture
 title: "Pairing"
 ---
 
 # Pairing
 
-“Pairing” is DMMS AI’s explicit **owner approval** step.
+“Pairing” is Dryads AI’s explicit **owner approval** step.
 It is used in two places:
 
 1. **DM pairing** (who is allowed to talk to the bot)
@@ -32,15 +32,15 @@ Pairing codes:
 ### Approve a sender
 
 ```bash
-dmms-ai pairing list telegram
-dmms-ai pairing approve telegram <CODE>
+dryads-ai pairing list telegram
+dryads-ai pairing approve telegram <CODE>
 ```
 
 Supported channels: `telegram`, `whatsapp`, `signal`, `imessage`, `discord`, `slack`, `feishu`.
 
 ### Where the state lives
 
-Stored under `~/.dmms-ai/credentials/`:
+Stored under `~/.dryads-ai/credentials/`:
 
 - Pending requests: `<channel>-pairing.json`
 - Approved allowlist store: `<channel>-allowFrom.json`
@@ -58,7 +58,7 @@ If you use the `device-pair` plugin, you can do first-time device pairing entire
 
 1. In Telegram, message your bot: `/pair`
 2. The bot replies with two messages: an instruction message and a separate **setup code** message (easy to copy/paste in Telegram).
-3. On your phone, open the DMMS AI iOS app → Settings → Gateway.
+3. On your phone, open the Dryads AI iOS app → Settings → Gateway.
 4. Paste the setup code and connect.
 5. Back in Telegram: `/pair approve`
 
@@ -72,21 +72,21 @@ Treat the setup code like a password while it is valid.
 ### Approve a node device
 
 ```bash
-dmms-ai devices list
-dmms-ai devices approve <requestId>
-dmms-ai devices reject <requestId>
+dryads-ai devices list
+dryads-ai devices approve <requestId>
+dryads-ai devices reject <requestId>
 ```
 
 ### Node pairing state storage
 
-Stored under `~/.dmms-ai/devices/`:
+Stored under `~/.dryads-ai/devices/`:
 
 - `pending.json` (short-lived; pending requests expire)
 - `paired.json` (paired devices + tokens)
 
 ### Notes
 
-- The legacy `node.pair.*` API (CLI: `dmms-ai nodes pending/approve`) is a
+- The legacy `node.pair.*` API (CLI: `dryads-ai nodes pending/approve`) is a
   separate gateway-owned pairing store. WS nodes still require device pairing.
 
 ## Related docs

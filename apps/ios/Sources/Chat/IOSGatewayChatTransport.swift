@@ -1,11 +1,11 @@
-import DmmsAiChatUI
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiChatUI
+import DryadsAiKit
+import DryadsAiProtocol
 import Foundation
 import OSLog
 
-struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
-    private static let logger = Logger(subsystem: "ai.dmmsai", category: "ios.chat.transport")
+struct IOSGatewayChatTransport: DryadsAiChatTransport, Sendable {
+    private static let logger = Logger(subsystem: "ai.dryadsai", category: "ios.chat.transport")
     private let gateway: GatewayNodeSession
 
     init(gateway: GatewayNodeSession) {
@@ -22,7 +22,7 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
         _ = try await self.gateway.request(method: "chat.abort", paramsJSON: json, timeoutSeconds: 10)
     }
 
-    func listSessions(limit: Int?) async throws -> DmmsAiChatSessionsListResponse {
+    func listSessions(limit: Int?) async throws -> DryadsAiChatSessionsListResponse {
         struct Params: Codable {
             var includeGlobal: Bool
             var includeUnknown: Bool
@@ -31,7 +31,7 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
         let data = try JSONEncoder().encode(Params(includeGlobal: true, includeUnknown: false, limit: limit))
         let json = String(data: data, encoding: .utf8)
         let res = try await self.gateway.request(method: "sessions.list", paramsJSON: json, timeoutSeconds: 15)
-        return try JSONDecoder().decode(DmmsAiChatSessionsListResponse.self, from: res)
+        return try JSONDecoder().decode(DryadsAiChatSessionsListResponse.self, from: res)
     }
 
     func setActiveSessionKey(_ sessionKey: String) async throws {
@@ -39,12 +39,12 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
         // (chat.subscribe is a node event, not an operator RPC method.)
     }
 
-    func requestHistory(sessionKey: String) async throws -> DmmsAiChatHistoryPayload {
+    func requestHistory(sessionKey: String) async throws -> DryadsAiChatHistoryPayload {
         struct Params: Codable { var sessionKey: String }
         let data = try JSONEncoder().encode(Params(sessionKey: sessionKey))
         let json = String(data: data, encoding: .utf8)
         let res = try await self.gateway.request(method: "chat.history", paramsJSON: json, timeoutSeconds: 15)
-        return try JSONDecoder().decode(DmmsAiChatHistoryPayload.self, from: res)
+        return try JSONDecoder().decode(DryadsAiChatHistoryPayload.self, from: res)
     }
 
     func sendMessage(
@@ -52,14 +52,14 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
         message: String,
         thinking: String,
         idempotencyKey: String,
-        attachments: [DmmsAiChatAttachmentPayload]) async throws -> DmmsAiChatSendResponse
+        attachments: [DryadsAiChatAttachmentPayload]) async throws -> DryadsAiChatSendResponse
     {
         Self.logger.info("chat.send start sessionKey=\(sessionKey, privacy: .public) len=\(message.count, privacy: .public) attachments=\(attachments.count, privacy: .public)")
         struct Params: Codable {
             var sessionKey: String
             var message: String
             var thinking: String
-            var attachments: [DmmsAiChatAttachmentPayload]?
+            var attachments: [DryadsAiChatAttachmentPayload]?
             var timeoutMs: Int
             var idempotencyKey: String
         }
@@ -75,7 +75,7 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
         let json = String(data: data, encoding: .utf8)
         do {
             let res = try await self.gateway.request(method: "chat.send", paramsJSON: json, timeoutSeconds: 35)
-            let decoded = try JSONDecoder().decode(DmmsAiChatSendResponse.self, from: res)
+            let decoded = try JSONDecoder().decode(DryadsAiChatSendResponse.self, from: res)
             Self.logger.info("chat.send ok runId=\(decoded.runId, privacy: .public)")
             return decoded
         } catch {
@@ -87,10 +87,10 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
     func requestHealth(timeoutMs: Int) async throws -> Bool {
         let seconds = max(1, Int(ceil(Double(timeoutMs) / 1000.0)))
         let res = try await self.gateway.request(method: "health", paramsJSON: nil, timeoutSeconds: seconds)
-        return (try? JSONDecoder().decode(DmmsAiGatewayHealthOK.self, from: res))?.ok ?? true
+        return (try? JSONDecoder().decode(DryadsAiGatewayHealthOK.self, from: res))?.ok ?? true
     }
 
-    func events() -> AsyncStream<DmmsAiChatTransportEvent> {
+    func events() -> AsyncStream<DryadsAiChatTransportEvent> {
         AsyncStream { continuation in
             let task = Task {
                 let stream = await self.gateway.subscribeServerEvents()
@@ -105,13 +105,13 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
                         guard let payload = evt.payload else { break }
                         let ok = (try? GatewayPayloadDecoding.decode(
                             payload,
-                            as: DmmsAiGatewayHealthOK.self))?.ok ?? true
+                            as: DryadsAiGatewayHealthOK.self))?.ok ?? true
                         continuation.yield(.health(ok: ok))
                     case "chat":
                         guard let payload = evt.payload else { break }
                         if let chatPayload = try? GatewayPayloadDecoding.decode(
                             payload,
-                            as: DmmsAiChatEventPayload.self)
+                            as: DryadsAiChatEventPayload.self)
                         {
                             continuation.yield(.chat(chatPayload))
                         }
@@ -119,7 +119,7 @@ struct IOSGatewayChatTransport: DmmsAiChatTransport, Sendable {
                         guard let payload = evt.payload else { break }
                         if let agentPayload = try? GatewayPayloadDecoding.decode(
                             payload,
-                            as: DmmsAiAgentEventPayload.self)
+                            as: DryadsAiAgentEventPayload.self)
                         {
                             continuation.yield(.agent(agentPayload))
                         }

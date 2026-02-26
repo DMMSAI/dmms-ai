@@ -51,7 +51,7 @@ vi.mock("../plugins/tools.js", () => ({
 
 // Perf: the real tool factory instantiates many tools per request; for these HTTP
 // routing/policy tests we only need a small set of tool names.
-vi.mock("../agents/dmms-ai-tools.js", () => {
+vi.mock("../agents/dryads-ai-tools.js", () => {
   const toolInputError = (message: string) => {
     const err = new Error(message);
     err.name = "ToolInputError";
@@ -110,7 +110,7 @@ vi.mock("../agents/dmms-ai-tools.js", () => {
   ];
 
   return {
-    createDmmsAiTools: () => tools,
+    createDryadsAiTools: () => tools,
   };
 });
 
@@ -163,8 +163,8 @@ afterAll(async () => {
 });
 
 beforeEach(() => {
-  delete process.env.DMMS_AI_GATEWAY_TOKEN;
-  delete process.env.DMMS_AI_GATEWAY_PASSWORD;
+  delete process.env.DRYADS_AI_GATEWAY_TOKEN;
+  delete process.env.DRYADS_AI_GATEWAY_PASSWORD;
   pluginHttpHandlers = [];
   cfg = {};
 });

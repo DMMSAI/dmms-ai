@@ -7,7 +7,7 @@ export type HookInstallSpec = {
   bins?: string[];
 };
 
-export type DmmsAiHookMetadata = {
+export type DryadsAiHookMetadata = {
   always?: boolean;
   hookKey?: string;
   emoji?: string;
@@ -35,7 +35,7 @@ export type ParsedHookFrontmatter = Record<string, string>;
 export type Hook = {
   name: string;
   description: string;
-  source: "dmms-ai-bundled" | "dmms-ai-managed" | "dmms-ai-workspace" | "dmms-ai-plugin";
+  source: "dryads-ai-bundled" | "dryads-ai-managed" | "dryads-ai-workspace" | "dryads-ai-plugin";
   pluginId?: string;
   filePath: string; // Path to HOOK.md
   baseDir: string; // Directory containing hook
@@ -47,7 +47,7 @@ export type HookSource = Hook["source"];
 export type HookEntry = {
   hook: Hook;
   frontmatter: ParsedHookFrontmatter;
-  metadata?: DmmsAiHookMetadata;
+  metadata?: DryadsAiHookMetadata;
   invocation?: HookInvocationPolicy;
 };
 

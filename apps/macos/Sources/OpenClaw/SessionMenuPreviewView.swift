@@ -1,6 +1,6 @@
-import DmmsAiChatUI
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiChatUI
+import DryadsAiKit
+import DryadsAiProtocol
 import OSLog
 import SwiftUI
 
@@ -219,7 +219,7 @@ struct SessionMenuPreviewView: View {
 }
 
 enum SessionMenuPreviewLoader {
-    private static let logger = Logger(subsystem: "ai.dmmsai", category: "SessionPreview")
+    private static let logger = Logger(subsystem: "ai.dryadsai", category: "SessionPreview")
     private static let previewTimeoutSeconds: Double = 4
     private static let cacheMaxAgeSeconds: TimeInterval = 30
     private static let previewMaxChars = 240
@@ -288,7 +288,7 @@ enum SessionMenuPreviewLoader {
 
     private static func requestPreview(
         keys: [String],
-        maxItems: Int) async throws -> DmmsAiSessionsPreviewPayload
+        maxItems: Int) async throws -> DryadsAiSessionsPreviewPayload
     {
         let boundedItems = self.normalizeMaxItems(maxItems)
         let timeoutMs = Int(self.previewTimeoutSeconds * 1000)
@@ -331,7 +331,7 @@ enum SessionMenuPreviewLoader {
     }
 
     private static func snapshot(
-        from entry: DmmsAiSessionPreviewEntry,
+        from entry: DryadsAiSessionPreviewEntry,
         maxItems: Int) -> SessionMenuPreviewSnapshot
     {
         let items = self.previewItems(from: entry, maxItems: maxItems)
@@ -348,7 +348,7 @@ enum SessionMenuPreviewLoader {
         }
     }
 
-    private static func cache(payload: DmmsAiSessionsPreviewPayload, maxItems: Int) async {
+    private static func cache(payload: DryadsAiSessionsPreviewPayload, maxItems: Int) async {
         for entry in payload.previews {
             let snapshot = self.snapshot(from: entry, maxItems: maxItems)
             await SessionPreviewCache.shared.store(snapshot: snapshot, for: entry.key)
@@ -365,7 +365,7 @@ enum SessionMenuPreviewLoader {
     }
 
     private static func previewItems(
-        from entry: DmmsAiSessionPreviewEntry,
+        from entry: DryadsAiSessionPreviewEntry,
         maxItems: Int) -> [SessionPreviewItem]
     {
         let boundedItems = self.normalizeMaxItems(maxItems)
@@ -381,11 +381,11 @@ enum SessionMenuPreviewLoader {
     }
 
     private static func previewItems(
-        from payload: DmmsAiChatHistoryPayload,
+        from payload: DryadsAiChatHistoryPayload,
         maxItems: Int) -> [SessionPreviewItem]
     {
         let boundedItems = self.normalizeMaxItems(maxItems)
-        let raw: [DmmsAiKit.AnyCodable] = payload.messages ?? []
+        let raw: [DryadsAiKit.AnyCodable] = payload.messages ?? []
         let messages = self.decodeMessages(raw)
         let built = messages.compactMap { message -> SessionPreviewItem? in
             guard let text = self.previewText(for: message) else { return nil }
@@ -399,10 +399,10 @@ enum SessionMenuPreviewLoader {
         return Array(trimmed.reversed())
     }
 
-    private static func decodeMessages(_ raw: [DmmsAiKit.AnyCodable]) -> [DmmsAiChatMessage] {
+    private static func decodeMessages(_ raw: [DryadsAiKit.AnyCodable]) -> [DryadsAiChatMessage] {
         raw.compactMap { item in
             guard let data = try? JSONEncoder().encode(item) else { return nil }
-            return try? JSONDecoder().decode(DmmsAiChatMessage.self, from: data)
+            return try? JSONDecoder().decode(DryadsAiChatMessage.self, from: data)
         }
     }
 
@@ -421,7 +421,7 @@ enum SessionMenuPreviewLoader {
         }
     }
 
-    private static func previewText(for message: DmmsAiChatMessage) -> String? {
+    private static func previewText(for message: DryadsAiChatMessage) -> String? {
         let text = message.content.compactMap(\.text).joined(separator: "\n")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         if !text.isEmpty { return text }
@@ -442,12 +442,12 @@ enum SessionMenuPreviewLoader {
         return nil
     }
 
-    private static func isToolCall(_ message: DmmsAiChatMessage) -> Bool {
+    private static func isToolCall(_ message: DryadsAiChatMessage) -> Bool {
         if message.toolName?.nonEmpty != nil { return true }
         return message.content.contains { $0.name?.nonEmpty != nil || $0.type?.lowercased() == "toolcall" }
     }
 
-    private static func toolNames(for message: DmmsAiChatMessage) -> [String] {
+    private static func toolNames(for message: DryadsAiChatMessage) -> [String] {
         var names: [String] = []
         for content in message.content {
             if let name = content.name?.nonEmpty {
@@ -460,7 +460,7 @@ enum SessionMenuPreviewLoader {
         return Self.dedupePreservingOrder(names)
     }
 
-    private static func mediaSummary(for message: DmmsAiChatMessage) -> String? {
+    private static func mediaSummary(for message: DryadsAiChatMessage) -> String? {
         let types = message.content.compactMap { content -> String? in
             let raw = content.type?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
             guard let raw, !raw.isEmpty else { return nil }

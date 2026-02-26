@@ -34,7 +34,7 @@ describe("applyPluginAutoEnable", () => {
       config: {},
       env: {
         IRC_HOST: "irc.libera.chat",
-        IRC_NICK: "dmms-ai-bot",
+        IRC_NICK: "dryads-ai-bot",
       },
     });
 

@@ -2,12 +2,12 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { captureFullEnv } from "../test-utils/env.js";
 import { resolveSandboxContext } from "./sandbox.js";
 
 vi.mock("./sandbox/docker.js", () => ({
-  ensureSandboxContainer: vi.fn(async () => "dmms-ai-sbx-test"),
+  ensureSandboxContainer: vi.fn(async () => "dryads-ai-sbx-test"),
 }));
 
 vi.mock("./sandbox/browser.js", () => ({
@@ -40,19 +40,19 @@ describe("sandbox skill mirroring", () => {
   });
 
   const runContext = async (workspaceAccess: "none" | "ro") => {
-    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-bundled-skills-"));
+    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-bundled-skills-"));
     await fs.mkdir(bundledDir, { recursive: true });
 
-    process.env.DMMS_AI_BUNDLED_SKILLS_DIR = bundledDir;
+    process.env.DRYADS_AI_BUNDLED_SKILLS_DIR = bundledDir;
 
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-workspace-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-workspace-"));
     await writeSkill({
       dir: path.join(workspaceDir, "skills", "demo-skill"),
       name: "demo-skill",
       description: "Demo skill",
     });
 
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         defaults: {
           sandbox: {

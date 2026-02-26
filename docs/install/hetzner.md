@@ -1,28 +1,28 @@
 ---
-summary: "Run DMMS AI Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
+summary: "Run Dryads AI Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
 read_when:
-  - You want DMMS AI running 24/7 on a cloud VPS (not your laptop)
+  - You want Dryads AI running 24/7 on a cloud VPS (not your laptop)
   - You want a production-grade, always-on Gateway on your own VPS
   - You want full control over persistence, binaries, and restart behavior
-  - You are running DMMS AI in Docker on Hetzner or a similar provider
+  - You are running Dryads AI in Docker on Hetzner or a similar provider
 title: "Hetzner"
 ---
 
-# DMMS AI on Hetzner (Docker, Production VPS Guide)
+# Dryads AI on Hetzner (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent DMMS AI Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Dryads AI Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want “DMMS AI 24/7 for ~$5”, this is the simplest reliable setup.
+If you want “Dryads AI 24/7 for ~$5”, this is the simplest reliable setup.
 Hetzner pricing changes; pick the smallest Debian/Ubuntu VPS and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
 
 - Rent a small Linux server (Hetzner VPS)
 - Install Docker (isolated app runtime)
-- Start the DMMS AI Gateway in Docker
-- Persist `~/.dmms-ai` + `~/.dmms-ai/workspace` on the host (survives restarts/rebuilds)
+- Start the Dryads AI Gateway in Docker
+- Persist `~/.dryads-ai` + `~/.dryads-ai/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -40,7 +40,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 
 1. Provision Hetzner VPS
 2. Install Docker
-3. Clone DMMS AI repository
+3. Clone Dryads AI repository
 4. Create persistent host directories
 5. Configure `.env` and `docker-compose.yml`
 6. Bake required binaries into the image
@@ -96,11 +96,11 @@ docker compose version
 
 ---
 
-## 3) Clone the DMMS AI repository
+## 3) Clone the Dryads AI repository
 
 ```bash
-git clone https://github.com/dmms-ai/dmms-ai.git
-cd dmms-ai
+git clone https://github.com/dryads-ai/dryads-ai.git
+cd dryads-ai
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -113,10 +113,10 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p /root/.dmms-ai/workspace
+mkdir -p /root/.dryads-ai/workspace
 
 # Set ownership to the container user (uid 1000):
-chown -R 1000:1000 /root/.dmms-ai
+chown -R 1000:1000 /root/.dryads-ai
 ```
 
 ---
@@ -126,16 +126,16 @@ chown -R 1000:1000 /root/.dmms-ai
 Create `.env` in the repository root.
 
 ```bash
-DMMS_AI_IMAGE=dmms-ai:latest
-DMMS_AI_GATEWAY_TOKEN=change-me-now
-DMMS_AI_GATEWAY_BIND=lan
-DMMS_AI_GATEWAY_PORT=18789
+DRYADS_AI_IMAGE=dryads-ai:latest
+DRYADS_AI_GATEWAY_TOKEN=change-me-now
+DRYADS_AI_GATEWAY_BIND=lan
+DRYADS_AI_GATEWAY_PORT=18789
 
-DMMS_AI_CONFIG_DIR=/root/.dmms-ai
-DMMS_AI_WORKSPACE_DIR=/root/.dmms-ai/workspace
+DRYADS_AI_CONFIG_DIR=/root/.dryads-ai
+DRYADS_AI_WORKSPACE_DIR=/root/.dryads-ai/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.dmms-ai
+XDG_CONFIG_HOME=/home/node/.dryads-ai
 ```
 
 Generate strong secrets:
@@ -154,8 +154,8 @@ Create or update `docker-compose.yml`.
 
 ```yaml
 services:
-  dmms-ai-gateway:
-    image: ${DMMS_AI_IMAGE}
+  dryads-ai-gateway:
+    image: ${DRYADS_AI_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -164,28 +164,28 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - DMMS_AI_GATEWAY_BIND=${DMMS_AI_GATEWAY_BIND}
-      - DMMS_AI_GATEWAY_PORT=${DMMS_AI_GATEWAY_PORT}
-      - DMMS_AI_GATEWAY_TOKEN=${DMMS_AI_GATEWAY_TOKEN}
+      - DRYADS_AI_GATEWAY_BIND=${DRYADS_AI_GATEWAY_BIND}
+      - DRYADS_AI_GATEWAY_PORT=${DRYADS_AI_GATEWAY_PORT}
+      - DRYADS_AI_GATEWAY_TOKEN=${DRYADS_AI_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${DMMS_AI_CONFIG_DIR}:/home/node/.dmms-ai
-      - ${DMMS_AI_WORKSPACE_DIR}:/home/node/.dmms-ai/workspace
+      - ${DRYADS_AI_CONFIG_DIR}:/home/node/.dryads-ai
+      - ${DRYADS_AI_WORKSPACE_DIR}:/home/node/.dryads-ai/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VPS; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${DMMS_AI_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${DRYADS_AI_GATEWAY_PORT}:18789"
     command:
       [
         "node",
         "dist/index.js",
         "gateway",
         "--bind",
-        "${DMMS_AI_GATEWAY_BIND}",
+        "${DRYADS_AI_GATEWAY_BIND}",
         "--port",
-        "${DMMS_AI_GATEWAY_PORT}",
+        "${DRYADS_AI_GATEWAY_PORT}",
         "--allow-unconfigured",
       ]
 ```
@@ -261,15 +261,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d dmms-ai-gateway
+docker compose up -d dryads-ai-gateway
 ```
 
 Verify binaries:
 
 ```bash
-docker compose exec dmms-ai-gateway which gog
-docker compose exec dmms-ai-gateway which goplaces
-docker compose exec dmms-ai-gateway which wacli
+docker compose exec dryads-ai-gateway which gog
+docker compose exec dryads-ai-gateway which goplaces
+docker compose exec dryads-ai-gateway which wacli
 ```
 
 Expected output:
@@ -285,7 +285,7 @@ Expected output:
 ## 9) Verify Gateway
 
 ```bash
-docker compose logs -f dmms-ai-gateway
+docker compose logs -f dryads-ai-gateway
 ```
 
 Success:
@@ -310,21 +310,21 @@ Paste your gateway token.
 
 ## What persists where (source of truth)
 
-DMMS AI runs in Docker, but Docker is not the source of truth.
+Dryads AI runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
-| Component           | Location                         | Persistence mechanism  | Notes                           |
-| ------------------- | -------------------------------- | ---------------------- | ------------------------------- |
-| Gateway config      | `/home/node/.dmms-ai/`           | Host volume mount      | Includes `dmms-ai.json`, tokens |
-| Model auth profiles | `/home/node/.dmms-ai/`           | Host volume mount      | OAuth tokens, API keys          |
-| Skill configs       | `/home/node/.dmms-ai/skills/`    | Host volume mount      | Skill-level state               |
-| Agent workspace     | `/home/node/.dmms-ai/workspace/` | Host volume mount      | Code and agent artifacts        |
-| WhatsApp session    | `/home/node/.dmms-ai/`           | Host volume mount      | Preserves QR login              |
-| Gmail keyring       | `/home/node/.dmms-ai/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
-| External binaries   | `/usr/local/bin/`                | Docker image           | Must be baked at build time     |
-| Node runtime        | Container filesystem             | Docker image           | Rebuilt every image build       |
-| OS packages         | Container filesystem             | Docker image           | Do not install at runtime       |
-| Docker container    | Ephemeral                        | Restartable            | Safe to destroy                 |
+| Component           | Location                           | Persistence mechanism  | Notes                             |
+| ------------------- | ---------------------------------- | ---------------------- | --------------------------------- |
+| Gateway config      | `/home/node/.dryads-ai/`           | Host volume mount      | Includes `dryads-ai.json`, tokens |
+| Model auth profiles | `/home/node/.dryads-ai/`           | Host volume mount      | OAuth tokens, API keys            |
+| Skill configs       | `/home/node/.dryads-ai/skills/`    | Host volume mount      | Skill-level state                 |
+| Agent workspace     | `/home/node/.dryads-ai/workspace/` | Host volume mount      | Code and agent artifacts          |
+| WhatsApp session    | `/home/node/.dryads-ai/`           | Host volume mount      | Preserves QR login                |
+| Gmail keyring       | `/home/node/.dryads-ai/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`   |
+| External binaries   | `/usr/local/bin/`                  | Docker image           | Must be baked at build time       |
+| Node runtime        | Container filesystem               | Docker image           | Rebuilt every image build         |
+| OS packages         | Container filesystem               | Docker image           | Do not install at runtime         |
+| Docker container    | Ephemeral                          | Restartable            | Safe to destroy                   |
 
 ---
 
@@ -340,8 +340,8 @@ For teams preferring infrastructure-as-code workflows, a community-maintained Te
 
 **Repositories:**
 
-- Infrastructure: [dmms-ai-terraform-hetzner](https://github.com/andreesg/dmms-ai-terraform-hetzner)
-- Docker config: [dmms-ai-docker-config](https://github.com/andreesg/dmms-ai-docker-config)
+- Infrastructure: [dryads-ai-terraform-hetzner](https://github.com/andreesg/dryads-ai-terraform-hetzner)
+- Docker config: [dryads-ai-docker-config](https://github.com/andreesg/dryads-ai-docker-config)
 
 This approach complements the Docker setup above with reproducible deployments, version-controlled infrastructure, and automated disaster recovery.
 

@@ -2,15 +2,15 @@ import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import { listChannelPlugins } from "../channels/plugins/index.js";
 import type { ChannelId } from "../channels/plugins/types.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { DmmsAiConfig, GatewayBindMode } from "../config/config.js";
+import type { DryadsAiConfig, GatewayBindMode } from "../config/config.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { isLoopbackHost, resolveGatewayBindHost } from "../gateway/net.js";
 import { readChannelAllowFromStore } from "../pairing/pairing-store.js";
 import { note } from "../terminal/note.js";
 
-export async function noteSecurityWarnings(cfg: DmmsAiConfig) {
+export async function noteSecurityWarnings(cfg: DryadsAiConfig) {
   const warnings: string[] = [];
-  const auditHint = `- Run: ${formatCliCommand("dmms-ai security audit --deep")}`;
+  const auditHint = `- Run: ${formatCliCommand("dryads-ai security audit --deep")}`;
 
   // ===========================================
   // GATEWAY NETWORK EXPOSURE CHECK
@@ -48,19 +48,19 @@ export async function noteSecurityWarnings(cfg: DmmsAiConfig) {
       const authFixLines =
         resolvedAuth.mode === "password"
           ? [
-              `  Fix: ${formatCliCommand("dmms-ai configure")} to set a password`,
-              `  Or switch to token: ${formatCliCommand("dmms-ai config set gateway.auth.mode token")}`,
+              `  Fix: ${formatCliCommand("dryads-ai configure")} to set a password`,
+              `  Or switch to token: ${formatCliCommand("dryads-ai config set gateway.auth.mode token")}`,
             ]
           : [
-              `  Fix: ${formatCliCommand("dmms-ai doctor --fix")} to generate a token`,
+              `  Fix: ${formatCliCommand("dryads-ai doctor --fix")} to generate a token`,
               `  Or set token directly: ${formatCliCommand(
-                "dmms-ai config set gateway.auth.mode token",
+                "dryads-ai config set gateway.auth.mode token",
               )}`,
             ];
       warnings.push(
         `- CRITICAL: Gateway bound to ${bindDescriptor} without authentication.`,
         `  Anyone on your network (or internet if port-forwarded) can fully control your agent.`,
-        `  Fix: ${formatCliCommand("dmms-ai config set gateway.bind loopback")}`,
+        `  Fix: ${formatCliCommand("dryads-ai config set gateway.bind loopback")}`,
         ...authFixLines,
       );
     } else {
@@ -125,7 +125,7 @@ export async function noteSecurityWarnings(cfg: DmmsAiConfig) {
     if (dmScope === "main" && isMultiUserDm) {
       warnings.push(
         `- ${params.label} DMs: multiple senders share the main session; run: ` +
-          formatCliCommand('dmms-ai config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('dryads-ai config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate sessions.',
       );
     }

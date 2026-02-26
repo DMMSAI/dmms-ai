@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import "./test-helpers/fast-coding-tools.js";
-import { createDmmsAiCodingTools } from "./pi-tools.js";
+import { createDryadsAiCodingTools } from "./pi-tools.js";
 
 vi.mock("./channel-tools.js", () => {
   const stubTool = (name: string) => ({
@@ -16,19 +16,19 @@ vi.mock("./channel-tools.js", () => {
 
 describe("whatsapp_login tool gating", () => {
   it("removes whatsapp_login for unauthorized senders", () => {
-    const tools = createDmmsAiCodingTools({ senderIsOwner: false });
+    const tools = createDryadsAiCodingTools({ senderIsOwner: false });
     const toolNames = tools.map((tool) => tool.name);
     expect(toolNames).not.toContain("whatsapp_login");
   });
 
   it("keeps whatsapp_login for authorized senders", () => {
-    const tools = createDmmsAiCodingTools({ senderIsOwner: true });
+    const tools = createDryadsAiCodingTools({ senderIsOwner: true });
     const toolNames = tools.map((tool) => tool.name);
     expect(toolNames).toContain("whatsapp_login");
   });
 
   it("defaults to removing whatsapp_login when owner status is unknown", () => {
-    const tools = createDmmsAiCodingTools();
+    const tools = createDryadsAiCodingTools();
     const toolNames = tools.map((tool) => tool.name);
     expect(toolNames).not.toContain("whatsapp_login");
   });

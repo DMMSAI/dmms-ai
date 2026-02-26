@@ -9,10 +9,10 @@ async function runDoctorConfigWithInput(params: {
   repair?: boolean;
 }) {
   return withTempHome(async (home) => {
-    const configDir = path.join(home, ".dmms-ai");
+    const configDir = path.join(home, ".dryads-ai");
     await fs.mkdir(configDir, { recursive: true });
     await fs.writeFile(
-      path.join(configDir, "dmms-ai.json"),
+      path.join(configDir, "dryads-ai.json"),
       JSON.stringify(params.config, null, 2),
       "utf-8",
     );
@@ -136,10 +136,10 @@ describe("doctor config flow", () => {
 
   it("converts numeric discord ids to strings on repair", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".dmms-ai");
+      const configDir = path.join(home, ".dryads-ai");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "dmms-ai.json"),
+        path.join(configDir, "dryads-ai.json"),
         JSON.stringify(
           {
             channels: {

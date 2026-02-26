@@ -18,7 +18,7 @@ x-i18n:
 Gateway 网关从与 Gateway 网关 WebSocket 相同的端口提供一个小型**浏览器 Control UI**（Vite + Lit）：
 
 - 默认：`http://<host>:18789/`
-- 可选前缀：设置 `gateway.controlUi.basePath`（例如 `/dmms-ai`）
+- 可选前缀：设置 `gateway.controlUi.basePath`（例如 `/dryads-ai`）
 
 功能详见 [Control UI](/web/control-ui)。
 本页重点介绍绑定模式、安全和面向 Web 的界面。
@@ -36,7 +36,7 @@ Gateway 网关从与 Gateway 网关 WebSocket 相同的端口提供一个小型*
 ```json5
 {
   gateway: {
-    controlUi: { enabled: true, basePath: "/dmms-ai" }, // basePath 可选
+    controlUi: { enabled: true, basePath: "/dryads-ai" }, // basePath 可选
   },
 }
 ```
@@ -59,7 +59,7 @@ Gateway 网关从与 Gateway 网关 WebSocket 相同的端口提供一个小型*
 然后启动 Gateway 网关：
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
 打开：
@@ -81,7 +81,7 @@ dmms-ai gateway
 然后启动 Gateway 网关（非本地回环绑定需要令牌）：
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
 打开：
@@ -95,7 +95,7 @@ dmms-ai gateway
   gateway: {
     bind: "loopback",
     tailscale: { mode: "funnel" },
-    auth: { mode: "password" }, // 或 DMMS_AI_GATEWAY_PASSWORD
+    auth: { mode: "password" }, // 或 DRYADS_AI_GATEWAY_PASSWORD
   },
 }
 ```

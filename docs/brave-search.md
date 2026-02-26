@@ -8,7 +8,7 @@ title: "Brave Search"
 
 # Brave Search API
 
-DMMS AI uses Brave Search as the default provider for `web_search`.
+Dryads AI uses Brave Search as the default provider for `web_search`.
 
 ## Get an API key
 

@@ -1,7 +1,7 @@
 import Foundation
 
 public enum ShareToAgentSettings {
-    private static let suiteName = "group.ai.dmmsai.shared"
+    private static let suiteName = "group.ai.dryadsai.shared"
     private static let defaultInstructionKey = "share.defaultInstruction"
     private static let fallbackInstruction = "Please help me with this."
 

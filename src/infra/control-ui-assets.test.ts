@@ -68,9 +68,9 @@ vi.mock("node:fs", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-vi.mock("./dmms-ai-root.js", () => ({
-  resolveDmmsAiPackageRoot: vi.fn(async () => null),
-  resolveDmmsAiPackageRootSync: vi.fn(() => null),
+vi.mock("./dryads-ai-root.js", () => ({
+  resolveDryadsAiPackageRoot: vi.fn(async () => null),
+  resolveDryadsAiPackageRootSync: vi.fn(() => null),
 }));
 
 describe("control UI assets helpers (fs-mocked)", () => {
@@ -111,16 +111,16 @@ describe("control UI assets helpers (fs-mocked)", () => {
     );
   });
 
-  it("uses resolveDmmsAiPackageRoot when available", async () => {
-    const dmmsAiRoot = await import("./dmms-ai-root.js");
+  it("uses resolveDryadsAiPackageRoot when available", async () => {
+    const dryadsAiRoot = await import("./dryads-ai-root.js");
     const { resolveControlUiDistIndexPath } = await import("./control-ui-assets.js");
 
-    const pkgRoot = abs("fixtures/dmms-ai");
+    const pkgRoot = abs("fixtures/dryads-ai");
     (
-      dmmsAiRoot.resolveDmmsAiPackageRoot as unknown as ReturnType<typeof vi.fn>
+      dryadsAiRoot.resolveDryadsAiPackageRoot as unknown as ReturnType<typeof vi.fn>
     ).mockResolvedValueOnce(pkgRoot);
 
-    await expect(resolveControlUiDistIndexPath(abs("fixtures/bin/dmms-ai"))).resolves.toBe(
+    await expect(resolveControlUiDistIndexPath(abs("fixtures/bin/dryads-ai"))).resolves.toBe(
       path.join(pkgRoot, "dist", "control-ui", "index.html"),
     );
   });
@@ -129,10 +129,10 @@ describe("control UI assets helpers (fs-mocked)", () => {
     const { resolveControlUiDistIndexPath } = await import("./control-ui-assets.js");
 
     const root = abs("fixtures/fallback");
-    setFile(path.join(root, "package.json"), JSON.stringify({ name: "dmms-ai" }));
+    setFile(path.join(root, "package.json"), JSON.stringify({ name: "dryads-ai" }));
     setFile(path.join(root, "dist", "control-ui", "index.html"), "<html></html>\n");
 
-    await expect(resolveControlUiDistIndexPath(path.join(root, "dmms-ai.mjs"))).resolves.toBe(
+    await expect(resolveControlUiDistIndexPath(path.join(root, "dryads-ai.mjs"))).resolves.toBe(
       path.join(root, "dist", "control-ui", "index.html"),
     );
   });
@@ -140,7 +140,7 @@ describe("control UI assets helpers (fs-mocked)", () => {
   it("returns null when fallback package name does not match", async () => {
     const { resolveControlUiDistIndexPath } = await import("./control-ui-assets.js");
 
-    const root = abs("fixtures/not-dmms-ai");
+    const root = abs("fixtures/not-dryads-ai");
     setFile(path.join(root, "package.json"), JSON.stringify({ name: "malicious-pkg" }));
     setFile(path.join(root, "dist", "control-ui", "index.html"), "<html></html>\n");
 
@@ -181,12 +181,12 @@ describe("control UI assets helpers (fs-mocked)", () => {
   });
 
   it("resolves control-ui root for dist bundle argv1 and moduleUrl candidates", async () => {
-    const dmmsAiRoot = await import("./dmms-ai-root.js");
+    const dryadsAiRoot = await import("./dryads-ai-root.js");
     const { resolveControlUiRootSync } = await import("./control-ui-assets.js");
 
-    const pkgRoot = abs("fixtures/dmms-ai-bundle");
+    const pkgRoot = abs("fixtures/dryads-ai-bundle");
     (
-      dmmsAiRoot.resolveDmmsAiPackageRootSync as unknown as ReturnType<typeof vi.fn>
+      dryadsAiRoot.resolveDryadsAiPackageRootSync as unknown as ReturnType<typeof vi.fn>
     ).mockReturnValueOnce(pkgRoot);
 
     const uiDir = path.join(pkgRoot, "dist", "control-ui");

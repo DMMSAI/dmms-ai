@@ -7,7 +7,7 @@ import {
   setAccountEnabledInConfigSection,
   deleteAccountFromConfigSection,
   type ChannelPlugin,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   listIrcAccountIds,
   resolveDefaultIrcAccountId,

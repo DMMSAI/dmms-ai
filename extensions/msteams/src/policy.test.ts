@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "dmms-ai/plugin-sdk";
+import type { MSTeamsConfig } from "dryads-ai/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import {
   isMSTeamsGroupAllowed,

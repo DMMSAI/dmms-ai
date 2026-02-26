@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { __test__, isSensitiveConfigPath } from "./schema.hints.js";
-import { DmmsAiSchema } from "./zod-schema.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 import { sensitive } from "./zod-schema.sensitive.js";
 
 const { mapSensitivePaths } = __test__;
@@ -99,12 +99,12 @@ describe("mapSensitivePaths", () => {
   });
 
   it("main schema yields correct hints (samples)", () => {
-    const schema = DmmsAiSchema.toJSONSchema({
+    const schema = DryadsAiSchema.toJSONSchema({
       target: "draft-07",
       unrepresentable: "any",
     });
-    schema.title = "DmmsAiConfig";
-    const hints = mapSensitivePaths(DmmsAiSchema, "", {});
+    schema.title = "DryadsAiConfig";
+    const hints = mapSensitivePaths(DryadsAiSchema, "", {});
 
     expect(hints["agents.defaults.memorySearch.remote.apiKey"]?.sensitive).toBe(true);
     expect(hints["agents.list[].memorySearch.remote.apiKey"]?.sensitive).toBe(true);

@@ -44,7 +44,7 @@ describe("ports helpers", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 
-  it("prints an DMMS AI-specific hint when port details look like another DMMS AI instance", async () => {
+  it("prints an Dryads AI-specific hint when port details look like another Dryads AI instance", async () => {
     const runtime = {
       error: vi.fn(),
       log: vi.fn(),
@@ -52,14 +52,14 @@ describe("ports helpers", () => {
     };
 
     await handlePortError(
-      new PortInUseError(18789, "node dist/index.js dmms-ai gateway"),
+      new PortInUseError(18789, "node dist/index.js dryads-ai gateway"),
       18789,
       "gateway start",
       runtime,
     ).catch(() => {});
 
     const messages = runtime.error.mock.calls.map((call) => stripAnsi(String(call[0] ?? "")));
-    expect(messages.join("\n")).toContain("another DMMS AI instance is already running");
+    expect(messages.join("\n")).toContain("another Dryads AI instance is already running");
   });
 
   it("classifies ssh and gateway listeners", () => {
@@ -69,7 +69,7 @@ describe("ports helpers", () => {
     expect(
       classifyPortListener(
         {
-          commandLine: "node /Users/me/Projects/dmms-ai/dist/entry.js gateway",
+          commandLine: "node /Users/me/Projects/dryads-ai/dist/entry.js gateway",
         },
         18789,
       ),

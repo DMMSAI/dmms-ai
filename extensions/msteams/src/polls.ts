@@ -102,13 +102,13 @@ export function extractMSTeamsPollVote(
     return null;
   }
   const pollId =
-    readNestedString(value, ["dmmsAiPollId"]) ??
+    readNestedString(value, ["dryadsAiPollId"]) ??
     readNestedString(value, ["pollId"]) ??
-    readNestedString(value, ["dmms-ai", "pollId"]) ??
-    readNestedString(value, ["dmms-ai", "poll", "id"]) ??
-    readNestedString(value, ["data", "dmmsAiPollId"]) ??
+    readNestedString(value, ["dryads-ai", "pollId"]) ??
+    readNestedString(value, ["dryads-ai", "poll", "id"]) ??
+    readNestedString(value, ["data", "dryadsAiPollId"]) ??
     readNestedString(value, ["data", "pollId"]) ??
-    readNestedString(value, ["data", "dmms-ai", "pollId"]);
+    readNestedString(value, ["data", "dryads-ai", "pollId"]);
   if (!pollId) {
     return null;
   }
@@ -185,14 +185,14 @@ export function buildMSTeamsPollCard(params: {
         type: "Action.Submit",
         title: "Vote",
         data: {
-          dmmsAiPollId: pollId,
+          dryadsAiPollId: pollId,
           pollId,
         },
         msteams: {
           type: "messageBack",
-          text: "dmms-ai poll vote",
+          text: "dryads-ai poll vote",
           displayText: "Vote recorded",
-          value: { dmmsAiPollId: pollId, pollId },
+          value: { dryadsAiPollId: pollId, pollId },
         },
       },
     ],

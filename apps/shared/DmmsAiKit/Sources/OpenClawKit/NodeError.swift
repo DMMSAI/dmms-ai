@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiNodeErrorCode: String, Codable, Sendable {
+public enum DryadsAiNodeErrorCode: String, Codable, Sendable {
     case notPaired = "NOT_PAIRED"
     case unauthorized = "UNAUTHORIZED"
     case backgroundUnavailable = "NODE_BACKGROUND_UNAVAILABLE"
@@ -8,14 +8,14 @@ public enum DmmsAiNodeErrorCode: String, Codable, Sendable {
     case unavailable = "UNAVAILABLE"
 }
 
-public struct DmmsAiNodeError: Error, Codable, Sendable, Equatable {
-    public var code: DmmsAiNodeErrorCode
+public struct DryadsAiNodeError: Error, Codable, Sendable, Equatable {
+    public var code: DryadsAiNodeErrorCode
     public var message: String
     public var retryable: Bool?
     public var retryAfterMs: Int?
 
     public init(
-        code: DmmsAiNodeErrorCode,
+        code: DryadsAiNodeErrorCode,
         message: String,
         retryable: Bool? = nil,
         retryAfterMs: Int? = nil)

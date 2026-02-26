@@ -218,7 +218,7 @@ async function installSignalCliFromRelease(runtime: RuntimeEnv): Promise<SignalI
   const apiUrl = "https://api.github.com/repos/AsamK/signal-cli/releases/latest";
   const response = await fetch(apiUrl, {
     headers: {
-      "User-Agent": "dmms-ai",
+      "User-Agent": "dryads-ai",
       Accept: "application/vnd.github+json",
     },
   });
@@ -242,7 +242,7 @@ async function installSignalCliFromRelease(runtime: RuntimeEnv): Promise<SignalI
     };
   }
 
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-signal-"));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-signal-"));
   const archivePath = path.join(tmpDir, asset.name);
 
   runtime.log(`Downloading signal-cli ${version} (${asset.name})…`);

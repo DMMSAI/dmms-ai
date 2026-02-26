@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai security` (audit and fix common security footguns)"
+summary: "CLI reference for `dryads-ai security` (audit and fix common security footguns)"
 read_when:
   - You want to run a quick security audit on config/state
   - You want to apply safe “fix” suggestions (chmod, tighten defaults)
 title: "security"
 ---
 
-# `dmms-ai security`
+# `dryads-ai security`
 
 Security tools (audit + optional fixes).
 
@@ -17,10 +17,10 @@ Related:
 ## Audit
 
 ```bash
-dmms-ai security audit
-dmms-ai security audit --deep
-dmms-ai security audit --fix
-dmms-ai security audit --json
+dryads-ai security audit
+dryads-ai security audit --deep
+dryads-ai security audit --fix
+dryads-ai security audit --json
 ```
 
 The audit warns when multiple DM senders share the main session and recommends **secure DM mode**: `session.dmScope="per-channel-peer"` (or `per-account-channel-peer` for multi-account channels) for shared inboxes.
@@ -33,14 +33,14 @@ It also warns when sandbox Docker settings are configured while sandbox mode is 
 Use `--json` for CI/policy checks:
 
 ```bash
-dmms-ai security audit --json | jq '.summary'
-dmms-ai security audit --deep --json | jq '.findings[] | select(.severity=="critical") | .checkId'
+dryads-ai security audit --json | jq '.summary'
+dryads-ai security audit --deep --json | jq '.findings[] | select(.severity=="critical") | .checkId'
 ```
 
 If `--fix` and `--json` are combined, output includes both fix actions and final report:
 
 ```bash
-dmms-ai security audit --fix --json | jq '{fix: .fix.ok, summary: .report.summary}'
+dryads-ai security audit --fix --json | jq '{fix: .fix.ok, summary: .report.summary}'
 ```
 
 ## What `--fix` changes

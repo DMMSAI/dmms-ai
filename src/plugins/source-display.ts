@@ -31,7 +31,7 @@ export function resolvePluginSourceRoots(params: { workspaceDir?: string }): Plu
   const stock = resolveBundledPluginsDir();
   const global = path.join(resolveConfigDir(), "extensions");
   const workspace = params.workspaceDir
-    ? path.join(params.workspaceDir, ".dmms-ai", "extensions")
+    ? path.join(params.workspaceDir, ".dryads-ai", "extensions")
     : undefined;
   return { stock, global, workspace };
 }

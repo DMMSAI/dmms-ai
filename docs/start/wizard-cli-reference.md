@@ -1,7 +1,7 @@
 ---
 summary: "Complete reference for CLI onboarding flow, auth/model setup, outputs, and internals"
 read_when:
-  - You need detailed behavior for dmms-ai onboard
+  - You need detailed behavior for dryads-ai onboard
   - You are debugging onboarding results or integrating onboarding clients
 title: "CLI Onboarding Reference"
 sidebarTitle: "CLI reference"
@@ -9,7 +9,7 @@ sidebarTitle: "CLI reference"
 
 # CLI Onboarding Reference
 
-This page is the full reference for `dmms-ai onboard`.
+This page is the full reference for `dryads-ai onboard`.
 For the short guide, see [Onboarding Wizard (CLI)](/start/wizard).
 
 ## What the wizard does
@@ -31,9 +31,9 @@ It does not install or modify anything on the remote host.
 
 <Steps>
   <Step title="Existing config detection">
-    - If `~/.dmms-ai/dmms-ai.json` exists, choose Keep, Modify, or Reset.
+    - If `~/.dryads-ai/dryads-ai.json` exists, choose Keep, Modify, or Reset.
     - Re-running the wizard does not wipe anything unless you explicitly choose Reset (or pass `--reset`).
-    - If config is invalid or contains legacy keys, the wizard stops and asks you to run `dmms-ai doctor` before continuing.
+    - If config is invalid or contains legacy keys, the wizard stops and asks you to run `dryads-ai doctor` before continuing.
     - Reset uses `trash` and offers scopes:
       - Config only
       - Config + credentials + sessions
@@ -43,7 +43,7 @@ It does not install or modify anything on the remote host.
     - Full option matrix is in [Auth and model options](#auth-and-model-options).
   </Step>
   <Step title="Workspace">
-    - Default `~/.dmms-ai/workspace` (configurable).
+    - Default `~/.dryads-ai/workspace` (configurable).
     - Seeds workspace files needed for first-run bootstrap ritual.
     - Workspace layout: [Agent workspace](/concepts/agent-workspace).
   </Step>
@@ -63,7 +63,7 @@ It does not install or modify anything on the remote host.
     - [BlueBubbles](/channels/bluebubbles): recommended for iMessage; server URL + password + webhook
     - [iMessage](/channels/imessage): legacy `imsg` CLI path + DB access
     - DM security: default is pairing. First DM sends a code; approve via
-      `dmms-ai pairing approve <channel> <code>` or use allowlists.
+      `dryads-ai pairing approve <channel> <code>` or use allowlists.
   </Step>
   <Step title="Daemon install">
     - macOS: LaunchAgent
@@ -74,8 +74,8 @@ It does not install or modify anything on the remote host.
     - Runtime selection: Node (recommended; required for WhatsApp and Telegram). Bun is not recommended.
   </Step>
   <Step title="Health check">
-    - Starts gateway (if needed) and runs `dmms-ai health`.
-    - `dmms-ai status --deep` adds gateway health probes to status output.
+    - Starts gateway (if needed) and runs `dryads-ai health`.
+    - `dryads-ai status --deep` adds gateway health probes to status output.
   </Step>
   <Step title="Skills">
     - Reads available skills and checks requirements.
@@ -140,7 +140,7 @@ What you set:
   </Accordion>
   <Accordion title="OpenAI API key">
     Uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to
-    `~/.dmms-ai/.env` so launchd can read it.
+    `~/.dryads-ai/.env` so launchd can read it.
 
     Sets `agents.defaults.model` to `openai/gpt-5.1-codex` when model is unset, `openai/*`, or `openai-codex/*`.
 
@@ -199,18 +199,18 @@ Model behavior:
 
 Credential and profile paths:
 
-- OAuth credentials: `~/.dmms-ai/credentials/oauth.json`
-- Auth profiles (API keys + OAuth): `~/.dmms-ai/agents/<agentId>/agent/auth-profiles.json`
+- OAuth credentials: `~/.dryads-ai/credentials/oauth.json`
+- Auth profiles (API keys + OAuth): `~/.dryads-ai/agents/<agentId>/agent/auth-profiles.json`
 
 <Note>
 Headless and server tip: complete OAuth on a machine with a browser, then copy
-`~/.dmms-ai/credentials/oauth.json` (or `$DMMS_AI_STATE_DIR/credentials/oauth.json`)
+`~/.dryads-ai/credentials/oauth.json` (or `$DRYADS_AI_STATE_DIR/credentials/oauth.json`)
 to the gateway host.
 </Note>
 
 ## Outputs and internals
 
-Typical fields in `~/.dmms-ai/dmms-ai.json`:
+Typical fields in `~/.dryads-ai/dryads-ai.json`:
 
 - `agents.defaults.workspace`
 - `agents.defaults.model` / `models.providers` (if Minimax chosen)
@@ -224,10 +224,10 @@ Typical fields in `~/.dmms-ai/dmms-ai.json`:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`dmms-ai agents add` writes `agents.list[]` and optional `bindings`.
+`dryads-ai agents add` writes `agents.list[]` and optional `bindings`.
 
-WhatsApp credentials go under `~/.dmms-ai/credentials/whatsapp/<accountId>/`.
-Sessions are stored under `~/.dmms-ai/agents/<agentId>/sessions/`.
+WhatsApp credentials go under `~/.dryads-ai/credentials/whatsapp/<accountId>/`.
+Sessions are stored under `~/.dryads-ai/agents/<agentId>/sessions/`.
 
 <Note>
 Some channels are delivered as plugins. When selected during onboarding, the wizard
@@ -246,7 +246,7 @@ Clients (macOS app and Control UI) can render steps without re-implementing onbo
 Signal setup behavior:
 
 - Downloads the appropriate release asset
-- Stores it under `~/.dmms-ai/tools/signal-cli/<version>/`
+- Stores it under `~/.dryads-ai/tools/signal-cli/<version>/`
 - Writes `channels.signal.cliPath` in config
 - JVM builds require Java 21
 - Native builds are used when available
@@ -256,4 +256,4 @@ Signal setup behavior:
 
 - Onboarding hub: [Onboarding Wizard (CLI)](/start/wizard)
 - Automation and scripts: [CLI Automation](/start/wizard-cli-automation)
-- Command reference: [`dmms-ai onboard`](/cli/onboard)
+- Command reference: [`dryads-ai onboard`](/cli/onboard)

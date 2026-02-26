@@ -33,7 +33,7 @@ function makePathEnv(binDir: string): NodeJS.ProcessEnv {
 }
 
 function makeTempDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-exec-approvals-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-exec-approvals-"));
 }
 
 describe("exec approvals allowlist matching", () => {
@@ -115,20 +115,20 @@ describe("mergeExecApprovalsSocketDefaults", () => {
 describe("resolve exec approvals defaults", () => {
   it("expands home-prefixed default file and socket paths", () => {
     const dir = makeTempDir();
-    const prevDmmsAiHome = process.env.DMMS_AI_HOME;
+    const prevDryadsAiHome = process.env.DRYADS_AI_HOME;
     try {
-      process.env.DMMS_AI_HOME = dir;
+      process.env.DRYADS_AI_HOME = dir;
       expect(path.normalize(resolveExecApprovalsPath())).toBe(
-        path.normalize(path.join(dir, ".dmms-ai", "exec-approvals.json")),
+        path.normalize(path.join(dir, ".dryads-ai", "exec-approvals.json")),
       );
       expect(path.normalize(resolveExecApprovalsSocketPath())).toBe(
-        path.normalize(path.join(dir, ".dmms-ai", "exec-approvals.sock")),
+        path.normalize(path.join(dir, ".dryads-ai", "exec-approvals.sock")),
       );
     } finally {
-      if (prevDmmsAiHome === undefined) {
-        delete process.env.DMMS_AI_HOME;
+      if (prevDryadsAiHome === undefined) {
+        delete process.env.DRYADS_AI_HOME;
       } else {
-        process.env.DMMS_AI_HOME = prevDmmsAiHome;
+        process.env.DRYADS_AI_HOME = prevDryadsAiHome;
       }
     }
   });
@@ -623,11 +623,11 @@ describe("exec approvals policy helpers", () => {
 describe("exec approvals wildcard agent", () => {
   it("merges wildcard allowlist entries with agent entries", () => {
     const dir = makeTempDir();
-    const prevDmmsAiHome = process.env.DMMS_AI_HOME;
+    const prevDryadsAiHome = process.env.DRYADS_AI_HOME;
 
     try {
-      process.env.DMMS_AI_HOME = dir;
-      const approvalsPath = path.join(dir, ".dmms-ai", "exec-approvals.json");
+      process.env.DRYADS_AI_HOME = dir;
+      const approvalsPath = path.join(dir, ".dryads-ai", "exec-approvals.json");
       fs.mkdirSync(path.dirname(approvalsPath), { recursive: true });
       fs.writeFileSync(
         approvalsPath,
@@ -650,10 +650,10 @@ describe("exec approvals wildcard agent", () => {
         "/usr/bin/uname",
       ]);
     } finally {
-      if (prevDmmsAiHome === undefined) {
-        delete process.env.DMMS_AI_HOME;
+      if (prevDryadsAiHome === undefined) {
+        delete process.env.DRYADS_AI_HOME;
       } else {
-        process.env.DMMS_AI_HOME = prevDmmsAiHome;
+        process.env.DRYADS_AI_HOME = prevDryadsAiHome;
       }
     }
   });

@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
-import DmmsAiIPC
-import DmmsAiKit
+import DryadsAiIPC
+import DryadsAiKit
 import WebKit
 
 @MainActor
@@ -61,8 +61,8 @@ final class CanvasWindowController: NSWindowController, WKNavigationDelegate, NS
             const allowedSchemes = \(String(describing: CanvasScheme.allSchemes));
             const protocol = location.protocol.replace(':', '');
             if (!allowedSchemes.includes(protocol)) return;
-            if (globalThis.__dmmsaiA2UIBridgeInstalled) return;
-            globalThis.__dmmsaiA2UIBridgeInstalled = true;
+            if (globalThis.__dryadsaiA2UIBridgeInstalled) return;
+            globalThis.__dryadsaiA2UIBridgeInstalled = true;
 
             const deepLinkKey = \(Self.jsStringLiteral(deepLinkKey));
             const sessionKey = \(Self.jsStringLiteral(injectedSessionKey));
@@ -89,13 +89,13 @@ final class CanvasWindowController: NSWindowController, WKNavigationDelegate, NS
                   ...(context.length ? { context } : {}),
                 };
 
-                const handler = globalThis.webkit?.messageHandlers?.dmmsAiCanvasA2UIAction;
+                const handler = globalThis.webkit?.messageHandlers?.dryadsAiCanvasA2UIAction;
 
                 // If the bundled A2UI shell is present, let it forward actions so we keep its richer
                 // context resolution (data model path lookups, surface detection, etc.).
                 const hasBundledA2UIHost =
-                  !!globalThis.dmmsAiA2UI ||
-                  !!document.querySelector('dmms-ai-a2ui-host');
+                  !!globalThis.dryadsAiA2UI ||
+                  !!document.querySelector('dryads-ai-a2ui-host');
                 if (hasBundledA2UIHost && handler?.postMessage) return;
 
                 // Otherwise, forward directly when possible.
@@ -121,7 +121,7 @@ final class CanvasWindowController: NSWindowController, WKNavigationDelegate, NS
                 params.set('deliver', 'false');
                 params.set('channel', 'last');
                 params.set('key', deepLinkKey);
-                location.href = 'dmms-ai://agent?' + params.toString();
+                location.href = 'dryads-ai://agent?' + params.toString();
               } catch {}
             }, true);
           } catch {}
@@ -280,7 +280,7 @@ final class CanvasWindowController: NSWindowController, WKNavigationDelegate, NS
         let js = """
         (() => {
           try {
-            const api = globalThis.__dmmsai;
+            const api = globalThis.__dryadsai;
             if (!api) return;
             if (typeof api.setDebugStatusEnabled === 'function') {
               api.setDebugStatusEnabled(\(enabled ? "true" : "false"));
@@ -348,7 +348,7 @@ final class CanvasWindowController: NSWindowController, WKNavigationDelegate, NS
             path = outPath
         } else {
             let ts = Int(Date().timeIntervalSince1970)
-            path = "/tmp/dmms-ai-canvas-\(CanvasWindowController.sanitizeSessionKey(self.sessionKey))-\(ts).png"
+            path = "/tmp/dryads-ai-canvas-\(CanvasWindowController.sanitizeSessionKey(self.sessionKey))-\(ts).png"
         }
 
         try png.write(to: URL(fileURLWithPath: path), options: [.atomic])

@@ -1,12 +1,12 @@
 import Foundation
 
-public enum DmmsAiBonjour {
+public enum DryadsAiBonjour {
     // v0: internal-only, subject to rename.
-    public static let gatewayServiceType = "_dmms-ai-gw._tcp"
+    public static let gatewayServiceType = "_dryads-ai-gw._tcp"
     public static let gatewayServiceDomain = "local."
     public static var wideAreaGatewayServiceDomain: String? {
         let env = ProcessInfo.processInfo.environment
-        return resolveWideAreaDomain(env["DMMS_AI_WIDE_AREA_DOMAIN"])
+        return resolveWideAreaDomain(env["DRYADS_AI_WIDE_AREA_DOMAIN"])
     }
 
     public static var gatewayServiceDomains: [String] {

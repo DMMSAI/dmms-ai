@@ -3,13 +3,13 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 import { saveAuthProfileStore } from "./auth-profiles.js";
 import { AUTH_STORE_VERSION } from "./auth-profiles/constants.js";
 import { runWithModelFallback } from "./model-fallback.js";
 
-function makeCfg(overrides: Partial<DmmsAiConfig> = {}): DmmsAiConfig {
+function makeCfg(overrides: Partial<DryadsAiConfig> = {}): DryadsAiConfig {
   return {
     agents: {
       defaults: {
@@ -20,10 +20,10 @@ function makeCfg(overrides: Partial<DmmsAiConfig> = {}): DmmsAiConfig {
       },
     },
     ...overrides,
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
-function makeFallbacksOnlyCfg(): DmmsAiConfig {
+function makeFallbacksOnlyCfg(): DryadsAiConfig {
   return {
     agents: {
       defaults: {
@@ -32,10 +32,10 @@ function makeFallbacksOnlyCfg(): DmmsAiConfig {
         },
       },
     },
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
-function makeProviderFallbackCfg(provider: string): DmmsAiConfig {
+function makeProviderFallbackCfg(provider: string): DryadsAiConfig {
   return makeCfg({
     agents: {
       defaults: {
@@ -52,7 +52,7 @@ async function withTempAuthStore<T>(
   store: AuthProfileStore,
   run: (tempDir: string) => Promise<T>,
 ): Promise<T> {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-auth-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-auth-"));
   saveAuthProfileStore(store, tempDir);
   try {
     return await run(tempDir);
@@ -62,7 +62,7 @@ async function withTempAuthStore<T>(
 }
 
 async function runWithStoredAuth(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   store: AuthProfileStore;
   provider: string;
   run: (provider: string, model: string) => Promise<string>;

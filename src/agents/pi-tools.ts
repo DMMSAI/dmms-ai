@@ -5,7 +5,7 @@ import {
   createWriteTool,
   readTool,
 } from "@mariozechner/pi-coding-agent";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { ToolLoopDetectionConfig } from "../config/types.tools.js";
 import { logWarn } from "../logger.js";
 import { getPluginToolMeta } from "../plugins/tools.js";
@@ -20,7 +20,7 @@ import {
   type ProcessToolDefaults,
 } from "./bash-tools.js";
 import { listChannelAgentTools } from "./channel-tools.js";
-import { createDmmsAiTools } from "./dmms-ai-tools.js";
+import { createDryadsAiTools } from "./dryads-ai-tools.js";
 import { resolveImageSanitizationLimits } from "./image-sanitization.js";
 import type { ModelAuthMode } from "./model-auth.js";
 import { wrapToolWithAbortSignal } from "./pi-tools.abort.js";
@@ -34,7 +34,7 @@ import {
 import {
   assertRequiredParams,
   CLAUDE_PARAM_GROUPS,
-  createDmmsAiReadTool,
+  createDryadsAiReadTool,
   createSandboxedEditTool,
   createSandboxedReadTool,
   createSandboxedWriteTool,
@@ -92,7 +92,7 @@ function isApplyPatchAllowedForModel(params: {
   });
 }
 
-function resolveExecConfig(params: { cfg?: DmmsAiConfig; agentId?: string }) {
+function resolveExecConfig(params: { cfg?: DryadsAiConfig; agentId?: string }) {
   const cfg = params.cfg;
   const globalExec = cfg?.tools?.exec;
   const agentExec =
@@ -116,7 +116,7 @@ function resolveExecConfig(params: { cfg?: DmmsAiConfig; agentId?: string }) {
   };
 }
 
-function resolveFsConfig(params: { cfg?: DmmsAiConfig; agentId?: string }) {
+function resolveFsConfig(params: { cfg?: DryadsAiConfig; agentId?: string }) {
   const cfg = params.cfg;
   const globalFs = cfg?.tools?.fs;
   const agentFs =
@@ -127,7 +127,7 @@ function resolveFsConfig(params: { cfg?: DmmsAiConfig; agentId?: string }) {
 }
 
 export function resolveToolLoopDetectionConfig(params: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   agentId?: string;
 }): ToolLoopDetectionConfig | undefined {
   const global = params.cfg?.tools?.loopDetection;
@@ -161,7 +161,7 @@ export const __testing = {
   assertRequiredParams,
 } as const;
 
-export function createDmmsAiCodingTools(options?: {
+export function createDryadsAiCodingTools(options?: {
   exec?: ExecToolDefaults & ProcessToolDefaults;
   messageProvider?: string;
   agentAccountId?: string;
@@ -171,7 +171,7 @@ export function createDmmsAiCodingTools(options?: {
   sessionKey?: string;
   agentDir?: string;
   workspaceDir?: string;
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   abortSignal?: AbortSignal;
   /**
    * Provider of the currently selected model (used for provider-specific tool quirks).
@@ -315,7 +315,7 @@ export function createDmmsAiCodingTools(options?: {
         return [workspaceOnly ? wrapToolWorkspaceRootGuard(sandboxed, sandboxRoot) : sandboxed];
       }
       const freshReadTool = createReadTool(workspaceRoot);
-      const wrapped = createDmmsAiReadTool(freshReadTool, {
+      const wrapped = createDryadsAiReadTool(freshReadTool, {
         modelContextWindowTokens: options?.modelContextWindowTokens,
         imageSanitization,
       });
@@ -419,7 +419,7 @@ export function createDmmsAiCodingTools(options?: {
     processTool as unknown as AnyAgentTool,
     // Channel docking: include channel-defined agent tools (login, etc.).
     ...listChannelAgentTools({ cfg: options?.config }),
-    ...createDmmsAiTools({
+    ...createDryadsAiTools({
       sandboxBrowserBridgeUrl: sandbox?.browser?.bridgeUrl,
       allowHostBrowserControl: sandbox ? sandbox.browserAllowHostControl : true,
       agentSessionKey: options?.sessionKey,

@@ -4,7 +4,7 @@ title: "Pi Development Workflow"
 
 # Pi Development Workflow
 
-This guide summarizes a sane workflow for working on the pi integration in DMMS AI.
+This guide summarizes a sane workflow for working on the pi integration in Dryads AI.
 
 ## Type Checking and Linting
 
@@ -43,7 +43,7 @@ Recommended flow:
 - Run the gateway in dev mode:
   - `pnpm gateway:dev`
 - Trigger the agent directly:
-  - `pnpm dmms-ai agent --message "Hello" --thinking low`
+  - `pnpm dryads-ai agent --message "Hello" --thinking low`
 - Use the TUI for interactive debugging:
   - `pnpm tui`
 
@@ -51,11 +51,11 @@ For tool call behavior, prompt for a `read` or `exec` action so you can see tool
 
 ## Clean Slate Reset
 
-State lives under the DMMS AI state directory. Default is `~/.dmms-ai`. If `DMMS_AI_STATE_DIR` is set, use that directory instead.
+State lives under the Dryads AI state directory. Default is `~/.dryads-ai`. If `DRYADS_AI_STATE_DIR` is set, use that directory instead.
 
 To reset everything:
 
-- `dmms-ai.json` for config
+- `dryads-ai.json` for config
 - `credentials/` for auth profiles and tokens
 - `agents/<agentId>/sessions/` for agent session history
 - `agents/<agentId>/sessions.json` for the session index
@@ -66,5 +66,5 @@ If you only want to reset sessions, delete `agents/<agentId>/sessions/` and `age
 
 ## References
 
-- [https://docs.dmms-ai.com/testing](https://docs.dmms-ai.com/testing)
-- [https://docs.dmms-ai.com/start/getting-started](https://docs.dmms-ai.com/start/getting-started)
+- [https://docs.dryads-ai.com/testing](https://docs.dryads-ai.com/testing)
+- [https://docs.dryads-ai.com/start/getting-started](https://docs.dryads-ai.com/start/getting-started)

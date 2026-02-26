@@ -1,7 +1,7 @@
 ---
-summary: "Use NVIDIA's OpenAI-compatible API in DMMS AI"
+summary: "Use NVIDIA's OpenAI-compatible API in Dryads AI"
 read_when:
-  - You want to use NVIDIA models in DMMS AI
+  - You want to use NVIDIA models in Dryads AI
   - You need NVIDIA_API_KEY setup
 title: "NVIDIA"
 ---
@@ -16,8 +16,8 @@ Export the key once, then run onboarding and set an NVIDIA model:
 
 ```bash
 export NVIDIA_API_KEY="nvapi-..."
-dmms-ai onboard --auth-choice skip
-dmms-ai models set nvidia/nvidia/llama-3.1-nemotron-70b-instruct
+dryads-ai onboard --auth-choice skip
+dryads-ai models set nvidia/nvidia/llama-3.1-nemotron-70b-instruct
 ```
 
 If you still pass `--token`, remember it lands in shell history and `ps` output; prefer the env var when possible.

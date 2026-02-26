@@ -4,7 +4,7 @@ import {
   type OAuthCredentials,
   type OAuthProvider,
 } from "@mariozechner/pi-ai";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { withFileLock } from "../../infra/file-lock.js";
 import { refreshQwenPortalCredentials } from "../../providers/qwen-portal-oauth.js";
 import { refreshChutesTokens } from "../chutes-oauth.js";
@@ -24,7 +24,7 @@ const resolveOAuthProvider = (provider: string): OAuthProvider | null =>
   isOAuthProvider(provider) ? provider : null;
 
 function isProfileConfigCompatible(params: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   profileId: string;
   provider: string;
   mode: "api_key" | "token" | "oauth";
@@ -85,7 +85,7 @@ function isExpiredCredential(expires: number | undefined): boolean {
 }
 
 type ResolveApiKeyForProfileParams = {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   store: AuthProfileStore;
   profileId: string;
   agentDir?: string;

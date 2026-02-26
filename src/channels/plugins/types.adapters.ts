@@ -1,5 +1,5 @@
 import type { ReplyPayload } from "../../auto-reply/types.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import type { GroupToolPolicyConfig } from "../../config/types.tools.js";
 import type { OutboundDeliveryResult, OutboundSendDeps } from "../../infra/outbound/deliver.js";
 import type { OutboundIdentity } from "../../infra/outbound/identity.js";
@@ -21,45 +21,45 @@ import type {
 } from "./types.core.js";
 
 export type ChannelSetupAdapter = {
-  resolveAccountId?: (params: { cfg: DmmsAiConfig; accountId?: string }) => string;
+  resolveAccountId?: (params: { cfg: DryadsAiConfig; accountId?: string }) => string;
   applyAccountName?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId: string;
     name?: string;
-  }) => DmmsAiConfig;
+  }) => DryadsAiConfig;
   applyAccountConfig: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId: string;
     input: ChannelSetupInput;
-  }) => DmmsAiConfig;
+  }) => DryadsAiConfig;
   validateInput?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId: string;
     input: ChannelSetupInput;
   }) => string | null;
 };
 
 export type ChannelConfigAdapter<ResolvedAccount> = {
-  listAccountIds: (cfg: DmmsAiConfig) => string[];
-  resolveAccount: (cfg: DmmsAiConfig, accountId?: string | null) => ResolvedAccount;
-  defaultAccountId?: (cfg: DmmsAiConfig) => string;
+  listAccountIds: (cfg: DryadsAiConfig) => string[];
+  resolveAccount: (cfg: DryadsAiConfig, accountId?: string | null) => ResolvedAccount;
+  defaultAccountId?: (cfg: DryadsAiConfig) => string;
   setAccountEnabled?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId: string;
     enabled: boolean;
-  }) => DmmsAiConfig;
-  deleteAccount?: (params: { cfg: DmmsAiConfig; accountId: string }) => DmmsAiConfig;
-  isEnabled?: (account: ResolvedAccount, cfg: DmmsAiConfig) => boolean;
-  disabledReason?: (account: ResolvedAccount, cfg: DmmsAiConfig) => string;
-  isConfigured?: (account: ResolvedAccount, cfg: DmmsAiConfig) => boolean | Promise<boolean>;
-  unconfiguredReason?: (account: ResolvedAccount, cfg: DmmsAiConfig) => string;
-  describeAccount?: (account: ResolvedAccount, cfg: DmmsAiConfig) => ChannelAccountSnapshot;
+  }) => DryadsAiConfig;
+  deleteAccount?: (params: { cfg: DryadsAiConfig; accountId: string }) => DryadsAiConfig;
+  isEnabled?: (account: ResolvedAccount, cfg: DryadsAiConfig) => boolean;
+  disabledReason?: (account: ResolvedAccount, cfg: DryadsAiConfig) => string;
+  isConfigured?: (account: ResolvedAccount, cfg: DryadsAiConfig) => boolean | Promise<boolean>;
+  unconfiguredReason?: (account: ResolvedAccount, cfg: DryadsAiConfig) => string;
+  describeAccount?: (account: ResolvedAccount, cfg: DryadsAiConfig) => ChannelAccountSnapshot;
   resolveAllowFrom?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
   }) => string[] | undefined;
   formatAllowFrom?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     allowFrom: Array<string | number>;
   }) => string[];
@@ -72,7 +72,7 @@ export type ChannelGroupAdapter = {
 };
 
 export type ChannelOutboundContext = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   to: string;
   text: string;
   mediaUrl?: string;
@@ -97,7 +97,7 @@ export type ChannelOutboundAdapter = {
   textChunkLimit?: number;
   pollMaxOptions?: number;
   resolveTarget?: (params: {
-    cfg?: DmmsAiConfig;
+    cfg?: DryadsAiConfig;
     to?: string;
     allowFrom?: string[];
     accountId?: string | null;
@@ -113,37 +113,37 @@ export type ChannelStatusAdapter<ResolvedAccount, Probe = unknown, Audit = unkno
   defaultRuntime?: ChannelAccountSnapshot;
   buildChannelSummary?: (params: {
     account: ResolvedAccount;
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     defaultAccountId: string;
     snapshot: ChannelAccountSnapshot;
   }) => Record<string, unknown> | Promise<Record<string, unknown>>;
   probeAccount?: (params: {
     account: ResolvedAccount;
     timeoutMs: number;
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
   }) => Promise<Probe>;
   auditAccount?: (params: {
     account: ResolvedAccount;
     timeoutMs: number;
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     probe?: Probe;
   }) => Promise<Audit>;
   buildAccountSnapshot?: (params: {
     account: ResolvedAccount;
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     runtime?: ChannelAccountSnapshot;
     probe?: Probe;
     audit?: Audit;
   }) => ChannelAccountSnapshot | Promise<ChannelAccountSnapshot>;
   logSelfId?: (params: {
     account: ResolvedAccount;
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     runtime: RuntimeEnv;
     includeChannelPrefix?: boolean;
   }) => void;
   resolveAccountState?: (params: {
     account: ResolvedAccount;
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     configured: boolean;
     enabled: boolean;
   }) => ChannelAccountState;
@@ -151,7 +151,7 @@ export type ChannelStatusAdapter<ResolvedAccount, Probe = unknown, Audit = unkno
 };
 
 export type ChannelGatewayContext<ResolvedAccount = unknown> = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId: string;
   account: ResolvedAccount;
   runtime: RuntimeEnv;
@@ -178,7 +178,7 @@ export type ChannelLoginWithQrWaitResult = {
 };
 
 export type ChannelLogoutContext<ResolvedAccount = unknown> = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId: string;
   account: ResolvedAccount;
   runtime: RuntimeEnv;
@@ -189,7 +189,7 @@ export type ChannelPairingAdapter = {
   idLabel: string;
   normalizeAllowEntry?: (entry: string) => string;
   notifyApproval?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     id: string;
     runtime?: RuntimeEnv;
   }) => Promise<void>;
@@ -213,7 +213,7 @@ export type ChannelGatewayAdapter<ResolvedAccount = unknown> = {
 
 export type ChannelAuthAdapter = {
   login?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     runtime: RuntimeEnv;
     verbose?: boolean;
@@ -223,11 +223,11 @@ export type ChannelAuthAdapter = {
 
 export type ChannelHeartbeatAdapter = {
   checkReady?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     deps?: ChannelHeartbeatDeps;
   }) => Promise<{ ok: boolean; reason: string }>;
-  resolveRecipients?: (params: { cfg: DmmsAiConfig; opts?: { to?: string; all?: boolean } }) => {
+  resolveRecipients?: (params: { cfg: DryadsAiConfig; opts?: { to?: string; all?: boolean } }) => {
     recipients: string[];
     source: string;
   };
@@ -235,40 +235,40 @@ export type ChannelHeartbeatAdapter = {
 
 export type ChannelDirectoryAdapter = {
   self?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry | null>;
   listPeers?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listPeersLive?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroups?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroupsLive?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroupMembers?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     groupId: string;
     limit?: number | null;
@@ -288,7 +288,7 @@ export type ChannelResolveResult = {
 
 export type ChannelResolverAdapter = {
   resolveTargets: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
     inputs: string[];
     kind: ChannelResolveKind;
@@ -298,7 +298,7 @@ export type ChannelResolverAdapter = {
 
 export type ChannelElevatedAdapter = {
   allowFromFallback?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     accountId?: string | null;
   }) => Array<string | number> | undefined;
 };

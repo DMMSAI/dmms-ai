@@ -1,4 +1,4 @@
-import type { DmmsAiConfig, RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, RuntimeEnv } from "dryads-ai/plugin-sdk";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import { buildFileInfoCard, parseFileConsentInvoke, uploadToConsentUrl } from "./file-consent.js";
 import type { MSTeamsAdapter } from "./messenger.js";
@@ -23,7 +23,7 @@ export type MSTeamsActivityHandler = {
 };
 
 export type MSTeamsMessageHandlerDeps = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   runtime: RuntimeEnv;
   appId: string;
   adapter: MSTeamsAdapter;

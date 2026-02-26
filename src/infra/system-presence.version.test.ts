@@ -17,10 +17,10 @@ async function withPresenceModule<T>(
 }
 
 describe("system-presence version fallback", () => {
-  it("uses DMMS_AI_SERVICE_VERSION when DMMS_AI_VERSION is not set", async () => {
+  it("uses DRYADS_AI_SERVICE_VERSION when DRYADS_AI_VERSION is not set", async () => {
     await withPresenceModule(
       {
-        DMMS_AI_SERVICE_VERSION: "2.4.6-service",
+        DRYADS_AI_SERVICE_VERSION: "2.4.6-service",
         npm_package_version: "1.0.0-package",
       },
       ({ listSystemPresence }) => {
@@ -30,11 +30,11 @@ describe("system-presence version fallback", () => {
     );
   });
 
-  it("prefers DMMS_AI_VERSION over DMMS_AI_SERVICE_VERSION", async () => {
+  it("prefers DRYADS_AI_VERSION over DRYADS_AI_SERVICE_VERSION", async () => {
     await withPresenceModule(
       {
-        DMMS_AI_VERSION: "9.9.9-cli",
-        DMMS_AI_SERVICE_VERSION: "2.4.6-service",
+        DRYADS_AI_VERSION: "9.9.9-cli",
+        DRYADS_AI_SERVICE_VERSION: "2.4.6-service",
         npm_package_version: "1.0.0-package",
       },
       ({ listSystemPresence }) => {
@@ -44,11 +44,11 @@ describe("system-presence version fallback", () => {
     );
   });
 
-  it("uses npm_package_version when DMMS_AI_VERSION and DMMS_AI_SERVICE_VERSION are blank", async () => {
+  it("uses npm_package_version when DRYADS_AI_VERSION and DRYADS_AI_SERVICE_VERSION are blank", async () => {
     await withPresenceModule(
       {
-        DMMS_AI_VERSION: " ",
-        DMMS_AI_SERVICE_VERSION: "\t",
+        DRYADS_AI_VERSION: " ",
+        DRYADS_AI_SERVICE_VERSION: "\t",
         npm_package_version: "1.0.0-package",
       },
       ({ listSystemPresence }) => {

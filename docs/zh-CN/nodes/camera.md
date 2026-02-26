@@ -15,7 +15,7 @@ x-i18n:
 
 # 相机捕获（智能体）
 
-DMMS AI 支持用于智能体工作流的**相机捕获**：
+Dryads AI 支持用于智能体工作流的**相机捕获**：
 
 - **iOS 节点**（通过 Gateway 网关配对）：通过 `node.invoke` 捕获**照片**（`jpg`）或**短视频片段**（`mp4`，可选音频）。
 - **Android 节点**（通过 Gateway 网关配对）：通过 `node.invoke` 捕获**照片**（`jpg`）或**短视频片段**（`mp4`，可选音频）。
@@ -75,10 +75,10 @@ DMMS AI 支持用于智能体工作流的**相机捕获**：
 示例：
 
 ```bash
-dmms-ai nodes camera snap --node <id>               # default: both front + back (2 MEDIA lines)
-dmms-ai nodes camera snap --node <id> --facing front
-dmms-ai nodes camera clip --node <id> --duration 3000
-dmms-ai nodes camera clip --node <id> --no-audio
+dryads-ai nodes camera snap --node <id>               # default: both front + back (2 MEDIA lines)
+dryads-ai nodes camera snap --node <id> --facing front
+dryads-ai nodes camera clip --node <id> --duration 3000
+dryads-ai nodes camera clip --node <id> --no-audio
 ```
 
 注意事项：
@@ -116,31 +116,31 @@ dmms-ai nodes camera clip --node <id> --no-audio
 
 macOS 配套应用暴露一个复选框：
 
-- **设置 → 通用 → 允许相机**（`dmms-ai.cameraEnabled`）
+- **设置 → 通用 → 允许相机**（`dryads-ai.cameraEnabled`）
   - 默认：**关闭**
   - 关闭时：相机请求返回"用户已禁用相机"。
 
 ### CLI 辅助工具（节点调用）
 
-使用主 `dmms-ai` CLI 在 macOS 节点上调用相机命令。
+使用主 `dryads-ai` CLI 在 macOS 节点上调用相机命令。
 
 示例：
 
 ```bash
-dmms-ai nodes camera list --node <id>            # list camera ids
-dmms-ai nodes camera snap --node <id>            # prints MEDIA:<path>
-dmms-ai nodes camera snap --node <id> --max-width 1280
-dmms-ai nodes camera snap --node <id> --delay-ms 2000
-dmms-ai nodes camera snap --node <id> --device-id <id>
-dmms-ai nodes camera clip --node <id> --duration 10s          # prints MEDIA:<path>
-dmms-ai nodes camera clip --node <id> --duration-ms 3000      # prints MEDIA:<path> (legacy flag)
-dmms-ai nodes camera clip --node <id> --device-id <id>
-dmms-ai nodes camera clip --node <id> --no-audio
+dryads-ai nodes camera list --node <id>            # list camera ids
+dryads-ai nodes camera snap --node <id>            # prints MEDIA:<path>
+dryads-ai nodes camera snap --node <id> --max-width 1280
+dryads-ai nodes camera snap --node <id> --delay-ms 2000
+dryads-ai nodes camera snap --node <id> --device-id <id>
+dryads-ai nodes camera clip --node <id> --duration 10s          # prints MEDIA:<path>
+dryads-ai nodes camera clip --node <id> --duration-ms 3000      # prints MEDIA:<path> (legacy flag)
+dryads-ai nodes camera clip --node <id> --device-id <id>
+dryads-ai nodes camera clip --node <id> --no-audio
 ```
 
 注意事项：
 
-- `dmms-ai nodes camera snap` 默认 `maxWidth=1600`，除非被覆盖。
+- `dryads-ai nodes camera snap` 默认 `maxWidth=1600`，除非被覆盖。
 - 在 macOS 上，`camera.snap` 在预热/曝光稳定后等待 `delayMs`（默认 2000ms）再捕获。
 - 照片载荷会重新压缩以保持 base64 小于 5 MB。
 
@@ -154,7 +154,7 @@ dmms-ai nodes camera clip --node <id> --no-audio
 对于*屏幕*视频（非相机），使用 macOS 配套应用：
 
 ```bash
-dmms-ai nodes screen record --node <id> --duration 10s --fps 15   # prints MEDIA:<path>
+dryads-ai nodes screen record --node <id> --duration 10s --fps 15   # prints MEDIA:<path>
 ```
 
 注意事项：

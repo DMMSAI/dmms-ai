@@ -1,16 +1,16 @@
 {
-  "name": "@dmms-ai/tlon",
+  "name": "@dryads-ai/tlon",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Tlon/Urbit channel plugin",
+  "description": "Dryads AI Tlon/Urbit channel plugin",
   "type": "module",
   "dependencies": {
     "@urbit/aura": "^3.0.0"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/tlon",
+      "npmSpec": "@dryads-ai/tlon",
       "localPath": "extensions/tlon",
       "defaultChoice": "npm"
     }

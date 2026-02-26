@@ -1,12 +1,12 @@
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 import OSLog
 
 @MainActor
 final class MacNodeModeCoordinator {
     static let shared = MacNodeModeCoordinator()
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "mac-node")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "mac-node")
     private var task: Task<Void, Never>?
     private let runtime = MacNodeRuntime()
     private let session = GatewayNodeSession()
@@ -60,7 +60,7 @@ final class MacNodeModeCoordinator {
                     caps: caps,
                     commands: commands,
                     permissions: permissions,
-                    clientId: "dmms-ai-macos",
+                    clientId: "dryads-ai-macos",
                     clientMode: "node",
                     clientDisplayName: InstanceIdentity.displayName)
                 let sessionBox = self.buildSessionBox(url: config.url)
@@ -91,7 +91,7 @@ final class MacNodeModeCoordinator {
                             return BridgeInvokeResponse(
                                 id: req.id,
                                 ok: false,
-                                error: DmmsAiNodeError(code: .unavailable, message: "UNAVAILABLE: node not ready"))
+                                error: DryadsAiNodeError(code: .unavailable, message: "UNAVAILABLE: node not ready"))
                         }
                         return await self.runtime.handleInvoke(req)
                     })
@@ -107,13 +107,13 @@ final class MacNodeModeCoordinator {
     }
 
     private func currentCaps() -> [String] {
-        var caps: [String] = [DmmsAiCapability.canvas.rawValue, DmmsAiCapability.screen.rawValue]
+        var caps: [String] = [DryadsAiCapability.canvas.rawValue, DryadsAiCapability.screen.rawValue]
         if UserDefaults.standard.object(forKey: cameraEnabledKey) as? Bool ?? false {
-            caps.append(DmmsAiCapability.camera.rawValue)
+            caps.append(DryadsAiCapability.camera.rawValue)
         }
         let rawLocationMode = UserDefaults.standard.string(forKey: locationModeKey) ?? "off"
-        if DmmsAiLocationMode(rawValue: rawLocationMode) != .off {
-            caps.append(DmmsAiCapability.location.rawValue)
+        if DryadsAiLocationMode(rawValue: rawLocationMode) != .off {
+            caps.append(DryadsAiCapability.location.rawValue)
         }
         return caps
     }
@@ -125,30 +125,30 @@ final class MacNodeModeCoordinator {
 
     private func currentCommands(caps: [String]) -> [String] {
         var commands: [String] = [
-            DmmsAiCanvasCommand.present.rawValue,
-            DmmsAiCanvasCommand.hide.rawValue,
-            DmmsAiCanvasCommand.navigate.rawValue,
-            DmmsAiCanvasCommand.evalJS.rawValue,
-            DmmsAiCanvasCommand.snapshot.rawValue,
-            DmmsAiCanvasA2UICommand.push.rawValue,
-            DmmsAiCanvasA2UICommand.pushJSONL.rawValue,
-            DmmsAiCanvasA2UICommand.reset.rawValue,
+            DryadsAiCanvasCommand.present.rawValue,
+            DryadsAiCanvasCommand.hide.rawValue,
+            DryadsAiCanvasCommand.navigate.rawValue,
+            DryadsAiCanvasCommand.evalJS.rawValue,
+            DryadsAiCanvasCommand.snapshot.rawValue,
+            DryadsAiCanvasA2UICommand.push.rawValue,
+            DryadsAiCanvasA2UICommand.pushJSONL.rawValue,
+            DryadsAiCanvasA2UICommand.reset.rawValue,
             MacNodeScreenCommand.record.rawValue,
-            DmmsAiSystemCommand.notify.rawValue,
-            DmmsAiSystemCommand.which.rawValue,
-            DmmsAiSystemCommand.run.rawValue,
-            DmmsAiSystemCommand.execApprovalsGet.rawValue,
-            DmmsAiSystemCommand.execApprovalsSet.rawValue,
+            DryadsAiSystemCommand.notify.rawValue,
+            DryadsAiSystemCommand.which.rawValue,
+            DryadsAiSystemCommand.run.rawValue,
+            DryadsAiSystemCommand.execApprovalsGet.rawValue,
+            DryadsAiSystemCommand.execApprovalsSet.rawValue,
         ]
 
         let capsSet = Set(caps)
-        if capsSet.contains(DmmsAiCapability.camera.rawValue) {
-            commands.append(DmmsAiCameraCommand.list.rawValue)
-            commands.append(DmmsAiCameraCommand.snap.rawValue)
-            commands.append(DmmsAiCameraCommand.clip.rawValue)
+        if capsSet.contains(DryadsAiCapability.camera.rawValue) {
+            commands.append(DryadsAiCameraCommand.list.rawValue)
+            commands.append(DryadsAiCameraCommand.snap.rawValue)
+            commands.append(DryadsAiCameraCommand.clip.rawValue)
         }
-        if capsSet.contains(DmmsAiCapability.location.rawValue) {
-            commands.append(DmmsAiLocationCommand.get.rawValue)
+        if capsSet.contains(DryadsAiCapability.location.rawValue) {
+            commands.append(DryadsAiLocationCommand.get.rawValue)
         }
 
         return commands

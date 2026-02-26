@@ -19,7 +19,7 @@ import { formatHelpExamples } from "./help-format.js";
 export function registerBrowserCli(program: Command) {
   const browser = program
     .command("browser")
-    .description("Manage DMMS AI's dedicated browser (Chrome/Chromium)")
+    .description("Manage Dryads AI's dedicated browser (Chrome/Chromium)")
     .option("--browser-profile <name>", "Browser profile name (default from config)")
     .option("--json", "Output machine-readable JSON", false)
     .addHelpText(
@@ -30,13 +30,13 @@ export function registerBrowserCli(program: Command) {
           true,
         )}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/browser",
-          "docs.dmms-ai.com/cli/browser",
+          "docs.dryads-ai.com/cli/browser",
         )}\n`,
     )
     .action(() => {
       browser.outputHelp();
       defaultRuntime.error(
-        danger(`Missing subcommand. Try: "${formatCliCommand("dmms-ai browser status")}"`),
+        danger(`Missing subcommand. Try: "${formatCliCommand("dryads-ai browser status")}"`),
       );
       defaultRuntime.exit(1);
     });

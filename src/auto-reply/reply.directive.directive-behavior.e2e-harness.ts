@@ -57,10 +57,10 @@ export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise
     },
     {
       env: {
-        DMMS_AI_AGENT_DIR: (home) => path.join(home, ".dmms-ai", "agent"),
-        PI_CODING_AGENT_DIR: (home) => path.join(home, ".dmms-ai", "agent"),
+        DRYADS_AI_AGENT_DIR: (home) => path.join(home, ".dryads-ai", "agent"),
+        PI_CODING_AGENT_DIR: (home) => path.join(home, ".dryads-ai", "agent"),
       },
-      prefix: "dmms-ai-reply-",
+      prefix: "dryads-ai-reply-",
     },
   );
 }
@@ -77,7 +77,7 @@ export function makeWhatsAppDirectiveConfig(
   return {
     agents: {
       defaults: {
-        workspace: path.join(home, "dmms-ai"),
+        workspace: path.join(home, "dryads-ai"),
         ...defaults,
       },
     },
@@ -148,7 +148,7 @@ export function makeRestrictedElevatedDisabledConfig(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "dmms-ai"),
+        workspace: path.join(home, "dryads-ai"),
       },
       list: [
         {

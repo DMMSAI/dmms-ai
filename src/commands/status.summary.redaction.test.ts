@@ -29,14 +29,14 @@ describe("redactSensitiveStatusSummary", () => {
       channelSummary: ["ok"],
       queuedSystemEvents: ["none"],
       sessions: {
-        paths: ["/tmp/dmms-ai/sessions.json"],
+        paths: ["/tmp/dryads-ai/sessions.json"],
         count: 1,
         defaults: { model: "gpt-5", contextTokens: 200_000 },
         recent: [createRecentSessionRow()],
         byAgent: [
           {
             agentId: "main",
-            path: "/tmp/dmms-ai/main-sessions.json",
+            path: "/tmp/dryads-ai/main-sessions.json",
             count: 1,
             recent: [createRecentSessionRow()],
           },

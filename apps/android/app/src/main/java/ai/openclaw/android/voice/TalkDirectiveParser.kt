@@ -1,4 +1,4 @@
-package ai.dmmsai.android.voice
+package ai.dryadsai.android.voice
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement

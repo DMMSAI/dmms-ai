@@ -1,7 +1,7 @@
 ---
-summary: "DMMS AI capabilities across channels, routing, media, and UX."
+summary: "Dryads AI capabilities across channels, routing, media, and UX."
 read_when:
-  - You want a full list of what DMMS AI supports
+  - You want a full list of what Dryads AI supports
 title: "Features"
 ---
 

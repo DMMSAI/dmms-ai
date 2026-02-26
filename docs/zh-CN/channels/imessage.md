@@ -22,7 +22,7 @@ x-i18n:
 1. 确保在此 Mac 上已登录"信息"。
 2. 安装 `imsg`：
    - `brew install steipete/tap/imsg`
-3. 配置 DMMS AI 的 `channels.imessage.cliPath` 和 `channels.imessage.dbPath`。
+3. 配置 Dryads AI 的 `channels.imessage.cliPath` 和 `channels.imessage.dbPath`。
 4. 启动 Gateway 网关并批准所有 macOS 提示（自动化 + 完全磁盘访问权限）。
 
 最小配置：
@@ -61,7 +61,7 @@ x-i18n:
 ## 要求
 
 - 已登录"信息"的 macOS。
-- DMMS AI + `imsg` 的完全磁盘访问权限（访问"信息"数据库）。
+- Dryads AI + `imsg` 的完全磁盘访问权限（访问"信息"数据库）。
 - 发送时需要自动化权限。
 - `channels.imessage.cliPath` 可以指向任何代理 stdin/stdout 的命令（例如，通过 SSH 连接到另一台 Mac 并运行 `imsg rpc` 的包装脚本）。
 
@@ -76,7 +76,7 @@ x-i18n:
 
 1. 创建专用 Apple ID（例如：`my-cool-bot@icloud.com`）。
    - Apple 可能需要电话号码进行验证 / 2FA。
-2. 创建 macOS 用户（例如：`dmms-aihome`）并登录。
+2. 创建 macOS 用户（例如：`dryads-aihome`）并登录。
 3. 在该 macOS 用户中打开"信息"并使用机器人 Apple ID 登录 iMessage。
 4. 启用远程登录（系统设置 → 通用 → 共享 → 远程登录）。
 5. 安装 `imsg`：
@@ -122,7 +122,7 @@ exec /usr/bin/ssh -o BatchMode=yes -o ConnectTimeout=5 -T <bot-macos-user>@local
 
 ### 远程/SSH 变体（可选）
 
-如果你想在另一台 Mac 上使用 iMessage，请将 `channels.imessage.cliPath` 设置为通过 SSH 在远程 macOS 主机上运行 `imsg` 的包装脚本。DMMS AI 只需要 stdio。
+如果你想在另一台 Mac 上使用 iMessage，请将 `channels.imessage.cliPath` 设置为通过 SSH 在远程 macOS 主机上运行 `imsg` 的包装脚本。Dryads AI 只需要 stdio。
 
 示例包装脚本：
 
@@ -131,7 +131,7 @@ exec /usr/bin/ssh -o BatchMode=yes -o ConnectTimeout=5 -T <bot-macos-user>@local
 exec ssh -T gateway-host imsg "$@"
 ```
 
-**远程附件：** 当 `cliPath` 通过 SSH 指向远程主机时，"信息"数据库中的附件路径引用的是远程机器上的文件。DMMS AI 可以通过设置 `channels.imessage.remoteHost` 自动通过 SCP 获取这些文件：
+**远程附件：** 当 `cliPath` 通过 SSH 指向远程主机时，"信息"数据库中的附件路径引用的是远程机器上的文件。Dryads AI 可以通过设置 `channels.imessage.remoteHost` 自动通过 SCP 获取这些文件：
 
 ```json5
 {
@@ -145,7 +145,7 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-如果未设置 `remoteHost`，DMMS AI 会尝试通过解析包装脚本中的 SSH 命令自动检测。建议显式配置以提高可靠性。
+如果未设置 `remoteHost`，Dryads AI 会尝试通过解析包装脚本中的 SSH 命令自动检测。建议显式配置以提高可靠性。
 
 #### 通过 Tailscale 连接远程 Mac（示例）
 
@@ -156,7 +156,7 @@ exec ssh -T gateway-host imsg "$@"
 ```
 ┌──────────────────────────────┐          SSH (imsg rpc)          ┌──────────────────────────┐
 │ Gateway host (Linux/VM)      │──────────────────────────────────▶│ Mac with Messages + imsg │
-│ - dmms-ai gateway           │          SCP (attachments)        │ - Messages signed in     │
+│ - dryads-ai gateway           │          SCP (attachments)        │ - Messages signed in     │
 │ - channels.imessage.cliPath  │◀──────────────────────────────────│ - Remote Login enabled   │
 └──────────────────────────────┘                                   └──────────────────────────┘
               ▲
@@ -172,7 +172,7 @@ exec ssh -T gateway-host imsg "$@"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.dmms-ai/scripts/imsg-ssh",
+      cliPath: "~/.dryads-ai/scripts/imsg-ssh",
       remoteHost: "bot@mac-mini.tailnet-1234.ts.net",
       includeAttachments: true,
       dbPath: "/Users/bot/Library/Messages/chat.db",
@@ -181,7 +181,7 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-示例包装脚本（`~/.dmms-ai/scripts/imsg-ssh`）：
+示例包装脚本（`~/.dryads-ai/scripts/imsg-ssh`）：
 
 ```bash
 #!/usr/bin/env bash
@@ -194,7 +194,7 @@ exec ssh -T bot@mac-mini.tailnet-1234.ts.net imsg "$@"
 - 使用 SSH 密钥使 `ssh bot@mac-mini.tailnet-1234.ts.net` 无需提示即可工作。
 - `remoteHost` 应与 SSH 目标匹配，以便 SCP 可以获取附件。
 
-多账户支持：使用 `channels.imessage.accounts` 配置每个账户及可选的 `name`。参见 [`gateway/configuration`](/gateway/configuration#telegramaccounts--discordaccounts--slackaccounts--signalaccounts--imessageaccounts) 了解共享模式。不要提交 `~/.dmms-ai/dmms-ai.json`（它通常包含令牌）。
+多账户支持：使用 `channels.imessage.accounts` 配置每个账户及可选的 `name`。参见 [`gateway/configuration`](/gateway/configuration#telegramaccounts--discordaccounts--slackaccounts--signalaccounts--imessageaccounts) 了解共享模式。不要提交 `~/.dryads-ai/dryads-ai.json`（它通常包含令牌）。
 
 ## 访问控制（私信 + 群组）
 
@@ -203,8 +203,8 @@ exec ssh -T bot@mac-mini.tailnet-1234.ts.net imsg "$@"
 - 默认：`channels.imessage.dmPolicy = "pairing"`。
 - 未知发送者会收到配对码；消息在批准前会被忽略（配对码在 1 小时后过期）。
 - 批准方式：
-  - `dmms-ai pairing list imessage`
-  - `dmms-ai pairing approve imessage <CODE>`
+  - `dryads-ai pairing list imessage`
+  - `dryads-ai pairing approve imessage <CODE>`
 - 配对是 iMessage 私信的默认令牌交换方式。详情：[配对](/channels/pairing)
 
 群组：
@@ -223,7 +223,7 @@ exec ssh -T bot@mac-mini.tailnet-1234.ts.net imsg "$@"
 
 某些 iMessage 会话可能有多个参与者，但根据"信息"存储聊天标识符的方式，仍以 `is_group=false` 到达。
 
-如果你在 `channels.imessage.groups` 下显式配置了 `chat_id`，DMMS AI 会将该会话视为"群组"用于：
+如果你在 `channels.imessage.groups` 下显式配置了 `chat_id`，Dryads AI 会将该会话视为"群组"用于：
 
 - 会话隔离（独立的 `agent:<agentId>:imessage:group:<chat_id>` 会话键）
 - 群组允许列表 / 提及检测行为

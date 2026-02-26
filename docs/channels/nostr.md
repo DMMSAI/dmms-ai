@@ -1,7 +1,7 @@
 ---
 summary: "Nostr DM channel via NIP-04 encrypted messages"
 read_when:
-  - You want DMMS AI to receive DMs via Nostr
+  - You want Dryads AI to receive DMs via Nostr
   - You're setting up decentralized messaging
 title: "Nostr"
 ---
@@ -10,13 +10,13 @@ title: "Nostr"
 
 **Status:** Optional plugin (disabled by default).
 
-Nostr is a decentralized protocol for social networking. This channel enables DMMS AI to receive and respond to encrypted direct messages (DMs) via NIP-04.
+Nostr is a decentralized protocol for social networking. This channel enables Dryads AI to receive and respond to encrypted direct messages (DMs) via NIP-04.
 
 ## Install (on demand)
 
 ### Onboarding (recommended)
 
-- The onboarding wizard (`dmms-ai onboard`) and `dmms-ai channels add` list optional channel plugins.
+- The onboarding wizard (`dryads-ai onboard`) and `dryads-ai channels add` list optional channel plugins.
 - Selecting Nostr prompts you to install the plugin on demand.
 
 Install defaults:
@@ -29,13 +29,13 @@ You can always override the choice in the prompt.
 ### Manual install
 
 ```bash
-dmms-ai plugins install @dmms-ai/nostr
+dryads-ai plugins install @dryads-ai/nostr
 ```
 
 Use a local checkout (dev workflows):
 
 ```bash
-dmms-ai plugins install --link <path-to-dmms-ai>/extensions/nostr
+dryads-ai plugins install --link <path-to-dryads-ai>/extensions/nostr
 ```
 
 Restart the Gateway after installing or enabling plugins.
@@ -93,14 +93,14 @@ Example:
     "nostr": {
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
-        "name": "dmms-ai",
-        "displayName": "DMMS AI",
+        "name": "dryads-ai",
+        "displayName": "Dryads AI",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",
         "website": "https://example.com",
-        "nip05": "dmms-ai@example.com",
-        "lud16": "dmms-ai@example.com"
+        "nip05": "dryads-ai@example.com",
+        "lud16": "dryads-ai@example.com"
       }
     }
   }

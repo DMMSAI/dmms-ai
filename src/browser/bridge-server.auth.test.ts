@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it } from "vitest";
 import { startBrowserBridgeServer, stopBrowserBridgeServer } from "./bridge-server.js";
 import type { ResolvedBrowserConfig } from "./config.js";
 import {
-  DEFAULT_DMMS_AI_BROWSER_COLOR,
-  DEFAULT_DMMS_AI_BROWSER_PROFILE_NAME,
+  DEFAULT_DRYADS_AI_BROWSER_COLOR,
+  DEFAULT_DRYADS_AI_BROWSER_PROFILE_NAME,
 } from "./constants.js";
 
 function buildResolvedConfig(): ResolvedBrowserConfig {
@@ -17,16 +17,16 @@ function buildResolvedConfig(): ResolvedBrowserConfig {
     remoteCdpTimeoutMs: 1500,
     remoteCdpHandshakeTimeoutMs: 3000,
     extraArgs: [],
-    color: DEFAULT_DMMS_AI_BROWSER_COLOR,
+    color: DEFAULT_DRYADS_AI_BROWSER_COLOR,
     executablePath: undefined,
     headless: true,
     noSandbox: false,
     attachOnly: true,
-    defaultProfile: DEFAULT_DMMS_AI_BROWSER_PROFILE_NAME,
+    defaultProfile: DEFAULT_DRYADS_AI_BROWSER_PROFILE_NAME,
     profiles: {
-      [DEFAULT_DMMS_AI_BROWSER_PROFILE_NAME]: {
+      [DEFAULT_DRYADS_AI_BROWSER_PROFILE_NAME]: {
         cdpPort: 1,
-        color: DEFAULT_DMMS_AI_BROWSER_COLOR,
+        color: DEFAULT_DRYADS_AI_BROWSER_COLOR,
       },
     },
   } as unknown as ResolvedBrowserConfig;
@@ -60,7 +60,7 @@ describe("startBrowserBridgeServer auth", () => {
     expect(authed.status).toBe(200);
   });
 
-  it("accepts x-dmms-ai-password when authPassword is set", async () => {
+  it("accepts x-dryads-ai-password when authPassword is set", async () => {
     const bridge = await startBrowserBridgeServer({
       resolved: buildResolvedConfig(),
       authPassword: "secret-password",
@@ -71,7 +71,7 @@ describe("startBrowserBridgeServer auth", () => {
     expect(unauth.status).toBe(401);
 
     const authed = await fetch(`${bridge.baseUrl}/`, {
-      headers: { "x-dmms-ai-password": "secret-password" },
+      headers: { "x-dryads-ai-password": "secret-password" },
     });
     expect(authed.status).toBe(200);
   });

@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui.chat
+package ai.dryadsai.android.ui.chat
 
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -31,10 +31,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
-import ai.dmmsai.android.chat.ChatMessage
-import ai.dmmsai.android.chat.ChatMessageContent
-import ai.dmmsai.android.chat.ChatPendingToolCall
-import ai.dmmsai.android.tools.ToolDisplayRegistry
+import ai.dryadsai.android.chat.ChatMessage
+import ai.dryadsai.android.chat.ChatMessageContent
+import ai.dryadsai.android.chat.ChatPendingToolCall
+import ai.dryadsai.android.tools.ToolDisplayRegistry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.compose.ui.platform.LocalContext

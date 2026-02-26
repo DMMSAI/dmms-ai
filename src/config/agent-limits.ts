@@ -1,9 +1,9 @@
-import type { DmmsAiConfig } from "./types.js";
+import type { DryadsAiConfig } from "./types.js";
 
 export const DEFAULT_AGENT_MAX_CONCURRENT = 4;
 export const DEFAULT_SUBAGENT_MAX_CONCURRENT = 8;
 
-export function resolveAgentMaxConcurrent(cfg?: DmmsAiConfig): number {
+export function resolveAgentMaxConcurrent(cfg?: DryadsAiConfig): number {
   const raw = cfg?.agents?.defaults?.maxConcurrent;
   if (typeof raw === "number" && Number.isFinite(raw)) {
     return Math.max(1, Math.floor(raw));
@@ -11,7 +11,7 @@ export function resolveAgentMaxConcurrent(cfg?: DmmsAiConfig): number {
   return DEFAULT_AGENT_MAX_CONCURRENT;
 }
 
-export function resolveSubagentMaxConcurrent(cfg?: DmmsAiConfig): number {
+export function resolveSubagentMaxConcurrent(cfg?: DryadsAiConfig): number {
   const raw = cfg?.agents?.defaults?.subagents?.maxConcurrent;
   if (typeof raw === "number" && Number.isFinite(raw)) {
     return Math.max(1, Math.floor(raw));

@@ -79,7 +79,7 @@ beforeAll(async () => {
 beforeEach(() => {
   state.runEmbeddedPiAgentMock.mockReset();
   state.runCliAgentMock.mockReset();
-  vi.stubEnv("DMMS_AI_TEST_FAST", "1");
+  vi.stubEnv("DRYADS_AI_TEST_FAST", "1");
 });
 
 function createMinimalRun(params?: {
@@ -270,18 +270,18 @@ describe("runReplyAgent typing (heartbeat)", () => {
   let caseId = 0;
 
   type StateEnvSnapshot = {
-    DMMS_AI_STATE_DIR: string | undefined;
+    DRYADS_AI_STATE_DIR: string | undefined;
   };
 
   function snapshotStateEnv(): StateEnvSnapshot {
-    return { DMMS_AI_STATE_DIR: process.env.DMMS_AI_STATE_DIR };
+    return { DRYADS_AI_STATE_DIR: process.env.DRYADS_AI_STATE_DIR };
   }
 
   function restoreStateEnv(snapshot: StateEnvSnapshot) {
-    if (snapshot.DMMS_AI_STATE_DIR === undefined) {
-      delete process.env.DMMS_AI_STATE_DIR;
+    if (snapshot.DRYADS_AI_STATE_DIR === undefined) {
+      delete process.env.DRYADS_AI_STATE_DIR;
     } else {
-      process.env.DMMS_AI_STATE_DIR = snapshot.DMMS_AI_STATE_DIR;
+      process.env.DRYADS_AI_STATE_DIR = snapshot.DRYADS_AI_STATE_DIR;
     }
   }
 
@@ -289,7 +289,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
     const stateDir = path.join(fixtureRoot, `case-${++caseId}`);
     await fs.mkdir(stateDir, { recursive: true });
     const envSnapshot = snapshotStateEnv();
-    process.env.DMMS_AI_STATE_DIR = stateDir;
+    process.env.DRYADS_AI_STATE_DIR = stateDir;
     try {
       return await fn(stateDir);
     } finally {
@@ -319,7 +319,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
   }
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "dmms-ai-typing-heartbeat-"));
+    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "dryads-ai-typing-heartbeat-"));
   });
 
   afterAll(async () => {
@@ -813,7 +813,7 @@ describe("runReplyAgent memory flush", () => {
   }
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "dmms-ai-memory-flush-"));
+    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "dryads-ai-memory-flush-"));
   });
 
   afterAll(async () => {

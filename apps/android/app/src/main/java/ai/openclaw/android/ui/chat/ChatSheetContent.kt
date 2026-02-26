@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui.chat
+package ai.dryadsai.android.ui.chat
 
 import android.content.ContentResolver
 import android.net.Uri
@@ -19,8 +19,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import ai.dmmsai.android.MainViewModel
-import ai.dmmsai.android.chat.OutgoingAttachment
+import ai.dryadsai.android.MainViewModel
+import ai.dryadsai.android.chat.OutgoingAttachment
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

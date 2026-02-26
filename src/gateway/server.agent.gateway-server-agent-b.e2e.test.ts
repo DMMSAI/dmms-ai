@@ -141,7 +141,7 @@ async function sendAgentWsRequestAndWaitFinal(
 }
 
 async function useTempSessionStorePath() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gw-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gw-"));
   testState.sessionStorePath = path.join(dir, "sessions.json");
 }
 

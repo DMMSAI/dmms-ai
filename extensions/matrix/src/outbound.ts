@@ -1,4 +1,4 @@
-import type { ChannelOutboundAdapter } from "dmms-ai/plugin-sdk";
+import type { ChannelOutboundAdapter } from "dryads-ai/plugin-sdk";
 import { sendMessageMatrix, sendPollMatrix } from "./matrix/send.js";
 import { getMatrixRuntime } from "./runtime.js";
 

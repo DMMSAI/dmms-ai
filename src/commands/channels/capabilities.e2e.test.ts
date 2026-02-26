@@ -92,7 +92,7 @@ describe("channelsCapabilitiesCommand", () => {
         botToken: "xoxb-bot",
         config: { userToken: "xoxp-user" },
       },
-      probe: { ok: true, bot: { name: "dmms-ai" }, team: { name: "team" } },
+      probe: { ok: true, bot: { name: "dryads-ai" }, team: { name: "team" } },
     });
     vi.mocked(listChannelPlugins).mockReturnValue([plugin]);
     vi.mocked(getChannelPlugin).mockReturnValue(plugin);

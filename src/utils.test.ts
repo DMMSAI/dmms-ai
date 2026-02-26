@@ -42,7 +42,7 @@ describe("withWhatsAppPrefix", () => {
 
 describe("ensureDir", () => {
   it("creates nested directory", async () => {
-    const tmp = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dmms-ai-test-"));
+    const tmp = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dryads-ai-test-"));
     const target = path.join(tmp, "nested", "dir");
     await ensureDir(target);
     expect(fs.existsSync(target)).toBe(true);
@@ -97,7 +97,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @lid from authDir mapping files", () => {
-    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-auth-"));
+    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-auth-"));
     const mappingPath = path.join(authDir, "lid-mapping-456_reverse.json");
     fs.writeFileSync(mappingPath, JSON.stringify("5559876"));
     expect(jidToE164("456@lid", { authDir })).toBe("+5559876");
@@ -105,7 +105,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @hosted.lid from authDir mapping files", () => {
-    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-auth-"));
+    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-auth-"));
     const mappingPath = path.join(authDir, "lid-mapping-789_reverse.json");
     fs.writeFileSync(mappingPath, JSON.stringify(4440001));
     expect(jidToE164("789@hosted.lid", { authDir })).toBe("+4440001");
@@ -117,8 +117,8 @@ describe("jidToE164", () => {
   });
 
   it("falls back through lidMappingDirs in order", () => {
-    const first = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-lid-a-"));
-    const second = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-lid-b-"));
+    const first = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-lid-a-"));
+    const second = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-lid-b-"));
     const mappingPath = path.join(second, "lid-mapping-321_reverse.json");
     fs.writeFileSync(mappingPath, JSON.stringify("123321"));
     expect(jidToE164("321@lid", { lidMappingDirs: [first, second] })).toBe("+123321");
@@ -128,10 +128,10 @@ describe("jidToE164", () => {
 });
 
 describe("resolveConfigDir", () => {
-  it("prefers ~/.dmms-ai when legacy dir is missing", async () => {
-    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dmms-ai-config-dir-"));
+  it("prefers ~/.dryads-ai when legacy dir is missing", async () => {
+    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "dryads-ai-config-dir-"));
     try {
-      const newDir = path.join(root, ".dmms-ai");
+      const newDir = path.join(root, ".dryads-ai");
       await fs.promises.mkdir(newDir, { recursive: true });
       const resolved = resolveConfigDir({} as NodeJS.ProcessEnv, () => root);
       expect(resolved).toBe(newDir);
@@ -142,37 +142,39 @@ describe("resolveConfigDir", () => {
 });
 
 describe("resolveHomeDir", () => {
-  it("prefers DMMS_AI_HOME over HOME", () => {
-    vi.stubEnv("DMMS_AI_HOME", "/srv/dmms-ai-home");
+  it("prefers DRYADS_AI_HOME over HOME", () => {
+    vi.stubEnv("DRYADS_AI_HOME", "/srv/dryads-ai-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveHomeDir()).toBe(path.resolve("/srv/dmms-ai-home"));
+    expect(resolveHomeDir()).toBe(path.resolve("/srv/dryads-ai-home"));
 
     vi.unstubAllEnvs();
   });
 });
 
 describe("shortenHomePath", () => {
-  it("uses $DMMS_AI_HOME prefix when DMMS_AI_HOME is set", () => {
-    vi.stubEnv("DMMS_AI_HOME", "/srv/dmms-ai-home");
+  it("uses $DRYADS_AI_HOME prefix when DRYADS_AI_HOME is set", () => {
+    vi.stubEnv("DRYADS_AI_HOME", "/srv/dryads-ai-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(shortenHomePath(`${path.resolve("/srv/dmms-ai-home")}/.dmms-ai/dmms-ai.json`)).toBe(
-      "$DMMS_AI_HOME/.dmms-ai/dmms-ai.json",
-    );
+    expect(
+      shortenHomePath(`${path.resolve("/srv/dryads-ai-home")}/.dryads-ai/dryads-ai.json`),
+    ).toBe("$DRYADS_AI_HOME/.dryads-ai/dryads-ai.json");
 
     vi.unstubAllEnvs();
   });
 });
 
 describe("shortenHomeInString", () => {
-  it("uses $DMMS_AI_HOME replacement when DMMS_AI_HOME is set", () => {
-    vi.stubEnv("DMMS_AI_HOME", "/srv/dmms-ai-home");
+  it("uses $DRYADS_AI_HOME replacement when DRYADS_AI_HOME is set", () => {
+    vi.stubEnv("DRYADS_AI_HOME", "/srv/dryads-ai-home");
     vi.stubEnv("HOME", "/home/other");
 
     expect(
-      shortenHomeInString(`config: ${path.resolve("/srv/dmms-ai-home")}/.dmms-ai/dmms-ai.json`),
-    ).toBe("config: $DMMS_AI_HOME/.dmms-ai/dmms-ai.json");
+      shortenHomeInString(
+        `config: ${path.resolve("/srv/dryads-ai-home")}/.dryads-ai/dryads-ai.json`,
+      ),
+    ).toBe("config: $DRYADS_AI_HOME/.dryads-ai/dryads-ai.json");
 
     vi.unstubAllEnvs();
   });
@@ -202,18 +204,18 @@ describe("resolveUserPath", () => {
   });
 
   it("expands ~/ to home dir", () => {
-    expect(resolveUserPath("~/dmms-ai")).toBe(path.resolve(os.homedir(), "dmms-ai"));
+    expect(resolveUserPath("~/dryads-ai")).toBe(path.resolve(os.homedir(), "dryads-ai"));
   });
 
   it("resolves relative paths", () => {
     expect(resolveUserPath("tmp/dir")).toBe(path.resolve("tmp/dir"));
   });
 
-  it("prefers DMMS_AI_HOME for tilde expansion", () => {
-    vi.stubEnv("DMMS_AI_HOME", "/srv/dmms-ai-home");
+  it("prefers DRYADS_AI_HOME for tilde expansion", () => {
+    vi.stubEnv("DRYADS_AI_HOME", "/srv/dryads-ai-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveUserPath("~/dmms-ai")).toBe(path.resolve("/srv/dmms-ai-home", "dmms-ai"));
+    expect(resolveUserPath("~/dryads-ai")).toBe(path.resolve("/srv/dryads-ai-home", "dryads-ai"));
 
     vi.unstubAllEnvs();
   });

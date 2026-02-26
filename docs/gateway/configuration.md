@@ -1,7 +1,7 @@
 ---
 summary: "Configuration overview: common tasks, quick setup, and links to the full reference"
 read_when:
-  - Setting up DMMS AI for the first time
+  - Setting up Dryads AI for the first time
   - Looking for common configuration patterns
   - Navigating to specific config sections
 title: "Configuration"
@@ -9,9 +9,9 @@ title: "Configuration"
 
 # Configuration
 
-DMMS AI reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.dmms-ai/dmms-ai.json`.
+Dryads AI reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.dryads-ai/dryads-ai.json`.
 
-If the file is missing, DMMS AI uses safe defaults. Common reasons to add a config:
+If the file is missing, Dryads AI uses safe defaults. Common reasons to add a config:
 
 - Connect channels and control who can message the bot
 - Set models, tools, sandboxing, or automation (cron, hooks)
@@ -20,15 +20,15 @@ If the file is missing, DMMS AI uses safe defaults. Common reasons to add a conf
 See the [full reference](/gateway/configuration-reference) for every available field.
 
 <Tip>
-**New to configuration?** Start with `dmms-ai onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
+**New to configuration?** Start with `dryads-ai onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
 </Tip>
 
 ## Minimal config
 
 ```json5
-// ~/.dmms-ai/dmms-ai.json
+// ~/.dryads-ai/dryads-ai.json
 {
-  agents: { defaults: { workspace: "~/.dmms-ai/workspace" } },
+  agents: { defaults: { workspace: "~/.dryads-ai/workspace" } },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
@@ -38,15 +38,15 @@ See the [full reference](/gateway/configuration-reference) for every available f
 <Tabs>
   <Tab title="Interactive wizard">
     ```bash
-    dmms-ai onboard       # full setup wizard
-    dmms-ai configure     # config wizard
+    dryads-ai onboard       # full setup wizard
+    dryads-ai configure     # config wizard
     ```
   </Tab>
   <Tab title="CLI (one-liners)">
     ```bash
-    dmms-ai config get agents.defaults.workspace
-    dmms-ai config set agents.defaults.heartbeat.every "2h"
-    dmms-ai config unset tools.web.search.apiKey
+    dryads-ai config get agents.defaults.workspace
+    dryads-ai config set agents.defaults.heartbeat.every "2h"
+    dryads-ai config unset tools.web.search.apiKey
     ```
   </Tab>
   <Tab title="Control UI">
@@ -54,22 +54,22 @@ See the [full reference](/gateway/configuration-reference) for every available f
     The Control UI renders a form from the config schema, with a **Raw JSON** editor as an escape hatch.
   </Tab>
   <Tab title="Direct edit">
-    Edit `~/.dmms-ai/dmms-ai.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
+    Edit `~/.dryads-ai/dryads-ai.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
   </Tab>
 </Tabs>
 
 ## Strict validation
 
 <Warning>
-DMMS AI only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
+Dryads AI only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
 </Warning>
 
 When validation fails:
 
 - The Gateway does not boot
-- Only diagnostic commands work (`dmms-ai doctor`, `dmms-ai logs`, `dmms-ai health`, `dmms-ai status`)
-- Run `dmms-ai doctor` to see exact issues
-- Run `dmms-ai doctor --fix` (or `--yes`) to apply repairs
+- Only diagnostic commands work (`dryads-ai doctor`, `dryads-ai logs`, `dryads-ai health`, `dryads-ai status`)
+- Run `dryads-ai doctor` to see exact issues
+- Run `dryads-ai doctor --fix` (or `--yes`) to apply repairs
 
 ## Common tasks
 
@@ -156,7 +156,7 @@ When validation fails:
           {
             id: "main",
             groupChat: {
-              mentionPatterns: ["@dmms-ai", "dmms-ai"],
+              mentionPatterns: ["@dryads-ai", "dryads-ai"],
             },
           },
         ],
@@ -289,8 +289,8 @@ When validation fails:
     {
       agents: {
         list: [
-          { id: "home", default: true, workspace: "~/.dmms-ai/workspace-home" },
-          { id: "work", workspace: "~/.dmms-ai/workspace-work" },
+          { id: "home", default: true, workspace: "~/.dryads-ai/workspace-home" },
+          { id: "work", workspace: "~/.dryads-ai/workspace-work" },
         ],
       },
       bindings: [
@@ -308,7 +308,7 @@ When validation fails:
     Use `$include` to organize large configs:
 
     ```json5
-    // ~/.dmms-ai/dmms-ai.json
+    // ~/.dryads-ai/dryads-ai.json
     {
       gateway: { port: 18789 },
       agents: { $include: "./agents.json5" },
@@ -330,7 +330,7 @@ When validation fails:
 
 ## Config hot reload
 
-The Gateway watches `~/.dmms-ai/dmms-ai.json` and applies changes automatically — no manual restart needed for most settings.
+The Gateway watches `~/.dryads-ai/dryads-ai.json` and applies changes automatically — no manual restart needed for most settings.
 
 ### Reload modes
 
@@ -375,7 +375,7 @@ Most fields hot-apply without downtime. In `hybrid` mode, restart-required chang
     Validates + writes the full config and restarts the Gateway in one step.
 
     <Warning>
-    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `dmms-ai config set` for single keys.
+    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `dryads-ai config set` for single keys.
     </Warning>
 
     Params:
@@ -387,9 +387,9 @@ Most fields hot-apply without downtime. In `hybrid` mode, restart-required chang
     - `restartDelayMs` (optional) — delay before restart (default 2000)
 
     ```bash
-    dmms-ai gateway call config.get --params '{}'  # capture payload.hash
-    dmms-ai gateway call config.apply --params '{
-      "raw": "{ agents: { defaults: { workspace: \"~/.dmms-ai/workspace\" } } }",
+    dryads-ai gateway call config.get --params '{}'  # capture payload.hash
+    dryads-ai gateway call config.apply --params '{
+      "raw": "{ agents: { defaults: { workspace: \"~/.dryads-ai/workspace\" } } }",
       "baseHash": "<hash>",
       "sessionKey": "agent:main:whatsapp:dm:+15555550123"
     }'
@@ -411,7 +411,7 @@ Most fields hot-apply without downtime. In `hybrid` mode, restart-required chang
     - `sessionKey`, `note`, `restartDelayMs` — same as `config.apply`
 
     ```bash
-    dmms-ai gateway call config.patch --params '{
+    dryads-ai gateway call config.patch --params '{
       "raw": "{ channels: { telegram: { groups: { \"*\": { requireMention: false } } } } }",
       "baseHash": "<hash>"
     }'
@@ -422,10 +422,10 @@ Most fields hot-apply without downtime. In `hybrid` mode, restart-required chang
 
 ## Environment variables
 
-DMMS AI reads env vars from the parent process plus:
+Dryads AI reads env vars from the parent process plus:
 
 - `.env` from the current working directory (if present)
-- `~/.dmms-ai/.env` (global fallback)
+- `~/.dryads-ai/.env` (global fallback)
 
 Neither file overrides existing env vars. You can also set inline env vars in config:
 
@@ -439,7 +439,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 ```
 
 <Accordion title="Shell env import (optional)">
-  If enabled and expected keys aren't set, DMMS AI runs your login shell and imports only the missing keys:
+  If enabled and expected keys aren't set, Dryads AI runs your login shell and imports only the missing keys:
 
 ```json5
 {
@@ -449,7 +449,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 }
 ```
 
-Env var equivalent: `DMMS_AI_LOAD_SHELL_ENV=1`
+Env var equivalent: `DRYADS_AI_LOAD_SHELL_ENV=1`
 </Accordion>
 
 <Accordion title="Env var substitution in config values">
@@ -457,7 +457,7 @@ Env var equivalent: `DMMS_AI_LOAD_SHELL_ENV=1`
 
 ```json5
 {
-  gateway: { auth: { token: "${DMMS_AI_GATEWAY_TOKEN}" } },
+  gateway: { auth: { token: "${DRYADS_AI_GATEWAY_TOKEN}" } },
   models: { providers: { custom: { apiKey: "${CUSTOM_API_KEY}" } } },
 }
 ```

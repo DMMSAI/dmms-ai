@@ -1,12 +1,12 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct WebChatMainSessionKeyTests {
     @Test func configGetSnapshotMainKeyFallsBackToMainWhenMissing() throws {
         let json = """
         {
-          "path": "/Users/pete/.dmms-ai/dmms-ai.json",
+          "path": "/Users/pete/.dryads-ai/dryads-ai.json",
           "exists": true,
           "raw": null,
           "parsed": {},
@@ -22,7 +22,7 @@ import Testing
     @Test func configGetSnapshotMainKeyTrimsAndUsesValue() throws {
         let json = """
         {
-          "path": "/Users/pete/.dmms-ai/dmms-ai.json",
+          "path": "/Users/pete/.dryads-ai/dryads-ai.json",
           "exists": true,
           "raw": null,
           "parsed": {},

@@ -1,5 +1,5 @@
 import Testing
-@testable import DmmsAiChatUI
+@testable import DryadsAiChatUI
 
 @Suite struct AssistantTextParserTests {
     @Test func splitsThinkAndFinalSegments() {

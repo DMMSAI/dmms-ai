@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { DEFAULT_CHAT_CHANNEL } from "../../channels/registry.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 
 vi.mock("../../config/sessions.js", () => ({
   loadSessionStore: vi.fn().mockReturnValue({}),
@@ -16,12 +16,12 @@ import { loadSessionStore } from "../../config/sessions.js";
 import { resolveMessageChannelSelection } from "../../infra/outbound/channel-selection.js";
 import { resolveDeliveryTarget } from "./delivery-target.js";
 
-function makeCfg(overrides?: Partial<DmmsAiConfig>): DmmsAiConfig {
+function makeCfg(overrides?: Partial<DryadsAiConfig>): DryadsAiConfig {
   return {
     bindings: [],
     channels: {},
     ...overrides,
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
 const AGENT_ID = "agent-b";
@@ -38,7 +38,7 @@ function setMainSessionEntry(entry?: SessionStore[string]) {
 }
 
 async function resolveForAgent(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   target?: { channel?: "last" | "telegram"; to?: string };
 }) {
   const channel = params.target ? params.target.channel : DEFAULT_TARGET.channel;

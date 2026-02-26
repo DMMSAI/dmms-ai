@@ -1,5 +1,5 @@
-import type { DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
-import { emptyPluginConfigSchema } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
+import { emptyPluginConfigSchema } from "dryads-ai/plugin-sdk";
 import { discordPlugin } from "./src/channel.js";
 import { setDiscordRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "Discord",
   description: "Discord channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: DmmsAiPluginApi) {
+  register(api: DryadsAiPluginApi) {
     setDiscordRuntime(api.runtime);
     api.registerChannel({ plugin: discordPlugin });
   },

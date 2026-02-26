@@ -22,10 +22,10 @@ actor PortGuardian {
     }
 
     private var records: [Record] = []
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "portguard")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "portguard")
     private nonisolated static let appSupportDir: URL = {
         let base = FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return base.appendingPathComponent("DMMS AI", isDirectory: true)
+        return base.appendingPathComponent("Dryads AI", isDirectory: true)
     }()
 
     private nonisolated static var recordPath: URL {
@@ -267,7 +267,7 @@ actor PortGuardian {
     {
         let expectedDesc: String
         let okPredicate: (Listener) -> Bool
-        let expectedCommands = ["node", "dmms-ai", "tsx", "pnpm", "bun"]
+        let expectedCommands = ["node", "dryads-ai", "tsx", "pnpm", "bun"]
 
         switch mode {
         case .remote:
@@ -361,10 +361,10 @@ actor PortGuardian {
             if port == GatewayEnvironment.gatewayPort() { return cmd.contains("ssh") }
             return false
         case .local:
-            // The gateway daemon may listen as `dmms-ai` or as its runtime (`node`, `bun`, etc).
+            // The gateway daemon may listen as `dryads-ai` or as its runtime (`node`, `bun`, etc).
             if full.contains("gateway-daemon") { return true }
             // If args are unavailable, treat a CLI listener as expected.
-            if cmd.contains("dmms-ai"), full == cmd { return true }
+            if cmd.contains("dryads-ai"), full == cmd { return true }
             return false
         case .unconfigured:
             return false

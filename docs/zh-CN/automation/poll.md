@@ -25,19 +25,19 @@ x-i18n:
 
 ```bash
 # WhatsApp
-dmms-ai message poll --target +15555550123 \
+dryads-ai message poll --target +15555550123 \
   --poll-question "Lunch today?" --poll-option "Yes" --poll-option "No" --poll-option "Maybe"
-dmms-ai message poll --target 123456789@g.us \
+dryads-ai message poll --target 123456789@g.us \
   --poll-question "Meeting time?" --poll-option "10am" --poll-option "2pm" --poll-option "4pm" --poll-multi
 
 # Discord
-dmms-ai message poll --channel discord --target channel:123456789 \
+dryads-ai message poll --channel discord --target channel:123456789 \
   --poll-question "Snack?" --poll-option "Pizza" --poll-option "Sushi"
-dmms-ai message poll --channel discord --target channel:123456789 \
+dryads-ai message poll --channel discord --target channel:123456789 \
   --poll-question "Plan?" --poll-option "A" --poll-option "B" --poll-duration-hours 48
 
 # MS Teams
-dmms-ai message poll --channel msteams --target conversation:19:abc@thread.tacv2 \
+dryads-ai message poll --channel msteams --target conversation:19:abc@thread.tacv2 \
   --poll-question "Lunch?" --poll-option "Pizza" --poll-option "Sushi"
 ```
 
@@ -65,7 +65,7 @@ dmms-ai message poll --channel msteams --target conversation:19:abc@thread.tacv2
 
 - WhatsApp：2-12 个选项，`maxSelections` 必须在选项数量范围内，忽略 `durationHours`。
 - Discord：2-10 个选项，`durationHours` 限制在 1-768 小时之间（默认 24）。`maxSelections > 1` 启用多选；Discord 不支持严格的选择数量限制。
-- MS Teams：Adaptive Card 投票（由 DMMS AI 管理）。无原生投票 API；`durationHours` 被忽略。
+- MS Teams：Adaptive Card 投票（由 Dryads AI 管理）。无原生投票 API；`durationHours` 被忽略。
 
 ## 智能体工具（Message）
 
@@ -73,4 +73,4 @@ dmms-ai message poll --channel msteams --target conversation:19:abc@thread.tacv2
 
 注意：Discord 没有"恰好选择 N 个"模式；`pollMulti` 映射为多选。
 Teams 投票以 Adaptive Cards 形式渲染，需要 Gateway 网关保持在线
-以将投票记录到 `~/.dmms-ai/msteams-polls.json`。
+以将投票记录到 `~/.dryads-ai/msteams-polls.json`。

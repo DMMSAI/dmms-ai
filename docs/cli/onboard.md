@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `dmms-ai onboard` (interactive onboarding wizard)"
+summary: "CLI reference for `dryads-ai onboard` (interactive onboarding wizard)"
 read_when:
   - You want guided setup for gateway, workspace, auth, channels, and skills
 title: "onboard"
 ---
 
-# `dmms-ai onboard`
+# `dryads-ai onboard`
 
 Interactive onboarding wizard (local or remote Gateway setup).
 
@@ -20,16 +20,16 @@ Interactive onboarding wizard (local or remote Gateway setup).
 ## Examples
 
 ```bash
-dmms-ai onboard
-dmms-ai onboard --flow quickstart
-dmms-ai onboard --flow manual
-dmms-ai onboard --mode remote --remote-url ws://gateway-host:18789
+dryads-ai onboard
+dryads-ai onboard --flow quickstart
+dryads-ai onboard --flow manual
+dryads-ai onboard --mode remote --remote-url ws://gateway-host:18789
 ```
 
 Non-interactive custom provider:
 
 ```bash
-dmms-ai onboard --non-interactive \
+dryads-ai onboard --non-interactive \
   --auth-choice custom-api-key \
   --custom-base-url "https://llm.example.com/v1" \
   --custom-model-id "foo-large" \
@@ -46,7 +46,7 @@ If you specifically want the GLM Coding Plan endpoints, pick `zai-coding-global`
 
 ```bash
 # Promptless endpoint selection
-dmms-ai onboard --non-interactive \
+dryads-ai onboard --non-interactive \
   --auth-choice zai-coding-global \
   --zai-api-key "$ZAI_API_KEY"
 
@@ -60,15 +60,15 @@ Flow notes:
 
 - `quickstart`: minimal prompts, auto-generates a gateway token.
 - `manual`: full prompts for port/bind/auth (alias of `advanced`).
-- Fastest first chat: `dmms-ai dashboard` (Control UI, no channel setup).
+- Fastest first chat: `dryads-ai dashboard` (Control UI, no channel setup).
 - Custom Provider: connect any OpenAI or Anthropic compatible endpoint,
   including hosted providers not listed. Use Unknown to auto-detect.
 
 ## Common follow-up commands
 
 ```bash
-dmms-ai configure
-dmms-ai agents add <name>
+dryads-ai configure
+dryads-ai agents add <name>
 ```
 
 <Note>

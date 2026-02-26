@@ -121,7 +121,7 @@ async function tryInstallShellCompletion(opts: {
       if (!opts.skipPrompt) {
         defaultRuntime.log(
           theme.muted(
-            `Skipped. Run \`${replaceCliName(formatCliCommand("dmms-ai completion --install"), CLI_NAME)}\` later to enable.`,
+            `Skipped. Run \`${replaceCliName(formatCliCommand("dryads-ai completion --install"), CLI_NAME)}\` later to enable.`,
           ),
         );
       }
@@ -412,7 +412,7 @@ async function maybeRestartService(params: {
       if (!params.opts.json && restarted) {
         defaultRuntime.log(theme.success("Daemon restarted successfully."));
         defaultRuntime.log("");
-        process.env.DMMS_AI_UPDATE_IN_PROGRESS = "1";
+        process.env.DRYADS_AI_UPDATE_IN_PROGRESS = "1";
         try {
           const interactiveDoctor =
             Boolean(process.stdin.isTTY) && !params.opts.json && params.opts.yes !== true;
@@ -422,7 +422,7 @@ async function maybeRestartService(params: {
         } catch (err) {
           defaultRuntime.log(theme.warn(`Doctor failed: ${String(err)}`));
         } finally {
-          delete process.env.DMMS_AI_UPDATE_IN_PROGRESS;
+          delete process.env.DRYADS_AI_UPDATE_IN_PROGRESS;
         }
       }
 
@@ -430,7 +430,7 @@ async function maybeRestartService(params: {
         defaultRuntime.log(theme.success("Daemon restart initiated."));
         defaultRuntime.log(
           theme.muted(
-            `Verify with \`${replaceCliName(formatCliCommand("dmms-ai gateway status"), CLI_NAME)}\` once the gateway is back.`,
+            `Verify with \`${replaceCliName(formatCliCommand("dryads-ai gateway status"), CLI_NAME)}\` once the gateway is back.`,
           ),
         );
         defaultRuntime.log("");
@@ -440,7 +440,7 @@ async function maybeRestartService(params: {
         defaultRuntime.log(theme.warn(`Daemon restart failed: ${String(err)}`));
         defaultRuntime.log(
           theme.muted(
-            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("dmms-ai gateway restart"), CLI_NAME)}`,
+            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("dryads-ai gateway restart"), CLI_NAME)}`,
           ),
         );
       }
@@ -453,13 +453,13 @@ async function maybeRestartService(params: {
     if (params.result.mode === "npm" || params.result.mode === "pnpm") {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("dmms-ai doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("dmms-ai gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("dryads-ai doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("dryads-ai gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     } else {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("dmms-ai gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("dryads-ai gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     }
@@ -578,7 +578,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
 
   const showProgress = !opts.json && process.stdout.isTTY;
   if (!opts.json) {
-    defaultRuntime.log(theme.heading("Updating DMMS AI..."));
+    defaultRuntime.log(theme.heading("Updating Dryads AI..."));
     defaultRuntime.log("");
   }
 
@@ -639,12 +639,12 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.reason === "not-git-install") {
       defaultRuntime.log(
         theme.warn(
-          `Skipped: this DMMS AI install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("dmms-ai doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("dmms-ai gateway restart"), CLI_NAME)}\`.`,
+          `Skipped: this Dryads AI install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("dryads-ai doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("dryads-ai gateway restart"), CLI_NAME)}\`.`,
         ),
       );
       defaultRuntime.log(
         theme.muted(
-          `Examples: \`${replaceCliName("npm i -g dmms-ai@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g dmms-ai@latest", CLI_NAME)}\``,
+          `Examples: \`${replaceCliName("npm i -g dryads-ai@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g dryads-ai@latest", CLI_NAME)}\``,
         ),
       );
     }

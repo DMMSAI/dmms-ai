@@ -2,20 +2,20 @@ import Foundation
 
 enum LogLocator {
     private static var logDir: URL {
-        if let override = ProcessInfo.processInfo.environment["DMMS_AI_LOG_DIR"],
+        if let override = ProcessInfo.processInfo.environment["DRYADS_AI_LOG_DIR"],
            !override.isEmpty
         {
             return URL(fileURLWithPath: override)
         }
-        return URL(fileURLWithPath: "/tmp/dmms-ai")
+        return URL(fileURLWithPath: "/tmp/dryads-ai")
     }
 
     private static var stdoutLog: URL {
-        logDir.appendingPathComponent("dmms-ai-stdout.log")
+        logDir.appendingPathComponent("dryads-ai-stdout.log")
     }
 
     private static var gatewayLog: URL {
-        logDir.appendingPathComponent("dmms-ai-gateway.log")
+        logDir.appendingPathComponent("dryads-ai-gateway.log")
     }
 
     private static func ensureLogDirExists() {
@@ -26,7 +26,7 @@ enum LogLocator {
         (try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
     }
 
-    /// Returns the newest log file under /tmp/dmms-ai/ (rolling or stdout), or nil if none exist.
+    /// Returns the newest log file under /tmp/dryads-ai/ (rolling or stdout), or nil if none exist.
     static func bestLogFile() -> URL? {
         self.ensureLogDirExists()
         let fm = FileManager()
@@ -35,7 +35,7 @@ enum LogLocator {
             includingPropertiesForKeys: [.contentModificationDateKey],
             options: [.skipsHiddenFiles])) ?? []
 
-        let prefixes = ["dmms-ai"]
+        let prefixes = ["dryads-ai"]
         return files
             .filter { file in
                 prefixes.contains { file.lastPathComponent.hasPrefix($0) } && file.pathExtension == "log"

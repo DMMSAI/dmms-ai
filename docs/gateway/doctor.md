@@ -8,44 +8,44 @@ title: "Doctor"
 
 # Doctor
 
-`dmms-ai doctor` is the repair + migration tool for DMMS AI. It fixes stale
+`dryads-ai doctor` is the repair + migration tool for Dryads AI. It fixes stale
 config/state, checks health, and provides actionable repair steps.
 
 ## Quick start
 
 ```bash
-dmms-ai doctor
+dryads-ai doctor
 ```
 
 ### Headless / automation
 
 ```bash
-dmms-ai doctor --yes
+dryads-ai doctor --yes
 ```
 
 Accept defaults without prompting (including restart/service/sandbox repair steps when applicable).
 
 ```bash
-dmms-ai doctor --repair
+dryads-ai doctor --repair
 ```
 
 Apply recommended repairs without prompting (repairs + restarts where safe).
 
 ```bash
-dmms-ai doctor --repair --force
+dryads-ai doctor --repair --force
 ```
 
 Apply aggressive repairs too (overwrites custom supervisor configs).
 
 ```bash
-dmms-ai doctor --non-interactive
+dryads-ai doctor --non-interactive
 ```
 
 Run without prompts and only apply safe migrations (config normalization + on-disk state moves). Skips restart/service/sandbox actions that require human confirmation.
 Legacy state migrations run automatically when detected.
 
 ```bash
-dmms-ai doctor --deep
+dryads-ai doctor --deep
 ```
 
 Scan system services for extra gateway installs (launchd/systemd/schtasks).
@@ -53,7 +53,7 @@ Scan system services for extra gateway installs (launchd/systemd/schtasks).
 If you want to review changes before writing, open the config file first:
 
 ```bash
-cat ~/.dmms-ai/dmms-ai.json
+cat ~/.dryads-ai/dryads-ai.json
 ```
 
 ## What it does (summary)
@@ -68,7 +68,7 @@ cat ~/.dmms-ai/dmms-ai.json
 - State integrity and permissions checks (sessions, transcripts, state dir).
 - Config file permission checks (chmod 600) when running locally.
 - Model auth health: checks OAuth expiry, can refresh expiring tokens, and reports auth-profile cooldown/disabled states.
-- Extra workspace dir detection (`~/dmms-ai`).
+- Extra workspace dir detection (`~/dryads-ai`).
 - Sandbox image repair when sandboxing is enabled.
 - Legacy service migration and extra gateway detection.
 - Gateway runtime checks (service installed but not running; cached launchd label).
@@ -98,13 +98,13 @@ schema.
 ### 2) Legacy config key migrations
 
 When the config contains deprecated keys, other commands refuse to run and ask
-you to run `dmms-ai doctor`.
+you to run `dryads-ai doctor`.
 
 Doctor will:
 
 - Explain which legacy keys were found.
 - Show the migration it applied.
-- Rewrite `~/.dmms-ai/dmms-ai.json` with the updated schema.
+- Rewrite `~/.dryads-ai/dryads-ai.json` with the updated schema.
 
 The Gateway also auto-runs doctor migrations on startup when it detects a
 legacy config format, so stale configs are repaired without manual intervention.
@@ -138,18 +138,18 @@ remove the override and restore per-model API routing + costs.
 Doctor can migrate older on-disk layouts into the current structure:
 
 - Sessions store + transcripts:
-  - from `~/.dmms-ai/sessions/` to `~/.dmms-ai/agents/<agentId>/sessions/`
+  - from `~/.dryads-ai/sessions/` to `~/.dryads-ai/agents/<agentId>/sessions/`
 - Agent dir:
-  - from `~/.dmms-ai/agent/` to `~/.dmms-ai/agents/<agentId>/agent/`
+  - from `~/.dryads-ai/agent/` to `~/.dryads-ai/agents/<agentId>/agent/`
 - WhatsApp auth state (Baileys):
-  - from legacy `~/.dmms-ai/credentials/*.json` (except `oauth.json`)
-  - to `~/.dmms-ai/credentials/whatsapp/<accountId>/...` (default account id: `default`)
+  - from legacy `~/.dryads-ai/credentials/*.json` (except `oauth.json`)
+  - to `~/.dryads-ai/credentials/whatsapp/<accountId>/...` (default account id: `default`)
 
 These migrations are best-effort and idempotent; doctor will emit warnings when
 it leaves any legacy folders behind as backups. The Gateway/CLI also auto-migrates
 the legacy sessions + agent dir on startup so history/auth/models land in the
 per-agent path without a manual doctor run. WhatsApp auth is intentionally only
-migrated via `dmms-ai doctor`.
+migrated via `dryads-ai doctor`.
 
 ### 4) State integrity checks (session persistence, routing, and safety)
 
@@ -168,12 +168,12 @@ Doctor checks:
   transcript files.
 - **Main session “1-line JSONL”**: flags when the main transcript has only one
   line (history is not accumulating).
-- **Multiple state dirs**: warns when multiple `~/.dmms-ai` folders exist across
-  home directories or when `DMMS_AI_STATE_DIR` points elsewhere (history can
+- **Multiple state dirs**: warns when multiple `~/.dryads-ai` folders exist across
+  home directories or when `DRYADS_AI_STATE_DIR` points elsewhere (history can
   split between installs).
 - **Remote mode reminder**: if `gateway.mode=remote`, doctor reminds you to run
   it on the remote host (the state lives there).
-- **Config file permissions**: warns if `~/.dmms-ai/dmms-ai.json` is
+- **Config file permissions**: warns if `~/.dryads-ai/dryads-ai.json` is
   group/world readable and offers to tighten to `600`.
 
 ### 5) Model auth health (OAuth expiry)
@@ -202,9 +202,9 @@ switch to legacy names if the current image is missing.
 ### 8) Gateway service migrations and cleanup hints
 
 Doctor detects legacy gateway services (launchd/systemd/schtasks) and
-offers to remove them and install the DMMS AI service using the current gateway
+offers to remove them and install the Dryads AI service using the current gateway
 port. It can also scan for extra gateway-like services and print cleanup hints.
-Profile-named DMMS AI gateway services are considered first-class and are not
+Profile-named Dryads AI gateway services are considered first-class and are not
 flagged as "extra."
 
 ### 9) Security warnings
@@ -225,7 +225,7 @@ workspace.
 ### 12) Gateway auth checks (local token)
 
 Doctor warns when `gateway.auth` is missing on a local gateway and offers to
-generate a token. Use `dmms-ai doctor --generate-gateway-token` to force token
+generate a token. Use `dryads-ai doctor --generate-gateway-token` to force token
 creation in automation.
 
 ### 13) Gateway health check + restart
@@ -247,11 +247,11 @@ rewrite the service file/task to the current defaults.
 
 Notes:
 
-- `dmms-ai doctor` prompts before rewriting supervisor config.
-- `dmms-ai doctor --yes` accepts the default repair prompts.
-- `dmms-ai doctor --repair` applies recommended fixes without prompts.
-- `dmms-ai doctor --repair --force` overwrites custom supervisor configs.
-- You can always force a full rewrite via `dmms-ai gateway install --force`.
+- `dryads-ai doctor` prompts before rewriting supervisor config.
+- `dryads-ai doctor --yes` accepts the default repair prompts.
+- `dryads-ai doctor --repair` applies recommended fixes without prompts.
+- `dryads-ai doctor --repair --force` overwrites custom supervisor configs.
+- You can always force a full rewrite via `dryads-ai gateway install --force`.
 
 ### 16) Gateway runtime + port diagnostics
 

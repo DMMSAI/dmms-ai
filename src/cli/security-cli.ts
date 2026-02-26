@@ -35,11 +35,11 @@ export function registerSecurityCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai security audit", "Run a local security audit."],
-          ["dmms-ai security audit --deep", "Include best-effort live Gateway probe checks."],
-          ["dmms-ai security audit --fix", "Apply safe remediations and file-permission fixes."],
-          ["dmms-ai security audit --json", "Output machine-readable JSON."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/security", "docs.dmms-ai.com/cli/security")}\n`,
+          ["dryads-ai security audit", "Run a local security audit."],
+          ["dryads-ai security audit --deep", "Include best-effort live Gateway probe checks."],
+          ["dryads-ai security audit --fix", "Apply safe remediations and file-permission fixes."],
+          ["dryads-ai security audit --json", "Output machine-readable JSON."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/security", "docs.dryads-ai.com/cli/security")}\n`,
     );
 
   security
@@ -71,12 +71,12 @@ export function registerSecurityCli(program: Command) {
       const muted = (text: string) => (rich ? theme.muted(text) : text);
 
       const lines: string[] = [];
-      lines.push(heading("DMMS AI security audit"));
+      lines.push(heading("Dryads AI security audit"));
       lines.push(muted(`Summary: ${formatSummary(report.summary)}`));
-      lines.push(muted(`Run deeper: ${formatCliCommand("dmms-ai security audit --deep")}`));
+      lines.push(muted(`Run deeper: ${formatCliCommand("dryads-ai security audit --deep")}`));
 
       if (opts.fix) {
-        lines.push(muted(`Fix: ${formatCliCommand("dmms-ai security audit --fix")}`));
+        lines.push(muted(`Fix: ${formatCliCommand("dryads-ai security audit --fix")}`));
         if (!fixResult) {
           lines.push(muted("Fixes: failed to apply (unexpected error)"));
         } else if (

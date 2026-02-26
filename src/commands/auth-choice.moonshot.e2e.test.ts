@@ -6,7 +6,7 @@ import {
   createExitThrowingRuntime,
   createWizardPrompter,
   readAuthProfilesForAgent,
-  requireDmmsAiAgentDir,
+  requireDryadsAiAgentDir,
   setupAuthTestEnv,
 } from "./test-wizard-helpers.js";
 
@@ -16,14 +16,14 @@ function createPrompter(overrides: Partial<WizardPrompter>): WizardPrompter {
 
 describe("applyAuthChoice (moonshot)", () => {
   const lifecycle = createAuthTestLifecycle([
-    "DMMS_AI_STATE_DIR",
-    "DMMS_AI_AGENT_DIR",
+    "DRYADS_AI_STATE_DIR",
+    "DRYADS_AI_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "MOONSHOT_API_KEY",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("dmms-ai-auth-");
+    const env = await setupAuthTestEnv("dryads-ai-auth-");
     lifecycle.setStateDir(env.stateDir);
     delete process.env.MOONSHOT_API_KEY;
   }
@@ -31,7 +31,7 @@ describe("applyAuthChoice (moonshot)", () => {
   async function readAuthProfiles() {
     return await readAuthProfilesForAgent<{
       profiles?: Record<string, { key?: string }>;
-    }>(requireDmmsAiAgentDir());
+    }>(requireDryadsAiAgentDir());
   }
 
   async function runMoonshotCnFlow(params: {

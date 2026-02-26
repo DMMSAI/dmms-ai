@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createJiti } from "jiti";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { GatewayRequestHandler } from "../gateway/server-methods/types.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { resolveUserPath } from "../utils.js";
@@ -14,7 +14,7 @@ import {
   resolveMemorySlotDecision,
   type NormalizedPluginsConfig,
 } from "./config-state.js";
-import { discoverDmmsAiPlugins } from "./discovery.js";
+import { discoverDryadsAiPlugins } from "./discovery.js";
 import { initializeGlobalHookRunner } from "./hook-runner-global.js";
 import { loadPluginManifestRegistry } from "./manifest-registry.js";
 import { createPluginRegistry, type PluginRecord, type PluginRegistry } from "./registry.js";
@@ -22,8 +22,8 @@ import { setActivePluginRegistry } from "./runtime.js";
 import { createPluginRuntime } from "./runtime/index.js";
 import { validateJsonSchemaValue } from "./schema-validator.js";
 import type {
-  DmmsAiPluginDefinition,
-  DmmsAiPluginModule,
+  DryadsAiPluginDefinition,
+  DryadsAiPluginModule,
   PluginDiagnostic,
   PluginLogger,
 } from "./types.js";
@@ -31,7 +31,7 @@ import type {
 export type PluginLoadResult = PluginRegistry;
 
 export type PluginLoadOptions = {
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   workspaceDir?: string;
   logger?: PluginLogger;
   coreGatewayHandlers?: Record<string, GatewayRequestHandler>;
@@ -114,8 +114,8 @@ function validatePluginConfig(params: {
 }
 
 function resolvePluginModuleExport(moduleExport: unknown): {
-  definition?: DmmsAiPluginDefinition;
-  register?: DmmsAiPluginDefinition["register"];
+  definition?: DryadsAiPluginDefinition;
+  register?: DryadsAiPluginDefinition["register"];
 } {
   const resolved =
     moduleExport &&
@@ -125,11 +125,11 @@ function resolvePluginModuleExport(moduleExport: unknown): {
       : moduleExport;
   if (typeof resolved === "function") {
     return {
-      register: resolved as DmmsAiPluginDefinition["register"],
+      register: resolved as DryadsAiPluginDefinition["register"],
     };
   }
   if (resolved && typeof resolved === "object") {
-    const def = resolved as DmmsAiPluginDefinition;
+    const def = resolved as DryadsAiPluginDefinition;
     const register = def.register ?? def.activate;
     return { definition: def, register };
   }
@@ -177,7 +177,7 @@ function pushDiagnostics(diagnostics: PluginDiagnostic[], append: PluginDiagnost
   diagnostics.push(...append);
 }
 
-export function loadDmmsAiPlugins(options: PluginLoadOptions = {}): PluginRegistry {
+export function loadDryadsAiPlugins(options: PluginLoadOptions = {}): PluginRegistry {
   // Test env: default-disable plugins unless explicitly configured.
   // This keeps unit/gateway suites fast and avoids loading heavyweight plugin deps by accident.
   const cfg = applyTestPluginDefaults(options.config ?? {}, process.env);
@@ -207,7 +207,7 @@ export function loadDmmsAiPlugins(options: PluginLoadOptions = {}): PluginRegist
     coreGatewayHandlers: options.coreGatewayHandlers as Record<string, GatewayRequestHandler>,
   });
 
-  const discovery = discoverDmmsAiPlugins({
+  const discovery = discoverDryadsAiPlugins({
     workspaceDir: options.workspaceDir,
     extraPaths: normalized.loadPaths,
   });
@@ -234,9 +234,9 @@ export function loadDmmsAiPlugins(options: PluginLoadOptions = {}): PluginRegist
       ...(pluginSdkAlias || pluginSdkAccountIdAlias
         ? {
             alias: {
-              ...(pluginSdkAlias ? { "dmms-ai/plugin-sdk": pluginSdkAlias } : {}),
+              ...(pluginSdkAlias ? { "dryads-ai/plugin-sdk": pluginSdkAlias } : {}),
               ...(pluginSdkAccountIdAlias
-                ? { "dmms-ai/plugin-sdk/account-id": pluginSdkAccountIdAlias }
+                ? { "dryads-ai/plugin-sdk/account-id": pluginSdkAccountIdAlias }
                 : {}),
             },
           }
@@ -318,9 +318,9 @@ export function loadDmmsAiPlugins(options: PluginLoadOptions = {}): PluginRegist
       continue;
     }
 
-    let mod: DmmsAiPluginModule | null = null;
+    let mod: DryadsAiPluginModule | null = null;
     try {
-      mod = getJiti()(candidate.source) as DmmsAiPluginModule;
+      mod = getJiti()(candidate.source) as DryadsAiPluginModule;
     } catch (err) {
       logger.error(`[plugins] ${record.id} failed to load from ${record.source}: ${String(err)}`);
       record.status = "error";

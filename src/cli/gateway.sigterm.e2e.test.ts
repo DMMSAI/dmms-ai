@@ -79,22 +79,22 @@ describe("gateway SIGTERM", () => {
   });
 
   it("exits 0 on SIGTERM", { timeout: 180_000 }, async () => {
-    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-gateway-test-"));
+    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-gateway-test-"));
     const out: string[] = [];
     const err: string[] = [];
 
     const nodeBin = process.execPath;
     const env = {
       ...process.env,
-      DMMS_AI_NO_RESPAWN: "1",
-      DMMS_AI_STATE_DIR: stateDir,
-      DMMS_AI_SKIP_CHANNELS: "1",
-      DMMS_AI_SKIP_GMAIL_WATCHER: "1",
-      DMMS_AI_SKIP_CRON: "1",
-      DMMS_AI_SKIP_BROWSER_CONTROL_SERVER: "1",
-      DMMS_AI_SKIP_CANVAS_HOST: "1",
+      DRYADS_AI_NO_RESPAWN: "1",
+      DRYADS_AI_STATE_DIR: stateDir,
+      DRYADS_AI_SKIP_CHANNELS: "1",
+      DRYADS_AI_SKIP_GMAIL_WATCHER: "1",
+      DRYADS_AI_SKIP_CRON: "1",
+      DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER: "1",
+      DRYADS_AI_SKIP_CANVAS_HOST: "1",
     };
-    const bootstrapPath = path.join(stateDir, "dmms-ai-entry-bootstrap.mjs");
+    const bootstrapPath = path.join(stateDir, "dryads-ai-entry-bootstrap.mjs");
     const runLoopPath = path.resolve("src/cli/gateway-cli/run-loop.ts");
     const runtimePath = path.resolve("src/runtime.ts");
     fs.writeFileSync(

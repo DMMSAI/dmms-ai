@@ -18,22 +18,25 @@ const ROOT_COMMANDS_HINT =
   "Hint: commands suffixed with * have subcommands. Run <command> --help for details.";
 
 const EXAMPLES = [
-  ["dmms-ai models --help", "Show detailed help for the models command."],
-  ["dmms-ai channels login --verbose", "Link personal WhatsApp Web and show QR + connection logs."],
+  ["dryads-ai models --help", "Show detailed help for the models command."],
   [
-    'dmms-ai message send --target +15555550123 --message "Hi" --json',
+    "dryads-ai channels login --verbose",
+    "Link personal WhatsApp Web and show QR + connection logs.",
+  ],
+  [
+    'dryads-ai message send --target +15555550123 --message "Hi" --json',
     "Send via your web session and print JSON result.",
   ],
-  ["dmms-ai gateway --port 18789", "Run the WebSocket Gateway locally."],
-  ["dmms-ai --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
-  ["dmms-ai gateway --force", "Kill anything bound to the default gateway port, then start it."],
-  ["dmms-ai gateway ...", "Gateway control via WebSocket."],
+  ["dryads-ai gateway --port 18789", "Run the WebSocket Gateway locally."],
+  ["dryads-ai --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
+  ["dryads-ai gateway --force", "Kill anything bound to the default gateway port, then start it."],
+  ["dryads-ai gateway ...", "Gateway control via WebSocket."],
   [
-    'dmms-ai agent --to +15555550123 --message "Run summary" --deliver',
+    'dryads-ai agent --to +15555550123 --message "Run summary" --deliver',
     "Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.",
   ],
   [
-    'dmms-ai message send --channel telegram --target @mychat --message "Hi"',
+    'dryads-ai message send --channel telegram --target @mychat --message "Hi"',
     "Send via your Telegram bot.",
   ],
 ] as const;
@@ -45,11 +48,11 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     .version(ctx.programVersion)
     .option(
       "--dev",
-      "Dev profile: isolate state under ~/.dmms-ai-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
+      "Dev profile: isolate state under ~/.dryads-ai-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
     )
     .option(
       "--profile <name>",
-      "Use a named profile (isolates DMMS_AI_STATE_DIR/DMMS_AI_CONFIG_PATH under ~/.dmms-ai-<name>)",
+      "Use a named profile (isolates DRYADS_AI_STATE_DIR/DRYADS_AI_CONFIG_PATH under ~/.dryads-ai-<name>)",
     );
 
   program.option("--no-color", "Disable ANSI colors", false);
@@ -120,7 +123,7 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     if (command !== program) {
       return "";
     }
-    const docs = formatDocsLink("/cli", "docs.dmms-ai.com/cli");
+    const docs = formatDocsLink("/cli", "docs.dryads-ai.com/cli");
     return `\n${theme.heading("Examples:")}\n${fmtExamples}\n\n${theme.muted("Docs:")} ${docs}\n`;
   });
 }

@@ -1,7 +1,7 @@
 import { createRequire } from "node:module";
 
-declare const __DMMS_AI_VERSION__: string | undefined;
-const CORE_PACKAGE_NAME = "dmms-ai";
+declare const __DRYADS_AI_VERSION__: string | undefined;
+const CORE_PACKAGE_NAME = "dryads-ai";
 
 const PACKAGE_JSON_CANDIDATES = [
   "../package.json",
@@ -81,18 +81,18 @@ export function resolveRuntimeServiceVersion(
 ): string {
   return (
     firstNonEmpty(
-      env["DMMS_AI_VERSION"],
-      env["DMMS_AI_SERVICE_VERSION"],
+      env["DRYADS_AI_VERSION"],
+      env["DRYADS_AI_SERVICE_VERSION"],
       env["npm_package_version"],
     ) ?? fallback
   );
 }
 
-// Single source of truth for the current DMMS AI version.
+// Single source of truth for the current Dryads AI version.
 // - Embedded/bundled builds: injected define or env var.
 // - Dev/npm builds: package.json.
 export const VERSION =
-  (typeof __DMMS_AI_VERSION__ === "string" && __DMMS_AI_VERSION__) ||
-  process.env.DMMS_AI_BUNDLED_VERSION ||
+  (typeof __DRYADS_AI_VERSION__ === "string" && __DRYADS_AI_VERSION__) ||
+  process.env.DRYADS_AI_BUNDLED_VERSION ||
   resolveVersionFromModuleUrl(import.meta.url) ||
   "0.0.0";

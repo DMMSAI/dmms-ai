@@ -1,6 +1,6 @@
-## DMMS AI Node (Android) (internal)
+## Dryads AI Node (Android) (internal)
 
-Modern Android node app: connects to the **Gateway WebSocket** (`_dmms-ai-gw._tcp`) and exposes **Canvas + Chat + Camera**.
+Modern Android node app: connects to the **Gateway WebSocket** (`_dryads-ai-gw._tcp`) and exposes **Canvas + Chat + Camera**.
 
 Notes:
 - The node keeps the connection alive via a **foreground service** (persistent notification with a Disconnect action).
@@ -25,7 +25,7 @@ cd apps/android
 
 1) Start the gateway (on your “master” machine):
 ```bash
-pnpm dmms-ai gateway --port 18789 --verbose
+pnpm dryads-ai gateway --port 18789 --verbose
 ```
 
 2) In the Android app:
@@ -34,8 +34,8 @@ pnpm dmms-ai gateway --port 18789 --verbose
 
 3) Approve pairing (on the gateway machine):
 ```bash
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
 ```
 
 More details: `docs/platforms/android.md`.

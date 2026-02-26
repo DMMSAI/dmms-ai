@@ -15,12 +15,12 @@ An **agent** is a fully scoped brain with its own:
 
 - **Workspace** (files, AGENTS.md/SOUL.md/USER.md, local notes, persona rules).
 - **State directory** (`agentDir`) for auth profiles, model registry, and per-agent config.
-- **Session store** (chat history + routing state) under `~/.dmms-ai/agents/<agentId>/sessions`.
+- **Session store** (chat history + routing state) under `~/.dryads-ai/agents/<agentId>/sessions`.
 
 Auth profiles are **per-agent**. Each agent reads from its own:
 
 ```text
-~/.dmms-ai/agents/<agentId>/agent/auth-profiles.json
+~/.dryads-ai/agents/<agentId>/agent/auth-profiles.json
 ```
 
 Main agent credentials are **not** shared automatically. Never reuse `agentDir`
@@ -28,7 +28,7 @@ across agents (it causes auth/session collisions). If you want to share creds,
 copy `auth-profiles.json` into the other agent's `agentDir`.
 
 Skills are per-agent via each workspace’s `skills/` folder, with shared skills
-available from `~/.dmms-ai/skills`. See [Skills: per-agent vs shared](/tools/skills#per-agent-vs-shared-skills).
+available from `~/.dryads-ai/skills`. See [Skills: per-agent vs shared](/tools/skills#per-agent-vs-shared-skills).
 
 The Gateway can host **one agent** (default) or **many agents** side-by-side.
 
@@ -39,27 +39,27 @@ reach other host locations unless sandboxing is enabled. See
 
 ## Paths (quick map)
 
-- Config: `~/.dmms-ai/dmms-ai.json` (or `DMMS_AI_CONFIG_PATH`)
-- State dir: `~/.dmms-ai` (or `DMMS_AI_STATE_DIR`)
-- Workspace: `~/.dmms-ai/workspace` (or `~/.dmms-ai/workspace-<agentId>`)
-- Agent dir: `~/.dmms-ai/agents/<agentId>/agent` (or `agents.list[].agentDir`)
-- Sessions: `~/.dmms-ai/agents/<agentId>/sessions`
+- Config: `~/.dryads-ai/dryads-ai.json` (or `DRYADS_AI_CONFIG_PATH`)
+- State dir: `~/.dryads-ai` (or `DRYADS_AI_STATE_DIR`)
+- Workspace: `~/.dryads-ai/workspace` (or `~/.dryads-ai/workspace-<agentId>`)
+- Agent dir: `~/.dryads-ai/agents/<agentId>/agent` (or `agents.list[].agentDir`)
+- Sessions: `~/.dryads-ai/agents/<agentId>/sessions`
 
 ### Single-agent mode (default)
 
-If you do nothing, DMMS AI runs a single agent:
+If you do nothing, Dryads AI runs a single agent:
 
 - `agentId` defaults to **`main`**.
 - Sessions are keyed as `agent:main:<mainKey>`.
-- Workspace defaults to `~/.dmms-ai/workspace` (or `~/.dmms-ai/workspace-<profile>` when `DMMS_AI_PROFILE` is set).
-- State defaults to `~/.dmms-ai/agents/main/agent`.
+- Workspace defaults to `~/.dryads-ai/workspace` (or `~/.dryads-ai/workspace-<profile>` when `DRYADS_AI_PROFILE` is set).
+- State defaults to `~/.dryads-ai/agents/main/agent`.
 
 ## Agent helper
 
 Use the agent wizard to add a new isolated agent:
 
 ```bash
-dmms-ai agents add work
+dryads-ai agents add work
 ```
 
 Then add `bindings` (or let the wizard do it) to route inbound messages.
@@ -67,7 +67,7 @@ Then add `bindings` (or let the wizard do it) to route inbound messages.
 Verify with:
 
 ```bash
-dmms-ai agents list --bindings
+dryads-ai agents list --bindings
 ```
 
 ## Quick start
@@ -78,11 +78,11 @@ dmms-ai agents list --bindings
 Use the wizard or create workspaces manually:
 
 ```bash
-dmms-ai agents add coding
-dmms-ai agents add social
+dryads-ai agents add coding
+dryads-ai agents add social
 ```
 
-Each agent gets its own workspace with `SOUL.md`, `AGENTS.md`, and optional `USER.md`, plus a dedicated `agentDir` and session store under `~/.dmms-ai/agents/<agentId>`.
+Each agent gets its own workspace with `SOUL.md`, `AGENTS.md`, and optional `USER.md`, plus a dedicated `agentDir` and session store under `~/.dryads-ai/agents/<agentId>`.
 
   </Step>
 
@@ -95,7 +95,7 @@ Create one account per agent on your preferred channels:
 - WhatsApp: link each phone number per account.
 
 ```bash
-dmms-ai channels login --channel whatsapp --account work
+dryads-ai channels login --channel whatsapp --account work
 ```
 
 See channel guides: [Discord](/channels/discord), [Telegram](/channels/telegram), [WhatsApp](/channels/whatsapp).
@@ -111,9 +111,9 @@ Add agents under `agents.list`, channel accounts under `channels.<channel>.accou
   <Step title="Restart and verify">
 
 ```bash
-dmms-ai gateway restart
-dmms-ai agents list --bindings
-dmms-ai channels status --probe
+dryads-ai gateway restart
+dryads-ai agents list --bindings
+dryads-ai channels status --probe
 ```
 
   </Step>
@@ -141,8 +141,8 @@ Example:
 {
   agents: {
     list: [
-      { id: "alex", workspace: "~/.dmms-ai/workspace-alex" },
-      { id: "mia", workspace: "~/.dmms-ai/workspace-mia" },
+      { id: "alex", workspace: "~/.dryads-ai/workspace-alex" },
+      { id: "mia", workspace: "~/.dryads-ai/workspace-mia" },
     ],
   },
   bindings: [
@@ -208,8 +208,8 @@ Each Discord bot account maps to a unique `accountId`. Bind each account to an a
 {
   agents: {
     list: [
-      { id: "main", workspace: "~/.dmms-ai/workspace-main" },
-      { id: "coding", workspace: "~/.dmms-ai/workspace-coding" },
+      { id: "main", workspace: "~/.dryads-ai/workspace-main" },
+      { id: "coding", workspace: "~/.dryads-ai/workspace-coding" },
     ],
   },
   bindings: [
@@ -257,8 +257,8 @@ Notes:
 {
   agents: {
     list: [
-      { id: "main", workspace: "~/.dmms-ai/workspace-main" },
-      { id: "alerts", workspace: "~/.dmms-ai/workspace-alerts" },
+      { id: "main", workspace: "~/.dryads-ai/workspace-main" },
+      { id: "alerts", workspace: "~/.dryads-ai/workspace-alerts" },
     ],
   },
   bindings: [
@@ -293,11 +293,11 @@ Notes:
 Link each account before starting the gateway:
 
 ```bash
-dmms-ai channels login --channel whatsapp --account personal
-dmms-ai channels login --channel whatsapp --account biz
+dryads-ai channels login --channel whatsapp --account personal
+dryads-ai channels login --channel whatsapp --account biz
 ```
 
-`~/.dmms-ai/dmms-ai.json` (JSON5):
+`~/.dryads-ai/dryads-ai.json` (JSON5):
 
 ```js
 {
@@ -307,14 +307,14 @@ dmms-ai channels login --channel whatsapp --account biz
         id: "home",
         default: true,
         name: "Home",
-        workspace: "~/.dmms-ai/workspace-home",
-        agentDir: "~/.dmms-ai/agents/home/agent",
+        workspace: "~/.dryads-ai/workspace-home",
+        agentDir: "~/.dryads-ai/agents/home/agent",
       },
       {
         id: "work",
         name: "Work",
-        workspace: "~/.dmms-ai/workspace-work",
-        agentDir: "~/.dmms-ai/agents/work/agent",
+        workspace: "~/.dryads-ai/workspace-work",
+        agentDir: "~/.dryads-ai/agents/work/agent",
       },
     ],
   },
@@ -347,12 +347,12 @@ dmms-ai channels login --channel whatsapp --account biz
     whatsapp: {
       accounts: {
         personal: {
-          // Optional override. Default: ~/.dmms-ai/credentials/whatsapp/personal
-          // authDir: "~/.dmms-ai/credentials/whatsapp/personal",
+          // Optional override. Default: ~/.dryads-ai/credentials/whatsapp/personal
+          // authDir: "~/.dryads-ai/credentials/whatsapp/personal",
         },
         biz: {
-          // Optional override. Default: ~/.dmms-ai/credentials/whatsapp/biz
-          // authDir: "~/.dmms-ai/credentials/whatsapp/biz",
+          // Optional override. Default: ~/.dryads-ai/credentials/whatsapp/biz
+          // authDir: "~/.dryads-ai/credentials/whatsapp/biz",
         },
       },
     },
@@ -371,13 +371,13 @@ Split by channel: route WhatsApp to a fast everyday agent and Telegram to an Opu
       {
         id: "chat",
         name: "Everyday",
-        workspace: "~/.dmms-ai/workspace-chat",
+        workspace: "~/.dryads-ai/workspace-chat",
         model: "anthropic/claude-sonnet-4-5",
       },
       {
         id: "opus",
         name: "Deep Work",
-        workspace: "~/.dmms-ai/workspace-opus",
+        workspace: "~/.dryads-ai/workspace-opus",
         model: "anthropic/claude-opus-4-6",
       },
     ],
@@ -405,13 +405,13 @@ Keep WhatsApp on the fast agent, but route one DM to Opus:
       {
         id: "chat",
         name: "Everyday",
-        workspace: "~/.dmms-ai/workspace-chat",
+        workspace: "~/.dryads-ai/workspace-chat",
         model: "anthropic/claude-sonnet-4-5",
       },
       {
         id: "opus",
         name: "Deep Work",
-        workspace: "~/.dmms-ai/workspace-opus",
+        workspace: "~/.dryads-ai/workspace-opus",
         model: "anthropic/claude-opus-4-6",
       },
     ],
@@ -440,7 +440,7 @@ and a tighter tool policy:
       {
         id: "family",
         name: "Family",
-        workspace: "~/.dmms-ai/workspace-family",
+        workspace: "~/.dryads-ai/workspace-family",
         identity: { name: "Family Bot" },
         groupChat: {
           mentionPatterns: ["@family", "@familybot", "@Family Bot"],
@@ -493,7 +493,7 @@ Starting with v2026.1.6, each agent can have its own sandbox and tool restrictio
     list: [
       {
         id: "personal",
-        workspace: "~/.dmms-ai/workspace-personal",
+        workspace: "~/.dryads-ai/workspace-personal",
         sandbox: {
           mode: "off",  // No sandbox for personal agent
         },
@@ -501,7 +501,7 @@ Starting with v2026.1.6, each agent can have its own sandbox and tool restrictio
       },
       {
         id: "family",
-        workspace: "~/.dmms-ai/workspace-family",
+        workspace: "~/.dryads-ai/workspace-family",
         sandbox: {
           mode: "all",     // Always sandboxed
           scope: "agent",  // One container per agent

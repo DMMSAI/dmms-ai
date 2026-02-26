@@ -13,7 +13,7 @@ A **node** is a companion device (macOS/iOS/Android/headless) that connects to t
 
 Legacy transport: [Bridge protocol](/gateway/bridge-protocol) (TCP JSONL; deprecated/removed for current nodes).
 
-macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `dmms-ai nodes …` works against this Mac).
+macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `dryads-ai nodes …` works against this Mac).
 
 Notes:
 
@@ -29,17 +29,17 @@ creates a device pairing request for `role: node`. Approve via the devices CLI (
 Quick CLI:
 
 ```bash
-dmms-ai devices list
-dmms-ai devices approve <requestId>
-dmms-ai devices reject <requestId>
-dmms-ai nodes status
-dmms-ai nodes describe --node <idOrNameOrIp>
+dryads-ai devices list
+dryads-ai devices approve <requestId>
+dryads-ai devices reject <requestId>
+dryads-ai nodes status
+dryads-ai nodes describe --node <idOrNameOrIp>
 ```
 
 Notes:
 
 - `nodes status` marks a node as **paired** when its device pairing role includes `node`.
-- `node.pair.*` (CLI: `dmms-ai nodes pending/approve/reject`) is a separate gateway-owned
+- `node.pair.*` (CLI: `dryads-ai nodes pending/approve/reject`) is a separate gateway-owned
   node pairing store; it does **not** gate the WS `connect` handshake.
 
 ## Remote node host (system.run)
@@ -52,14 +52,14 @@ forwards `exec` calls to the **node host** when `host=node` is selected.
 
 - **Gateway host**: receives messages, runs the model, routes tool calls.
 - **Node host**: executes `system.run`/`system.which` on the node machine.
-- **Approvals**: enforced on the node host via `~/.dmms-ai/exec-approvals.json`.
+- **Approvals**: enforced on the node host via `~/.dryads-ai/exec-approvals.json`.
 
 ### Start a node host (foreground)
 
 On the node machine:
 
 ```bash
-dmms-ai node run --host <gateway-host> --port 18789 --display-name "Build Node"
+dryads-ai node run --host <gateway-host> --port 18789 --display-name "Build Node"
 ```
 
 ### Remote gateway via SSH tunnel (loopback bind)
@@ -75,20 +75,20 @@ Example (node host -> gateway host):
 ssh -N -L 18790:127.0.0.1:18789 user@gateway-host
 
 # Terminal B: export the gateway token and connect through the tunnel
-export DMMS_AI_GATEWAY_TOKEN="<gateway-token>"
-dmms-ai node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
+export DRYADS_AI_GATEWAY_TOKEN="<gateway-token>"
+dryads-ai node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
 ```
 
 Notes:
 
-- The token is `gateway.auth.token` from the gateway config (`~/.dmms-ai/dmms-ai.json` on the gateway host).
-- `dmms-ai node run` reads `DMMS_AI_GATEWAY_TOKEN` for auth.
+- The token is `gateway.auth.token` from the gateway config (`~/.dryads-ai/dryads-ai.json` on the gateway host).
+- `dryads-ai node run` reads `DRYADS_AI_GATEWAY_TOKEN` for auth.
 
 ### Start a node host (service)
 
 ```bash
-dmms-ai node install --host <gateway-host> --port 18789 --display-name "Build Node"
-dmms-ai node restart
+dryads-ai node install --host <gateway-host> --port 18789 --display-name "Build Node"
+dryads-ai node restart
 ```
 
 ### Pair + name
@@ -96,35 +96,35 @@ dmms-ai node restart
 On the gateway host:
 
 ```bash
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
-dmms-ai nodes list
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
+dryads-ai nodes list
 ```
 
 Naming options:
 
-- `--display-name` on `dmms-ai node run` / `dmms-ai node install` (persists in `~/.dmms-ai/node.json` on the node).
-- `dmms-ai nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
+- `--display-name` on `dryads-ai node run` / `dryads-ai node install` (persists in `~/.dryads-ai/node.json` on the node).
+- `dryads-ai nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
 
 ### Allowlist the commands
 
 Exec approvals are **per node host**. Add allowlist entries from the gateway:
 
 ```bash
-dmms-ai approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
-dmms-ai approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
+dryads-ai approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
+dryads-ai approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
 ```
 
-Approvals live on the node host at `~/.dmms-ai/exec-approvals.json`.
+Approvals live on the node host at `~/.dryads-ai/exec-approvals.json`.
 
 ### Point exec at the node
 
 Configure defaults (gateway config):
 
 ```bash
-dmms-ai config set tools.exec.host node
-dmms-ai config set tools.exec.security allowlist
-dmms-ai config set tools.exec.node "<id-or-name>"
+dryads-ai config set tools.exec.host node
+dryads-ai config set tools.exec.security allowlist
+dryads-ai config set tools.exec.node "<id-or-name>"
 ```
 
 Or per session:
@@ -147,7 +147,7 @@ Related:
 Low-level (raw RPC):
 
 ```bash
-dmms-ai nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
+dryads-ai nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
 ```
 
 Higher-level helpers exist for the common “give the agent a MEDIA attachment” workflows.
@@ -159,17 +159,17 @@ If the node is showing the Canvas (WebView), `canvas.snapshot` returns `{ format
 CLI helper (writes to a temp file and prints `MEDIA:<path>`):
 
 ```bash
-dmms-ai nodes canvas snapshot --node <idOrNameOrIp> --format png
-dmms-ai nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
+dryads-ai nodes canvas snapshot --node <idOrNameOrIp> --format png
+dryads-ai nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
 ```
 
 ### Canvas controls
 
 ```bash
-dmms-ai nodes canvas present --node <idOrNameOrIp> --target https://example.com
-dmms-ai nodes canvas hide --node <idOrNameOrIp>
-dmms-ai nodes canvas navigate https://example.com --node <idOrNameOrIp>
-dmms-ai nodes canvas eval --node <idOrNameOrIp> --js "document.title"
+dryads-ai nodes canvas present --node <idOrNameOrIp> --target https://example.com
+dryads-ai nodes canvas hide --node <idOrNameOrIp>
+dryads-ai nodes canvas navigate https://example.com --node <idOrNameOrIp>
+dryads-ai nodes canvas eval --node <idOrNameOrIp> --js "document.title"
 ```
 
 Notes:
@@ -180,9 +180,9 @@ Notes:
 ### A2UI (Canvas)
 
 ```bash
-dmms-ai nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
-dmms-ai nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
-dmms-ai nodes canvas a2ui reset --node <idOrNameOrIp>
+dryads-ai nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
+dryads-ai nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
+dryads-ai nodes canvas a2ui reset --node <idOrNameOrIp>
 ```
 
 Notes:
@@ -194,16 +194,16 @@ Notes:
 Photos (`jpg`):
 
 ```bash
-dmms-ai nodes camera list --node <idOrNameOrIp>
-dmms-ai nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
-dmms-ai nodes camera snap --node <idOrNameOrIp> --facing front
+dryads-ai nodes camera list --node <idOrNameOrIp>
+dryads-ai nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
+dryads-ai nodes camera snap --node <idOrNameOrIp> --facing front
 ```
 
 Video clips (`mp4`):
 
 ```bash
-dmms-ai nodes camera clip --node <idOrNameOrIp> --duration 10s
-dmms-ai nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
+dryads-ai nodes camera clip --node <idOrNameOrIp> --duration 10s
+dryads-ai nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
 ```
 
 Notes:
@@ -217,8 +217,8 @@ Notes:
 Nodes expose `screen.record` (mp4). Example:
 
 ```bash
-dmms-ai nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
-dmms-ai nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
+dryads-ai nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
+dryads-ai nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
 ```
 
 Notes:
@@ -236,8 +236,8 @@ Nodes expose `location.get` when Location is enabled in settings.
 CLI helper:
 
 ```bash
-dmms-ai nodes location get --node <idOrNameOrIp>
-dmms-ai nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
+dryads-ai nodes location get --node <idOrNameOrIp>
+dryads-ai nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
 ```
 
 Notes:
@@ -253,7 +253,7 @@ Android nodes can expose `sms.send` when the user grants **SMS** permission and 
 Low-level invoke:
 
 ```bash
-dmms-ai nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from DMMS AI"}'
+dryads-ai nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from Dryads AI"}'
 ```
 
 Notes:
@@ -269,8 +269,8 @@ The headless node host exposes `system.run`, `system.which`, and `system.execApp
 Examples:
 
 ```bash
-dmms-ai nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
-dmms-ai nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
+dryads-ai nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
+dryads-ai nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
 ```
 
 Notes:
@@ -282,7 +282,7 @@ Notes:
 - Node hosts ignore `PATH` overrides. If you need extra PATH entries, configure the node host service environment (or install tools in standard locations) instead of passing `PATH` via `--env`.
 - On macOS node mode, `system.run` is gated by exec approvals in the macOS app (Settings → Exec approvals).
   Ask/allowlist/full behave the same as the headless node host; denied prompts return `SYSTEM_RUN_DENIED`.
-- On headless node host, `system.run` is gated by exec approvals (`~/.dmms-ai/exec-approvals.json`).
+- On headless node host, `system.run` is gated by exec approvals (`~/.dryads-ai/exec-approvals.json`).
 
 ## Exec node binding
 
@@ -292,21 +292,21 @@ This sets the default node for `exec host=node` (and can be overridden per agent
 Global default:
 
 ```bash
-dmms-ai config set tools.exec.node "node-id-or-name"
+dryads-ai config set tools.exec.node "node-id-or-name"
 ```
 
 Per-agent override:
 
 ```bash
-dmms-ai config get agents.list
-dmms-ai config set agents.list[0].tools.exec.node "node-id-or-name"
+dryads-ai config get agents.list
+dryads-ai config set agents.list[0].tools.exec.node "node-id-or-name"
 ```
 
 Unset to allow any node:
 
 ```bash
-dmms-ai config unset tools.exec.node
-dmms-ai config unset agents.list[0].tools.exec.node
+dryads-ai config unset tools.exec.node
+dryads-ai config unset agents.list[0].tools.exec.node
 ```
 
 ## Permissions map
@@ -315,28 +315,28 @@ Nodes may include a `permissions` map in `node.list` / `node.describe`, keyed by
 
 ## Headless node host (cross-platform)
 
-DMMS AI can run a **headless node host** (no UI) that connects to the Gateway
+Dryads AI can run a **headless node host** (no UI) that connects to the Gateway
 WebSocket and exposes `system.run` / `system.which`. This is useful on Linux/Windows
 or for running a minimal node alongside a server.
 
 Start it:
 
 ```bash
-dmms-ai node run --host <gateway-host> --port 18789
+dryads-ai node run --host <gateway-host> --port 18789
 ```
 
 Notes:
 
 - Pairing is still required (the Gateway will show a node approval prompt).
-- The node host stores its node id, token, display name, and gateway connection info in `~/.dmms-ai/node.json`.
-- Exec approvals are enforced locally via `~/.dmms-ai/exec-approvals.json`
+- The node host stores its node id, token, display name, and gateway connection info in `~/.dryads-ai/node.json`.
+- Exec approvals are enforced locally via `~/.dryads-ai/exec-approvals.json`
   (see [Exec approvals](/tools/exec-approvals)).
 - On macOS, the headless node host prefers the companion app exec host when reachable and falls
-  back to local execution if the app is unavailable. Set `DMMS_AI_NODE_EXEC_HOST=app` to require
-  the app, or `DMMS_AI_NODE_EXEC_FALLBACK=0` to disable fallback.
+  back to local execution if the app is unavailable. Set `DRYADS_AI_NODE_EXEC_HOST=app` to require
+  the app, or `DRYADS_AI_NODE_EXEC_FALLBACK=0` to disable fallback.
 - Add `--tls` / `--tls-fingerprint` when the Gateway WS uses TLS.
 
 ## Mac node mode
 
-- The macOS menubar app connects to the Gateway WS server as a node (so `dmms-ai nodes …` works against this Mac).
+- The macOS menubar app connects to the Gateway WS server as a node (so `dryads-ai nodes …` works against this Mac).
 - In remote mode, the app opens an SSH tunnel for the Gateway port and connects to `localhost`.

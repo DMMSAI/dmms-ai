@@ -15,21 +15,21 @@ async function writeSkill(dir: string, name: string) {
 }
 
 describe("resolveBundledSkillsDir", () => {
-  const originalOverride = process.env.DMMS_AI_BUNDLED_SKILLS_DIR;
+  const originalOverride = process.env.DRYADS_AI_BUNDLED_SKILLS_DIR;
 
   afterEach(() => {
     if (originalOverride === undefined) {
-      delete process.env.DMMS_AI_BUNDLED_SKILLS_DIR;
+      delete process.env.DRYADS_AI_BUNDLED_SKILLS_DIR;
     } else {
-      process.env.DMMS_AI_BUNDLED_SKILLS_DIR = originalOverride;
+      process.env.DRYADS_AI_BUNDLED_SKILLS_DIR = originalOverride;
     }
   });
 
   it("resolves bundled skills under a flattened dist layout", async () => {
-    delete process.env.DMMS_AI_BUNDLED_SKILLS_DIR;
+    delete process.env.DRYADS_AI_BUNDLED_SKILLS_DIR;
 
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-bundled-"));
-    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "dmms-ai" }));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-bundled-"));
+    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "dryads-ai" }));
 
     await writeSkill(path.join(root, "skills", "peekaboo"), "peekaboo");
 

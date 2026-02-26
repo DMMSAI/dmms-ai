@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/line",
+  "name": "@dryads-ai/line",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI LINE channel plugin",
+  "description": "Dryads AI LINE channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/line",
+      "npmSpec": "@dryads-ai/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }

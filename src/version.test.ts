@@ -11,7 +11,7 @@ import {
 } from "./version.js";
 
 async function withTempDir<T>(run: (dir: string) => Promise<T>): Promise<T> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-version-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-version-"));
   try {
     return await run(dir);
   } finally {
@@ -29,7 +29,7 @@ describe("version resolution", () => {
       await fs.mkdir(path.join(root, "dist", "plugin-sdk"), { recursive: true });
       await fs.writeFile(
         path.join(root, "package.json"),
-        JSON.stringify({ name: "dmms-ai", version: "1.2.3" }),
+        JSON.stringify({ name: "dryads-ai", version: "1.2.3" }),
         "utf-8",
       );
 
@@ -44,7 +44,7 @@ describe("version resolution", () => {
       await fs.mkdir(path.join(root, "dist", "plugin-sdk"), { recursive: true });
       await fs.writeFile(
         path.join(root, "package.json"),
-        JSON.stringify({ name: "dmms-ai", version: "2.3.4" }),
+        JSON.stringify({ name: "dryads-ai", version: "2.3.4" }),
         "utf-8",
       );
       await fs.writeFile(
@@ -85,11 +85,11 @@ describe("version resolution", () => {
     });
   });
 
-  it("prefers DMMS_AI_VERSION over service and package versions", () => {
+  it("prefers DRYADS_AI_VERSION over service and package versions", () => {
     expect(
       resolveRuntimeServiceVersion({
-        DMMS_AI_VERSION: "9.9.9",
-        DMMS_AI_SERVICE_VERSION: "2.2.2",
+        DRYADS_AI_VERSION: "9.9.9",
+        DRYADS_AI_SERVICE_VERSION: "2.2.2",
         npm_package_version: "1.1.1",
       }),
     ).toBe("9.9.9");
@@ -98,16 +98,16 @@ describe("version resolution", () => {
   it("uses service and package fallbacks and ignores blank env values", () => {
     expect(
       resolveRuntimeServiceVersion({
-        DMMS_AI_VERSION: "   ",
-        DMMS_AI_SERVICE_VERSION: "  2.0.0  ",
+        DRYADS_AI_VERSION: "   ",
+        DRYADS_AI_SERVICE_VERSION: "  2.0.0  ",
         npm_package_version: "1.0.0",
       }),
     ).toBe("2.0.0");
 
     expect(
       resolveRuntimeServiceVersion({
-        DMMS_AI_VERSION: " ",
-        DMMS_AI_SERVICE_VERSION: "\t",
+        DRYADS_AI_VERSION: " ",
+        DRYADS_AI_SERVICE_VERSION: "\t",
         npm_package_version: " 1.0.0-package ",
       }),
     ).toBe("1.0.0-package");
@@ -115,8 +115,8 @@ describe("version resolution", () => {
     expect(
       resolveRuntimeServiceVersion(
         {
-          DMMS_AI_VERSION: "",
-          DMMS_AI_SERVICE_VERSION: " ",
+          DRYADS_AI_VERSION: "",
+          DRYADS_AI_SERVICE_VERSION: " ",
           npm_package_version: "",
         },
         "fallback",

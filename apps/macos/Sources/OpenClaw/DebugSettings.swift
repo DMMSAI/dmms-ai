@@ -103,7 +103,7 @@ struct DebugSettings: View {
                     }
 
                 Text(
-                    "When enabled, DMMS AI won't install or manage \(gatewayLaunchdLabel). " +
+                    "When enabled, Dryads AI won't install or manage \(gatewayLaunchdLabel). " +
                         "It will only attach to an existing Gateway.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -203,7 +203,7 @@ struct DebugSettings: View {
                     Button("Copy sample URL") {
                         let msg = "Hello from deep link"
                         let encoded = msg.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? msg
-                        let url = "dmms-ai://agent?message=\(encoded)&key=\(key)"
+                        let url = "dryads-ai://agent?message=\(encoded)&key=\(key)"
                         NSPasteboard.general.clearContents()
                         NSPasteboard.general.setString(url, forType: .string)
                     }
@@ -211,7 +211,7 @@ struct DebugSettings: View {
                     Spacer(minLength: 0)
                 }
 
-                Text("Deep links (dmms-ai://…) are always enabled; the key controls unattended runs.")
+                Text("Deep links (dryads-ai://…) are always enabled; the key controls unattended runs.")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
 
@@ -274,7 +274,7 @@ struct DebugSettings: View {
                         Toggle("Write rolling diagnostics log (JSONL)", isOn: self.$diagnosticsFileLogEnabled)
                             .toggleStyle(.checkbox)
                             .help(
-                                "Writes a rotating, local-only log under ~/Library/Logs/DMMS AI/. " +
+                                "Writes a rotating, local-only log under ~/Library/Logs/Dryads AI/. " +
                                     "Enable only while actively debugging.")
 
                         HStack(spacing: 8) {
@@ -382,10 +382,10 @@ struct DebugSettings: View {
         GroupBox("Paths") {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("DMMS AI project root")
+                    Text("Dryads AI project root")
                         .font(.caption.weight(.semibold))
                     HStack(spacing: 8) {
-                        TextField("Path to dmms-ai repo", text: self.$gatewayRootInput)
+                        TextField("Path to dryads-ai repo", text: self.$gatewayRootInput)
                             .textFieldStyle(.roundedBorder)
                             .font(.caption.monospaced())
                             .onSubmit { self.saveRelayRoot() }
@@ -393,7 +393,7 @@ struct DebugSettings: View {
                             .buttonStyle(.borderedProminent)
                         Button("Reset") {
                             let def = FileManager().homeDirectoryForCurrentUser
-                                .appendingPathComponent("Projects/dmms-ai").path
+                                .appendingPathComponent("Projects/dryads-ai").path
                             self.gatewayRootInput = def
                             self.saveRelayRoot()
                         }
@@ -423,7 +423,7 @@ struct DebugSettings: View {
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
                             } else {
-                                Text("Used by the CLI session loader; stored in ~/.dmms-ai/dmms-ai.json.")
+                                Text("Used by the CLI session loader; stored in ~/.dryads-ai/dryads-ai.json.")
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
                             }
@@ -524,15 +524,15 @@ struct DebugSettings: View {
 
                 VStack(alignment: .leading, spacing: 6) {
                     Text(
-                        "Note: macOS may require restarting DMMS AI after enabling Accessibility or Screen Recording.")
+                        "Note: macOS may require restarting Dryads AI after enabling Accessibility or Screen Recording.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Button {
-                        LaunchdManager.startDMMS AI()
+                        LaunchdManager.startDryads AI()
                     } label: {
-                        Label("Restart DMMS AI", systemImage: "arrow.counterclockwise")
+                        Label("Restart Dryads AI", systemImage: "arrow.counterclockwise")
                     }
                     .buttonStyle(.bordered)
                     .controlSize(.small)
@@ -830,7 +830,7 @@ struct DebugSettings: View {
     }
 
     private func configURL() -> URL {
-        DmmsAiPaths.configURL
+        DryadsAiPaths.configURL
     }
 }
 
@@ -979,7 +979,7 @@ extension DebugSettings {
         view.modelsCount = 3
         view.modelsLoading = false
         view.modelsError = "Failed to load models"
-        view.gatewayRootInput = "/tmp/dmms-ai"
+        view.gatewayRootInput = "/tmp/dryads-ai"
         view.sessionStorePath = "/tmp/sessions.json"
         view.sessionStoreSaveError = "Save failed"
         view.debugSendInFlight = true

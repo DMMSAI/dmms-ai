@@ -2,7 +2,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
 import { loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadDmmsAiPlugins } from "./loader.js";
+import { loadDryadsAiPlugins } from "./loader.js";
 import type { PluginRegistry } from "./registry.js";
 
 export type PluginStatusReport = PluginRegistry & {
@@ -21,7 +21,7 @@ export function buildPluginStatusReport(params?: {
     : (resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config)) ??
       resolveDefaultAgentWorkspaceDir());
 
-  const registry = loadDmmsAiPlugins({
+  const registry = loadDryadsAiPlugins({
     config,
     workspaceDir,
     logger: {

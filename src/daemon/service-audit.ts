@@ -211,14 +211,14 @@ function auditGatewayToken(
   if (!expectedToken) {
     return;
   }
-  const serviceToken = command?.environment?.DMMS_AI_GATEWAY_TOKEN?.trim();
+  const serviceToken = command?.environment?.DRYADS_AI_GATEWAY_TOKEN?.trim();
   if (serviceToken === expectedToken) {
     return;
   }
   issues.push({
     code: SERVICE_AUDIT_CODES.gatewayTokenMismatch,
     message:
-      "Gateway service DMMS_AI_GATEWAY_TOKEN does not match gateway.auth.token in dmms-ai.json",
+      "Gateway service DRYADS_AI_GATEWAY_TOKEN does not match gateway.auth.token in dryads-ai.json",
     detail: serviceToken ? "service token is stale" : "service token is missing",
     level: "recommended",
   });
@@ -382,7 +382,7 @@ export function checkTokenDrift(params: {
       code: SERVICE_AUDIT_CODES.gatewayTokenDrift,
       message:
         "Config token differs from service token. The daemon will use the old token after restart.",
-      detail: "Run `dmms-ai gateway install --force` to sync the token.",
+      detail: "Run `dryads-ai gateway install --force` to sync the token.",
       level: "recommended",
     };
   }

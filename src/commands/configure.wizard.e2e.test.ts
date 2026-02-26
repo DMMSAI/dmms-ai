@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 const mocks = vi.hoisted(() => ({
   clackIntro: vi.fn(),
@@ -29,7 +29,7 @@ vi.mock("@clack/prompts", () => ({
 }));
 
 vi.mock("../config/config.js", () => ({
-  CONFIG_PATH: "~/.dmms-ai/dmms-ai.json",
+  CONFIG_PATH: "~/.dryads-ai/dryads-ai.json",
   readConfigFileSnapshot: mocks.readConfigFileSnapshot,
   writeConfigFile: mocks.writeConfigFile,
   resolveGatewayPort: mocks.resolveGatewayPort,
@@ -48,8 +48,8 @@ vi.mock("../terminal/note.js", () => ({
 }));
 
 vi.mock("./onboard-helpers.js", () => ({
-  DEFAULT_WORKSPACE: "~/.dmms-ai/workspace",
-  applyWizardMetadata: (cfg: DmmsAiConfig) => cfg,
+  DEFAULT_WORKSPACE: "~/.dryads-ai/workspace",
+  applyWizardMetadata: (cfg: DryadsAiConfig) => cfg,
   ensureWorkspaceAndSessions: vi.fn(),
   guardCancel: <T>(value: T) => value,
   printWizardHeader: mocks.printWizardHeader,

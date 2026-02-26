@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 import { imessageOutbound } from "./imessage.js";
 
 describe("imessageOutbound", () => {
-  const cfg: DmmsAiConfig = {
+  const cfg: DryadsAiConfig = {
     channels: {
       imessage: {
         mediaMaxMb: 2,

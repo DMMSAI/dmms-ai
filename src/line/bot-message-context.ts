@@ -2,7 +2,7 @@ import type { MessageEvent, StickerEventMessage, EventSource, PostbackEvent } fr
 import { formatInboundEnvelope, resolveEnvelopeFormatOptions } from "../auto-reply/envelope.js";
 import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
 import { formatLocationText, toLocationContext } from "../channels/location.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   readSessionUpdatedAt,
   recordSessionMetaFromInbound,
@@ -22,7 +22,7 @@ interface MediaRef {
 interface BuildLineMessageContextParams {
   event: MessageEvent;
   allMedia: MediaRef[];
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   account: ResolvedLineAccount;
 }
 
@@ -64,7 +64,7 @@ function buildPeerId(source: EventSource): string {
 
 function resolveLineInboundRoute(params: {
   source: EventSource;
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   account: ResolvedLineAccount;
 }): {
   userId?: string;
@@ -209,7 +209,7 @@ function resolveLineAddresses(params: {
 }
 
 async function finalizeLineInboundContext(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   account: ResolvedLineAccount;
   event: MessageEvent | PostbackEvent;
   route: LineRouteInfo;
@@ -406,7 +406,7 @@ export async function buildLineMessageContext(params: BuildLineMessageContextPar
 
 export async function buildLinePostbackContext(params: {
   event: PostbackEvent;
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   account: ResolvedLineAccount;
 }) {
   const { event, cfg, account } = params;

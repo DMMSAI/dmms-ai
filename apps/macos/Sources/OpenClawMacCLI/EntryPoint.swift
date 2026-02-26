@@ -6,7 +6,7 @@ private struct RootCommand {
 }
 
 @main
-struct DmmsAiMacCLI {
+struct DryadsAiMacCLI {
     static func main() async {
         let args = Array(CommandLine.arguments.dropFirst())
         let command = parseRootCommand(args)
@@ -22,7 +22,7 @@ struct DmmsAiMacCLI {
         case "wizard":
             await runWizardCommand(command?.args ?? [])
         default:
-            fputs("dmms-ai-mac: unknown command\n", stderr)
+            fputs("dryads-ai-mac: unknown command\n", stderr)
             printUsage()
             exit(1)
         }
@@ -36,21 +36,21 @@ private func parseRootCommand(_ args: [String]) -> RootCommand? {
 
 private func printUsage() {
     print("""
-    dmms-ai-mac
+    dryads-ai-mac
 
     Usage:
-      dmms-ai-mac connect [--url <ws://host:port>] [--token <token>] [--password <password>]
+      dryads-ai-mac connect [--url <ws://host:port>] [--token <token>] [--password <password>]
                            [--mode <local|remote>] [--timeout <ms>] [--probe] [--json]
                            [--client-id <id>] [--client-mode <mode>] [--display-name <name>]
                            [--role <role>] [--scopes <a,b,c>]
-      dmms-ai-mac discover [--timeout <ms>] [--json] [--include-local]
-      dmms-ai-mac wizard [--url <ws://host:port>] [--token <token>] [--password <password>]
+      dryads-ai-mac discover [--timeout <ms>] [--json] [--include-local]
+      dryads-ai-mac wizard [--url <ws://host:port>] [--token <token>] [--password <password>]
                           [--mode <local|remote>] [--workspace <path>] [--json]
 
     Examples:
-      dmms-ai-mac connect
-      dmms-ai-mac connect --url ws://127.0.0.1:18789 --json
-      dmms-ai-mac discover --timeout 3000 --json
-      dmms-ai-mac wizard --mode local
+      dryads-ai-mac connect
+      dryads-ai-mac connect --url ws://127.0.0.1:18789 --json
+      dryads-ai-mac discover --timeout 3000 --json
+      dryads-ai-mac wizard --mode local
     """)
 }

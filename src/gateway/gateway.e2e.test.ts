@@ -29,39 +29,39 @@ describe("gateway e2e", () => {
     async () => {
       const prev = {
         home: process.env.HOME,
-        configPath: process.env.DMMS_AI_CONFIG_PATH,
-        token: process.env.DMMS_AI_GATEWAY_TOKEN,
-        skipChannels: process.env.DMMS_AI_SKIP_CHANNELS,
-        skipGmail: process.env.DMMS_AI_SKIP_GMAIL_WATCHER,
-        skipCron: process.env.DMMS_AI_SKIP_CRON,
-        skipCanvas: process.env.DMMS_AI_SKIP_CANVAS_HOST,
-        skipBrowser: process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER,
+        configPath: process.env.DRYADS_AI_CONFIG_PATH,
+        token: process.env.DRYADS_AI_GATEWAY_TOKEN,
+        skipChannels: process.env.DRYADS_AI_SKIP_CHANNELS,
+        skipGmail: process.env.DRYADS_AI_SKIP_GMAIL_WATCHER,
+        skipCron: process.env.DRYADS_AI_SKIP_CRON,
+        skipCanvas: process.env.DRYADS_AI_SKIP_CANVAS_HOST,
+        skipBrowser: process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER,
       };
 
       const { baseUrl: openaiBaseUrl, restore } = installOpenAiResponsesMock();
 
-      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gw-mock-home-"));
+      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gw-mock-home-"));
       process.env.HOME = tempHome;
-      process.env.DMMS_AI_SKIP_CHANNELS = "1";
-      process.env.DMMS_AI_SKIP_GMAIL_WATCHER = "1";
-      process.env.DMMS_AI_SKIP_CRON = "1";
-      process.env.DMMS_AI_SKIP_CANVAS_HOST = "1";
-      process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
+      process.env.DRYADS_AI_SKIP_CHANNELS = "1";
+      process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = "1";
+      process.env.DRYADS_AI_SKIP_CRON = "1";
+      process.env.DRYADS_AI_SKIP_CANVAS_HOST = "1";
+      process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
 
       const token = `test-${randomUUID()}`;
-      process.env.DMMS_AI_GATEWAY_TOKEN = token;
+      process.env.DRYADS_AI_GATEWAY_TOKEN = token;
 
-      const workspaceDir = path.join(tempHome, "dmms-ai");
+      const workspaceDir = path.join(tempHome, "dryads-ai");
       await fs.mkdir(workspaceDir, { recursive: true });
 
       const nonceA = randomUUID();
       const nonceB = randomUUID();
-      const toolProbePath = path.join(workspaceDir, `.dmms-ai-tool-probe.${nonceA}.txt`);
+      const toolProbePath = path.join(workspaceDir, `.dryads-ai-tool-probe.${nonceA}.txt`);
       await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
-      const configDir = path.join(tempHome, ".dmms-ai");
+      const configDir = path.join(tempHome, ".dryads-ai");
       await fs.mkdir(configDir, { recursive: true });
-      const configPath = path.join(configDir, "dmms-ai.json");
+      const configPath = path.join(configDir, "dryads-ai.json");
 
       const cfg = {
         agents: { defaults: { workspace: workspaceDir } },
@@ -116,13 +116,13 @@ describe("gateway e2e", () => {
         await fs.rm(tempHome, { recursive: true, force: true });
         restore();
         process.env.HOME = prev.home;
-        process.env.DMMS_AI_CONFIG_PATH = prev.configPath;
-        process.env.DMMS_AI_GATEWAY_TOKEN = prev.token;
-        process.env.DMMS_AI_SKIP_CHANNELS = prev.skipChannels;
-        process.env.DMMS_AI_SKIP_GMAIL_WATCHER = prev.skipGmail;
-        process.env.DMMS_AI_SKIP_CRON = prev.skipCron;
-        process.env.DMMS_AI_SKIP_CANVAS_HOST = prev.skipCanvas;
-        process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+        process.env.DRYADS_AI_CONFIG_PATH = prev.configPath;
+        process.env.DRYADS_AI_GATEWAY_TOKEN = prev.token;
+        process.env.DRYADS_AI_SKIP_CHANNELS = prev.skipChannels;
+        process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = prev.skipGmail;
+        process.env.DRYADS_AI_SKIP_CRON = prev.skipCron;
+        process.env.DRYADS_AI_SKIP_CANVAS_HOST = prev.skipCanvas;
+        process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
       }
     },
   );
@@ -130,27 +130,27 @@ describe("gateway e2e", () => {
   it("runs wizard over ws and writes auth token config", { timeout: 90_000 }, async () => {
     const prev = {
       home: process.env.HOME,
-      stateDir: process.env.DMMS_AI_STATE_DIR,
-      configPath: process.env.DMMS_AI_CONFIG_PATH,
-      token: process.env.DMMS_AI_GATEWAY_TOKEN,
-      skipChannels: process.env.DMMS_AI_SKIP_CHANNELS,
-      skipGmail: process.env.DMMS_AI_SKIP_GMAIL_WATCHER,
-      skipCron: process.env.DMMS_AI_SKIP_CRON,
-      skipCanvas: process.env.DMMS_AI_SKIP_CANVAS_HOST,
-      skipBrowser: process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER,
+      stateDir: process.env.DRYADS_AI_STATE_DIR,
+      configPath: process.env.DRYADS_AI_CONFIG_PATH,
+      token: process.env.DRYADS_AI_GATEWAY_TOKEN,
+      skipChannels: process.env.DRYADS_AI_SKIP_CHANNELS,
+      skipGmail: process.env.DRYADS_AI_SKIP_GMAIL_WATCHER,
+      skipCron: process.env.DRYADS_AI_SKIP_CRON,
+      skipCanvas: process.env.DRYADS_AI_SKIP_CANVAS_HOST,
+      skipBrowser: process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER,
     };
 
-    process.env.DMMS_AI_SKIP_CHANNELS = "1";
-    process.env.DMMS_AI_SKIP_GMAIL_WATCHER = "1";
-    process.env.DMMS_AI_SKIP_CRON = "1";
-    process.env.DMMS_AI_SKIP_CANVAS_HOST = "1";
-    process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
-    delete process.env.DMMS_AI_GATEWAY_TOKEN;
+    process.env.DRYADS_AI_SKIP_CHANNELS = "1";
+    process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = "1";
+    process.env.DRYADS_AI_SKIP_CRON = "1";
+    process.env.DRYADS_AI_SKIP_CANVAS_HOST = "1";
+    process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = "1";
+    delete process.env.DRYADS_AI_GATEWAY_TOKEN;
 
-    const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-wizard-home-"));
+    const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-wizard-home-"));
     process.env.HOME = tempHome;
-    delete process.env.DMMS_AI_STATE_DIR;
-    delete process.env.DMMS_AI_CONFIG_PATH;
+    delete process.env.DRYADS_AI_STATE_DIR;
+    delete process.env.DRYADS_AI_CONFIG_PATH;
 
     const wizardToken = `wiz-${randomUUID()}`;
     const port = await getFreeGatewayPort();
@@ -242,14 +242,14 @@ describe("gateway e2e", () => {
       await server2.close({ reason: "wizard auth verify" });
       await fs.rm(tempHome, { recursive: true, force: true });
       process.env.HOME = prev.home;
-      process.env.DMMS_AI_STATE_DIR = prev.stateDir;
-      process.env.DMMS_AI_CONFIG_PATH = prev.configPath;
-      process.env.DMMS_AI_GATEWAY_TOKEN = prev.token;
-      process.env.DMMS_AI_SKIP_CHANNELS = prev.skipChannels;
-      process.env.DMMS_AI_SKIP_GMAIL_WATCHER = prev.skipGmail;
-      process.env.DMMS_AI_SKIP_CRON = prev.skipCron;
-      process.env.DMMS_AI_SKIP_CANVAS_HOST = prev.skipCanvas;
-      process.env.DMMS_AI_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+      process.env.DRYADS_AI_STATE_DIR = prev.stateDir;
+      process.env.DRYADS_AI_CONFIG_PATH = prev.configPath;
+      process.env.DRYADS_AI_GATEWAY_TOKEN = prev.token;
+      process.env.DRYADS_AI_SKIP_CHANNELS = prev.skipChannels;
+      process.env.DRYADS_AI_SKIP_GMAIL_WATCHER = prev.skipGmail;
+      process.env.DRYADS_AI_SKIP_CRON = prev.skipCron;
+      process.env.DRYADS_AI_SKIP_CANVAS_HOST = prev.skipCanvas;
+      process.env.DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
     }
   });
 });

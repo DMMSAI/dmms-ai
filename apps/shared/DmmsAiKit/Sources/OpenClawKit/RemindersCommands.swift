@@ -1,27 +1,27 @@
 import Foundation
 
-public enum DmmsAiRemindersCommand: String, Codable, Sendable {
+public enum DryadsAiRemindersCommand: String, Codable, Sendable {
     case list = "reminders.list"
     case add = "reminders.add"
 }
 
-public enum DmmsAiReminderStatusFilter: String, Codable, Sendable {
+public enum DryadsAiReminderStatusFilter: String, Codable, Sendable {
     case incomplete
     case completed
     case all
 }
 
-public struct DmmsAiRemindersListParams: Codable, Sendable, Equatable {
-    public var status: DmmsAiReminderStatusFilter?
+public struct DryadsAiRemindersListParams: Codable, Sendable, Equatable {
+    public var status: DryadsAiReminderStatusFilter?
     public var limit: Int?
 
-    public init(status: DmmsAiReminderStatusFilter? = nil, limit: Int? = nil) {
+    public init(status: DryadsAiReminderStatusFilter? = nil, limit: Int? = nil) {
         self.status = status
         self.limit = limit
     }
 }
 
-public struct DmmsAiRemindersAddParams: Codable, Sendable, Equatable {
+public struct DryadsAiRemindersAddParams: Codable, Sendable, Equatable {
     public var title: String
     public var dueISO: String?
     public var notes: String?
@@ -43,7 +43,7 @@ public struct DmmsAiRemindersAddParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiReminderPayload: Codable, Sendable, Equatable {
+public struct DryadsAiReminderPayload: Codable, Sendable, Equatable {
     public var identifier: String
     public var title: String
     public var dueISO: String?
@@ -65,18 +65,18 @@ public struct DmmsAiReminderPayload: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiRemindersListPayload: Codable, Sendable, Equatable {
-    public var reminders: [DmmsAiReminderPayload]
+public struct DryadsAiRemindersListPayload: Codable, Sendable, Equatable {
+    public var reminders: [DryadsAiReminderPayload]
 
-    public init(reminders: [DmmsAiReminderPayload]) {
+    public init(reminders: [DryadsAiReminderPayload]) {
         self.reminders = reminders
     }
 }
 
-public struct DmmsAiRemindersAddPayload: Codable, Sendable, Equatable {
-    public var reminder: DmmsAiReminderPayload
+public struct DryadsAiRemindersAddPayload: Codable, Sendable, Equatable {
+    public var reminder: DryadsAiReminderPayload
 
-    public init(reminder: DmmsAiReminderPayload) {
+    public init(reminder: DryadsAiReminderPayload) {
         self.reminder = reminder
     }
 }

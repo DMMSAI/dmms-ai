@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelPlugin, DmmsAiConfig } from "dmms-ai/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelPlugin, DryadsAiConfig } from "dryads-ai/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -12,7 +12,7 @@ import {
   resolveBlueBubblesGroupRequireMention,
   resolveBlueBubblesGroupToolPolicy,
   setAccountEnabledInConfigSection,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   listBlueBubblesAccountIds,
   type ResolvedBlueBubblesAccount,
@@ -262,7 +262,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
               ...(input.webhookPath ? { webhookPath: input.webhookPath } : {}),
             },
           },
-        } as DmmsAiConfig;
+        } as DryadsAiConfig;
       }
       return {
         ...next,
@@ -283,7 +283,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
             },
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     },
   },
   pairing: {

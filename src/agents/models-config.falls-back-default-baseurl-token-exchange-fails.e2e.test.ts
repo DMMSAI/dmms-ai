@@ -9,7 +9,7 @@ import {
   withUnsetCopilotTokenEnv,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureDmmsAiModelsJson } from "./models-config.js";
+import { ensureDryadsAiModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks({ restoreFetch: true });
 
@@ -26,9 +26,9 @@ describe("models-config", () => {
       globalThis.fetch = fetchMock as unknown as typeof fetch;
 
       try {
-        await ensureDmmsAiModelsJson({ models: { providers: {} } });
+        await ensureDryadsAiModelsJson({ models: { providers: {} } });
 
-        const agentDir = path.join(process.env.HOME ?? "", ".dmms-ai", "agents", "main", "agent");
+        const agentDir = path.join(process.env.HOME ?? "", ".dryads-ai", "agents", "main", "agent");
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {
           providers: Record<string, { baseUrl?: string }>;
@@ -65,7 +65,7 @@ describe("models-config", () => {
           ),
         );
 
-        await ensureDmmsAiModelsJson({ models: { providers: {} } }, agentDir);
+        await ensureDryadsAiModelsJson({ models: { providers: {} } }, agentDir);
 
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {

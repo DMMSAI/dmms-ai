@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { RuntimeEnv } from "dryads-ai/plugin-sdk";
 import { formatChangesDate } from "./utils.js";
 
 export async function fetchGroupChanges(

@@ -1,5 +1,5 @@
 ---
-summary: "How DMMS AI presence entries are produced, merged, and displayed"
+summary: "How Dryads AI presence entries are produced, merged, and displayed"
 read_when:
   - Debugging the Instances tab
   - Investigating duplicate or stale instance rows
@@ -9,7 +9,7 @@ title: "Presence"
 
 # Presence
 
-DMMS AI “presence” is a lightweight, best‑effort view of:
+Dryads AI “presence” is a lightweight, best‑effort view of:
 
 - the **Gateway** itself, and
 - **clients connected to the Gateway** (mac app, WebChat, CLI, etc.)

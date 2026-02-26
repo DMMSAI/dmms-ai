@@ -36,7 +36,7 @@ function replyText(res: Awaited<ReturnType<typeof getReplyFromConfig>>) {
 describe("trigger handling", () => {
   it("runs /compact as a gated command", async () => {
     await withTempHome(async (home) => {
-      const storePath = join(tmpdir(), `dmms-ai-session-test-${Date.now()}.json`);
+      const storePath = join(tmpdir(), `dryads-ai-session-test-${Date.now()}.json`);
       mockSuccessfulCompaction();
 
       const res = await getReplyFromConfig(
@@ -51,7 +51,7 @@ describe("trigger handling", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: join(home, "dmms-ai"),
+              workspace: join(home, "dryads-ai"),
             },
           },
           channels: {

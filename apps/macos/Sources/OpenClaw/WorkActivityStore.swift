@@ -1,7 +1,7 @@
 import Foundation
 import Observation
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiKit
+import DryadsAiProtocol
 import SwiftUI
 
 @MainActor
@@ -58,7 +58,7 @@ final class WorkActivityStore {
         phase: String,
         name: String?,
         meta: String?,
-        args: [String: DmmsAiProtocol.AnyCodable]?)
+        args: [String: DryadsAiProtocol.AnyCodable]?)
     {
         let toolKind = Self.mapToolKind(name)
         let label = Self.buildLabel(name: name, meta: meta, args: args)
@@ -227,7 +227,7 @@ final class WorkActivityStore {
     private static func buildLabel(
         name: String?,
         meta: String?,
-        args: [String: DmmsAiProtocol.AnyCodable]?) -> String
+        args: [String: DryadsAiProtocol.AnyCodable]?) -> String
     {
         let wrappedArgs = self.wrapToolArgs(args)
         let display = ToolDisplayRegistry.resolve(name: name ?? "tool", args: wrappedArgs, meta: meta)
@@ -238,17 +238,17 @@ final class WorkActivityStore {
         return display.label
     }
 
-    private static func wrapToolArgs(_ args: [String: DmmsAiProtocol.AnyCodable]?) -> DmmsAiKit.AnyCodable? {
+    private static func wrapToolArgs(_ args: [String: DryadsAiProtocol.AnyCodable]?) -> DryadsAiKit.AnyCodable? {
         guard let args else { return nil }
         let converted: [String: Any] = args.mapValues { self.unwrapJSONValue($0.value) }
-        return DmmsAiKit.AnyCodable(converted)
+        return DryadsAiKit.AnyCodable(converted)
     }
 
     private static func unwrapJSONValue(_ value: Any) -> Any {
-        if let dict = value as? [String: DmmsAiProtocol.AnyCodable] {
+        if let dict = value as? [String: DryadsAiProtocol.AnyCodable] {
             return dict.mapValues { self.unwrapJSONValue($0.value) }
         }
-        if let array = value as? [DmmsAiProtocol.AnyCodable] {
+        if let array = value as? [DryadsAiProtocol.AnyCodable] {
             return array.map { self.unwrapJSONValue($0.value) }
         }
         if let dict = value as? [String: Any] {

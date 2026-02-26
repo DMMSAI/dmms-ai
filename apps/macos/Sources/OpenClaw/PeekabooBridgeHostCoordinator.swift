@@ -9,15 +9,15 @@ import Security
 final class PeekabooBridgeHostCoordinator {
     static let shared = PeekabooBridgeHostCoordinator()
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "PeekabooBridge")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "PeekabooBridge")
 
     private var host: PeekabooBridgeHost?
-    private var services: DmmsAiPeekabooBridgeServices?
-    private static var dmmsAiSocketPath: String {
+    private var services: DryadsAiPeekabooBridgeServices?
+    private static var dryadsAiSocketPath: String {
         let fileManager = FileManager.default
         let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
-        let directory = base.appendingPathComponent("DMMS AI", isDirectory: true)
+        let directory = base.appendingPathComponent("Dryads AI", isDirectory: true)
         return directory.appendingPathComponent(PeekabooBridgeConstants.socketName, isDirectory: false).path
     }
 
@@ -46,7 +46,7 @@ final class PeekabooBridgeHostCoordinator {
         }
         let allowlistedBundles: Set<String> = []
 
-        let services = DmmsAiPeekabooBridgeServices()
+        let services = DryadsAiPeekabooBridgeServices()
         let server = PeekabooBridgeServer(
             services: services,
             hostKind: .gui,
@@ -54,7 +54,7 @@ final class PeekabooBridgeHostCoordinator {
             allowlistedBundles: allowlistedBundles)
 
         let host = PeekabooBridgeHost(
-            socketPath: Self.dmmsAiSocketPath,
+            socketPath: Self.dryadsAiSocketPath,
             server: server,
             allowedTeamIDs: allowlistedTeamIDs,
             requestTimeoutSec: 10)
@@ -64,7 +64,7 @@ final class PeekabooBridgeHostCoordinator {
 
         await host.start()
         self.logger
-            .info("PeekabooBridge host started at \(Self.dmmsAiSocketPath, privacy: .public)")
+            .info("PeekabooBridge host started at \(Self.dryadsAiSocketPath, privacy: .public)")
     }
 
     private static func currentTeamID() -> String? {
@@ -97,7 +97,7 @@ final class PeekabooBridgeHostCoordinator {
 }
 
 @MainActor
-private final class DmmsAiPeekabooBridgeServices: PeekabooBridgeServiceProviding {
+private final class DryadsAiPeekabooBridgeServices: PeekabooBridgeServiceProviding {
     let permissions: PermissionsService
     let screenCapture: any ScreenCaptureServiceProtocol
     let automation: any UIAutomationServiceProtocol
@@ -109,7 +109,7 @@ private final class DmmsAiPeekabooBridgeServices: PeekabooBridgeServiceProviding
     let snapshots: any SnapshotManagerProtocol
 
     init() {
-        let logging = LoggingService(subsystem: "ai.dmmsai.peekaboo")
+        let logging = LoggingService(subsystem: "ai.dryadsai.peekaboo")
         let feedbackClient: any AutomationFeedbackClient = NoopAutomationFeedbackClient()
 
         let snapshots = InMemorySnapshotManager(options: .init(

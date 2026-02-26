@@ -1,5 +1,5 @@
-import type { DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
-import { emptyPluginConfigSchema } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
+import { emptyPluginConfigSchema } from "dryads-ai/plugin-sdk";
 import { twitchPlugin } from "./src/plugin.js";
 import { setTwitchRuntime } from "./src/runtime.js";
 
@@ -10,7 +10,7 @@ const plugin = {
   name: "Twitch",
   description: "Twitch channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: DmmsAiPluginApi) {
+  register(api: DryadsAiPluginApi) {
     setTwitchRuntime(api.runtime);
     // oxlint-disable-next-line typescript/no-explicit-any
     api.registerChannel({ plugin: twitchPlugin as any });

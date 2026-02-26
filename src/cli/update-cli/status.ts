@@ -107,7 +107,7 @@ export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<vo
     },
   ];
 
-  defaultRuntime.log(theme.heading("DMMS AI update status"));
+  defaultRuntime.log(theme.heading("Dryads AI update status"));
   defaultRuntime.log("");
   defaultRuntime.log(
     renderTable({

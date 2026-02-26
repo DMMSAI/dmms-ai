@@ -42,7 +42,7 @@ describe("signal event handler sender prefix", () => {
         },
       },
       cfg: {
-        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/dmms-ai" } },
+        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/dryads-ai" } },
         channels: { signal: {} },
       } as never,
       baseUrl: "http://localhost",

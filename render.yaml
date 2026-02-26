@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: dmms-ai
+    name: dryads-ai
     runtime: docker
     plan: starter
     healthCheckPath: /health
@@ -9,13 +9,13 @@ services:
         value: "8080"
       - key: SETUP_PASSWORD
         sync: false
-      - key: DMMS_AI_STATE_DIR
-        value: /data/.dmms-ai
-      - key: DMMS_AI_WORKSPACE_DIR
+      - key: DRYADS_AI_STATE_DIR
+        value: /data/.dryads-ai
+      - key: DRYADS_AI_WORKSPACE_DIR
         value: /data/workspace
-      - key: DMMS_AI_GATEWAY_TOKEN
+      - key: DRYADS_AI_GATEWAY_TOKEN
         generateValue: true
     disk:
-      name: dmms-ai-data
+      name: dryads-ai-data
       mountPath: /data
       sizeGB: 1

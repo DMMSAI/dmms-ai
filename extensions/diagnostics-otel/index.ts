@@ -1,5 +1,5 @@
-import type { DmmsAiPluginApi } from "dmms-ai/plugin-sdk";
-import { emptyPluginConfigSchema } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginApi } from "dryads-ai/plugin-sdk";
+import { emptyPluginConfigSchema } from "dryads-ai/plugin-sdk";
 import { createDiagnosticsOtelService } from "./src/service.js";
 
 const plugin = {
@@ -7,7 +7,7 @@ const plugin = {
   name: "Diagnostics OpenTelemetry",
   description: "Export diagnostics events to OpenTelemetry",
   configSchema: emptyPluginConfigSchema(),
-  register(api: DmmsAiPluginApi) {
+  register(api: DryadsAiPluginApi) {
     api.registerService(createDiagnosticsOtelService());
   },
 };

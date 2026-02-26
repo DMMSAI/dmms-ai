@@ -1,8 +1,8 @@
-import DmmsAiKit
+import DryadsAiKit
 import SwiftUI
 import Testing
 import UIKit
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct SwiftUIRenderSmokeTests {
     @MainActor private static func host(_ view: some View) -> UIWindow {
@@ -75,7 +75,7 @@ import UIKit
     }
 
     @Test @MainActor func voiceWakeToastBuildsAViewHierarchy() {
-        let root = VoiceWakeToast(command: "dmms-ai: do something")
+        let root = VoiceWakeToast(command: "dryads-ai: do something")
         _ = Self.host(root)
     }
 }

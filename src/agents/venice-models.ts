@@ -301,7 +301,7 @@ export function buildVeniceModelDefinition(entry: VeniceCatalogEntry): ModelDefi
     contextWindow: entry.contextWindow,
     maxTokens: entry.maxTokens,
     // Avoid usage-only streaming chunks that can break OpenAI-compatible parsers.
-    // See: https://github.com/dmms-ai/dmms-ai/issues/15819
+    // See: https://github.com/dryads-ai/dryads-ai/issues/15819
     compat: {
       supportsUsageInStreaming: false,
     },

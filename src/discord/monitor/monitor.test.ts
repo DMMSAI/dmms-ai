@@ -7,7 +7,7 @@ import type {
 import type { Client } from "@buape/carbon";
 import type { GatewayPresenceUpdate } from "discord-api-types/v10";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import type { DiscordAccountConfig } from "../../config/types.discord.js";
 import { buildAgentSessionKey } from "../../routing/resolve-route.js";
 import {
@@ -89,7 +89,7 @@ vi.mock("../../config/sessions.js", async (importOriginal) => {
 });
 
 describe("agent components", () => {
-  const createCfg = (): DmmsAiConfig => ({}) as DmmsAiConfig;
+  const createCfg = (): DryadsAiConfig => ({}) as DryadsAiConfig;
 
   const createDmButtonInteraction = (overrides: Partial<ButtonInteraction> = {}) => {
     const reply = vi.fn().mockResolvedValue(undefined);
@@ -174,14 +174,14 @@ describe("agent components", () => {
 });
 
 describe("discord component interactions", () => {
-  const createCfg = (): DmmsAiConfig =>
+  const createCfg = (): DryadsAiConfig =>
     ({
       channels: {
         discord: {
           replyToMode: "first",
         },
       },
-    }) as DmmsAiConfig;
+    }) as DryadsAiConfig;
 
   const createDiscordConfig = (overrides?: Partial<DiscordAccountConfig>): DiscordAccountConfig =>
     ({
@@ -291,7 +291,7 @@ describe("discord component interactions", () => {
     deliverDiscordReplyMock.mockReset();
     recordInboundSessionMock.mockReset().mockResolvedValue(undefined);
     readSessionUpdatedAtMock.mockReset().mockReturnValue(undefined);
-    resolveStorePathMock.mockReset().mockReturnValue("/tmp/dmms-ai-sessions-test.json");
+    resolveStorePathMock.mockReset().mockReturnValue("/tmp/dryads-ai-sessions-test.json");
   });
 
   it("routes button clicks with reply references", async () => {
@@ -618,14 +618,14 @@ describe("resolveDiscordPresenceUpdate", () => {
     const presence = resolveDiscordPresenceUpdate({
       activity: "Live",
       activityType: 1,
-      activityUrl: "https://twitch.tv/dmms-ai",
+      activityUrl: "https://twitch.tv/dryads-ai",
     });
     expect(presence).not.toBeNull();
     expect(presence?.activities).toHaveLength(1);
     expect(presence?.activities[0]).toMatchObject({
       type: 1,
       name: "Live",
-      url: "https://twitch.tv/dmms-ai",
+      url: "https://twitch.tv/dryads-ai",
     });
   });
 });

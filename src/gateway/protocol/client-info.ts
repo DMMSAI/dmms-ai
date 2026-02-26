@@ -1,16 +1,16 @@
 export const GATEWAY_CLIENT_IDS = {
   WEBCHAT_UI: "webchat-ui",
-  CONTROL_UI: "dmms-ai-control-ui",
+  CONTROL_UI: "dryads-ai-control-ui",
   WEBCHAT: "webchat",
   CLI: "cli",
   GATEWAY_CLIENT: "gateway-client",
-  MACOS_APP: "dmms-ai-macos",
-  IOS_APP: "dmms-ai-ios",
-  ANDROID_APP: "dmms-ai-android",
+  MACOS_APP: "dryads-ai-macos",
+  IOS_APP: "dryads-ai-ios",
+  ANDROID_APP: "dryads-ai-android",
   NODE_HOST: "node-host",
   TEST: "test",
   FINGERPRINT: "fingerprint",
-  PROBE: "dmms-ai-probe",
+  PROBE: "dryads-ai-probe",
 } as const;
 
 export type GatewayClientId = (typeof GATEWAY_CLIENT_IDS)[keyof typeof GATEWAY_CLIENT_IDS];

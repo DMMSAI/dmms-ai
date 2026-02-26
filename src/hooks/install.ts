@@ -72,14 +72,14 @@ export function resolveHookInstallDir(hookId: string, hooksDir?: string): string
   return targetDirResult.path;
 }
 
-async function ensureDmmsAiHooks(manifest: HookPackageManifest) {
+async function ensureDryadsAiHooks(manifest: HookPackageManifest) {
   const hooks = manifest[MANIFEST_KEY]?.hooks;
   if (!Array.isArray(hooks)) {
-    throw new Error("package.json missing dmms-ai.hooks");
+    throw new Error("package.json missing dryads-ai.hooks");
   }
   const list = hooks.map((e) => (typeof e === "string" ? e.trim() : "")).filter(Boolean);
   if (list.length === 0) {
-    throw new Error("package.json dmms-ai.hooks is empty");
+    throw new Error("package.json dryads-ai.hooks is empty");
   }
   return list;
 }
@@ -177,7 +177,7 @@ async function installHookPackageFromDir(params: {
 
   let hookEntries: string[];
   try {
-    hookEntries = await ensureDmmsAiHooks(manifest);
+    hookEntries = await ensureDryadsAiHooks(manifest);
   } catch (err) {
     return { ok: false, error: String(err) };
   }
@@ -325,7 +325,7 @@ export async function installHooksFromArchive(params: {
   }
   const archivePath = archivePathResult.path;
 
-  return await withTempDir("dmms-ai-hook-", async (tmpDir) => {
+  return await withTempDir("dryads-ai-hook-", async (tmpDir) => {
     const extractDir = path.join(tmpDir, "extract");
     await fs.mkdir(extractDir, { recursive: true });
 
@@ -384,7 +384,7 @@ export async function installHooksFromNpmSpec(params: {
     return { ok: false, error: specError };
   }
 
-  return await withTempDir("dmms-ai-hook-pack-", async (tmpDir) => {
+  return await withTempDir("dryads-ai-hook-pack-", async (tmpDir) => {
     logger.info?.(`Downloading ${spec}…`);
     const packedResult = await packNpmSpecToArchive({
       spec,

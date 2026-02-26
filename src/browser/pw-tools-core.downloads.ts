@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { Page } from "playwright-core";
-import { resolvePreferredDmmsAiTmpDir } from "../infra/tmp-dmms-ai-dir.js";
+import { resolvePreferredDryadsAiTmpDir } from "../infra/tmp-dryads-ai-dir.js";
 import {
   ensurePageState,
   getPageForTargetId,
@@ -50,7 +50,7 @@ function sanitizeDownloadFileName(fileName: string): string {
 function buildTempDownloadPath(fileName: string): string {
   const id = crypto.randomUUID();
   const safeName = sanitizeDownloadFileName(fileName);
-  return path.join(resolvePreferredDmmsAiTmpDir(), "downloads", `${id}-${safeName}`);
+  return path.join(resolvePreferredDryadsAiTmpDir(), "downloads", `${id}-${safeName}`);
 }
 
 function createPageDownloadWaiter(page: Page, timeoutMs: number) {

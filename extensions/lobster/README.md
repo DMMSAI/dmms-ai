@@ -5,7 +5,7 @@ Adds the `lobster` agent tool as an **optional** plugin tool.
 ## What this is
 
 - Lobster is a standalone workflow shell (typed JSON-first pipelines + approvals/resume).
-- This plugin integrates Lobster with DMMS AI _without core changes_.
+- This plugin integrates Lobster with Dryads AI _without core changes_.
 
 ## Enable
 
@@ -30,19 +30,19 @@ Enable it in an agent allowlist:
 }
 ```
 
-## Using `dmms-ai.invoke` (Lobster → DMMS AI tools)
+## Using `dryads-ai.invoke` (Lobster → Dryads AI tools)
 
-Some Lobster pipelines may include a `dmms-ai.invoke` step to call back into DMMS AI tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
+Some Lobster pipelines may include a `dryads-ai.invoke` step to call back into Dryads AI tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
 
-For this to work, the DMMS AI Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
+For this to work, the Dryads AI Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
 
-- DMMS AI provides an HTTP endpoint: `POST /tools/invoke`.
+- Dryads AI provides an HTTP endpoint: `POST /tools/invoke`.
 - The request is gated by **gateway auth** (e.g. `Authorization: Bearer …` when token auth is enabled).
-- The invoked tool is gated by **tool policy** (global + per-agent + provider + group policy). If the tool is not allowed, DMMS AI returns `404 Tool not available`.
+- The invoked tool is gated by **tool policy** (global + per-agent + provider + group policy). If the tool is not allowed, Dryads AI returns `404 Tool not available`.
 
 ### Allowlisting recommended
 
-To avoid letting workflows call arbitrary tools, set a tight allowlist on the agent that will be used by `dmms-ai.invoke`.
+To avoid letting workflows call arbitrary tools, set a tight allowlist on the agent that will be used by `dryads-ai.invoke`.
 
 Example (allow only a small set of tools):
 

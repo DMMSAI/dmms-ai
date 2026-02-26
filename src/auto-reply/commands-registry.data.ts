@@ -406,7 +406,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
     defineChatCommand({
       key: "restart",
       nativeName: "restart",
-      description: "Restart DMMS AI.",
+      description: "Restart Dryads AI.",
       textAlias: "/restart",
       category: "tools",
     }),

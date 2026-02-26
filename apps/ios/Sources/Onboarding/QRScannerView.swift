@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import SwiftUI
 import VisionKit
 
@@ -72,7 +72,7 @@ struct QRScannerView: UIViewControllerRepresentable {
                     return
                 }
 
-                // Fall back to deep link URL format (dmms-ai://gateway?...).
+                // Fall back to deep link URL format (dryads-ai://gateway?...).
                 if let url = URL(string: payload),
                    let route = DeepLinkParser.parse(url),
                    case let .gateway(link) = route

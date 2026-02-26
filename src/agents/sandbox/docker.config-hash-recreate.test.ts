@@ -54,7 +54,7 @@ vi.mock("node:child_process", async (importOriginal) => {
       } else if (
         args[0] === "inspect" &&
         args[1] === "-f" &&
-        args[2]?.includes('index .Config.Labels "dmms-ai.configHash"')
+        args[2]?.includes('index .Config.Labels "dryads-ai.configHash"')
       ) {
         stdout = `${spawnState.labelHash}\n`;
       } else if (
@@ -88,9 +88,9 @@ function createSandboxConfig(dns: string[]): SandboxConfig {
     mode: "all",
     scope: "shared",
     workspaceAccess: "rw",
-    workspaceRoot: "~/.dmms-ai/sandboxes",
+    workspaceRoot: "~/.dryads-ai/sandboxes",
     docker: {
-      image: "dmms-ai-sandbox:test",
+      image: "dryads-ai-sandbox:test",
       containerPrefix: "oc-test-",
       workdir: "/workspace",
       readOnlyRoot: true,
@@ -104,7 +104,7 @@ function createSandboxConfig(dns: string[]): SandboxConfig {
     },
     browser: {
       enabled: false,
-      image: "dmms-ai-browser:test",
+      image: "dryads-ai-browser:test",
       containerPrefix: "oc-browser-",
       cdpPort: 9222,
       vncPort: 5900,
@@ -180,7 +180,7 @@ describe("ensureSandboxContainer config-hash recreation", () => {
     ).toBe(true);
     const createCall = dockerCalls.find((call) => call.args[0] === "create");
     expect(createCall).toBeDefined();
-    expect(createCall?.args).toContain(`dmms-ai.configHash=${newHash}`);
+    expect(createCall?.args).toContain(`dryads-ai.configHash=${newHash}`);
     expect(registryMocks.updateRegistry).toHaveBeenCalledWith(
       expect.objectContaining({
         containerName: "oc-test-shared",

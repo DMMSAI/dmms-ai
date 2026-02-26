@@ -1,7 +1,7 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite
 @MainActor
@@ -16,7 +16,7 @@ struct AgentEventStoreTests {
             seq: 1,
             stream: "test",
             ts: 0,
-            data: [:] as [String: DmmsAiProtocol.AnyCodable],
+            data: [:] as [String: DryadsAiProtocol.AnyCodable],
             summary: nil))
         #expect(store.events.count == 1)
 
@@ -33,7 +33,7 @@ struct AgentEventStoreTests {
                 seq: i,
                 stream: "test",
                 ts: Double(i),
-                data: [:] as [String: DmmsAiProtocol.AnyCodable],
+                data: [:] as [String: DryadsAiProtocol.AnyCodable],
                 summary: nil))
         }
 

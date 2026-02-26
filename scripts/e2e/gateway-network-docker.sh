@@ -2,12 +2,12 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-IMAGE_NAME="dmms-ai-gateway-network-e2e"
+IMAGE_NAME="dryads-ai-gateway-network-e2e"
 
 PORT="18789"
 TOKEN="e2e-$(date +%s)-$$"
-NET_NAME="dmms-ai-net-e2e-$$"
-GW_NAME="dmms-ai-gateway-e2e-$$"
+NET_NAME="dryads-ai-net-e2e-$$"
+GW_NAME="dryads-ai-gateway-e2e-$$"
 
 cleanup() {
   docker rm -f "$GW_NAME" >/dev/null 2>&1 || true
@@ -25,11 +25,11 @@ echo "Starting gateway container..."
 	docker run --rm -d \
 	  --name "$GW_NAME" \
 	  --network "$NET_NAME" \
-	  -e "DMMS_AI_GATEWAY_TOKEN=$TOKEN" \
-	  -e "DMMS_AI_SKIP_CHANNELS=1" \
-	  -e "DMMS_AI_SKIP_GMAIL_WATCHER=1" \
-	  -e "DMMS_AI_SKIP_CRON=1" \
-	  -e "DMMS_AI_SKIP_CANVAS_HOST=1" \
+	  -e "DRYADS_AI_GATEWAY_TOKEN=$TOKEN" \
+	  -e "DRYADS_AI_SKIP_CHANNELS=1" \
+	  -e "DRYADS_AI_SKIP_GMAIL_WATCHER=1" \
+	  -e "DRYADS_AI_SKIP_CRON=1" \
+	  -e "DRYADS_AI_SKIP_CANVAS_HOST=1" \
 	  "$IMAGE_NAME" \
   bash -lc "entry=dist/index.mjs; [ -f \"\$entry\" ] || entry=dist/index.js; node \"\$entry\" gateway --port $PORT --bind lan --allow-unconfigured > /tmp/gateway-net-e2e.log 2>&1"
 

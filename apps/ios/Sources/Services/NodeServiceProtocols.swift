@@ -1,12 +1,12 @@
 import CoreLocation
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 import UIKit
 
 protocol CameraServicing: Sendable {
     func listDevices() async -> [CameraController.CameraDeviceInfo]
-    func snap(params: DmmsAiCameraSnapParams) async throws -> (format: String, base64: String, width: Int, height: Int)
-    func clip(params: DmmsAiCameraClipParams) async throws -> (format: String, base64: String, durationMs: Int, hasAudio: Bool)
+    func snap(params: DryadsAiCameraSnapParams) async throws -> (format: String, base64: String, width: Int, height: Int)
+    func clip(params: DryadsAiCameraClipParams) async throws -> (format: String, base64: String, durationMs: Int, hasAudio: Bool)
 }
 
 protocol ScreenRecordingServicing: Sendable {
@@ -22,14 +22,14 @@ protocol ScreenRecordingServicing: Sendable {
 protocol LocationServicing: Sendable {
     func authorizationStatus() -> CLAuthorizationStatus
     func accuracyAuthorization() -> CLAccuracyAuthorization
-    func ensureAuthorization(mode: DmmsAiLocationMode) async -> CLAuthorizationStatus
+    func ensureAuthorization(mode: DryadsAiLocationMode) async -> CLAuthorizationStatus
     func currentLocation(
-        params: DmmsAiLocationGetParams,
-        desiredAccuracy: DmmsAiLocationAccuracy,
+        params: DryadsAiLocationGetParams,
+        desiredAccuracy: DryadsAiLocationAccuracy,
         maxAgeMs: Int?,
         timeoutMs: Int?) async throws -> CLLocation
     func startLocationUpdates(
-        desiredAccuracy: DmmsAiLocationAccuracy,
+        desiredAccuracy: DryadsAiLocationAccuracy,
         significantChangesOnly: Bool) -> AsyncStream<CLLocation>
     func stopLocationUpdates()
     func startMonitoringSignificantLocationChanges(onUpdate: @escaping @Sendable (CLLocation) -> Void)
@@ -37,32 +37,32 @@ protocol LocationServicing: Sendable {
 }
 
 protocol DeviceStatusServicing: Sendable {
-    func status() async throws -> DmmsAiDeviceStatusPayload
-    func info() -> DmmsAiDeviceInfoPayload
+    func status() async throws -> DryadsAiDeviceStatusPayload
+    func info() -> DryadsAiDeviceInfoPayload
 }
 
 protocol PhotosServicing: Sendable {
-    func latest(params: DmmsAiPhotosLatestParams) async throws -> DmmsAiPhotosLatestPayload
+    func latest(params: DryadsAiPhotosLatestParams) async throws -> DryadsAiPhotosLatestPayload
 }
 
 protocol ContactsServicing: Sendable {
-    func search(params: DmmsAiContactsSearchParams) async throws -> DmmsAiContactsSearchPayload
-    func add(params: DmmsAiContactsAddParams) async throws -> DmmsAiContactsAddPayload
+    func search(params: DryadsAiContactsSearchParams) async throws -> DryadsAiContactsSearchPayload
+    func add(params: DryadsAiContactsAddParams) async throws -> DryadsAiContactsAddPayload
 }
 
 protocol CalendarServicing: Sendable {
-    func events(params: DmmsAiCalendarEventsParams) async throws -> DmmsAiCalendarEventsPayload
-    func add(params: DmmsAiCalendarAddParams) async throws -> DmmsAiCalendarAddPayload
+    func events(params: DryadsAiCalendarEventsParams) async throws -> DryadsAiCalendarEventsPayload
+    func add(params: DryadsAiCalendarAddParams) async throws -> DryadsAiCalendarAddPayload
 }
 
 protocol RemindersServicing: Sendable {
-    func list(params: DmmsAiRemindersListParams) async throws -> DmmsAiRemindersListPayload
-    func add(params: DmmsAiRemindersAddParams) async throws -> DmmsAiRemindersAddPayload
+    func list(params: DryadsAiRemindersListParams) async throws -> DryadsAiRemindersListPayload
+    func add(params: DryadsAiRemindersAddParams) async throws -> DryadsAiRemindersAddPayload
 }
 
 protocol MotionServicing: Sendable {
-    func activities(params: DmmsAiMotionActivityParams) async throws -> DmmsAiMotionActivityPayload
-    func pedometer(params: DmmsAiPedometerParams) async throws -> DmmsAiPedometerPayload
+    func activities(params: DryadsAiMotionActivityParams) async throws -> DryadsAiMotionActivityPayload
+    func pedometer(params: DryadsAiPedometerParams) async throws -> DryadsAiPedometerPayload
 }
 
 struct WatchMessagingStatus: Sendable, Equatable {
@@ -85,7 +85,7 @@ protocol WatchMessagingServicing: AnyObject, Sendable {
         id: String,
         title: String,
         body: String,
-        priority: DmmsAiNotificationPriority?) async throws -> WatchNotificationSendResult
+        priority: DryadsAiNotificationPriority?) async throws -> WatchNotificationSendResult
 }
 
 extension CameraController: CameraServicing {}

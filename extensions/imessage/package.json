@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/imessage",
+  "name": "@dryads-ai/imessage",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI iMessage channel plugin",
+  "description": "Dryads AI iMessage channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

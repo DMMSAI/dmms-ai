@@ -1,7 +1,7 @@
 {
-  "name": "@dmms-ai/feishu",
+  "name": "@dryads-ai/feishu",
   "version": "2026.2.18",
-  "description": "DMMS AI Feishu/Lark channel plugin (community maintained by @m1heng)",
+  "description": "Dryads AI Feishu/Lark channel plugin (community maintained by @m1heng)",
   "type": "module",
   "dependencies": {
     "@larksuiteoapi/node-sdk": "^1.59.0",
@@ -9,9 +9,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -29,7 +29,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/feishu",
+      "npmSpec": "@dryads-ai/feishu",
       "localPath": "extensions/feishu",
       "defaultChoice": "npm"
     }

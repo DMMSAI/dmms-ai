@@ -1,7 +1,7 @@
 import Foundation
 import Testing
-@testable import DmmsAiKit
-import DmmsAiProtocol
+@testable import DryadsAiKit
+import DryadsAiProtocol
 
 struct GatewayNodeSessionTests {
     @Test

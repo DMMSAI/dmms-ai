@@ -1,5 +1,5 @@
 import Observation
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 
 struct SkillsSettings: View {
@@ -225,15 +225,15 @@ private struct SkillRow: View {
 
     private var sourceLabel: String {
         switch self.skill.source {
-        case "dmms-ai-bundled":
+        case "dryads-ai-bundled":
             "Bundled"
-        case "dmms-ai-managed":
+        case "dryads-ai-managed":
             "Managed"
-        case "dmms-ai-workspace":
+        case "dryads-ai-workspace":
             "Workspace"
-        case "dmms-ai-extra":
+        case "dryads-ai-extra":
             "Extra"
-        case "dmms-ai-plugin":
+        case "dryads-ai-plugin":
             "Plugin"
         default:
             self.skill.source
@@ -573,7 +573,7 @@ extension SkillsSettings {
         let skill = SkillStatus(
             name: "Test Skill",
             description: "Test description",
-            source: "dmms-ai-bundled",
+            source: "dryads-ai-bundled",
             filePath: "/tmp/skills/test",
             baseDir: "/tmp/skills",
             skillKey: "test",

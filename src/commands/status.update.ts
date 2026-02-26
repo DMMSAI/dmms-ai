@@ -1,5 +1,5 @@
 import { formatCliCommand } from "../cli/command-format.js";
-import { resolveDmmsAiPackageRoot } from "../infra/dmms-ai-root.js";
+import { resolveDryadsAiPackageRoot } from "../infra/dryads-ai-root.js";
 import {
   checkUpdateStatus,
   compareSemverStrings,
@@ -12,7 +12,7 @@ export async function getUpdateCheckResult(params: {
   fetchGit: boolean;
   includeRegistry: boolean;
 }): Promise<UpdateCheckResult> {
-  const root = await resolveDmmsAiPackageRoot({
+  const root = await resolveDryadsAiPackageRoot({
     moduleUrl: import.meta.url,
     argv1: process.argv[1],
     cwd: process.cwd(),
@@ -66,7 +66,7 @@ export function formatUpdateAvailableHint(update: UpdateCheckResult): string | n
     details.push(`npm ${availability.latestVersion}`);
   }
   const suffix = details.length > 0 ? ` (${details.join(" · ")})` : "";
-  return `Update available${suffix}. Run: ${formatCliCommand("dmms-ai update")}`;
+  return `Update available${suffix}. Run: ${formatCliCommand("dryads-ai update")}`;
 }
 
 export function formatUpdateOneLiner(update: UpdateCheckResult): string {

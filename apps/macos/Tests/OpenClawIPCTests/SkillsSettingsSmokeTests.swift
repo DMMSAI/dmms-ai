@@ -1,6 +1,6 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
 @MainActor
@@ -12,7 +12,7 @@ struct SkillsSettingsSmokeTests {
             SkillStatus(
                 name: "Needs Setup",
                 description: "Missing bins and env",
-                source: "dmms-ai-managed",
+                source: "dryads-ai-managed",
                 filePath: "/tmp/skills/needs-setup",
                 baseDir: "/tmp/skills",
                 skillKey: "needs-setup",
@@ -39,7 +39,7 @@ struct SkillsSettingsSmokeTests {
             SkillStatus(
                 name: "Ready Skill",
                 description: "All set",
-                source: "dmms-ai-bundled",
+                source: "dryads-ai-bundled",
                 filePath: "/tmp/skills/ready",
                 baseDir: "/tmp/skills",
                 skillKey: "ready",
@@ -59,7 +59,7 @@ struct SkillsSettingsSmokeTests {
             SkillStatus(
                 name: "Disabled Skill",
                 description: "Disabled in config",
-                source: "dmms-ai-extra",
+                source: "dryads-ai-extra",
                 filePath: "/tmp/skills/disabled",
                 baseDir: "/tmp/skills",
                 skillKey: "disabled",
@@ -90,7 +90,7 @@ struct SkillsSettingsSmokeTests {
             SkillStatus(
                 name: "Local Skill",
                 description: "Local ready",
-                source: "dmms-ai-workspace",
+                source: "dryads-ai-workspace",
                 filePath: "/tmp/skills/local",
                 baseDir: "/tmp/skills",
                 skillKey: "local",

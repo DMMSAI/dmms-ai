@@ -15,14 +15,14 @@ x-i18n:
 
 # Hooks
 
-Hooks 提供了一个可扩展的事件驱动系统，用于响应智能体命令和事件自动执行操作。Hooks 从目录中自动发现，可以通过 CLI 命令管理，类似于 DMMS AI 中 Skills 的工作方式。
+Hooks 提供了一个可扩展的事件驱动系统，用于响应智能体命令和事件自动执行操作。Hooks 从目录中自动发现，可以通过 CLI 命令管理，类似于 Dryads AI 中 Skills 的工作方式。
 
 ## 入门指南
 
 Hooks 是在事件发生时运行的小脚本。有两种类型：
 
 - **Hooks**（本页）：当智能体事件触发时在 Gateway 网关内运行，如 `/new`、`/reset`、`/stop` 或生命周期事件。
-- **Webhooks**：外部 HTTP webhooks，让其他系统触发 DMMS AI 中的工作。参见 [Webhook Hooks](/automation/webhook) 或使用 `dmms-ai webhooks` 获取 Gmail 助手命令。
+- **Webhooks**：外部 HTTP webhooks，让其他系统触发 Dryads AI 中的工作。参见 [Webhook Hooks](/automation/webhook) 或使用 `dryads-ai webhooks` 获取 Gmail 助手命令。
 
 Hooks 也可以捆绑在插件中；参见 [插件](/tools/plugin#plugin-hooks)。
 
@@ -42,53 +42,53 @@ hooks 系统允许你：
 - 在发出 `/new` 时将会话上下文保存到记忆
 - 记录所有命令以供审计
 - 在智能体生命周期事件上触发自定义自动化
-- 在不修改核心代码的情况下扩展 DMMS AI 的行为
+- 在不修改核心代码的情况下扩展 Dryads AI 的行为
 
 ## 入门
 
 ### 捆绑的 Hooks
 
-DMMS AI 附带三个自动发现的捆绑 hooks：
+Dryads AI 附带三个自动发现的捆绑 hooks：
 
-- **💾 session-memory**：当你发出 `/new` 时将会话上下文保存到智能体工作区（默认 `~/.dmms-ai/workspace/memory/`）
-- **📝 command-logger**：将所有命令事件记录到 `~/.dmms-ai/logs/commands.log`
+- **💾 session-memory**：当你发出 `/new` 时将会话上下文保存到智能体工作区（默认 `~/.dryads-ai/workspace/memory/`）
+- **📝 command-logger**：将所有命令事件记录到 `~/.dryads-ai/logs/commands.log`
 - **🚀 boot-md**：当 Gateway 网关启动时运行 `BOOT.md`（需要启用内部 hooks）
 
 列出可用的 hooks：
 
 ```bash
-dmms-ai hooks list
+dryads-ai hooks list
 ```
 
 启用一个 hook：
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
 检查 hook 状态：
 
 ```bash
-dmms-ai hooks check
+dryads-ai hooks check
 ```
 
 获取详细信息：
 
 ```bash
-dmms-ai hooks info session-memory
+dryads-ai hooks info session-memory
 ```
 
 ### 新手引导
 
-在新手引导期间（`dmms-ai onboard`），你将被提示启用推荐的 hooks。向导会自动发现符合条件的 hooks 并呈现供选择。
+在新手引导期间（`dryads-ai onboard`），你将被提示启用推荐的 hooks。向导会自动发现符合条件的 hooks 并呈现供选择。
 
 ## Hook 发现
 
 Hooks 从三个目录自动发现（按优先级顺序）：
 
 1. **工作区 hooks**：`<workspace>/hooks/`（每智能体，最高优先级）
-2. **托管 hooks**：`~/.dmms-ai/hooks/`（用户安装，跨工作区共享）
-3. **捆绑 hooks**：`<dmms-ai>/dist/hooks/bundled/`（随 DMMS AI 附带）
+2. **托管 hooks**：`~/.dryads-ai/hooks/`（用户安装，跨工作区共享）
+3. **捆绑 hooks**：`<dryads-ai>/dist/hooks/bundled/`（随 Dryads AI 附带）
 
 托管 hook 目录可以是**单个 hook** 或 **hook 包**（包目录）。
 
@@ -102,10 +102,10 @@ my-hook/
 
 ## Hook 包（npm/archives）
 
-Hook 包是标准的 npm 包，通过 `package.json` 中的 `dmms-ai.hooks` 导出一个或多个 hooks。使用以下命令安装：
+Hook 包是标准的 npm 包，通过 `package.json` 中的 `dryads-ai.hooks` 导出一个或多个 hooks。使用以下命令安装：
 
 ```bash
-dmms-ai hooks install <path-or-spec>
+dryads-ai hooks install <path-or-spec>
 ```
 
 示例 `package.json`：
@@ -114,14 +114,14 @@ dmms-ai hooks install <path-or-spec>
 {
   "name": "@acme/my-hooks",
   "version": "0.1.0",
-  "dmms-ai": {
+  "dryads-ai": {
     "hooks": ["./hooks/my-hook", "./hooks/other-hook"]
   }
 }
 ```
 
 每个条目指向包含 `HOOK.md` 和 `handler.ts`（或 `index.ts`）的 hook 目录。
-Hook 包可以附带依赖；它们将安装在 `~/.dmms-ai/hooks/<id>` 下。
+Hook 包可以附带依赖；它们将安装在 `~/.dryads-ai/hooks/<id>` 下。
 
 ## Hook 结构
 
@@ -133,9 +133,9 @@ Hook 包可以附带依赖；它们将安装在 `~/.dmms-ai/hooks/<id>` 下。
 ---
 name: my-hook
 description: "Short description of what this hook does"
-homepage: https://docs.dmms-ai.com/automation/hooks#my-hook
+homepage: https://docs.dryads-ai.com/automation/hooks#my-hook
 metadata:
-  { "dmms-ai": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "dryads-ai": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 
 # My Hook
@@ -159,7 +159,7 @@ No configuration needed.
 
 ### 元数据字段
 
-`metadata.dmms-ai` 对象支持：
+`metadata.dryads-ai` 对象支持：
 
 - **`emoji`**：CLI 的显示表情符号（例如 `"💾"`）
 - **`events`**：要监听的事件数组（例如 `["command:new", "command:reset"]`）
@@ -219,7 +219,7 @@ export default myHandler;
     senderId?: string,
     workspaceDir?: string,
     bootstrapFiles?: WorkspaceBootstrapFile[],
-    cfg?: DmmsAiConfig
+    cfg?: DryadsAiConfig
   }
 }
 ```
@@ -247,7 +247,7 @@ export default myHandler;
 
 ### 工具结果 Hooks（插件 API）
 
-这些 hooks 不是事件流监听器；它们让插件在 DMMS AI 持久化工具结果之前同步调整它们。
+这些 hooks 不是事件流监听器；它们让插件在 Dryads AI 持久化工具结果之前同步调整它们。
 
 - **`tool_result_persist`**：在工具结果写入会话记录之前转换它们。必须是同步的；返回更新后的工具结果负载或 `undefined` 保持原样。参见 [智能体循环](/concepts/agent-loop)。
 
@@ -266,13 +266,13 @@ export default myHandler;
 ### 1. 选择位置
 
 - **工作区 hooks**（`<workspace>/hooks/`）：每智能体，最高优先级
-- **托管 hooks**（`~/.dmms-ai/hooks/`）：跨工作区共享
+- **托管 hooks**（`~/.dryads-ai/hooks/`）：跨工作区共享
 
 ### 2. 创建目录结构
 
 ```bash
-mkdir -p ~/.dmms-ai/hooks/my-hook
-cd ~/.dmms-ai/hooks/my-hook
+mkdir -p ~/.dryads-ai/hooks/my-hook
+cd ~/.dryads-ai/hooks/my-hook
 ```
 
 ### 3. 创建 HOOK.md
@@ -281,7 +281,7 @@ cd ~/.dmms-ai/hooks/my-hook
 ---
 name: my-hook
 description: "Does something useful"
-metadata: { "dmms-ai": { "emoji": "🎯", "events": ["command:new"] } }
+metadata: { "dryads-ai": { "emoji": "🎯", "events": ["command:new"] } }
 ---
 
 # My Custom Hook
@@ -310,10 +310,10 @@ export default handler;
 
 ```bash
 # Verify hook is discovered
-dmms-ai hooks list
+dryads-ai hooks list
 
 # Enable it
-dmms-ai hooks enable my-hook
+dryads-ai hooks enable my-hook
 
 # Restart your gateway process (menu bar app restart on macOS, or restart your dev process)
 
@@ -407,46 +407,46 @@ Hooks 可以有自定义配置：
 
 ```bash
 # List all hooks
-dmms-ai hooks list
+dryads-ai hooks list
 
 # Show only eligible hooks
-dmms-ai hooks list --eligible
+dryads-ai hooks list --eligible
 
 # Verbose output (show missing requirements)
-dmms-ai hooks list --verbose
+dryads-ai hooks list --verbose
 
 # JSON output
-dmms-ai hooks list --json
+dryads-ai hooks list --json
 ```
 
 ### Hook 信息
 
 ```bash
 # Show detailed info about a hook
-dmms-ai hooks info session-memory
+dryads-ai hooks info session-memory
 
 # JSON output
-dmms-ai hooks info session-memory --json
+dryads-ai hooks info session-memory --json
 ```
 
 ### 检查资格
 
 ```bash
 # Show eligibility summary
-dmms-ai hooks check
+dryads-ai hooks check
 
 # JSON output
-dmms-ai hooks check --json
+dryads-ai hooks check --json
 ```
 
 ### 启用/禁用
 
 ```bash
 # Enable a hook
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 
 # Disable a hook
-dmms-ai hooks disable command-logger
+dryads-ai hooks disable command-logger
 ```
 
 ## 捆绑的 Hooks
@@ -459,7 +459,7 @@ dmms-ai hooks disable command-logger
 
 **要求**：必须配置 `workspace.dir`
 
-**输出**：`<workspace>/memory/YYYY-MM-DD-slug.md`（默认为 `~/.dmms-ai/workspace`）
+**输出**：`<workspace>/memory/YYYY-MM-DD-slug.md`（默认为 `~/.dryads-ai/workspace`）
 
 **功能**：
 
@@ -487,7 +487,7 @@ dmms-ai hooks disable command-logger
 **启用**：
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
 ### command-logger
@@ -498,7 +498,7 @@ dmms-ai hooks enable session-memory
 
 **要求**：无
 
-**输出**：`~/.dmms-ai/logs/commands.log`
+**输出**：`~/.dryads-ai/logs/commands.log`
 
 **功能**：
 
@@ -517,19 +517,19 @@ dmms-ai hooks enable session-memory
 
 ```bash
 # View recent commands
-tail -n 20 ~/.dmms-ai/logs/commands.log
+tail -n 20 ~/.dryads-ai/logs/commands.log
 
 # Pretty-print with jq
-cat ~/.dmms-ai/logs/commands.log | jq .
+cat ~/.dryads-ai/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.dmms-ai/logs/commands.log | jq .
+grep '"action":"new"' ~/.dryads-ai/logs/commands.log | jq .
 ```
 
 **启用**：
 
 ```bash
-dmms-ai hooks enable command-logger
+dryads-ai hooks enable command-logger
 ```
 
 ### boot-md
@@ -550,7 +550,7 @@ dmms-ai hooks enable command-logger
 **启用**：
 
 ```bash
-dmms-ai hooks enable boot-md
+dryads-ai hooks enable boot-md
 ```
 
 ## 最佳实践
@@ -607,13 +607,13 @@ const handler: HookHandler = async (event) => {
 尽可能在元数据中指定确切事件：
 
 ```yaml
-metadata: { "dmms-ai": { "events": ["command:new"] } } # Specific
+metadata: { "dryads-ai": { "events": ["command:new"] } } # Specific
 ```
 
 而不是：
 
 ```yaml
-metadata: { "dmms-ai": { "events": ["command"] } } # General - more overhead
+metadata: { "dryads-ai": { "events": ["command"] } } # General - more overhead
 ```
 
 ## 调试
@@ -633,7 +633,7 @@ Registered hook: boot-md -> gateway:startup
 列出所有发现的 hooks：
 
 ```bash
-dmms-ai hooks list --verbose
+dryads-ai hooks list --verbose
 ```
 
 ### 检查注册
@@ -652,7 +652,7 @@ const handler: HookHandler = async (event) => {
 检查为什么 hook 不符合条件：
 
 ```bash
-dmms-ai hooks info my-hook
+dryads-ai hooks info my-hook
 ```
 
 在输出中查找缺失的要求。
@@ -668,7 +668,7 @@ dmms-ai hooks info my-hook
 ./scripts/clawlog.sh -f
 
 # Other platforms
-tail -f ~/.dmms-ai/gateway.log
+tail -f ~/.dryads-ai/gateway.log
 ```
 
 ### 直接测试 Hooks
@@ -744,20 +744,20 @@ Gateway 网关启动
 1. 检查目录结构：
 
    ```bash
-   ls -la ~/.dmms-ai/hooks/my-hook/
+   ls -la ~/.dryads-ai/hooks/my-hook/
    # Should show: HOOK.md, handler.ts
    ```
 
 2. 验证 HOOK.md 格式：
 
    ```bash
-   cat ~/.dmms-ai/hooks/my-hook/HOOK.md
+   cat ~/.dryads-ai/hooks/my-hook/HOOK.md
    # Should have YAML frontmatter with name and metadata
    ```
 
 3. 列出所有发现的 hooks：
    ```bash
-   dmms-ai hooks list
+   dryads-ai hooks list
    ```
 
 ### Hook 不符合条件
@@ -765,7 +765,7 @@ Gateway 网关启动
 检查要求：
 
 ```bash
-dmms-ai hooks info my-hook
+dryads-ai hooks info my-hook
 ```
 
 查找缺失的：
@@ -780,7 +780,7 @@ dmms-ai hooks info my-hook
 1. 验证 hook 已启用：
 
    ```bash
-   dmms-ai hooks list
+   dryads-ai hooks list
    # Should show ✓ next to enabled hooks
    ```
 
@@ -827,8 +827,8 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 1. 创建 hook 目录：
 
    ```bash
-   mkdir -p ~/.dmms-ai/hooks/my-hook
-   mv ./hooks/handlers/my-handler.ts ~/.dmms-ai/hooks/my-hook/handler.ts
+   mkdir -p ~/.dryads-ai/hooks/my-hook
+   mv ./hooks/handlers/my-handler.ts ~/.dryads-ai/hooks/my-hook/handler.ts
    ```
 
 2. 创建 HOOK.md：
@@ -837,7 +837,7 @@ node -e "import('./path/to/handler.ts').then(console.log)"
    ---
    name: my-hook
    description: "My custom hook"
-   metadata: { "dmms-ai": { "emoji": "🎯", "events": ["command:new"] } }
+   metadata: { "dryads-ai": { "emoji": "🎯", "events": ["command:new"] } }
    ---
 
    # My Hook
@@ -862,7 +862,7 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 
 4. 验证并重启你的 Gateway 网关进程：
    ```bash
-   dmms-ai hooks list
+   dryads-ai hooks list
    # Should show: 🎯 my-hook ✓
    ```
 
@@ -877,6 +877,6 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 ## 另请参阅
 
 - [CLI 参考：hooks](/cli/hooks)
-- [捆绑 Hooks README](https://github.com/dmms-ai/dmms-ai/tree/main/src/hooks/bundled)
+- [捆绑 Hooks README](https://github.com/dryads-ai/dryads-ai/tree/main/src/hooks/bundled)
 - [Webhook Hooks](/automation/webhook)
 - [配置](/gateway/configuration#hooks)

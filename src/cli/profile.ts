@@ -94,7 +94,10 @@ function resolveProfileStateDir(
   homedir: () => string,
 ): string {
   const suffix = profile.toLowerCase() === "default" ? "" : `-${profile}`;
-  return path.join(resolveRequiredHomeDir(env as NodeJS.ProcessEnv, homedir), `.dmms-ai${suffix}`);
+  return path.join(
+    resolveRequiredHomeDir(env as NodeJS.ProcessEnv, homedir),
+    `.dryads-ai${suffix}`,
+  );
 }
 
 export function applyCliProfileEnv(params: {
@@ -110,18 +113,18 @@ export function applyCliProfileEnv(params: {
   }
 
   // Convenience only: fill defaults, never override explicit env values.
-  env.DMMS_AI_PROFILE = profile;
+  env.DRYADS_AI_PROFILE = profile;
 
-  const stateDir = env.DMMS_AI_STATE_DIR?.trim() || resolveProfileStateDir(profile, env, homedir);
-  if (!env.DMMS_AI_STATE_DIR?.trim()) {
-    env.DMMS_AI_STATE_DIR = stateDir;
+  const stateDir = env.DRYADS_AI_STATE_DIR?.trim() || resolveProfileStateDir(profile, env, homedir);
+  if (!env.DRYADS_AI_STATE_DIR?.trim()) {
+    env.DRYADS_AI_STATE_DIR = stateDir;
   }
 
-  if (!env.DMMS_AI_CONFIG_PATH?.trim()) {
-    env.DMMS_AI_CONFIG_PATH = path.join(stateDir, "dmms-ai.json");
+  if (!env.DRYADS_AI_CONFIG_PATH?.trim()) {
+    env.DRYADS_AI_CONFIG_PATH = path.join(stateDir, "dryads-ai.json");
   }
 
-  if (profile === "dev" && !env.DMMS_AI_GATEWAY_PORT?.trim()) {
-    env.DMMS_AI_GATEWAY_PORT = "19001";
+  if (profile === "dev" && !env.DRYADS_AI_GATEWAY_PORT?.trim()) {
+    env.DRYADS_AI_GATEWAY_PORT = "19001";
   }
 }

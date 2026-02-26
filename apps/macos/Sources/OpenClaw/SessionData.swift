@@ -251,7 +251,7 @@ enum SessionLoader {
     static let fallbackContextTokens = 200_000
 
     static let defaultStorePath = standardize(
-        DmmsAiPaths.stateDirURL
+        DryadsAiPaths.stateDirURL
             .appendingPathComponent("sessions/sessions.json").path)
 
     static func loadSnapshot(

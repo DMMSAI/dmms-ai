@@ -10,12 +10,12 @@ function createPrompter(confirmValue = false) {
 
 function createDeps() {
   const deps: NonNullable<Parameters<typeof setupOnboardingShellCompletion>[0]["deps"]> = {
-    resolveCliName: () => "dmms-ai",
+    resolveCliName: () => "dryads-ai",
     checkShellCompletionStatus: vi.fn(async (_binName: string) => ({
       shell: "zsh" as const,
       profileInstalled: false,
       cacheExists: false,
-      cachePath: "/tmp/dmms-ai.zsh",
+      cachePath: "/tmp/dryads-ai.zsh",
       usesSlowPattern: false,
     })),
     ensureCompletionCacheExists: vi.fn(async (_binName: string) => true),
@@ -32,8 +32,8 @@ describe("setupOnboardingShellCompletion", () => {
     await setupOnboardingShellCompletion({ flow: "quickstart", prompter, deps });
 
     expect(prompter.confirm).not.toHaveBeenCalled();
-    expect(deps.ensureCompletionCacheExists).toHaveBeenCalledWith("dmms-ai");
-    expect(deps.installCompletion).toHaveBeenCalledWith("zsh", true, "dmms-ai");
+    expect(deps.ensureCompletionCacheExists).toHaveBeenCalledWith("dryads-ai");
+    expect(deps.installCompletion).toHaveBeenCalledWith("zsh", true, "dryads-ai");
     expect(prompter.note).toHaveBeenCalled();
   });
 

@@ -82,7 +82,7 @@ const DEFAULT_TIMEOUT_MS = 20 * 60_000;
 const MAX_LOG_CHARS = 8000;
 const PREFLIGHT_MAX_COMMITS = 10;
 const START_DIRS = ["cwd", "argv1", "process"];
-const DEFAULT_PACKAGE_NAME = "dmms-ai";
+const DEFAULT_PACKAGE_NAME = "dryads-ai";
 const CORE_PACKAGE_NAMES = new Set([DEFAULT_PACKAGE_NAME]);
 
 function normalizeDir(value?: string | null) {
@@ -315,8 +315,8 @@ function normalizeTag(tag?: string) {
   if (!trimmed) {
     return "latest";
   }
-  if (trimmed.startsWith("dmms-ai@")) {
-    return trimmed.slice("dmms-ai@".length);
+  if (trimmed.startsWith("dryads-ai@")) {
+    return trimmed.slice("dryads-ai@".length);
   }
   if (trimmed.startsWith(`${DEFAULT_PACKAGE_NAME}@`)) {
     return trimmed.slice(`${DEFAULT_PACKAGE_NAME}@`.length);
@@ -373,7 +373,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
       status: "error",
       mode: "unknown",
       root: gitRoot,
-      reason: "not-dmms-ai-root",
+      reason: "not-dryads-ai-root",
       steps: [],
       durationMs: Date.now() - startedAt,
     };
@@ -536,7 +536,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
       }
 
       const manager = await detectPackageManager(gitRoot);
-      const preflightRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-update-preflight-"));
+      const preflightRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-update-preflight-"));
       const worktreeDir = path.join(preflightRoot, "worktree");
       const worktreeStep = await runStep(
         step(
@@ -747,14 +747,14 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
       };
     }
 
-    const doctorEntry = path.join(gitRoot, "dmms-ai.mjs");
+    const doctorEntry = path.join(gitRoot, "dryads-ai.mjs");
     const doctorEntryExists = await fs
       .stat(doctorEntry)
       .then(() => true)
       .catch(() => false);
     if (!doctorEntryExists) {
       steps.push({
-        name: "dmms-ai doctor entry",
+        name: "dryads-ai doctor entry",
         command: `verify ${doctorEntry}`,
         cwd: gitRoot,
         durationMs: 0,
@@ -776,7 +776,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
     // schema changes between versions, preventing a startup validation crash.
     const doctorArgv = [process.execPath, doctorEntry, "doctor", "--non-interactive", "--fix"];
     const doctorStep = await runStep(
-      step("dmms-ai doctor", doctorArgv, gitRoot, { DMMS_AI_UPDATE_IN_PROGRESS: "1" }),
+      step("dryads-ai doctor", doctorArgv, gitRoot, { DRYADS_AI_UPDATE_IN_PROGRESS: "1" }),
     );
     steps.push(doctorStep);
 

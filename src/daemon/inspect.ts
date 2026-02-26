@@ -14,7 +14,7 @@ export type ExtraGatewayService = {
   label: string;
   detail: string;
   scope: "user" | "system";
-  marker?: "dmms-ai" | "clawdbot" | "moltbot";
+  marker?: "dryads-ai" | "clawdbot" | "moltbot";
   legacy?: boolean;
 };
 
@@ -22,12 +22,12 @@ export type FindExtraGatewayServicesOptions = {
   deep?: boolean;
 };
 
-const EXTRA_MARKERS = ["dmms-ai", "clawdbot", "moltbot"] as const;
+const EXTRA_MARKERS = ["dryads-ai", "clawdbot", "moltbot"] as const;
 
 export function renderGatewayServiceCleanupHints(
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string[] {
-  const profile = env.DMMS_AI_PROFILE;
+  const profile = env.DRYADS_AI_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);
@@ -71,8 +71,8 @@ function detectMarker(content: string): Marker | null {
 
 function hasGatewayServiceMarker(content: string): boolean {
   const lower = content.toLowerCase();
-  const markerKeys = ["dmms_ai_service_marker"];
-  const kindKeys = ["dmms_ai_service_kind"];
+  const markerKeys = ["dryads_ai_service_marker"];
+  const kindKeys = ["dryads_ai_service_kind"];
   const markerValues = [GATEWAY_SERVICE_MARKER.toLowerCase()];
   const hasMarkerKey = markerKeys.some((key) => lower.includes(key));
   const hasKindKey = kindKeys.some((key) => lower.includes(key));
@@ -85,7 +85,7 @@ function hasGatewayServiceMarker(content: string): boolean {
   );
 }
 
-function isDmmsAiGatewayLaunchdService(label: string, contents: string): boolean {
+function isDryadsAiGatewayLaunchdService(label: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
@@ -93,26 +93,26 @@ function isDmmsAiGatewayLaunchdService(label: string, contents: string): boolean
   if (!lowerContents.includes("gateway")) {
     return false;
   }
-  return label.startsWith("ai.dmmsai.");
+  return label.startsWith("ai.dryadsai.");
 }
 
-function isDmmsAiGatewaySystemdService(name: string, contents: string): boolean {
+function isDryadsAiGatewaySystemdService(name: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
-  if (!name.startsWith("dmms-ai-gateway")) {
+  if (!name.startsWith("dryads-ai-gateway")) {
     return false;
   }
   return contents.toLowerCase().includes("gateway");
 }
 
-function isDmmsAiGatewayTaskName(name: string): boolean {
+function isDryadsAiGatewayTaskName(name: string): boolean {
   const normalized = name.trim().toLowerCase();
   if (!normalized) {
     return false;
   }
   const defaultName = resolveGatewayWindowsTaskName().toLowerCase();
-  return normalized === defaultName || normalized.startsWith("dmms-ai gateway");
+  return normalized === defaultName || normalized.startsWith("dryads-ai gateway");
 }
 
 function tryExtractPlistLabel(contents: string): string | null {
@@ -192,7 +192,7 @@ async function scanLaunchdDir(params: {
     if (isIgnoredLaunchdLabel(label)) {
       continue;
     }
-    if (marker === "dmms-ai" && isDmmsAiGatewayLaunchdService(label, contents)) {
+    if (marker === "dryads-ai" && isDryadsAiGatewayLaunchdService(label, contents)) {
       continue;
     }
     results.push({
@@ -201,7 +201,7 @@ async function scanLaunchdDir(params: {
       detail: `plist: ${fullPath}`,
       scope: params.scope,
       marker,
-      legacy: marker !== "dmms-ai" || isLegacyLabel(label),
+      legacy: marker !== "dryads-ai" || isLegacyLabel(label),
     });
   }
 
@@ -232,7 +232,7 @@ async function scanSystemdDir(params: {
     if (!marker) {
       continue;
     }
-    if (marker === "dmms-ai" && isDmmsAiGatewaySystemdService(name, contents)) {
+    if (marker === "dryads-ai" && isDryadsAiGatewaySystemdService(name, contents)) {
       continue;
     }
     results.push({
@@ -241,7 +241,7 @@ async function scanSystemdDir(params: {
       detail: `unit: ${fullPath}`,
       scope: params.scope,
       marker,
-      legacy: marker !== "dmms-ai",
+      legacy: marker !== "dryads-ai",
     });
   }
 
@@ -385,7 +385,7 @@ export async function findExtraGatewayServices(
       if (!name) {
         continue;
       }
-      if (isDmmsAiGatewayTaskName(name)) {
+      if (isDryadsAiGatewayTaskName(name)) {
         continue;
       }
       const lowerName = name.toLowerCase();
@@ -406,7 +406,7 @@ export async function findExtraGatewayServices(
         detail: task.taskToRun ? `task: ${name}, run: ${task.taskToRun}` : name,
         scope: "system",
         marker,
-        legacy: marker !== "dmms-ai",
+        legacy: marker !== "dryads-ai",
       });
     }
     return results;

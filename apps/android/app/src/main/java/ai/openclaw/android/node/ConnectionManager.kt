@@ -1,21 +1,21 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.os.Build
-import ai.dmmsai.android.BuildConfig
-import ai.dmmsai.android.SecurePrefs
-import ai.dmmsai.android.gateway.GatewayClientInfo
-import ai.dmmsai.android.gateway.GatewayConnectOptions
-import ai.dmmsai.android.gateway.GatewayEndpoint
-import ai.dmmsai.android.gateway.GatewayTlsParams
-import ai.dmmsai.android.protocol.DmmsAiCanvasA2UICommand
-import ai.dmmsai.android.protocol.DmmsAiCanvasCommand
-import ai.dmmsai.android.protocol.DmmsAiCameraCommand
-import ai.dmmsai.android.protocol.DmmsAiLocationCommand
-import ai.dmmsai.android.protocol.DmmsAiScreenCommand
-import ai.dmmsai.android.protocol.DmmsAiSmsCommand
-import ai.dmmsai.android.protocol.DmmsAiCapability
-import ai.dmmsai.android.LocationMode
-import ai.dmmsai.android.VoiceWakeMode
+import ai.dryadsai.android.BuildConfig
+import ai.dryadsai.android.SecurePrefs
+import ai.dryadsai.android.gateway.GatewayClientInfo
+import ai.dryadsai.android.gateway.GatewayConnectOptions
+import ai.dryadsai.android.gateway.GatewayEndpoint
+import ai.dryadsai.android.gateway.GatewayTlsParams
+import ai.dryadsai.android.protocol.DryadsAiCanvasA2UICommand
+import ai.dryadsai.android.protocol.DryadsAiCanvasCommand
+import ai.dryadsai.android.protocol.DryadsAiCameraCommand
+import ai.dryadsai.android.protocol.DryadsAiLocationCommand
+import ai.dryadsai.android.protocol.DryadsAiScreenCommand
+import ai.dryadsai.android.protocol.DryadsAiSmsCommand
+import ai.dryadsai.android.protocol.DryadsAiCapability
+import ai.dryadsai.android.LocationMode
+import ai.dryadsai.android.VoiceWakeMode
 
 class ConnectionManager(
   private val prefs: SecurePrefs,
@@ -81,24 +81,24 @@ class ConnectionManager(
 
   fun buildInvokeCommands(): List<String> =
     buildList {
-      add(DmmsAiCanvasCommand.Present.rawValue)
-      add(DmmsAiCanvasCommand.Hide.rawValue)
-      add(DmmsAiCanvasCommand.Navigate.rawValue)
-      add(DmmsAiCanvasCommand.Eval.rawValue)
-      add(DmmsAiCanvasCommand.Snapshot.rawValue)
-      add(DmmsAiCanvasA2UICommand.Push.rawValue)
-      add(DmmsAiCanvasA2UICommand.PushJSONL.rawValue)
-      add(DmmsAiCanvasA2UICommand.Reset.rawValue)
-      add(DmmsAiScreenCommand.Record.rawValue)
+      add(DryadsAiCanvasCommand.Present.rawValue)
+      add(DryadsAiCanvasCommand.Hide.rawValue)
+      add(DryadsAiCanvasCommand.Navigate.rawValue)
+      add(DryadsAiCanvasCommand.Eval.rawValue)
+      add(DryadsAiCanvasCommand.Snapshot.rawValue)
+      add(DryadsAiCanvasA2UICommand.Push.rawValue)
+      add(DryadsAiCanvasA2UICommand.PushJSONL.rawValue)
+      add(DryadsAiCanvasA2UICommand.Reset.rawValue)
+      add(DryadsAiScreenCommand.Record.rawValue)
       if (cameraEnabled()) {
-        add(DmmsAiCameraCommand.Snap.rawValue)
-        add(DmmsAiCameraCommand.Clip.rawValue)
+        add(DryadsAiCameraCommand.Snap.rawValue)
+        add(DryadsAiCameraCommand.Clip.rawValue)
       }
       if (locationMode() != LocationMode.Off) {
-        add(DmmsAiLocationCommand.Get.rawValue)
+        add(DryadsAiLocationCommand.Get.rawValue)
       }
       if (smsAvailable()) {
-        add(DmmsAiSmsCommand.Send.rawValue)
+        add(DryadsAiSmsCommand.Send.rawValue)
       }
       if (BuildConfig.DEBUG) {
         add("debug.logs")
@@ -109,15 +109,15 @@ class ConnectionManager(
 
   fun buildCapabilities(): List<String> =
     buildList {
-      add(DmmsAiCapability.Canvas.rawValue)
-      add(DmmsAiCapability.Screen.rawValue)
-      if (cameraEnabled()) add(DmmsAiCapability.Camera.rawValue)
-      if (smsAvailable()) add(DmmsAiCapability.Sms.rawValue)
+      add(DryadsAiCapability.Canvas.rawValue)
+      add(DryadsAiCapability.Screen.rawValue)
+      if (cameraEnabled()) add(DryadsAiCapability.Camera.rawValue)
+      if (smsAvailable()) add(DryadsAiCapability.Sms.rawValue)
       if (voiceWakeMode() != VoiceWakeMode.Off && hasRecordAudioPermission()) {
-        add(DmmsAiCapability.VoiceWake.rawValue)
+        add(DryadsAiCapability.VoiceWake.rawValue)
       }
       if (locationMode() != LocationMode.Off) {
-        add(DmmsAiCapability.Location.rawValue)
+        add(DryadsAiCapability.Location.rawValue)
       }
     }
 
@@ -141,7 +141,7 @@ class ConnectionManager(
     val version = resolvedVersionName()
     val release = Build.VERSION.RELEASE?.trim().orEmpty()
     val releaseLabel = if (release.isEmpty()) "unknown" else release
-    return "DmmsAiAndroid/$version (Android $releaseLabel; SDK ${Build.VERSION.SDK_INT})"
+    return "DryadsAiAndroid/$version (Android $releaseLabel; SDK ${Build.VERSION.SDK_INT})"
   }
 
   fun buildClientInfo(clientId: String, clientMode: String): GatewayClientInfo {
@@ -164,7 +164,7 @@ class ConnectionManager(
       caps = buildCapabilities(),
       commands = buildInvokeCommands(),
       permissions = emptyMap(),
-      client = buildClientInfo(clientId = "dmms-ai-android", clientMode = "node"),
+      client = buildClientInfo(clientId = "dryads-ai-android", clientMode = "node"),
       userAgent = buildUserAgent(),
     )
   }
@@ -176,7 +176,7 @@ class ConnectionManager(
       caps = emptyList(),
       commands = emptyList(),
       permissions = emptyMap(),
-      client = buildClientInfo(clientId = "dmms-ai-control-ui", clientMode = "ui"),
+      client = buildClientInfo(clientId = "dryads-ai-control-ui", clientMode = "ui"),
       userAgent = buildUserAgent(),
     )
   }

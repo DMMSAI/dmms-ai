@@ -1,4 +1,4 @@
-const warningFilterKey = Symbol.for("dmms-ai.warning-filter");
+const warningFilterKey = Symbol.for("dryads-ai.warning-filter");
 
 export type ProcessWarning = {
   code?: string;

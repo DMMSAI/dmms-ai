@@ -1,0 +1,148 @@
+# Rate limiting zones
+limit_req_zone $binary_remote_addr zone=global:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=api:10m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=webhooks:10m rate=30r/s;
+
+# Upstream backends
+upstream dryads_web {
+    server 127.0.0.1:3000;
+}
+
+upstream dryads_bot {
+    server 127.0.0.1:3001;
+}
+
+upstream dryads_webhook {
+    server 127.0.0.1:9000;
+}
+
+# HTTP -> HTTPS redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name test.dryads.ai;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name test.dryads.ai;
+
+    # --- SSL (Cloudflare origin certs or self-signed) ---
+    ssl_certificate /etc/ssl/certs/dryads-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/dryads-selfsigned.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    # --- Security headers ---
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+
+    # --- Request limits ---
+    client_max_body_size 10m;
+
+    # --- Gzip compression ---
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_min_length 256;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/json
+        application/javascript
+        application/xml
+        application/rss+xml
+        image/svg+xml;
+
+    # --- Block attack paths ---
+    location ~ /\.(env|git) {
+        deny all;
+        return 404;
+    }
+
+    location ~ ^/(wp-admin|wp-login|phpmyadmin|xmlrpc\.php) {
+        deny all;
+        return 404;
+    }
+
+    # --- Static assets (long cache) ---
+    location /_next/static/ {
+        proxy_pass http://dryads_web;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # --- Health endpoint (no rate limit) ---
+    location = /api/health {
+        proxy_pass http://dryads_bot;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # --- Webhook endpoints ---
+    location /hooks/ {
+        limit_req zone=webhooks burst=10 nodelay;
+        proxy_pass http://dryads_bot;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # --- Git webhook auto-deploy ---
+    location = /webhook/deploy {
+        limit_req zone=api burst=3 nodelay;
+        proxy_pass http://dryads_webhook;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # --- API endpoints ---
+    location /api/ {
+        limit_req zone=api burst=10 nodelay;
+        proxy_pass http://dryads_bot;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+    }
+
+    # --- Socket.IO / WebSocket proxy ---
+    location /socket.io/ {
+        proxy_pass http://dryads_bot;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400s;
+        proxy_send_timeout 86400s;
+    }
+
+    # --- Default: web frontend ---
+    location / {
+        limit_req zone=global burst=20 nodelay;
+        proxy_pass http://dryads_web;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

@@ -5,13 +5,13 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleExecutable</key>
-    <string>DMMS AI</string>
+    <string>Dryads AI</string>
     <key>CFBundleIdentifier</key>
-    <string>ai.dmmsai.mac</string>
+    <string>ai.dryadsai.mac</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>DMMS AI</string>
+    <string>Dryads AI</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -19,15 +19,15 @@
     <key>CFBundleVersion</key>
     <string>202602180</string>
     <key>CFBundleIconFile</key>
-    <string>DMMS AI</string>
+    <string>Dryads AI</string>
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
             <key>CFBundleURLName</key>
-            <string>ai.dmmsai.mac.deeplink</string>
+            <string>ai.dryadsai.mac.deeplink</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>dmms-ai</string>
+                <string>dryads-ai</string>
             </array>
         </dict>
     </array>
@@ -36,29 +36,29 @@
     <key>LSUIElement</key>
     <true/>
 
-    <key>DmmsAiBuildTimestamp</key>
+    <key>DryadsAiBuildTimestamp</key>
     <string></string>
-    <key>DmmsAiGitCommit</key>
+    <key>DryadsAiGitCommit</key>
     <string></string>
 
     <key>NSUserNotificationUsageDescription</key>
-    <string>DMMS AI needs notification permission to show alerts for agent actions.</string>
+    <string>Dryads AI needs notification permission to show alerts for agent actions.</string>
     <key>NSScreenCaptureDescription</key>
-    <string>DMMS AI captures the screen when the agent needs screenshots for context.</string>
+    <string>Dryads AI captures the screen when the agent needs screenshots for context.</string>
     <key>NSCameraUsageDescription</key>
-    <string>DMMS AI can capture photos or short video clips when requested by the agent.</string>
+    <string>Dryads AI can capture photos or short video clips when requested by the agent.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>DMMS AI can share your location when requested by the agent.</string>
+	<string>Dryads AI can share your location when requested by the agent.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>DMMS AI can share your location when requested by the agent.</string>
+	<string>Dryads AI can share your location when requested by the agent.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>DMMS AI can share your location when requested by the agent.</string>
+	<string>Dryads AI can share your location when requested by the agent.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>DMMS AI needs the mic for Voice Wake tests and agent audio capture.</string>
+	<string>Dryads AI needs the mic for Voice Wake tests and agent audio capture.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
-    <string>DMMS AI uses speech recognition to detect your Voice Wake trigger phrase.</string>
+    <string>Dryads AI uses speech recognition to detect your Voice Wake trigger phrase.</string>
     <key>NSAppleEventsUsageDescription</key>
-    <string>DMMS AI needs Automation (AppleScript) permission to drive Terminal and other apps for agent actions.</string>
+    <string>Dryads AI needs Automation (AppleScript) permission to drive Terminal and other apps for agent actions.</string>
 
     <key>NSAppTransportSecurity</key>
     <dict>

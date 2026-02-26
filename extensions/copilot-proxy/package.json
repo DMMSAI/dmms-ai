@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/copilot-proxy",
+  "name": "@dryads-ai/copilot-proxy",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Copilot Proxy provider plugin",
+  "description": "Dryads AI Copilot Proxy provider plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

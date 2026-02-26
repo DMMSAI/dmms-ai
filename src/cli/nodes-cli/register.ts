@@ -20,11 +20,11 @@ export function registerNodesCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai nodes status", "List known nodes with live status."],
-          ["dmms-ai nodes pairing pending", "Show pending node pairing requests."],
-          ['dmms-ai nodes run --node <id> --raw "uname -a"', "Run a shell command on a node."],
-          ["dmms-ai nodes camera snap --node <id>", "Capture a photo from a node camera."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/nodes", "docs.dmms-ai.com/cli/nodes")}\n`,
+          ["dryads-ai nodes status", "List known nodes with live status."],
+          ["dryads-ai nodes pairing pending", "Show pending node pairing requests."],
+          ['dryads-ai nodes run --node <id> --raw "uname -a"', "Run a shell command on a node."],
+          ["dryads-ai nodes camera snap --node <id>", "Capture a photo from a node camera."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/nodes", "docs.dryads-ai.com/cli/nodes")}\n`,
     );
 
   registerNodesStatusCommands(nodes);

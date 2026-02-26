@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui
+package ai.dryadsai.android.ui
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

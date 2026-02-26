@@ -1,7 +1,7 @@
 import Foundation
 import SwabbleKit
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized) struct VoiceWakeManagerStateTests {
     @Test @MainActor func suspendAndResumeCycleUpdatesState() async {
@@ -35,7 +35,7 @@ import Testing
 
     @Test @MainActor func handleRecognitionCallbackDispatchesCommand() async {
         let manager = VoiceWakeManager()
-        manager.triggerWords = ["dmms-ai"]
+        manager.triggerWords = ["dryads-ai"]
         manager.isEnabled = true
 
         actor CaptureBox {
@@ -47,11 +47,11 @@ import Testing
             await capture.set(cmd)
         }
 
-        let transcript = "dmms-ai hello"
-        let triggerRange = transcript.range(of: "dmms-ai")!
+        let transcript = "dryads-ai hello"
+        let triggerRange = transcript.range(of: "dryads-ai")!
         let helloRange = transcript.range(of: "hello")!
         let segments = [
-            WakeWordSegment(text: "dmms-ai", start: 0.0, duration: 0.2, range: triggerRange),
+            WakeWordSegment(text: "dryads-ai", start: 0.0, duration: 0.2, range: triggerRange),
             WakeWordSegment(text: "hello", start: 0.8, duration: 0.2, range: helloRange),
         ]
 

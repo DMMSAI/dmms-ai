@@ -1,5 +1,5 @@
 ---
-summary: "Hubs that link to every DMMS AI doc"
+summary: "Hubs that link to every Dryads AI doc"
 read_when:
   - You want a complete map of the documentation
 title: "Docs Hubs"
@@ -8,7 +8,7 @@ title: "Docs Hubs"
 # Docs hubs
 
 <Note>
-If you are new to DMMS AI, start with [Getting Started](/start/getting-started).
+If you are new to Dryads AI, start with [Getting Started](/start/getting-started).
 </Note>
 
 Use these hubs to discover every page, including deep dives and reference docs that don’t appear in the left nav.
@@ -26,7 +26,7 @@ Use these hubs to discover every page, including deep dives and reference docs t
 - [Docs directory](/start/docs-directory)
 - [Configuration](/gateway/configuration)
 - [Configuration examples](/gateway/configuration-examples)
-- [DMMS AI assistant](/start/dmms-ai)
+- [Dryads AI assistant](/start/dryads-ai)
 - [Showcase](/start/showcase)
 - [Lore](/start/lore)
 

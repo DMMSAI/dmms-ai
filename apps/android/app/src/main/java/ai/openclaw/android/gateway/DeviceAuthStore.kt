@@ -1,6 +1,6 @@
-package ai.dmmsai.android.gateway
+package ai.dryadsai.android.gateway
 
-import ai.dmmsai.android.SecurePrefs
+import ai.dryadsai.android.SecurePrefs
 
 class DeviceAuthStore(private val prefs: SecurePrefs) {
   fun loadToken(deviceId: String, role: String): String? {

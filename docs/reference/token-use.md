@@ -1,5 +1,5 @@
 ---
-summary: "How DMMS AI builds prompt context and reports token usage + costs"
+summary: "How Dryads AI builds prompt context and reports token usage + costs"
 read_when:
   - Explaining token usage, costs, or context windows
   - Debugging context growth or compaction behavior
@@ -8,12 +8,12 @@ title: "Token Use and Costs"
 
 # Token use & costs
 
-DMMS AI tracks **tokens**, not characters. Tokens are model-specific, but most
+Dryads AI tracks **tokens**, not characters. Tokens are model-specific, but most
 OpenAI-style models average ~4 characters per token for English text.
 
 ## How the system prompt is built
 
-DMMS AI assembles its own system prompt on every run. It includes:
+Dryads AI assembles its own system prompt on every run. It includes:
 
 - Tool list + short descriptions
 - Skills list (only metadata; instructions are loaded on demand with `read`)
@@ -36,7 +36,7 @@ Everything the model receives counts toward the context limit:
 - Compaction summaries and pruning artifacts
 - Provider wrappers or safety headers (not visible, but still counted)
 
-For images, DMMS AI downscales transcript/tool image payloads before provider calls.
+For images, Dryads AI downscales transcript/tool image payloads before provider calls.
 Use `agents.defaults.imageMaxDimensionPx` (default: `1200`) to tune this:
 
 - Lower values usually reduce vision-token usage and payload size.
@@ -53,12 +53,12 @@ Use these in chat:
 - `/usage off|tokens|full` → appends a **per-response usage footer** to every reply.
   - Persists per session (stored as `responseUsage`).
   - OAuth auth **hides cost** (tokens only).
-- `/usage cost` → shows a local cost summary from DMMS AI session logs.
+- `/usage cost` → shows a local cost summary from Dryads AI session logs.
 
 Other surfaces:
 
 - **TUI/Web TUI:** `/status` + `/usage` are supported.
-- **CLI:** `dmms-ai status --usage` and `dmms-ai channels list` show
+- **CLI:** `dryads-ai status --usage` and `dryads-ai channels list` show
   provider quota windows (not per-response costs).
 
 ## Cost estimation (when shown)
@@ -70,12 +70,12 @@ models.providers.<provider>.models[].cost
 ```
 
 These are **USD per 1M tokens** for `input`, `output`, `cacheRead`, and
-`cacheWrite`. If pricing is missing, DMMS AI shows tokens only. OAuth tokens
+`cacheWrite`. If pricing is missing, Dryads AI shows tokens only. OAuth tokens
 never show dollar cost.
 
 ## Cache TTL and pruning impact
 
-Provider prompt caching only applies within the cache TTL window. DMMS AI can
+Provider prompt caching only applies within the cache TTL window. Dryads AI can
 optionally run **cache-ttl pruning**: it prunes the session once the cache TTL
 has expired, then resets the cache window so subsequent requests can re-use the
 freshly cached context instead of re-caching the full history. This keeps cache
@@ -110,7 +110,7 @@ agents:
 
 ### Example: enable Anthropic 1M context beta header
 
-Anthropic's 1M context window is currently beta-gated. DMMS AI can inject the
+Anthropic's 1M context window is currently beta-gated. Dryads AI can inject the
 required `anthropic-beta` value when you enable `context1m` on supported Opus
 or Sonnet models.
 

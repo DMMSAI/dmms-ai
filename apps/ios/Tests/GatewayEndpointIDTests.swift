@@ -1,17 +1,17 @@
-import DmmsAiKit
+import DryadsAiKit
 import Network
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct GatewayEndpointIDTests {
     @Test func stableIDForServiceDecodesAndNormalizesName() {
         let endpoint = NWEndpoint.service(
-            name: "DMMS AI\\032Gateway   \\032  Node\n",
-            type: "_dmms-ai-gw._tcp",
+            name: "Dryads AI\\032Gateway   \\032  Node\n",
+            type: "_dryads-ai-gw._tcp",
             domain: "local.",
             interface: nil)
 
-        #expect(GatewayEndpointID.stableID(endpoint) == "_dmms-ai-gw._tcp|local.|DMMS AI Gateway Node")
+        #expect(GatewayEndpointID.stableID(endpoint) == "_dryads-ai-gw._tcp|local.|Dryads AI Gateway Node")
     }
 
     @Test func stableIDForNonServiceUsesEndpointDescription() {
@@ -21,8 +21,8 @@ import Testing
 
     @Test func prettyDescriptionDecodesBonjourEscapes() {
         let endpoint = NWEndpoint.service(
-            name: "DMMS AI\\032Gateway",
-            type: "_dmms-ai-gw._tcp",
+            name: "Dryads AI\\032Gateway",
+            type: "_dryads-ai-gw._tcp",
             domain: "local.",
             interface: nil)
 

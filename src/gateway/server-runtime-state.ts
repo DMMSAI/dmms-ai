@@ -32,7 +32,7 @@ import type { GatewayTlsRuntime } from "./server/tls.js";
 import type { GatewayWsClient } from "./server/ws-types.js";
 
 export async function createGatewayRuntimeState(params: {
-  cfg: import("../config/config.js").DmmsAiConfig;
+  cfg: import("../config/config.js").DryadsAiConfig;
   bindHost: string;
   port: number;
   controlUiEnabled: boolean;

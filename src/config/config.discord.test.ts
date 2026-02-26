@@ -17,10 +17,10 @@ describe("config discord", () => {
 
   it("loads discord guild map + dm group settings", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".dmms-ai");
+      const configDir = path.join(home, ".dryads-ai");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "dmms-ai.json"),
+        path.join(configDir, "dryads-ai.json"),
         JSON.stringify(
           {
             channels: {
@@ -30,7 +30,7 @@ describe("config discord", () => {
                   enabled: true,
                   allowFrom: ["steipete"],
                   groupEnabled: true,
-                  groupChannels: ["dmms-ai-dm"],
+                  groupChannels: ["dryads-ai-dm"],
                 },
                 actions: {
                   emojiUploads: true,
@@ -39,7 +39,7 @@ describe("config discord", () => {
                 },
                 guilds: {
                   "123": {
-                    slug: "friends-of-dmms-ai",
+                    slug: "friends-of-dryads-ai",
                     requireMention: false,
                     users: ["steipete"],
                     channels: {
@@ -60,11 +60,11 @@ describe("config discord", () => {
 
       expect(cfg.channels?.discord?.enabled).toBe(true);
       expect(cfg.channels?.discord?.dm?.groupEnabled).toBe(true);
-      expect(cfg.channels?.discord?.dm?.groupChannels).toEqual(["dmms-ai-dm"]);
+      expect(cfg.channels?.discord?.dm?.groupChannels).toEqual(["dryads-ai-dm"]);
       expect(cfg.channels?.discord?.actions?.emojiUploads).toBe(true);
       expect(cfg.channels?.discord?.actions?.stickerUploads).toBe(false);
       expect(cfg.channels?.discord?.actions?.channels).toBe(true);
-      expect(cfg.channels?.discord?.guilds?.["123"]?.slug).toBe("friends-of-dmms-ai");
+      expect(cfg.channels?.discord?.guilds?.["123"]?.slug).toBe("friends-of-dryads-ai");
       expect(cfg.channels?.discord?.guilds?.["123"]?.channels?.general?.allow).toBe(true);
     });
   });

@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { resolveGatewayPort } from "../config/config.js";
 import {
   TAILSCALE_DOCS_LINES,
@@ -21,10 +21,10 @@ import {
 type GatewayAuthChoice = "token" | "password" | "trusted-proxy";
 
 export async function promptGatewayConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   runtime: RuntimeEnv,
 ): Promise<{
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   port: number;
   token?: string;
 }> {
@@ -188,12 +188,12 @@ export async function promptGatewayConfig(
   if (authMode === "trusted-proxy") {
     note(
       [
-        "Trusted proxy mode: DMMS AI trusts user identity from a reverse proxy.",
+        "Trusted proxy mode: Dryads AI trusts user identity from a reverse proxy.",
         "The proxy must authenticate users and pass identity via headers.",
         "Only requests from specified proxy IPs will be trusted.",
         "",
         "Common use cases: Pomerium, Caddy + OAuth, Traefik + forward auth",
-        "Docs: https://docs.dmms-ai.com/gateway/trusted-proxy-auth",
+        "Docs: https://docs.dryads-ai.com/gateway/trusted-proxy-auth",
       ].join("\n"),
       "Trusted Proxy Auth",
     );

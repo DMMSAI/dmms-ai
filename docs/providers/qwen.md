@@ -1,7 +1,7 @@
 ---
-summary: "Use Qwen OAuth (free tier) in DMMS AI"
+summary: "Use Qwen OAuth (free tier) in Dryads AI"
 read_when:
-  - You want to use Qwen with DMMS AI
+  - You want to use Qwen with Dryads AI
   - You want free-tier OAuth access to Qwen Coder
 title: "Qwen"
 ---
@@ -14,7 +14,7 @@ Qwen provides a free-tier OAuth flow for Qwen Coder and Qwen Vision models
 ## Enable the plugin
 
 ```bash
-dmms-ai plugins enable qwen-portal-auth
+dryads-ai plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -22,7 +22,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-dmms-ai models auth login --provider qwen-portal --set-default
+dryads-ai models auth login --provider qwen-portal --set-default
 ```
 
 This runs the Qwen device-code OAuth flow and writes a provider entry to your
@@ -36,12 +36,12 @@ This runs the Qwen device-code OAuth flow and writes a provider entry to your
 Switch models with:
 
 ```bash
-dmms-ai models set qwen-portal/coder-model
+dryads-ai models set qwen-portal/coder-model
 ```
 
 ## Reuse Qwen Code CLI login
 
-If you already logged in with the Qwen Code CLI, DMMS AI will sync credentials
+If you already logged in with the Qwen Code CLI, Dryads AI will sync credentials
 from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 `models.providers.qwen-portal` entry (use the login command above to create one).
 

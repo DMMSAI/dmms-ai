@@ -1,5 +1,5 @@
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct SettingsNetworkingHelpersTests {
     @Test func parseHostPortParsesIPv4() {

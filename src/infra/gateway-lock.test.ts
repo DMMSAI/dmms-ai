@@ -13,14 +13,14 @@ let fixtureCount = 0;
 async function makeEnv() {
   const dir = path.join(fixtureRoot, `case-${fixtureCount++}`);
   await fs.mkdir(dir, { recursive: true });
-  const configPath = path.join(dir, "dmms-ai.json");
+  const configPath = path.join(dir, "dryads-ai.json");
   await fs.writeFile(configPath, "{}", "utf8");
   await fs.mkdir(resolveGatewayLockDir(), { recursive: true });
   return {
     env: {
       ...process.env,
-      DMMS_AI_STATE_DIR: dir,
-      DMMS_AI_CONFIG_PATH: configPath,
+      DRYADS_AI_STATE_DIR: dir,
+      DRYADS_AI_CONFIG_PATH: configPath,
     },
     cleanup: async () => {},
   };
@@ -83,7 +83,7 @@ function mockProcStatRead(params: { onProcRead: () => string }) {
 
 describe("gateway lock", () => {
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gateway-lock-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gateway-lock-"));
   });
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
-import { resolveDmmsAiAgentDir } from "../../agents/agent-paths.js";
+import { resolveDryadsAiAgentDir } from "../../agents/agent-paths.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import {
   ensureAuthProfileStore,
@@ -18,7 +18,7 @@ import {
 } from "../../agents/model-selection.js";
 import { runEmbeddedPiAgent } from "../../agents/pi-embedded.js";
 import { resolveDefaultAgentWorkspaceDir } from "../../agents/workspace.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import {
   resolveSessionTranscriptPath,
   resolveSessionTranscriptsDirForAgent,
@@ -138,7 +138,7 @@ function selectProbeModel(params: {
 }
 
 function buildProbeTargets(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   providers: string[];
   modelCandidates: string[];
   options: AuthProbeOptions;
@@ -278,7 +278,7 @@ function buildProbeTargets(params: {
 }
 
 async function probeTarget(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   agentId: string;
   agentDir: string;
   workspaceDir: string;
@@ -354,7 +354,7 @@ async function probeTarget(params: {
 }
 
 async function runTargetsWithConcurrency(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   targets: AuthProbeTarget[];
   timeoutMs: number;
   maxTokens: number;
@@ -365,7 +365,7 @@ async function runTargetsWithConcurrency(params: {
   const concurrency = Math.max(1, Math.min(targets.length || 1, params.concurrency));
 
   const agentId = resolveDefaultAgentId(cfg);
-  const agentDir = resolveDmmsAiAgentDir();
+  const agentDir = resolveDryadsAiAgentDir();
   const workspaceDir = resolveAgentWorkspaceDir(cfg, agentId) ?? resolveDefaultAgentWorkspaceDir();
   const sessionDir = resolveSessionTranscriptsDirForAgent(agentId);
 
@@ -410,7 +410,7 @@ async function runTargetsWithConcurrency(params: {
 }
 
 export async function runAuthProbes(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   providers: string[];
   modelCandidates: string[];
   options: AuthProbeOptions;

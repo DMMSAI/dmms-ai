@@ -10,18 +10,18 @@ sidebarTitle: "Wizard Reference"
 
 # Onboarding Wizard Reference
 
-This is the full reference for the `dmms-ai onboard` CLI wizard.
+This is the full reference for the `dryads-ai onboard` CLI wizard.
 For a high-level overview, see [Onboarding Wizard](/start/wizard).
 
 ## Flow details (local mode)
 
 <Steps>
   <Step title="Existing config detection">
-    - If `~/.dmms-ai/dmms-ai.json` exists, choose **Keep / Modify / Reset**.
+    - If `~/.dryads-ai/dryads-ai.json` exists, choose **Keep / Modify / Reset**.
     - Re-running the wizard does **not** wipe anything unless you explicitly choose **Reset**
       (or pass `--reset`).
     - If the config is invalid or contains legacy keys, the wizard stops and asks
-      you to run `dmms-ai doctor` before continuing.
+      you to run `dryads-ai doctor` before continuing.
     - Reset uses `trash` (never `rm`) and offers scopes:
       - Config only
       - Config + credentials + sessions
@@ -34,7 +34,7 @@ For a high-level overview, see [Onboarding Wizard](/start/wizard).
     - **OpenAI Code (Codex) subscription (Codex CLI)**: if `~/.codex/auth.json` exists, the wizard can reuse it.
     - **OpenAI Code (Codex) subscription (OAuth)**: browser flow; paste the `code#state`.
       - Sets `agents.defaults.model` to `openai-codex/gpt-5.2` when model is unset or `openai/*`.
-    - **OpenAI API key**: uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to `~/.dmms-ai/.env` so launchd can read it.
+    - **OpenAI API key**: uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to `~/.dryads-ai/.env` so launchd can read it.
     - **xAI (Grok) API key**: prompts for `XAI_API_KEY` and configures xAI as a model provider.
     - **OpenCode Zen (multi-model proxy)**: prompts for `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`, get it at https://opencode.ai/auth).
     - **API key**: stores the key for you.
@@ -52,16 +52,16 @@ For a high-level overview, see [Onboarding Wizard](/start/wizard).
     - **Skip**: no auth configured yet.
     - Pick a default model from detected options (or enter provider/model manually).
     - Wizard runs a model check and warns if the configured model is unknown or missing auth.
-    - OAuth credentials live in `~/.dmms-ai/credentials/oauth.json`; auth profiles live in `~/.dmms-ai/agents/<agentId>/agent/auth-profiles.json` (API keys + OAuth).
+    - OAuth credentials live in `~/.dryads-ai/credentials/oauth.json`; auth profiles live in `~/.dryads-ai/agents/<agentId>/agent/auth-profiles.json` (API keys + OAuth).
     - More detail: [/concepts/oauth](/concepts/oauth)
     <Note>
     Headless/server tip: complete OAuth on a machine with a browser, then copy
-    `~/.dmms-ai/credentials/oauth.json` (or `$DMMS_AI_STATE_DIR/credentials/oauth.json`) to the
+    `~/.dryads-ai/credentials/oauth.json` (or `$DRYADS_AI_STATE_DIR/credentials/oauth.json`) to the
     gateway host.
     </Note>
   </Step>
   <Step title="Workspace">
-    - Default `~/.dmms-ai/workspace` (configurable).
+    - Default `~/.dryads-ai/workspace` (configurable).
     - Seeds the workspace files needed for the agent bootstrap ritual.
     - Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
   </Step>
@@ -80,7 +80,7 @@ For a high-level overview, see [Onboarding Wizard](/start/wizard).
     - [Signal](/channels/signal): optional `signal-cli` install + account config.
     - [BlueBubbles](/channels/bluebubbles): **recommended for iMessage**; server URL + password + webhook.
     - [iMessage](/channels/imessage): legacy `imsg` CLI path + DB access.
-    - DM security: default is pairing. First DM sends a code; approve via `dmms-ai pairing approve <channel> <code>` or use allowlists.
+    - DM security: default is pairing. First DM sends a code; approve via `dryads-ai pairing approve <channel> <code>` or use allowlists.
   </Step>
   <Step title="Daemon install">
     - macOS: LaunchAgent
@@ -91,8 +91,8 @@ For a high-level overview, see [Onboarding Wizard](/start/wizard).
     - **Runtime selection:** Node (recommended; required for WhatsApp/Telegram). Bun is **not recommended**.
   </Step>
   <Step title="Health check">
-    - Starts the Gateway (if needed) and runs `dmms-ai health`.
-    - Tip: `dmms-ai status --deep` adds gateway health probes to status output (requires a reachable gateway).
+    - Starts the Gateway (if needed) and runs `dryads-ai health`.
+    - Tip: `dryads-ai status --deep` adds gateway health probes to status output (requires a reachable gateway).
   </Step>
   <Step title="Skills (recommended)">
     - Reads the available skills and checks requirements.
@@ -114,7 +114,7 @@ If the Control UI assets are missing, the wizard attempts to build them; fallbac
 Use `--non-interactive` to automate or script onboarding:
 
 ```bash
-dmms-ai onboard --non-interactive \
+dryads-ai onboard --non-interactive \
   --mode local \
   --auth-choice apiKey \
   --anthropic-api-key "$ANTHROPIC_API_KEY" \
@@ -134,7 +134,7 @@ Add `--json` for a machine‑readable summary.
 <AccordionGroup>
   <Accordion title="Gemini example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice gemini-api-key \
       --gemini-api-key "$GEMINI_API_KEY" \
@@ -144,7 +144,7 @@ Add `--json` for a machine‑readable summary.
   </Accordion>
   <Accordion title="Z.AI example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice zai-api-key \
       --zai-api-key "$ZAI_API_KEY" \
@@ -154,7 +154,7 @@ Add `--json` for a machine‑readable summary.
   </Accordion>
   <Accordion title="Vercel AI Gateway example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice ai-gateway-api-key \
       --ai-gateway-api-key "$AI_GATEWAY_API_KEY" \
@@ -164,7 +164,7 @@ Add `--json` for a machine‑readable summary.
   </Accordion>
   <Accordion title="Cloudflare AI Gateway example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice cloudflare-ai-gateway-api-key \
       --cloudflare-ai-gateway-account-id "your-account-id" \
@@ -176,7 +176,7 @@ Add `--json` for a machine‑readable summary.
   </Accordion>
   <Accordion title="Moonshot example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice moonshot-api-key \
       --moonshot-api-key "$MOONSHOT_API_KEY" \
@@ -186,7 +186,7 @@ Add `--json` for a machine‑readable summary.
   </Accordion>
   <Accordion title="Synthetic example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice synthetic-api-key \
       --synthetic-api-key "$SYNTHETIC_API_KEY" \
@@ -196,7 +196,7 @@ Add `--json` for a machine‑readable summary.
   </Accordion>
   <Accordion title="OpenCode Zen example">
     ```bash
-    dmms-ai onboard --non-interactive \
+    dryads-ai onboard --non-interactive \
       --mode local \
       --auth-choice opencode-zen \
       --opencode-zen-api-key "$OPENCODE_API_KEY" \
@@ -209,8 +209,8 @@ Add `--json` for a machine‑readable summary.
 ### Add agent (non-interactive)
 
 ```bash
-dmms-ai agents add work \
-  --workspace ~/.dmms-ai/workspace-work \
+dryads-ai agents add work \
+  --workspace ~/.dryads-ai/workspace-work \
   --model openai/gpt-5.2 \
   --bind whatsapp:biz \
   --non-interactive \
@@ -227,7 +227,7 @@ Clients (macOS app, Control UI) can render steps without re‑implementing onboa
 The wizard can install `signal-cli` from GitHub releases:
 
 - Downloads the appropriate release asset.
-- Stores it under `~/.dmms-ai/tools/signal-cli/<version>/`.
+- Stores it under `~/.dryads-ai/tools/signal-cli/<version>/`.
 - Writes `channels.signal.cliPath` to your config.
 
 Notes:
@@ -238,7 +238,7 @@ Notes:
 
 ## What the wizard writes
 
-Typical fields in `~/.dmms-ai/dmms-ai.json`:
+Typical fields in `~/.dryads-ai/dryads-ai.json`:
 
 - `agents.defaults.workspace`
 - `agents.defaults.model` / `models.providers` (if Minimax chosen)
@@ -252,10 +252,10 @@ Typical fields in `~/.dmms-ai/dmms-ai.json`:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`dmms-ai agents add` writes `agents.list[]` and optional `bindings`.
+`dryads-ai agents add` writes `agents.list[]` and optional `bindings`.
 
-WhatsApp credentials go under `~/.dmms-ai/credentials/whatsapp/<accountId>/`.
-Sessions are stored under `~/.dmms-ai/agents/<agentId>/sessions/`.
+WhatsApp credentials go under `~/.dryads-ai/credentials/whatsapp/<accountId>/`.
+Sessions are stored under `~/.dryads-ai/agents/<agentId>/sessions/`.
 
 Some channels are delivered as plugins. When you pick one during onboarding, the wizard
 will prompt to install it (npm or a local path) before it can be configured.

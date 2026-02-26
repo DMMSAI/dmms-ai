@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { isWithinActiveHours } from "./heartbeat-active-hours.js";
 
-function cfgWithUserTimezone(userTimezone = "UTC"): DmmsAiConfig {
+function cfgWithUserTimezone(userTimezone = "UTC"): DryadsAiConfig {
   return {
     agents: {
       defaults: {

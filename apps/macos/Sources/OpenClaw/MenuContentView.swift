@@ -4,7 +4,7 @@ import Foundation
 import Observation
 import SwiftUI
 
-/// Menu contents for the DMMS AI menu bar extra.
+/// Menu contents for the Dryads AI menu bar extra.
 struct MenuContent: View {
     @Bindable var state: AppState
     let updater: UpdaterProviding?
@@ -149,7 +149,7 @@ struct MenuContent: View {
             Button("Settings…") { self.open(tab: .general) }
                 .keyboardShortcut(",", modifiers: [.command])
             self.debugMenu
-            Button("About DMMS AI") { self.open(tab: .about) }
+            Button("About Dryads AI") { self.open(tab: .about) }
             if let updater, updater.isAvailable, self.updateStatus.isUpdateReady {
                 Button("Update ready, restart now?") { updater.checkForUpdates(nil) }
             }
@@ -185,11 +185,11 @@ struct MenuContent: View {
     private var connectionLabel: String {
         switch self.state.connectionMode {
         case .unconfigured:
-            "DMMS AI Not Configured"
+            "Dryads AI Not Configured"
         case .remote:
-            "Remote DMMS AI Active"
+            "Remote Dryads AI Active"
         case .local:
-            "DMMS AI Active"
+            "Dryads AI Active"
         }
     }
 
@@ -329,7 +329,7 @@ struct MenuContent: View {
         NSApp.activate(ignoringOtherApps: true)
         self.openSettings()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .dmmsAiSelectSettingsTab, object: tab)
+            NotificationCenter.default.post(name: .dryadsAiSelectSettingsTab, object: tab)
         }
     }
 

@@ -24,7 +24,7 @@ actor DiagnosticsFileLog {
             ?? FileManager().homeDirectoryForCurrentUser.appendingPathComponent("Library", isDirectory: true)
         return library
             .appendingPathComponent("Logs", isDirectory: true)
-            .appendingPathComponent("DMMS AI", isDirectory: true)
+            .appendingPathComponent("Dryads AI", isDirectory: true)
     }
 
     nonisolated static func logFileURL() -> URL {

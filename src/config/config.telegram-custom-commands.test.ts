@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { DmmsAiSchema } from "./zod-schema.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 describe("telegram custom commands schema", () => {
   it("normalizes custom commands", () => {
-    const res = DmmsAiSchema.safeParse({
+    const res = DryadsAiSchema.safeParse({
       channels: {
         telegram: {
           customCommands: [{ command: "/Backup", description: "  Git backup  " }],
@@ -22,7 +22,7 @@ describe("telegram custom commands schema", () => {
   });
 
   it("normalizes hyphens in custom command names", () => {
-    const res = DmmsAiSchema.safeParse({
+    const res = DryadsAiSchema.safeParse({
       channels: {
         telegram: {
           customCommands: [{ command: "Bad-Name", description: "Override status" }],

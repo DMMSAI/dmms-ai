@@ -1,7 +1,7 @@
 ---
-summary: "Use OpenAI via API keys or Codex subscription in DMMS AI"
+summary: "Use OpenAI via API keys or Codex subscription in Dryads AI"
 read_when:
-  - You want to use OpenAI models in DMMS AI
+  - You want to use OpenAI models in Dryads AI
   - You want Codex subscription auth instead of API keys
 title: "OpenAI"
 ---
@@ -19,9 +19,9 @@ Get your API key from the OpenAI dashboard.
 ### CLI setup
 
 ```bash
-dmms-ai onboard --auth-choice openai-api-key
+dryads-ai onboard --auth-choice openai-api-key
 # or non-interactive
-dmms-ai onboard --openai-api-key "$OPENAI_API_KEY"
+dryads-ai onboard --openai-api-key "$OPENAI_API_KEY"
 ```
 
 ### Config snippet
@@ -42,10 +42,10 @@ Codex cloud requires ChatGPT sign-in, while the Codex CLI supports ChatGPT or AP
 
 ```bash
 # Run Codex OAuth in the wizard
-dmms-ai onboard --auth-choice openai-codex
+dryads-ai onboard --auth-choice openai-codex
 
 # Or run OAuth directly
-dmms-ai models auth login --provider openai-codex
+dryads-ai models auth login --provider openai-codex
 ```
 
 ### Config snippet (Codex subscription)

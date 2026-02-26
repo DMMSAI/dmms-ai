@@ -1,4 +1,4 @@
-import DmmsAiDiscovery
+import DryadsAiDiscovery
 import SwiftUI
 
 #if DEBUG
@@ -14,7 +14,7 @@ extension OnboardingView {
             tailnetDns: "gateway.ts.net",
             sshPort: 2222,
             gatewayPort: 18789,
-            cliPath: "/usr/local/bin/dmms-ai",
+            cliPath: "/usr/local/bin/dryads-ai",
             stableID: "gateway-1",
             debugID: "gateway-1",
             isLocal: false)
@@ -28,14 +28,14 @@ extension OnboardingView {
         view.localGatewayProbe = LocalGatewayProbe(
             port: GatewayEnvironment.gatewayPort(),
             pid: 123,
-            command: "dmms-ai-gateway",
+            command: "dryads-ai-gateway",
             expected: true)
         view.showAdvancedConnection = true
         view.preferredGatewayID = gateway.stableID
         view.cliInstalled = true
-        view.cliInstallLocation = "/usr/local/bin/dmms-ai"
+        view.cliInstallLocation = "/usr/local/bin/dryads-ai"
         view.cliStatus = "Installed"
-        view.workspacePath = "/tmp/dmms-ai"
+        view.workspacePath = "/tmp/dryads-ai"
         view.workspaceStatus = "Saved workspace"
         view.anthropicAuthPKCE = AnthropicOAuth.PKCE(verifier: "verifier", challenge: "challenge")
         view.anthropicAuthCode = "code#state"

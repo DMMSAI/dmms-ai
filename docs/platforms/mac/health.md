@@ -26,9 +26,9 @@ How to see whether the linked channel is healthy from the menu bar app.
 
 ## How the probe works
 
-- App runs `dmms-ai health --json` via `ShellExecutor` every ~60s and on demand. The probe loads creds and reports status without sending messages.
+- App runs `dryads-ai health --json` via `ShellExecutor` every ~60s and on demand. The probe loads creds and reports status without sending messages.
 - Cache the last good snapshot and the last error separately to avoid flicker; show the timestamp of each.
 
 ## When in doubt
 
-- You can still use the CLI flow in [Gateway health](/gateway/health) (`dmms-ai status`, `dmms-ai status --deep`, `dmms-ai health --json`) and tail `/tmp/dmms-ai/dmms-ai-*.log` for `web-heartbeat` / `web-reconnect`.
+- You can still use the CLI flow in [Gateway health](/gateway/health) (`dryads-ai status`, `dryads-ai status --deep`, `dryads-ai health --json`) and tail `/tmp/dryads-ai/dryads-ai-*.log` for `web-heartbeat` / `web-reconnect`.

@@ -10,7 +10,7 @@ title: "API Usage and Costs"
 # API usage & costs
 
 This doc lists **features that can invoke API keys** and where their costs show up. It focuses on
-DMMS AI features that can generate provider usage or paid API calls.
+Dryads AI features that can generate provider usage or paid API calls.
 
 ## Where costs show up (chat + CLI)
 
@@ -26,14 +26,14 @@ DMMS AI features that can generate provider usage or paid API calls.
 
 **CLI usage windows (provider quotas)**
 
-- `dmms-ai status --usage` and `dmms-ai channels list` show provider **usage windows**
+- `dryads-ai status --usage` and `dryads-ai channels list` show provider **usage windows**
   (quota snapshots, not per-message costs).
 
 See [Token use & costs](/reference/token-use) for details and examples.
 
 ## How keys are discovered
 
-DMMS AI can pick up credentials from:
+Dryads AI can pick up credentials from:
 
 - **Auth profiles** (per-agent, stored in `auth-profiles.json`).
 - **Environment variables** (e.g. `OPENAI_API_KEY`, `BRAVE_API_KEY`, `FIRECRAWL_API_KEY`).
@@ -103,8 +103,8 @@ See [Web tools](/tools/web).
 Some status commands call **provider usage endpoints** to display quota windows or auth health.
 These are typically low-volume calls but still hit provider APIs:
 
-- `dmms-ai status --usage`
-- `dmms-ai models status --json`
+- `dryads-ai status --usage`
+- `dryads-ai models status --json`
 
 See [Models CLI](/cli/models).
 
@@ -117,7 +117,7 @@ See [Session management + compaction](/reference/session-management-compaction).
 
 ### 8) Model scan / probe
 
-`dmms-ai models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
+`dryads-ai models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
 probing is enabled.
 
 See [Models CLI](/cli/models).

@@ -22,6 +22,6 @@ export const TAILSCALE_MISSING_BIN_NOTE_LINES = [
 
 export const TAILSCALE_DOCS_LINES = [
   "Docs:",
-  "https://docs.dmms-ai.com/gateway/tailscale",
-  "https://docs.dmms-ai.com/web",
+  "https://docs.dryads-ai.com/gateway/tailscale",
+  "https://docs.dryads-ai.com/web",
 ] as const;

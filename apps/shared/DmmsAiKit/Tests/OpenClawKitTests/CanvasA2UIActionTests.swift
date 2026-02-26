@@ -1,28 +1,28 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Testing
 
 @Suite struct CanvasA2UIActionTests {
     @Test func sanitizeTagValueIsStable() {
-        #expect(DmmsAiCanvasA2UIAction.sanitizeTagValue("Hello World!") == "Hello_World_")
-        #expect(DmmsAiCanvasA2UIAction.sanitizeTagValue("  ") == "-")
-        #expect(DmmsAiCanvasA2UIAction.sanitizeTagValue("macOS 26.2") == "macOS_26.2")
+        #expect(DryadsAiCanvasA2UIAction.sanitizeTagValue("Hello World!") == "Hello_World_")
+        #expect(DryadsAiCanvasA2UIAction.sanitizeTagValue("  ") == "-")
+        #expect(DryadsAiCanvasA2UIAction.sanitizeTagValue("macOS 26.2") == "macOS_26.2")
     }
 
     @Test func extractActionNameAcceptsNameOrAction() {
-        #expect(DmmsAiCanvasA2UIAction.extractActionName(["name": "Hello"]) == "Hello")
-        #expect(DmmsAiCanvasA2UIAction.extractActionName(["action": "Wave"]) == "Wave")
-        #expect(DmmsAiCanvasA2UIAction.extractActionName(["name": "  ", "action": "Fallback"]) == "Fallback")
-        #expect(DmmsAiCanvasA2UIAction.extractActionName(["action": " "]) == nil)
+        #expect(DryadsAiCanvasA2UIAction.extractActionName(["name": "Hello"]) == "Hello")
+        #expect(DryadsAiCanvasA2UIAction.extractActionName(["action": "Wave"]) == "Wave")
+        #expect(DryadsAiCanvasA2UIAction.extractActionName(["name": "  ", "action": "Fallback"]) == "Fallback")
+        #expect(DryadsAiCanvasA2UIAction.extractActionName(["action": " "]) == nil)
     }
 
     @Test func formatAgentMessageIsTokenEfficientAndUnambiguous() {
-        let messageContext = DmmsAiCanvasA2UIAction.AgentMessageContext(
+        let messageContext = DryadsAiCanvasA2UIAction.AgentMessageContext(
             actionName: "Get Weather",
             session: .init(key: "main", surfaceId: "main"),
             component: .init(id: "btnWeather", host: "Peter’s iPad", instanceId: "ipad16,6"),
             contextJSON: "{\"city\":\"Vienna\"}")
-        let msg = DmmsAiCanvasA2UIAction.formatAgentMessage(messageContext)
+        let msg = DryadsAiCanvasA2UIAction.formatAgentMessage(messageContext)
 
         #expect(msg.contains("CANVAS_A2UI "))
         #expect(msg.contains("action=Get_Weather"))

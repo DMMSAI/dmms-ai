@@ -126,7 +126,7 @@ export async function appendAssistantMessageToSessionTranscript(params: {
     role: "assistant",
     content: [{ type: "text", text: mirrorText }],
     api: "openai-responses",
-    provider: "dmms-ai",
+    provider: "dryads-ai",
     model: "delivery-mirror",
     usage: {
       input: 0,

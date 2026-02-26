@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 
 vi.mock("../../config/sessions.js", () => ({
   loadSessionStore: vi.fn(),
@@ -31,7 +31,7 @@ function resolveWithStoredEntry(params?: {
   vi.mocked(evaluateSessionFreshness).mockReturnValue({ fresh: params?.fresh ?? true });
 
   return resolveCronSession({
-    cfg: {} as DmmsAiConfig,
+    cfg: {} as DryadsAiConfig,
     sessionKey,
     agentId: "main",
     nowMs: NOW_MS,

@@ -1,7 +1,7 @@
 {
-  "name": "@dmms-ai/voice-call",
+  "name": "@dryads-ai/voice-call",
   "version": "2026.2.18",
-  "description": "DMMS AI voice-call plugin",
+  "description": "Dryads AI voice-call plugin",
   "type": "module",
   "dependencies": {
     "@sinclair/typebox": "0.34.48",
@@ -9,9 +9,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

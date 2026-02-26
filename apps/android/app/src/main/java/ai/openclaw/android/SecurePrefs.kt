@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -17,7 +17,7 @@ import java.util.UUID
 
 class SecurePrefs(context: Context) {
   companion object {
-    val defaultWakeWords: List<String> = listOf("dmms-ai", "claude")
+    val defaultWakeWords: List<String> = listOf("dryads-ai", "claude")
     private const val displayNameKey = "node.displayName"
     private const val voiceWakeModeKey = "voiceWake.mode"
   }
@@ -31,7 +31,7 @@ class SecurePrefs(context: Context) {
       .build()
 
   private val prefs: SharedPreferences by lazy {
-    createPrefs(appContext, "dmms-ai.node.secure")
+    createPrefs(appContext, "dryads-ai.node.secure")
   }
 
   private val _instanceId = MutableStateFlow(loadOrCreateInstanceId())

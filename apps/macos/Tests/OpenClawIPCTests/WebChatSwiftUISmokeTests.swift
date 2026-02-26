@@ -1,18 +1,18 @@
 import AppKit
-import DmmsAiChatUI
+import DryadsAiChatUI
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
 @MainActor
 struct WebChatSwiftUISmokeTests {
-    private struct TestTransport: DmmsAiChatTransport, Sendable {
-        func requestHistory(sessionKey: String) async throws -> DmmsAiChatHistoryPayload {
+    private struct TestTransport: DryadsAiChatTransport, Sendable {
+        func requestHistory(sessionKey: String) async throws -> DryadsAiChatHistoryPayload {
             let json = """
             {"sessionKey":"\(sessionKey)","sessionId":null,"messages":[],"thinkingLevel":"off"}
             """
-            return try JSONDecoder().decode(DmmsAiChatHistoryPayload.self, from: Data(json.utf8))
+            return try JSONDecoder().decode(DryadsAiChatHistoryPayload.self, from: Data(json.utf8))
         }
 
         func sendMessage(
@@ -20,17 +20,17 @@ struct WebChatSwiftUISmokeTests {
             message _: String,
             thinking _: String,
             idempotencyKey _: String,
-            attachments _: [DmmsAiChatAttachmentPayload]) async throws -> DmmsAiChatSendResponse
+            attachments _: [DryadsAiChatAttachmentPayload]) async throws -> DryadsAiChatSendResponse
         {
             let json = """
             {"runId":"\(UUID().uuidString)","status":"ok"}
             """
-            return try JSONDecoder().decode(DmmsAiChatSendResponse.self, from: Data(json.utf8))
+            return try JSONDecoder().decode(DryadsAiChatSendResponse.self, from: Data(json.utf8))
         }
 
         func requestHealth(timeoutMs _: Int) async throws -> Bool { true }
 
-        func events() -> AsyncStream<DmmsAiChatTransportEvent> {
+        func events() -> AsyncStream<DryadsAiChatTransportEvent> {
             AsyncStream { continuation in
                 continuation.finish()
             }

@@ -1,15 +1,15 @@
 ---
 summary: "Plugin manifest + JSON schema requirements (strict config validation)"
 read_when:
-  - You are building a DMMS AI plugin
+  - You are building a Dryads AI plugin
   - You need to ship a plugin config schema or debug plugin validation errors
 title: "Plugin Manifest"
 ---
 
-# Plugin manifest (dmms-ai.plugin.json)
+# Plugin manifest (dryads-ai.plugin.json)
 
-Every plugin **must** ship a `dmms-ai.plugin.json` file in the **plugin root**.
-DMMS AI uses this manifest to validate configuration **without executing plugin
+Every plugin **must** ship a `dryads-ai.plugin.json` file in the **plugin root**.
+Dryads AI uses this manifest to validate configuration **without executing plugin
 code**. Missing or invalid manifests are treated as plugin errors and block
 config validation.
 

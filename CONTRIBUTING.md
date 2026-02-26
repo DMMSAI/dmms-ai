@@ -1,13 +1,13 @@
-# Contributing to DMMS AI
+# Contributing to Dryads AI
 
 Welcome to the lobster tank! 🦞
 
 ## Quick Links
 
-- **GitHub:** https://github.com/dmms-ai/dmms-ai
+- **GitHub:** https://github.com/dryads-ai/dryads-ai
 - **Vision:** [`VISION.md`](VISION.md)
 - **Discord:** https://discord.gg/qkhbAGHRBT
-- **X/Twitter:** [@steipete](https://x.com/steipete) / [@dmms-ai](https://x.com/dmms-ai)
+- **X/Twitter:** [@steipete](https://x.com/steipete) / [@dryads-ai](https://x.com/dryads-ai)
 
 ## Maintainers
 
@@ -44,12 +44,12 @@ Welcome to the lobster tank! 🦞
 ## How to Contribute
 
 1. **Bugs & small fixes** → Open a PR!
-2. **New features / architecture** → Start a [GitHub Discussion](https://github.com/dmms-ai/dmms-ai/discussions) or ask in Discord first
+2. **New features / architecture** → Start a [GitHub Discussion](https://github.com/dryads-ai/dryads-ai/discussions) or ask in Discord first
 3. **Questions** → Discord #setup-help
 
 ## Before You PR
 
-- Test locally with your DMMS AI instance
+- Test locally with your Dryads AI instance
 - Run tests: `pnpm build && pnpm check && pnpm test`
 - Ensure CI checks pass
 - Keep PRs focused (one thing per PR; do not mix unrelated concerns)
@@ -89,21 +89,21 @@ We are currently prioritizing:
 
 - **Stability**: Fixing edge cases in channel connections (WhatsApp/Telegram).
 - **UX**: Improving the onboarding wizard and error messages.
-- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for DMMS AI skills.
+- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for Dryads AI skills.
 - **Performance**: Optimizing token usage and compaction logic.
 
-Check the [GitHub Issues](https://github.com/dmms-ai/dmms-ai/issues) for "good first issue" labels!
+Check the [GitHub Issues](https://github.com/dryads-ai/dryads-ai/issues) for "good first issue" labels!
 
 ## Maintainers
 
 We're selectively expanding the maintainer team.
-If you're an experienced contributor who wants to help shape DMMS AI's direction — whether through code, docs, or community — we'd like to hear from you.
+If you're an experienced contributor who wants to help shape Dryads AI's direction — whether through code, docs, or community — we'd like to hear from you.
 
 Being a maintainer is a responsibility, not an honorary title. We expect active, consistent involvement — triaging issues, reviewing PRs, and helping move the project forward.
 
-Still interested? Email contributing@dmms-ai.com with:
+Still interested? Email contributing@dryads-ai.com with:
 
-- Links to your PRs on DMMS AI (if you don't have any, start there first)
+- Links to your PRs on Dryads AI (if you don't have any, start there first)
 - Links to open source projects you maintain or actively contribute to
 - Your GitHub, Discord, and X/Twitter handles
 - A brief intro: background, experience, and areas of interest
@@ -118,14 +118,14 @@ Please allow a few weeks for a response.
 
 We take security reports seriously. Report vulnerabilities directly to the repository where the issue lives:
 
-- **Core CLI and gateway** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai)
-- **macOS desktop app** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai) (apps/macos)
-- **iOS app** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai) (apps/ios)
-- **Android app** — [dmms-ai/dmms-ai](https://github.com/dmms-ai/dmms-ai) (apps/android)
-- **ClawHub** — [dmms-ai/clawhub](https://github.com/dmms-ai/clawhub)
-- **Trust and threat model** — [dmms-ai/trust](https://github.com/dmms-ai/trust)
+- **Core CLI and gateway** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai)
+- **macOS desktop app** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai) (apps/macos)
+- **iOS app** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai) (apps/ios)
+- **Android app** — [dryads-ai/dryads-ai](https://github.com/dryads-ai/dryads-ai) (apps/android)
+- **ClawHub** — [dryads-ai/clawhub](https://github.com/dryads-ai/clawhub)
+- **Trust and threat model** — [dryads-ai/trust](https://github.com/dryads-ai/trust)
 
-For issues that don't fit a specific repo, or if you're unsure, email **security@dmms-ai.com** and we'll route it.
+For issues that don't fit a specific repo, or if you're unsure, email **security@dryads-ai.com** and we'll route it.
 
 ### Required in Reports
 

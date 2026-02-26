@@ -1,11 +1,11 @@
 import Foundation
 
-public enum DmmsAiMotionCommand: String, Codable, Sendable {
+public enum DryadsAiMotionCommand: String, Codable, Sendable {
     case activity = "motion.activity"
     case pedometer = "motion.pedometer"
 }
 
-public struct DmmsAiMotionActivityParams: Codable, Sendable, Equatable {
+public struct DryadsAiMotionActivityParams: Codable, Sendable, Equatable {
     public var startISO: String?
     public var endISO: String?
     public var limit: Int?
@@ -17,7 +17,7 @@ public struct DmmsAiMotionActivityParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiMotionActivityEntry: Codable, Sendable, Equatable {
+public struct DryadsAiMotionActivityEntry: Codable, Sendable, Equatable {
     public var startISO: String
     public var endISO: String
     public var confidence: String
@@ -51,15 +51,15 @@ public struct DmmsAiMotionActivityEntry: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiMotionActivityPayload: Codable, Sendable, Equatable {
-    public var activities: [DmmsAiMotionActivityEntry]
+public struct DryadsAiMotionActivityPayload: Codable, Sendable, Equatable {
+    public var activities: [DryadsAiMotionActivityEntry]
 
-    public init(activities: [DmmsAiMotionActivityEntry]) {
+    public init(activities: [DryadsAiMotionActivityEntry]) {
         self.activities = activities
     }
 }
 
-public struct DmmsAiPedometerParams: Codable, Sendable, Equatable {
+public struct DryadsAiPedometerParams: Codable, Sendable, Equatable {
     public var startISO: String?
     public var endISO: String?
 
@@ -69,7 +69,7 @@ public struct DmmsAiPedometerParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiPedometerPayload: Codable, Sendable, Equatable {
+public struct DryadsAiPedometerPayload: Codable, Sendable, Equatable {
     public var startISO: String
     public var endISO: String
     public var steps: Int?

@@ -841,9 +841,9 @@ function summarizeKnownExec(words: string[]): string {
     return `run ${bin} ${script}`;
   }
 
-  if (bin === "dmms-ai") {
+  if (bin === "dryads-ai") {
     const sub = firstPositional(words, 1);
-    return sub ? `run dmms-ai ${sub}` : "run dmms-ai";
+    return sub ? `run dryads-ai ${sub}` : "run dryads-ai";
   }
 
   const arg = firstPositional(words, 1);

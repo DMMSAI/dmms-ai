@@ -264,8 +264,8 @@ describe("uploadStickerDiscord", () => {
     await uploadStickerDiscord(
       {
         guildId: "g1",
-        name: "dmms_ai_wave",
-        description: "DMMS AI waving",
+        name: "dryads_ai_wave",
+        description: "Dryads AI waving",
         tags: "👋",
         mediaUrl: "file:///tmp/wave.png",
       },
@@ -275,8 +275,8 @@ describe("uploadStickerDiscord", () => {
       Routes.guildStickers("g1"),
       expect.objectContaining({
         body: {
-          name: "dmms_ai_wave",
-          description: "DMMS AI waving",
+          name: "dryads_ai_wave",
+          description: "Dryads AI waving",
           tags: "👋",
           files: [
             expect.objectContaining({

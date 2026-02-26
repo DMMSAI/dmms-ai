@@ -9,7 +9,7 @@ import {
 } from "./agent-limits.js";
 import { loadConfig } from "./config.js";
 import { withTempHome } from "./test-helpers.js";
-import { DmmsAiSchema } from "./zod-schema.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 describe("agent concurrency defaults", () => {
   it("resolves defaults when unset", () => {
@@ -31,7 +31,7 @@ describe("agent concurrency defaults", () => {
   });
 
   it("accepts subagent spawn depth and per-agent child limits", () => {
-    const parsed = DmmsAiSchema.parse({
+    const parsed = DryadsAiSchema.parse({
       agents: {
         defaults: {
           subagents: {
@@ -48,10 +48,10 @@ describe("agent concurrency defaults", () => {
 
   it("injects defaults on load", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".dmms-ai");
+      const configDir = path.join(home, ".dryads-ai");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "dmms-ai.json"),
+        path.join(configDir, "dryads-ai.json"),
         JSON.stringify({}, null, 2),
         "utf-8",
       );

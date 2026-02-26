@@ -72,7 +72,7 @@ private struct InlineImageList: View {
     var body: some View {
         ForEach(images, id: \.id) { item in
             if let img = item.image {
-                DmmsAiPlatformImageFactory.image(img)
+                DryadsAiPlatformImageFactory.image(img)
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: 260)

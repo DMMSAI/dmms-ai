@@ -1,9 +1,9 @@
 import type { AgentToolResult } from "@mariozechner/pi-agent-core";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { getChannelPlugin, listChannelPlugins } from "./index.js";
 import type { ChannelMessageActionContext, ChannelMessageActionName } from "./types.js";
 
-export function listChannelMessageActions(cfg: DmmsAiConfig): ChannelMessageActionName[] {
+export function listChannelMessageActions(cfg: DryadsAiConfig): ChannelMessageActionName[] {
   const actions = new Set<ChannelMessageActionName>(["send", "broadcast"]);
   for (const plugin of listChannelPlugins()) {
     const list = plugin.actions?.listActions?.({ cfg });
@@ -17,7 +17,7 @@ export function listChannelMessageActions(cfg: DmmsAiConfig): ChannelMessageActi
   return Array.from(actions);
 }
 
-export function supportsChannelMessageButtons(cfg: DmmsAiConfig): boolean {
+export function supportsChannelMessageButtons(cfg: DryadsAiConfig): boolean {
   for (const plugin of listChannelPlugins()) {
     if (plugin.actions?.supportsButtons?.({ cfg })) {
       return true;
@@ -27,7 +27,7 @@ export function supportsChannelMessageButtons(cfg: DmmsAiConfig): boolean {
 }
 
 export function supportsChannelMessageButtonsForChannel(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channel?: string;
 }): boolean {
   if (!params.channel) {
@@ -37,7 +37,7 @@ export function supportsChannelMessageButtonsForChannel(params: {
   return plugin?.actions?.supportsButtons?.({ cfg: params.cfg }) === true;
 }
 
-export function supportsChannelMessageCards(cfg: DmmsAiConfig): boolean {
+export function supportsChannelMessageCards(cfg: DryadsAiConfig): boolean {
   for (const plugin of listChannelPlugins()) {
     if (plugin.actions?.supportsCards?.({ cfg })) {
       return true;
@@ -47,7 +47,7 @@ export function supportsChannelMessageCards(cfg: DmmsAiConfig): boolean {
 }
 
 export function supportsChannelMessageCardsForChannel(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channel?: string;
 }): boolean {
   if (!params.channel) {

@@ -1,9 +1,9 @@
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 
-// Prefer the DmmsAiKit wrapper to keep gateway request payloads consistent.
-typealias AnyCodable = DmmsAiKit.AnyCodable
-typealias InstanceIdentity = DmmsAiKit.InstanceIdentity
+// Prefer the DryadsAiKit wrapper to keep gateway request payloads consistent.
+typealias AnyCodable = DryadsAiKit.AnyCodable
+typealias InstanceIdentity = DryadsAiKit.InstanceIdentity
 
 extension AnyCodable {
     var stringValue: String? {

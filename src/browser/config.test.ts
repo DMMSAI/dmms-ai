@@ -16,17 +16,17 @@ describe("browser config", () => {
     expect(profile?.cdpPort).toBe(18792);
     expect(profile?.cdpUrl).toBe("http://127.0.0.1:18792");
 
-    const dmmsAi = resolveProfile(resolved, "dmms-ai");
-    expect(dmmsAi?.driver).toBe("dmms-ai");
-    expect(dmmsAi?.cdpPort).toBe(18800);
-    expect(dmmsAi?.cdpUrl).toBe("http://127.0.0.1:18800");
+    const dryadsAi = resolveProfile(resolved, "dryads-ai");
+    expect(dryadsAi?.driver).toBe("dryads-ai");
+    expect(dryadsAi?.cdpPort).toBe(18800);
+    expect(dryadsAi?.cdpUrl).toBe("http://127.0.0.1:18800");
     expect(resolved.remoteCdpTimeoutMs).toBe(1500);
     expect(resolved.remoteCdpHandshakeTimeoutMs).toBe(3000);
   });
 
-  it("derives default ports from DMMS_AI_GATEWAY_PORT when unset", () => {
-    const prev = process.env.DMMS_AI_GATEWAY_PORT;
-    process.env.DMMS_AI_GATEWAY_PORT = "19001";
+  it("derives default ports from DRYADS_AI_GATEWAY_PORT when unset", () => {
+    const prev = process.env.DRYADS_AI_GATEWAY_PORT;
+    process.env.DRYADS_AI_GATEWAY_PORT = "19001";
     try {
       const resolved = resolveBrowserConfig(undefined);
       expect(resolved.controlPort).toBe(19003);
@@ -35,21 +35,21 @@ describe("browser config", () => {
       expect(chrome?.cdpPort).toBe(19004);
       expect(chrome?.cdpUrl).toBe("http://127.0.0.1:19004");
 
-      const dmmsAi = resolveProfile(resolved, "dmms-ai");
-      expect(dmmsAi?.cdpPort).toBe(19012);
-      expect(dmmsAi?.cdpUrl).toBe("http://127.0.0.1:19012");
+      const dryadsAi = resolveProfile(resolved, "dryads-ai");
+      expect(dryadsAi?.cdpPort).toBe(19012);
+      expect(dryadsAi?.cdpUrl).toBe("http://127.0.0.1:19012");
     } finally {
       if (prev === undefined) {
-        delete process.env.DMMS_AI_GATEWAY_PORT;
+        delete process.env.DRYADS_AI_GATEWAY_PORT;
       } else {
-        process.env.DMMS_AI_GATEWAY_PORT = prev;
+        process.env.DRYADS_AI_GATEWAY_PORT = prev;
       }
     }
   });
 
   it("derives default ports from gateway.port when env is unset", () => {
-    const prev = process.env.DMMS_AI_GATEWAY_PORT;
-    delete process.env.DMMS_AI_GATEWAY_PORT;
+    const prev = process.env.DRYADS_AI_GATEWAY_PORT;
+    delete process.env.DRYADS_AI_GATEWAY_PORT;
     try {
       const resolved = resolveBrowserConfig(undefined, { gateway: { port: 19011 } });
       expect(resolved.controlPort).toBe(19013);
@@ -58,14 +58,14 @@ describe("browser config", () => {
       expect(chrome?.cdpPort).toBe(19014);
       expect(chrome?.cdpUrl).toBe("http://127.0.0.1:19014");
 
-      const dmmsAi = resolveProfile(resolved, "dmms-ai");
-      expect(dmmsAi?.cdpPort).toBe(19022);
-      expect(dmmsAi?.cdpUrl).toBe("http://127.0.0.1:19022");
+      const dryadsAi = resolveProfile(resolved, "dryads-ai");
+      expect(dryadsAi?.cdpPort).toBe(19022);
+      expect(dryadsAi?.cdpUrl).toBe("http://127.0.0.1:19022");
     } finally {
       if (prev === undefined) {
-        delete process.env.DMMS_AI_GATEWAY_PORT;
+        delete process.env.DRYADS_AI_GATEWAY_PORT;
       } else {
-        process.env.DMMS_AI_GATEWAY_PORT = prev;
+        process.env.DRYADS_AI_GATEWAY_PORT = prev;
       }
     }
   });
@@ -97,7 +97,7 @@ describe("browser config", () => {
     const resolved = resolveBrowserConfig({
       cdpUrl: "http://example.com:9222",
     });
-    const profile = resolveProfile(resolved, "dmms-ai");
+    const profile = resolveProfile(resolved, "dryads-ai");
     expect(profile?.cdpIsLoopback).toBe(false);
   });
 
@@ -105,7 +105,7 @@ describe("browser config", () => {
     const resolved = resolveBrowserConfig({
       cdpUrl: "http://example.com:9222",
     });
-    const profile = resolveProfile(resolved, "dmms-ai");
+    const profile = resolveProfile(resolved, "dryads-ai");
     expect(profile?.cdpPort).toBe(9222);
     expect(profile?.cdpUrl).toBe("http://example.com:9222");
     expect(profile?.cdpIsLoopback).toBe(false);
@@ -143,11 +143,11 @@ describe("browser config", () => {
   it("does not add the built-in chrome extension profile if the derived relay port is already used", () => {
     const resolved = resolveBrowserConfig({
       profiles: {
-        "dmms-ai": { cdpPort: 18792, color: "#FF4500" },
+        "dryads-ai": { cdpPort: 18792, color: "#FF4500" },
       },
     });
     expect(resolveProfile(resolved, "chrome")).toBe(null);
-    expect(resolved.defaultProfile).toBe("dmms-ai");
+    expect(resolved.defaultProfile).toBe("dryads-ai");
   });
 
   it("defaults extraArgs to empty array when not provided", () => {

@@ -3,8 +3,9 @@ import { resolveStateDir } from "../config/paths.js";
 import { DEFAULT_AGENT_ID } from "../routing/session-key.js";
 import { resolveUserPath } from "../utils.js";
 
-export function resolveDmmsAiAgentDir(): string {
-  const override = process.env.DMMS_AI_AGENT_DIR?.trim() || process.env.PI_CODING_AGENT_DIR?.trim();
+export function resolveDryadsAiAgentDir(): string {
+  const override =
+    process.env.DRYADS_AI_AGENT_DIR?.trim() || process.env.PI_CODING_AGENT_DIR?.trim();
   if (override) {
     return resolveUserPath(override);
   }
@@ -12,10 +13,10 @@ export function resolveDmmsAiAgentDir(): string {
   return resolveUserPath(defaultAgentDir);
 }
 
-export function ensureDmmsAiAgentEnv(): string {
-  const dir = resolveDmmsAiAgentDir();
-  if (!process.env.DMMS_AI_AGENT_DIR) {
-    process.env.DMMS_AI_AGENT_DIR = dir;
+export function ensureDryadsAiAgentEnv(): string {
+  const dir = resolveDryadsAiAgentDir();
+  if (!process.env.DRYADS_AI_AGENT_DIR) {
+    process.env.DRYADS_AI_AGENT_DIR = dir;
   }
   if (!process.env.PI_CODING_AGENT_DIR) {
     process.env.PI_CODING_AGENT_DIR = dir;

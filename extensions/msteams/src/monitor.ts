@@ -2,9 +2,9 @@ import {
   DEFAULT_WEBHOOK_MAX_BODY_BYTES,
   mergeAllowlist,
   summarizeMapping,
-  type DmmsAiConfig,
+  type DryadsAiConfig,
   type RuntimeEnv,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import type { Request, Response } from "express";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
@@ -21,7 +21,7 @@ import { createMSTeamsAdapter, loadMSTeamsSdkWithAuth } from "./sdk.js";
 import { resolveMSTeamsCredentials } from "./token.js";
 
 export type MonitorMSTeamsOpts = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   conversationStore?: MSTeamsConversationStore;

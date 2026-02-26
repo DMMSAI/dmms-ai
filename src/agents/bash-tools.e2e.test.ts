@@ -27,7 +27,7 @@ const resolveShellFromPath = (name: string) => {
 };
 const defaultShell = isWin
   ? undefined
-  : process.env.DMMS_AI_TEST_SHELL || resolveShellFromPath("bash") || process.env.SHELL || "sh";
+  : process.env.DRYADS_AI_TEST_SHELL || resolveShellFromPath("bash") || process.env.SHELL || "sh";
 // PowerShell: Start-Sleep for delays, ; for command separation, $null for null device
 const shortDelayCmd = isWin ? "Start-Sleep -Milliseconds 50" : "sleep 0.05";
 const yieldDelayCmd = isWin ? "Start-Sleep -Milliseconds 200" : "sleep 0.2";
@@ -478,16 +478,16 @@ describe("buildDockerExecArgs", () => {
     });
 
     const commandArg = args[args.length - 1];
-    expect(args).toContain("DMMS_AI_PREPEND_PATH=/custom/bin:/usr/local/bin:/usr/bin");
-    expect(commandArg).toContain('export PATH="${DMMS_AI_PREPEND_PATH}:$PATH"');
+    expect(args).toContain("DRYADS_AI_PREPEND_PATH=/custom/bin:/usr/local/bin:/usr/bin");
+    expect(commandArg).toContain('export PATH="${DRYADS_AI_PREPEND_PATH}:$PATH"');
     expect(commandArg).toContain("echo hello");
     expect(commandArg).toBe(
-      'export PATH="${DMMS_AI_PREPEND_PATH}:$PATH"; unset DMMS_AI_PREPEND_PATH; echo hello',
+      'export PATH="${DRYADS_AI_PREPEND_PATH}:$PATH"; unset DRYADS_AI_PREPEND_PATH; echo hello',
     );
   });
 
   it("does not interpolate PATH into the shell command", () => {
-    const injectedPath = "$(touch /tmp/dmms-ai-path-injection)";
+    const injectedPath = "$(touch /tmp/dryads-ai-path-injection)";
     const args = buildDockerExecArgs({
       containerName: "test-container",
       command: "echo hello",
@@ -499,9 +499,9 @@ describe("buildDockerExecArgs", () => {
     });
 
     const commandArg = args[args.length - 1];
-    expect(args).toContain(`DMMS_AI_PREPEND_PATH=${injectedPath}`);
+    expect(args).toContain(`DRYADS_AI_PREPEND_PATH=${injectedPath}`);
     expect(commandArg).not.toContain(injectedPath);
-    expect(commandArg).toContain("DMMS_AI_PREPEND_PATH");
+    expect(commandArg).toContain("DRYADS_AI_PREPEND_PATH");
   });
 
   it("does not add PATH export when PATH is not in env", () => {

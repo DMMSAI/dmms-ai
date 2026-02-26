@@ -1,10 +1,10 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Testing
 
 @Suite struct ToolDisplayRegistryTests {
     @Test func loadsToolDisplayConfigFromBundle() {
-        let url = DmmsAiKitResources.bundle.url(forResource: "tool-display", withExtension: "json")
+        let url = DryadsAiKitResources.bundle.url(forResource: "tool-display", withExtension: "json")
         #expect(url != nil)
     }
 

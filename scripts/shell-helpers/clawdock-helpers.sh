@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# ClawDock - Docker helpers for DMMS AI
-# Inspired by Simon Willison's "Running DMMS AI in Docker"
-# https://til.simonwillison.net/llms/dmms-ai-docker
+# ClawDock - Docker helpers for Dryads AI
+# Inspired by Simon Willison's "Running Dryads AI in Docker"
+# https://til.simonwillison.net/llms/dryads-ai-docker
 #
 # Installation:
-#   mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/dmms-ai/dmms-ai/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+#   mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/dryads-ai/dryads-ai/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 #   echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc
 #
 # Usage:
@@ -38,14 +38,14 @@ _cmd() {
 # =============================================================================
 CLAWDOCK_CONFIG="${HOME}/.clawdock/config"
 
-# Common paths to check for DMMS AI
+# Common paths to check for Dryads AI
 CLAWDOCK_COMMON_PATHS=(
-  "${HOME}/dmms-ai"
-  "${HOME}/workspace/dmms-ai"
-  "${HOME}/projects/dmms-ai"
-  "${HOME}/dev/dmms-ai"
-  "${HOME}/code/dmms-ai"
-  "${HOME}/src/dmms-ai"
+  "${HOME}/dryads-ai"
+  "${HOME}/workspace/dryads-ai"
+  "${HOME}/projects/dryads-ai"
+  "${HOME}/dev/dryads-ai"
+  "${HOME}/code/dryads-ai"
+  "${HOME}/src/dryads-ai"
 )
 
 _clawdock_filter_warnings() {
@@ -97,28 +97,28 @@ _clawdock_ensure_dir() {
 
   if [[ -n "$found_path" ]]; then
     echo ""
-    echo "🦞 Found DMMS AI at: $found_path"
+    echo "🦞 Found Dryads AI at: $found_path"
     echo -n "   Use this location? [Y/n] "
     read -r response
     if [[ "$response" =~ ^[Nn] ]]; then
       echo ""
       echo "Set CLAWDOCK_DIR manually:"
-      echo "  export CLAWDOCK_DIR=/path/to/dmms-ai"
+      echo "  export CLAWDOCK_DIR=/path/to/dryads-ai"
       return 1
     fi
     CLAWDOCK_DIR="$found_path"
   else
     echo ""
-    echo "❌ DMMS AI not found in common locations."
+    echo "❌ Dryads AI not found in common locations."
     echo ""
     echo "Clone it first:"
     echo ""
-    echo "  git clone https://github.com/dmms-ai/dmms-ai.git ~/dmms-ai"
-    echo "  cd ~/dmms-ai && ./docker-setup.sh"
+    echo "  git clone https://github.com/dryads-ai/dryads-ai.git ~/dryads-ai"
+    echo "  cd ~/dryads-ai && ./docker-setup.sh"
     echo ""
     echo "Or set CLAWDOCK_DIR if it's elsewhere:"
     echo ""
-    echo "  export CLAWDOCK_DIR=/path/to/dmms-ai"
+    echo "  export CLAWDOCK_DIR=/path/to/dryads-ai"
     echo ""
     return 1
   fi
@@ -145,7 +145,7 @@ _clawdock_read_env_token() {
     return 1
   fi
   local raw
-  raw=$(sed -n 's/^DMMS_AI_GATEWAY_TOKEN=//p' "${CLAWDOCK_DIR}/.env" | head -n 1)
+  raw=$(sed -n 's/^DRYADS_AI_GATEWAY_TOKEN=//p' "${CLAWDOCK_DIR}/.env" | head -n 1)
   if [[ -z "$raw" ]]; then
     return 1
   fi
@@ -154,7 +154,7 @@ _clawdock_read_env_token() {
 
 # Basic Operations
 clawdock-start() {
-  _clawdock_compose up -d dmms-ai-gateway
+  _clawdock_compose up -d dryads-ai-gateway
 }
 
 clawdock-stop() {
@@ -162,11 +162,11 @@ clawdock-stop() {
 }
 
 clawdock-restart() {
-  _clawdock_compose restart dmms-ai-gateway
+  _clawdock_compose restart dryads-ai-gateway
 }
 
 clawdock-logs() {
-  _clawdock_compose logs -f dmms-ai-gateway
+  _clawdock_compose logs -f dryads-ai-gateway
 }
 
 clawdock-status() {
@@ -180,30 +180,30 @@ clawdock-cd() {
 }
 
 clawdock-config() {
-  cd ~/.dmms-ai
+  cd ~/.dryads-ai
 }
 
 clawdock-workspace() {
-  cd ~/.dmms-ai/workspace
+  cd ~/.dryads-ai/workspace
 }
 
 # Container Access
 clawdock-shell() {
-  _clawdock_compose exec dmms-ai-gateway \
-    bash -c 'echo "alias dmms-ai=\"./dmms-ai.mjs\"" > /tmp/.bashrc_dmms-ai && bash --rcfile /tmp/.bashrc_dmms-ai'
+  _clawdock_compose exec dryads-ai-gateway \
+    bash -c 'echo "alias dryads-ai=\"./dryads-ai.mjs\"" > /tmp/.bashrc_dryads-ai && bash --rcfile /tmp/.bashrc_dryads-ai'
 }
 
 clawdock-exec() {
-  _clawdock_compose exec dmms-ai-gateway "$@"
+  _clawdock_compose exec dryads-ai-gateway "$@"
 }
 
 clawdock-cli() {
-  _clawdock_compose run --rm dmms-ai-cli "$@"
+  _clawdock_compose run --rm dryads-ai-cli "$@"
 }
 
 # Maintenance
 clawdock-rebuild() {
-  _clawdock_compose build dmms-ai-gateway
+  _clawdock_compose build dryads-ai-gateway
 }
 
 clawdock-clean() {
@@ -220,7 +220,7 @@ clawdock-health() {
     echo "   Check: ${CLAWDOCK_DIR}/.env"
     return 1
   fi
-  _clawdock_compose exec -e "DMMS_AI_GATEWAY_TOKEN=$token" dmms-ai-gateway \
+  _clawdock_compose exec -e "DRYADS_AI_GATEWAY_TOKEN=$token" dryads-ai-gateway \
     node dist/index.js health
 }
 
@@ -244,13 +244,13 @@ clawdock-fix-token() {
 
   echo "📝 Setting token: ${token:0:20}..."
 
-  _clawdock_compose exec -e "TOKEN=$token" dmms-ai-gateway \
-    bash -c './dmms-ai.mjs config set gateway.remote.token "$TOKEN" && ./dmms-ai.mjs config set gateway.auth.token "$TOKEN"' 2>&1 | _clawdock_filter_warnings
+  _clawdock_compose exec -e "TOKEN=$token" dryads-ai-gateway \
+    bash -c './dryads-ai.mjs config set gateway.remote.token "$TOKEN" && ./dryads-ai.mjs config set gateway.auth.token "$TOKEN"' 2>&1 | _clawdock_filter_warnings
 
   echo "🔍 Verifying token was saved..."
   local saved_token
-  saved_token=$(_clawdock_compose exec dmms-ai-gateway \
-    bash -c "./dmms-ai.mjs config get gateway.remote.token 2>/dev/null" 2>&1 | _clawdock_filter_warnings | tr -d '\r\n' | head -c 64)
+  saved_token=$(_clawdock_compose exec dryads-ai-gateway \
+    bash -c "./dryads-ai.mjs config get gateway.remote.token 2>/dev/null" 2>&1 | _clawdock_filter_warnings | tr -d '\r\n' | head -c 64)
 
   if [[ "$saved_token" == "$token" ]]; then
     echo "✅ Token saved correctly!"
@@ -261,7 +261,7 @@ clawdock-fix-token() {
   fi
 
   echo "🔄 Restarting gateway..."
-  _clawdock_compose restart dmms-ai-gateway 2>&1 | _clawdock_filter_warnings
+  _clawdock_compose restart dryads-ai-gateway 2>&1 | _clawdock_filter_warnings
 
   echo "⏳ Waiting for gateway to start..."
   sleep 5
@@ -276,7 +276,7 @@ clawdock-dashboard() {
 
   echo "🦞 Getting dashboard URL..."
   local output exit_status url
-  output=$(_clawdock_compose run --rm dmms-ai-cli dashboard --no-open 2>&1)
+  output=$(_clawdock_compose run --rm dryads-ai-cli dashboard --no-open 2>&1)
   exit_status=$?
   url=$(printf "%s\n" "$output" | _clawdock_filter_warnings | grep -o 'http[s]\?://[^[:space:]]*' | head -n 1)
   if [[ $exit_status -ne 0 ]]; then
@@ -305,7 +305,7 @@ clawdock-devices() {
 
   echo "🔍 Checking device pairings..."
   local output exit_status
-  output=$(_clawdock_compose exec dmms-ai-gateway node dist/index.js devices list 2>&1)
+  output=$(_clawdock_compose exec dryads-ai-gateway node dist/index.js devices list 2>&1)
   exit_status=$?
   printf "%s\n" "$output" | _clawdock_filter_warnings
   if [ $exit_status -ne 0 ]; then
@@ -314,7 +314,7 @@ clawdock-devices() {
     echo -e "   1. Verify token is set: $(_cmd clawdock-token)"
     echo "   2. Try manual config inside container:"
     echo -e "      $(_cmd clawdock-shell)"
-    echo -e "      $(_cmd 'dmms-ai config get gateway.remote.token')"
+    echo -e "      $(_cmd 'dryads-ai config get gateway.remote.token')"
     return 1
   fi
 
@@ -341,7 +341,7 @@ clawdock-approve() {
   fi
 
   echo "✅ Approving device: $1"
-  _clawdock_compose exec dmms-ai-gateway \
+  _clawdock_compose exec dryads-ai-gateway \
     node dist/index.js devices approve "$1" 2>&1 | _clawdock_filter_warnings
 
   echo ""
@@ -350,7 +350,7 @@ clawdock-approve() {
 
 # Show all available clawdock helper commands
 clawdock-help() {
-  echo -e "\n${_CLR_BOLD}${_CLR_CYAN}🦞 ClawDock - Docker Helpers for DMMS AI${_CLR_RESET}\n"
+  echo -e "\n${_CLR_BOLD}${_CLR_CYAN}🦞 ClawDock - Docker Helpers for Dryads AI${_CLR_RESET}\n"
 
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}⚡ Basic Operations${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-start)       ${_CLR_DIM}Start the gateway${_CLR_RESET}"
@@ -361,7 +361,7 @@ clawdock-help() {
   echo ""
 
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🐚 Container Access${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-shell)       ${_CLR_DIM}Shell into container (dmms-ai alias ready)${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-shell)       ${_CLR_DIM}Shell into container (dryads-ai alias ready)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-cli)         ${_CLR_DIM}Run CLI commands (e.g., clawdock-cli status)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-exec) ${_CLR_CYAN}<cmd>${_CLR_RESET}  ${_CLR_DIM}Execute command in gateway container${_CLR_RESET}"
   echo ""
@@ -384,8 +384,8 @@ clawdock-help() {
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🛠️  Utilities${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-health)      ${_CLR_DIM}Run health check${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-token)       ${_CLR_DIM}Show gateway auth token${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-cd)          ${_CLR_DIM}Jump to dmms-ai project directory${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-config)      ${_CLR_DIM}Open config directory (~/.dmms-ai)${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-cd)          ${_CLR_DIM}Jump to dryads-ai project directory${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-config)      ${_CLR_DIM}Open config directory (~/.dryads-ai)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-workspace)   ${_CLR_DIM}Open workspace directory${_CLR_RESET}"
   echo ""
 
@@ -400,14 +400,14 @@ clawdock-help() {
 
   echo -e "${_CLR_BOLD}${_CLR_GREEN}💬 WhatsApp Setup${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-shell)"
-  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'dmms-ai channels login --channel whatsapp')"
-  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'dmms-ai status')"
+  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'dryads-ai channels login --channel whatsapp')"
+  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'dryads-ai status')"
   echo ""
 
   echo -e "${_CLR_BOLD}${_CLR_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${_CLR_RESET}"
   echo ""
 
   echo -e "${_CLR_CYAN}💡 All commands guide you through next steps!${_CLR_RESET}"
-  echo -e "${_CLR_BLUE}📚 Docs: ${_CLR_RESET}${_CLR_CYAN}https://docs.dmms-ai.com${_CLR_RESET}"
+  echo -e "${_CLR_BLUE}📚 Docs: ${_CLR_RESET}${_CLR_CYAN}https://docs.dryads-ai.com${_CLR_RESET}"
   echo ""
 }

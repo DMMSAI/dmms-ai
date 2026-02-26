@@ -3,17 +3,17 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vite
 let modelsListCommand: typeof import("./models/list.list-command.js").modelsListCommand;
 
 const loadConfig = vi.fn();
-const ensureDmmsAiModelsJson = vi.fn().mockResolvedValue(undefined);
+const ensureDryadsAiModelsJson = vi.fn().mockResolvedValue(undefined);
 const ensurePiAuthJsonFromAuthProfiles = vi
   .fn()
-  .mockResolvedValue({ wrote: false, authPath: "/tmp/dmms-ai-agent/auth.json" });
-const resolveDmmsAiAgentDir = vi.fn().mockReturnValue("/tmp/dmms-ai-agent");
+  .mockResolvedValue({ wrote: false, authPath: "/tmp/dryads-ai-agent/auth.json" });
+const resolveDryadsAiAgentDir = vi.fn().mockReturnValue("/tmp/dryads-ai-agent");
 const ensureAuthProfileStore = vi.fn().mockReturnValue({ version: 1, profiles: {} });
 const listProfilesForProvider = vi.fn().mockReturnValue([]);
 const resolveAuthProfileDisplayLabel = vi.fn(({ profileId }: { profileId: string }) => profileId);
 const resolveAuthStorePathForDisplay = vi
   .fn()
-  .mockReturnValue("/tmp/dmms-ai-agent/auth-profiles.json");
+  .mockReturnValue("/tmp/dryads-ai-agent/auth-profiles.json");
 const resolveProfileUnusableUntilForDisplay = vi.fn().mockReturnValue(null);
 const resolveEnvApiKey = vi.fn().mockReturnValue(undefined);
 const resolveAwsSdkEnvVarName = vi.fn().mockReturnValue(undefined);
@@ -27,13 +27,13 @@ const modelRegistryState = {
 let previousExitCode: typeof process.exitCode;
 
 vi.mock("../config/config.js", () => ({
-  CONFIG_PATH: "/tmp/dmms-ai.json",
-  STATE_DIR: "/tmp/dmms-ai-state",
+  CONFIG_PATH: "/tmp/dryads-ai.json",
+  STATE_DIR: "/tmp/dryads-ai-state",
   loadConfig,
 }));
 
 vi.mock("../agents/models-config.js", () => ({
-  ensureDmmsAiModelsJson,
+  ensureDryadsAiModelsJson,
 }));
 
 vi.mock("../agents/pi-auth-json.js", () => ({
@@ -41,7 +41,7 @@ vi.mock("../agents/pi-auth-json.js", () => ({
 }));
 
 vi.mock("../agents/agent-paths.js", () => ({
-  resolveDmmsAiAgentDir,
+  resolveDryadsAiAgentDir,
 }));
 
 vi.mock("../agents/auth-profiles.js", () => ({
@@ -282,7 +282,7 @@ describe("models list/status", () => {
 
     await modelsListCommand({ all: true, json: true }, runtime);
 
-    expect(ensurePiAuthJsonFromAuthProfiles).toHaveBeenCalledWith("/tmp/dmms-ai-agent");
+    expect(ensurePiAuthJsonFromAuthProfiles).toHaveBeenCalledWith("/tmp/dryads-ai-agent");
   });
 
   it("models list outputs canonical zai key for configured z.ai model", async () => {

@@ -1,11 +1,11 @@
 import Foundation
 import SwabbleKit
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct VoiceWakeRuntimeTests {
     @Test func trimsAfterTriggerKeepsPostSpeech() {
-        let triggers = ["claude", "dmms-ai"]
+        let triggers = ["claude", "dryads-ai"]
         let text = "hey Claude how are you"
         #expect(VoiceWakeRuntime._testTrimmedAfterTrigger(text, triggers: triggers) == "how are you")
     }
@@ -24,8 +24,8 @@ import Testing
     }
 
     @Test func hasContentAfterTriggerFalseWhenOnlyTrigger() {
-        let triggers = ["dmms-ai"]
-        let text = "hey dmms-ai"
+        let triggers = ["dryads-ai"]
+        let text = "hey dryads-ai"
         #expect(!VoiceWakeRuntime._testHasContentAfterTrigger(text, triggers: triggers))
     }
 
@@ -36,42 +36,42 @@ import Testing
     }
 
     @Test func trimsAfterChineseTriggerKeepsPostSpeech() {
-        let triggers = ["小爪", "dmms-ai"]
+        let triggers = ["小爪", "dryads-ai"]
         let text = "嘿 小爪 帮我打开设置"
         #expect(VoiceWakeRuntime._testTrimmedAfterTrigger(text, triggers: triggers) == "帮我打开设置")
     }
 
     @Test func trimsAfterTriggerHandlesWidthInsensitiveForms() {
-        let triggers = ["dmms-ai"]
+        let triggers = ["dryads-ai"]
         let text = "ＯｐｅｎＣｌａｗ 请帮我"
         #expect(VoiceWakeRuntime._testTrimmedAfterTrigger(text, triggers: triggers) == "请帮我")
     }
 
     @Test func gateRequiresGapBetweenTriggerAndCommand() {
-        let transcript = "hey dmms-ai do thing"
+        let transcript = "hey dryads-ai do thing"
         let segments = makeSegments(
             transcript: transcript,
             words: [
                 ("hey", 0.0, 0.1),
-                ("dmms-ai", 0.2, 0.1),
+                ("dryads-ai", 0.2, 0.1),
                 ("do", 0.35, 0.1),
                 ("thing", 0.5, 0.1),
             ])
-        let config = WakeWordGateConfig(triggers: ["dmms-ai"], minPostTriggerGap: 0.3)
+        let config = WakeWordGateConfig(triggers: ["dryads-ai"], minPostTriggerGap: 0.3)
         #expect(WakeWordGate.match(transcript: transcript, segments: segments, config: config) == nil)
     }
 
     @Test func gateAcceptsGapAndExtractsCommand() {
-        let transcript = "hey dmms-ai do thing"
+        let transcript = "hey dryads-ai do thing"
         let segments = makeSegments(
             transcript: transcript,
             words: [
                 ("hey", 0.0, 0.1),
-                ("dmms-ai", 0.2, 0.1),
+                ("dryads-ai", 0.2, 0.1),
                 ("do", 0.9, 0.1),
                 ("thing", 1.1, 0.1),
             ])
-        let config = WakeWordGateConfig(triggers: ["dmms-ai"], minPostTriggerGap: 0.3)
+        let config = WakeWordGateConfig(triggers: ["dryads-ai"], minPostTriggerGap: 0.3)
         #expect(WakeWordGate.match(transcript: transcript, segments: segments, config: config)?.command == "do thing")
     }
 }

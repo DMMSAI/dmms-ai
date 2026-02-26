@@ -1,9 +1,9 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { HookInstallRecord } from "../config/types.hooks.js";
 
 export type HookInstallUpdate = HookInstallRecord & { hookId: string };
 
-export function recordHookInstall(cfg: DmmsAiConfig, update: HookInstallUpdate): DmmsAiConfig {
+export function recordHookInstall(cfg: DryadsAiConfig, update: HookInstallUpdate): DryadsAiConfig {
   const { hookId, ...record } = update;
   const installs = {
     ...cfg.hooks?.internal?.installs,

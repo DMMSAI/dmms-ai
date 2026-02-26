@@ -1,4 +1,4 @@
-import type { DmmsAiConfig, SkillConfig } from "../../config/config.js";
+import type { DryadsAiConfig, SkillConfig } from "../../config/config.js";
 import {
   evaluateRuntimeRequires,
   hasBinary,
@@ -16,12 +16,12 @@ const DEFAULT_CONFIG_VALUES: Record<string, boolean> = {
 
 export { hasBinary, resolveConfigPath, resolveRuntimePlatform };
 
-export function isConfigPathTruthy(config: DmmsAiConfig | undefined, pathStr: string): boolean {
+export function isConfigPathTruthy(config: DryadsAiConfig | undefined, pathStr: string): boolean {
   return isConfigPathTruthyWithDefaults(config, pathStr, DEFAULT_CONFIG_VALUES);
 }
 
 export function resolveSkillConfig(
-  config: DmmsAiConfig | undefined,
+  config: DryadsAiConfig | undefined,
   skillKey: string,
 ): SkillConfig | undefined {
   const skills = config?.skills?.entries;
@@ -46,13 +46,13 @@ function normalizeAllowlist(input: unknown): string[] | undefined {
   return normalized.length > 0 ? normalized : undefined;
 }
 
-const BUNDLED_SOURCES = new Set(["dmms-ai-bundled"]);
+const BUNDLED_SOURCES = new Set(["dryads-ai-bundled"]);
 
 function isBundledSkill(entry: SkillEntry): boolean {
   return BUNDLED_SOURCES.has(entry.skill.source);
 }
 
-export function resolveBundledAllowlist(config?: DmmsAiConfig): string[] | undefined {
+export function resolveBundledAllowlist(config?: DryadsAiConfig): string[] | undefined {
   return normalizeAllowlist(config?.skills?.allowBundled);
 }
 
@@ -69,7 +69,7 @@ export function isBundledSkillAllowed(entry: SkillEntry, allowlist?: string[]): 
 
 export function shouldIncludeSkill(params: {
   entry: SkillEntry;
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   eligibility?: SkillEligibilityContext;
 }): boolean {
   const { entry, config, eligibility } = params;

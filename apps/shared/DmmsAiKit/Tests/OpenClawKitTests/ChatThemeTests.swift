@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import DmmsAiChatUI
+@testable import DryadsAiChatUI
 
 #if os(macOS)
 import AppKit
@@ -19,8 +19,8 @@ private func luminance(_ color: NSColor) throws -> CGFloat {
         let lightAppearance = try #require(NSAppearance(named: .aqua))
         let darkAppearance = try #require(NSAppearance(named: .darkAqua))
 
-        let lightResolved = DmmsAiChatTheme.resolvedAssistantBubbleColor(for: lightAppearance)
-        let darkResolved = DmmsAiChatTheme.resolvedAssistantBubbleColor(for: darkAppearance)
+        let lightResolved = DryadsAiChatTheme.resolvedAssistantBubbleColor(for: lightAppearance)
+        let darkResolved = DryadsAiChatTheme.resolvedAssistantBubbleColor(for: darkAppearance)
         #expect(try luminance(lightResolved) > luminance(darkResolved))
         #else
         #expect(Bool(true))

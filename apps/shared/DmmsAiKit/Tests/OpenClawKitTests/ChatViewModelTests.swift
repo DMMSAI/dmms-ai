@@ -1,7 +1,7 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Testing
-@testable import DmmsAiChatUI
+@testable import DryadsAiChatUI
 
 private struct TimeoutError: Error, CustomStringConvertible {
     let label: String
@@ -31,40 +31,40 @@ private actor TestChatTransportState {
     var abortedRunIds: [String] = []
 }
 
-private final class TestChatTransport: @unchecked Sendable, DmmsAiChatTransport {
+private final class TestChatTransport: @unchecked Sendable, DryadsAiChatTransport {
     private let state = TestChatTransportState()
-    private let historyResponses: [DmmsAiChatHistoryPayload]
-    private let sessionsResponses: [DmmsAiChatSessionsListResponse]
+    private let historyResponses: [DryadsAiChatHistoryPayload]
+    private let sessionsResponses: [DryadsAiChatSessionsListResponse]
 
-    private let stream: AsyncStream<DmmsAiChatTransportEvent>
-    private let continuation: AsyncStream<DmmsAiChatTransportEvent>.Continuation
+    private let stream: AsyncStream<DryadsAiChatTransportEvent>
+    private let continuation: AsyncStream<DryadsAiChatTransportEvent>.Continuation
 
     init(
-        historyResponses: [DmmsAiChatHistoryPayload],
-        sessionsResponses: [DmmsAiChatSessionsListResponse] = [])
+        historyResponses: [DryadsAiChatHistoryPayload],
+        sessionsResponses: [DryadsAiChatSessionsListResponse] = [])
     {
         self.historyResponses = historyResponses
         self.sessionsResponses = sessionsResponses
-        var cont: AsyncStream<DmmsAiChatTransportEvent>.Continuation!
+        var cont: AsyncStream<DryadsAiChatTransportEvent>.Continuation!
         self.stream = AsyncStream { c in
             cont = c
         }
         self.continuation = cont
     }
 
-    func events() -> AsyncStream<DmmsAiChatTransportEvent> {
+    func events() -> AsyncStream<DryadsAiChatTransportEvent> {
         self.stream
     }
 
     func setActiveSessionKey(_: String) async throws {}
 
-    func requestHistory(sessionKey: String) async throws -> DmmsAiChatHistoryPayload {
+    func requestHistory(sessionKey: String) async throws -> DryadsAiChatHistoryPayload {
         let idx = await self.state.historyCallCount
         await self.state.setHistoryCallCount(idx + 1)
         if idx < self.historyResponses.count {
             return self.historyResponses[idx]
         }
-        return self.historyResponses.last ?? DmmsAiChatHistoryPayload(
+        return self.historyResponses.last ?? DryadsAiChatHistoryPayload(
             sessionKey: sessionKey,
             sessionId: nil,
             messages: [],
@@ -76,23 +76,23 @@ private final class TestChatTransport: @unchecked Sendable, DmmsAiChatTransport 
         message _: String,
         thinking _: String,
         idempotencyKey: String,
-        attachments _: [DmmsAiChatAttachmentPayload]) async throws -> DmmsAiChatSendResponse
+        attachments _: [DryadsAiChatAttachmentPayload]) async throws -> DryadsAiChatSendResponse
     {
         await self.state.sentRunIdsAppend(idempotencyKey)
-        return DmmsAiChatSendResponse(runId: idempotencyKey, status: "ok")
+        return DryadsAiChatSendResponse(runId: idempotencyKey, status: "ok")
     }
 
     func abortRun(sessionKey _: String, runId: String) async throws {
         await self.state.abortedRunIdsAppend(runId)
     }
 
-    func listSessions(limit _: Int?) async throws -> DmmsAiChatSessionsListResponse {
+    func listSessions(limit _: Int?) async throws -> DryadsAiChatSessionsListResponse {
         let idx = await self.state.sessionsCallCount
         await self.state.setSessionsCallCount(idx + 1)
         if idx < self.sessionsResponses.count {
             return self.sessionsResponses[idx]
         }
-        return self.sessionsResponses.last ?? DmmsAiChatSessionsListResponse(
+        return self.sessionsResponses.last ?? DryadsAiChatSessionsListResponse(
             ts: nil,
             path: nil,
             count: 0,
@@ -104,7 +104,7 @@ private final class TestChatTransport: @unchecked Sendable, DmmsAiChatTransport 
         true
     }
 
-    func emit(_ evt: DmmsAiChatTransportEvent) {
+    func emit(_ evt: DryadsAiChatTransportEvent) {
         self.continuation.yield(evt)
     }
 
@@ -139,12 +139,12 @@ extension TestChatTransportState {
 @Suite struct ChatViewModelTests {
     @Test func streamsAssistantAndClearsOnFinal() async throws {
         let sessionId = "sess-main"
-        let history1 = DmmsAiChatHistoryPayload(
+        let history1 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: sessionId,
             messages: [],
             thinkingLevel: "off")
-        let history2 = DmmsAiChatHistoryPayload(
+        let history2 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: sessionId,
             messages: [
@@ -157,7 +157,7 @@ extension TestChatTransportState {
             thinkingLevel: "off")
 
         let transport = TestChatTransport(historyResponses: [history1, history2])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.healthOK && vm.sessionId == sessionId } }
@@ -170,7 +170,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .agent(
-                DmmsAiAgentEventPayload(
+                DryadsAiAgentEventPayload(
                     runId: sessionId,
                     seq: 1,
                     stream: "assistant",
@@ -183,7 +183,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .agent(
-                DmmsAiAgentEventPayload(
+                DryadsAiAgentEventPayload(
                     runId: sessionId,
                     seq: 2,
                     stream: "tool",
@@ -200,7 +200,7 @@ extension TestChatTransportState {
         let runId = try #require(await transport.lastSentRunId())
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: runId,
                     sessionKey: "main",
                     state: "final",
@@ -216,12 +216,12 @@ extension TestChatTransportState {
     }
 
     @Test func acceptsCanonicalSessionKeyEventsForOwnPendingRun() async throws {
-        let history1 = DmmsAiChatHistoryPayload(
+        let history1 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [],
             thinkingLevel: "off")
-        let history2 = DmmsAiChatHistoryPayload(
+        let history2 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [
@@ -234,7 +234,7 @@ extension TestChatTransportState {
             thinkingLevel: "off")
 
         let transport = TestChatTransport(historyResponses: [history1, history2])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.healthOK } }
@@ -248,7 +248,7 @@ extension TestChatTransportState {
         let runId = try #require(await transport.lastSentRunId())
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: runId,
                     sessionKey: "agent:main:main",
                     state: "final",
@@ -263,7 +263,7 @@ extension TestChatTransportState {
 
     @Test func acceptsCanonicalSessionKeyEventsForExternalRuns() async throws {
         let now = Date().timeIntervalSince1970 * 1000
-        let history1 = DmmsAiChatHistoryPayload(
+        let history1 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [
@@ -274,7 +274,7 @@ extension TestChatTransportState {
                 ]),
             ],
             thinkingLevel: "off")
-        let history2 = DmmsAiChatHistoryPayload(
+        let history2 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [
@@ -292,14 +292,14 @@ extension TestChatTransportState {
             thinkingLevel: "off")
 
         let transport = TestChatTransport(historyResponses: [history1, history2])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.messages.count == 1 } }
 
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: "external-run",
                     sessionKey: "agent:main:main",
                     state: "final",
@@ -313,7 +313,7 @@ extension TestChatTransportState {
 
     @Test func preservesMessageIDsAcrossHistoryRefreshes() async throws {
         let now = Date().timeIntervalSince1970 * 1000
-        let history1 = DmmsAiChatHistoryPayload(
+        let history1 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [
@@ -324,7 +324,7 @@ extension TestChatTransportState {
                 ]),
             ],
             thinkingLevel: "off")
-        let history2 = DmmsAiChatHistoryPayload(
+        let history2 = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [
@@ -342,7 +342,7 @@ extension TestChatTransportState {
             thinkingLevel: "off")
 
         let transport = TestChatTransport(historyResponses: [history1, history2])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.messages.count == 1 } }
@@ -350,7 +350,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: "other-run",
                     sessionKey: "main",
                     state: "final",
@@ -364,20 +364,20 @@ extension TestChatTransportState {
 
     @Test func clearsStreamingOnExternalFinalEvent() async throws {
         let sessionId = "sess-main"
-        let history = DmmsAiChatHistoryPayload(
+        let history = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: sessionId,
             messages: [],
             thinkingLevel: "off")
         let transport = TestChatTransport(historyResponses: [history, history])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.healthOK && vm.sessionId == sessionId } }
 
         transport.emit(
             .agent(
-                DmmsAiAgentEventPayload(
+                DryadsAiAgentEventPayload(
                     runId: sessionId,
                     seq: 1,
                     stream: "assistant",
@@ -386,7 +386,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .agent(
-                DmmsAiAgentEventPayload(
+                DryadsAiAgentEventPayload(
                     runId: sessionId,
                     seq: 2,
                     stream: "tool",
@@ -405,7 +405,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: "other-run",
                     sessionKey: "main",
                     state: "final",
@@ -421,18 +421,18 @@ extension TestChatTransportState {
         let recent = now - (2 * 60 * 60 * 1000)
         let recentOlder = now - (5 * 60 * 60 * 1000)
         let stale = now - (26 * 60 * 60 * 1000)
-        let history = DmmsAiChatHistoryPayload(
+        let history = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: "sess-main",
             messages: [],
             thinkingLevel: "off")
-        let sessions = DmmsAiChatSessionsListResponse(
+        let sessions = DryadsAiChatSessionsListResponse(
             ts: now,
             path: nil,
             count: 4,
             defaults: nil,
             sessions: [
-                DmmsAiChatSessionEntry(
+                DryadsAiChatSessionEntry(
                     key: "recent-1",
                     kind: nil,
                     displayName: nil,
@@ -451,7 +451,7 @@ extension TestChatTransportState {
                     totalTokens: nil,
                     model: nil,
                     contextTokens: nil),
-                DmmsAiChatSessionEntry(
+                DryadsAiChatSessionEntry(
                     key: "main",
                     kind: nil,
                     displayName: nil,
@@ -470,7 +470,7 @@ extension TestChatTransportState {
                     totalTokens: nil,
                     model: nil,
                     contextTokens: nil),
-                DmmsAiChatSessionEntry(
+                DryadsAiChatSessionEntry(
                     key: "recent-2",
                     kind: nil,
                     displayName: nil,
@@ -489,7 +489,7 @@ extension TestChatTransportState {
                     totalTokens: nil,
                     model: nil,
                     contextTokens: nil),
-                DmmsAiChatSessionEntry(
+                DryadsAiChatSessionEntry(
                     key: "old-1",
                     kind: nil,
                     displayName: nil,
@@ -513,7 +513,7 @@ extension TestChatTransportState {
         let transport = TestChatTransport(
             historyResponses: [history],
             sessionsResponses: [sessions])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
         await MainActor.run { vm.load() }
         try await waitUntil("sessions loaded") { await MainActor.run { !vm.sessions.isEmpty } }
 
@@ -524,18 +524,18 @@ extension TestChatTransportState {
     @Test func sessionChoicesIncludeCurrentWhenMissing() async throws {
         let now = Date().timeIntervalSince1970 * 1000
         let recent = now - (30 * 60 * 1000)
-        let history = DmmsAiChatHistoryPayload(
+        let history = DryadsAiChatHistoryPayload(
             sessionKey: "custom",
             sessionId: "sess-custom",
             messages: [],
             thinkingLevel: "off")
-        let sessions = DmmsAiChatSessionsListResponse(
+        let sessions = DryadsAiChatSessionsListResponse(
             ts: now,
             path: nil,
             count: 1,
             defaults: nil,
             sessions: [
-                DmmsAiChatSessionEntry(
+                DryadsAiChatSessionEntry(
                     key: "main",
                     kind: nil,
                     displayName: nil,
@@ -559,7 +559,7 @@ extension TestChatTransportState {
         let transport = TestChatTransport(
             historyResponses: [history],
             sessionsResponses: [sessions])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "custom", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "custom", transport: transport) }
         await MainActor.run { vm.load() }
         try await waitUntil("sessions loaded") { await MainActor.run { !vm.sessions.isEmpty } }
 
@@ -569,20 +569,20 @@ extension TestChatTransportState {
 
     @Test func clearsStreamingOnExternalErrorEvent() async throws {
         let sessionId = "sess-main"
-        let history = DmmsAiChatHistoryPayload(
+        let history = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: sessionId,
             messages: [],
             thinkingLevel: "off")
         let transport = TestChatTransport(historyResponses: [history, history])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.healthOK && vm.sessionId == sessionId } }
 
         transport.emit(
             .agent(
-                DmmsAiAgentEventPayload(
+                DryadsAiAgentEventPayload(
                     runId: sessionId,
                     seq: 1,
                     stream: "assistant",
@@ -595,7 +595,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: "other-run",
                     sessionKey: "main",
                     state: "error",
@@ -607,13 +607,13 @@ extension TestChatTransportState {
 
     @Test func abortRequestsDoNotClearPendingUntilAbortedEvent() async throws {
         let sessionId = "sess-main"
-        let history = DmmsAiChatHistoryPayload(
+        let history = DryadsAiChatHistoryPayload(
             sessionKey: "main",
             sessionId: sessionId,
             messages: [],
             thinkingLevel: "off")
         let transport = TestChatTransport(historyResponses: [history, history])
-        let vm = await MainActor.run { DmmsAiChatViewModel(sessionKey: "main", transport: transport) }
+        let vm = await MainActor.run { DryadsAiChatViewModel(sessionKey: "main", transport: transport) }
 
         await MainActor.run { vm.load() }
         try await waitUntil("bootstrap") { await MainActor.run { vm.healthOK && vm.sessionId == sessionId } }
@@ -637,7 +637,7 @@ extension TestChatTransportState {
 
         transport.emit(
             .chat(
-                DmmsAiChatEventPayload(
+                DryadsAiChatEventPayload(
                     runId: runId,
                     sessionKey: "main",
                     state: "aborted",

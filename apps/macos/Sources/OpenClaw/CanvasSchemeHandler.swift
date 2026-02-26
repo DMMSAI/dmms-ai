@@ -1,9 +1,9 @@
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 import OSLog
 import WebKit
 
-private let canvasLogger = Logger(subsystem: "ai.dmmsai", category: "Canvas")
+private let canvasLogger = Logger(subsystem: "ai.dryadsai", category: "Canvas")
 
 final class CanvasSchemeHandler: NSObject, WKURLSchemeHandler {
     private let root: URL
@@ -222,7 +222,7 @@ final class CanvasSchemeHandler: NSObject, WKURLSchemeHandler {
         let name = fileURL.deletingPathExtension().lastPathComponent
         guard !name.isEmpty, !ext.isEmpty else { return nil }
 
-        let bundle = DmmsAiKitResources.bundle
+        let bundle = DryadsAiKitResources.bundle
         let resourceURL =
             bundle.url(forResource: name, withExtension: ext, subdirectory: subdirectory)
             ?? bundle.url(forResource: name, withExtension: ext)

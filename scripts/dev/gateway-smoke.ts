@@ -1,14 +1,14 @@
 import { createArgReader, createGatewayWsClient, resolveGatewayUrl } from "./gateway-ws-client.ts";
 
 const { get: getArg } = createArgReader();
-const urlRaw = getArg("--url") ?? process.env.DMMS_AI_GATEWAY_URL;
-const token = getArg("--token") ?? process.env.DMMS_AI_GATEWAY_TOKEN;
+const urlRaw = getArg("--url") ?? process.env.DRYADS_AI_GATEWAY_URL;
+const token = getArg("--token") ?? process.env.DRYADS_AI_GATEWAY_TOKEN;
 
 if (!urlRaw || !token) {
   // eslint-disable-next-line no-console
   console.error(
     "Usage: bun scripts/dev/gateway-smoke.ts --url <wss://host[:port]> --token <gateway.auth.token>\n" +
-      "Or set env: DMMS_AI_GATEWAY_URL / DMMS_AI_GATEWAY_TOKEN",
+      "Or set env: DRYADS_AI_GATEWAY_URL / DRYADS_AI_GATEWAY_TOKEN",
   );
   process.exit(1);
 }
@@ -32,12 +32,12 @@ async function main() {
     minProtocol: 3,
     maxProtocol: 3,
     client: {
-      id: "dmms-ai-ios",
-      displayName: "dmms-ai gateway smoke test",
+      id: "dryads-ai-ios",
+      displayName: "dryads-ai gateway smoke test",
       version: "dev",
       platform: "dev",
       mode: "ui",
-      instanceId: "dmms-ai-dev-smoke",
+      instanceId: "dryads-ai-dev-smoke",
     },
     locale: "en-US",
     userAgent: "gateway-smoke",

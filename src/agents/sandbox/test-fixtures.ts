@@ -7,8 +7,8 @@ export function createSandboxTestContext(params?: {
   const overrides = params?.overrides ?? {};
   const { docker: _unusedDockerOverrides, ...sandboxOverrides } = overrides;
   const docker = {
-    image: "dmms-ai-sandbox:bookworm-slim",
-    containerPrefix: "dmms-ai-sbx-",
+    image: "dryads-ai-sandbox:bookworm-slim",
+    containerPrefix: "dryads-ai-sbx-",
     network: "none",
     user: "1000:1000",
     workdir: "/workspace",
@@ -32,7 +32,7 @@ export function createSandboxTestContext(params?: {
     workspaceDir: "/tmp/workspace",
     agentWorkspaceDir: "/tmp/workspace",
     workspaceAccess: "rw",
-    containerName: "dmms-ai-sbx-test",
+    containerName: "dryads-ai-sbx-test",
     containerWorkdir: "/workspace",
     tools: { allow: ["*"], deny: [] },
     browserAllowHostControl: false,

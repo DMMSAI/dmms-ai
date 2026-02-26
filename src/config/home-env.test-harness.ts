@@ -8,18 +8,18 @@ export async function withTempHome<T>(
   fn: (home: string) => Promise<T>,
 ): Promise<T> {
   const home = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
-  await fs.mkdir(path.join(home, ".dmms-ai"), { recursive: true });
+  await fs.mkdir(path.join(home, ".dryads-ai"), { recursive: true });
 
   const snapshot = captureEnv([
     "HOME",
     "USERPROFILE",
     "HOMEDRIVE",
     "HOMEPATH",
-    "DMMS_AI_STATE_DIR",
+    "DRYADS_AI_STATE_DIR",
   ]);
   process.env.HOME = home;
   process.env.USERPROFILE = home;
-  process.env.DMMS_AI_STATE_DIR = path.join(home, ".dmms-ai");
+  process.env.DRYADS_AI_STATE_DIR = path.join(home, ".dryads-ai");
 
   if (process.platform === "win32") {
     const match = home.match(/^([A-Za-z]:)(.*)$/);

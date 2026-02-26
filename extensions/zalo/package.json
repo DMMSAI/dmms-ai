@@ -1,15 +1,15 @@
 {
-  "name": "@dmms-ai/zalo",
+  "name": "@dryads-ai/zalo",
   "version": "2026.2.18",
-  "description": "DMMS AI Zalo channel plugin",
+  "description": "Dryads AI Zalo channel plugin",
   "type": "module",
   "dependencies": {
     "undici": "7.22.0"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -27,7 +27,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/zalo",
+      "npmSpec": "@dryads-ai/zalo",
       "localPath": "extensions/zalo",
       "defaultChoice": "npm"
     }

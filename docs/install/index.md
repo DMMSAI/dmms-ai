@@ -1,5 +1,5 @@
 ---
-summary: "Install DMMS AI — installer script, npm/pnpm, from source, Docker, and more"
+summary: "Install Dryads AI — installer script, npm/pnpm, from source, Docker, and more"
 read_when:
   - You need an install method other than the Getting Started quickstart
   - You want to deploy to a cloud platform
@@ -18,13 +18,13 @@ Already followed [Getting Started](/start/getting-started)? You're all set — t
 - `pnpm` only if you build from source
 
 <Note>
-On Windows, we strongly recommend running DMMS AI under [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
+On Windows, we strongly recommend running Dryads AI under [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
 </Note>
 
 ## Install methods
 
 <Tip>
-The **installer script** is the recommended way to install DMMS AI. It handles Node detection, installation, and onboarding in one step.
+The **installer script** is the recommended way to install Dryads AI. It handles Node detection, installation, and onboarding in one step.
 </Tip>
 
 <AccordionGroup>
@@ -34,12 +34,12 @@ The **installer script** is the recommended way to install DMMS AI. It handles N
     <Tabs>
       <Tab title="macOS / Linux / WSL2">
         ```bash
-        curl -fsSL https://dmms-ai.com/install.sh | bash
+        curl -fsSL https://dryads-ai.com/install.sh | bash
         ```
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        iwr -useb https://dmms-ai.com/install.ps1 | iex
+        iwr -useb https://dryads-ai.com/install.ps1 | iex
         ```
       </Tab>
     </Tabs>
@@ -51,12 +51,12 @@ The **installer script** is the recommended way to install DMMS AI. It handles N
     <Tabs>
       <Tab title="macOS / Linux / WSL2">
         ```bash
-        curl -fsSL https://dmms-ai.com/install.sh | bash -s -- --no-onboard
+        curl -fsSL https://dryads-ai.com/install.sh | bash -s -- --no-onboard
         ```
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -NoOnboard
+        & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -NoOnboard
         ```
       </Tab>
     </Tabs>
@@ -71,15 +71,15 @@ The **installer script** is the recommended way to install DMMS AI. It handles N
     <Tabs>
       <Tab title="npm">
         ```bash
-        npm install -g dmms-ai@latest
-        dmms-ai onboard --install-daemon
+        npm install -g dryads-ai@latest
+        dryads-ai onboard --install-daemon
         ```
 
         <Accordion title="sharp build errors?">
           If you have libvips installed globally (common on macOS via Homebrew) and `sharp` fails, force prebuilt binaries:
 
           ```bash
-          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g dmms-ai@latest
+          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g dryads-ai@latest
           ```
 
           If you see `sharp: Please add node-gyp to your dependencies`, either install build tooling (macOS: Xcode CLT + `npm install -g node-gyp`) or use the env var above.
@@ -87,9 +87,9 @@ The **installer script** is the recommended way to install DMMS AI. It handles N
       </Tab>
       <Tab title="pnpm">
         ```bash
-        pnpm add -g dmms-ai@latest
-        pnpm approve-builds -g        # approve dmms-ai, node-llama-cpp, sharp, etc.
-        dmms-ai onboard --install-daemon
+        pnpm add -g dryads-ai@latest
+        pnpm approve-builds -g        # approve dryads-ai, node-llama-cpp, sharp, etc.
+        dryads-ai onboard --install-daemon
         ```
 
         <Note>
@@ -105,28 +105,28 @@ The **installer script** is the recommended way to install DMMS AI. It handles N
 
     <Steps>
       <Step title="Clone and build">
-        Clone the [DMMS AI repo](https://github.com/dmms-ai/dmms-ai) and build:
+        Clone the [Dryads AI repo](https://github.com/dryads-ai/dryads-ai) and build:
 
         ```bash
-        git clone https://github.com/dmms-ai/dmms-ai.git
-        cd dmms-ai
+        git clone https://github.com/dryads-ai/dryads-ai.git
+        cd dryads-ai
         pnpm install
         pnpm ui:build
         pnpm build
         ```
       </Step>
       <Step title="Link the CLI">
-        Make the `dmms-ai` command available globally:
+        Make the `dryads-ai` command available globally:
 
         ```bash
         pnpm link --global
         ```
 
-        Alternatively, skip the link and run commands via `pnpm dmms-ai ...` from inside the repo.
+        Alternatively, skip the link and run commands via `pnpm dryads-ai ...` from inside the repo.
       </Step>
       <Step title="Run onboarding">
         ```bash
-        dmms-ai onboard --install-daemon
+        dryads-ai onboard --install-daemon
         ```
       </Step>
     </Steps>
@@ -161,20 +161,20 @@ The **installer script** is the recommended way to install DMMS AI. It handles N
 Verify everything is working:
 
 ```bash
-dmms-ai doctor         # check for config issues
-dmms-ai status         # gateway status
-dmms-ai dashboard      # open the browser UI
+dryads-ai doctor         # check for config issues
+dryads-ai status         # gateway status
+dryads-ai dashboard      # open the browser UI
 ```
 
 If you need custom runtime paths, use:
 
-- `DMMS_AI_HOME` for home-directory based internal paths
-- `DMMS_AI_STATE_DIR` for mutable state location
-- `DMMS_AI_CONFIG_PATH` for config file location
+- `DRYADS_AI_HOME` for home-directory based internal paths
+- `DRYADS_AI_STATE_DIR` for mutable state location
+- `DRYADS_AI_CONFIG_PATH` for config file location
 
 See [Environment vars](/help/environment) for precedence and full details.
 
-## Troubleshooting: `dmms-ai` not found
+## Troubleshooting: `dryads-ai` not found
 
 <Accordion title="PATH diagnosis and fix">
   Quick diagnosis:
@@ -186,7 +186,7 @@ npm prefix -g
 echo "$PATH"
 ```
 
-If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** in your `$PATH`, your shell can't find global npm binaries (including `dmms-ai`).
+If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** in your `$PATH`, your shell can't find global npm binaries (including `dryads-ai`).
 
 Fix — add it to your shell startup file (`~/.zshrc` or `~/.bashrc`):
 
@@ -203,12 +203,12 @@ Then open a new terminal (or `rehash` in zsh / `hash -r` in bash).
 
 <CardGroup cols={3}>
   <Card title="Updating" href="/install/updating" icon="refresh-cw">
-    Keep DMMS AI up to date.
+    Keep Dryads AI up to date.
   </Card>
   <Card title="Migrating" href="/install/migrating" icon="arrow-right">
     Move to a new machine.
   </Card>
   <Card title="Uninstall" href="/install/uninstall" icon="trash-2">
-    Remove DMMS AI completely.
+    Remove Dryads AI completely.
   </Card>
 </CardGroup>

@@ -1,7 +1,7 @@
 ---
 summary: "LINE Messaging API plugin setup, config, and usage"
 read_when:
-  - You want to connect DMMS AI to LINE
+  - You want to connect Dryads AI to LINE
   - You need LINE webhook + credential setup
   - You want LINE-specific message options
 title: LINE
@@ -9,7 +9,7 @@ title: LINE
 
 # LINE (plugin)
 
-LINE connects to DMMS AI via the LINE Messaging API. The plugin runs as a webhook
+LINE connects to Dryads AI via the LINE Messaging API. The plugin runs as a webhook
 receiver on the gateway and uses your channel access token + channel secret for
 authentication.
 
@@ -22,13 +22,13 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-dmms-ai plugins install @dmms-ai/line
+dryads-ai plugins install @dryads-ai/line
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-dmms-ai plugins install ./extensions/line
+dryads-ai plugins install ./extensions/line
 ```
 
 ## Setup
@@ -107,8 +107,8 @@ Direct messages default to pairing. Unknown senders get a pairing code and their
 messages are ignored until approved.
 
 ```bash
-dmms-ai pairing list line
-dmms-ai pairing approve line <CODE>
+dryads-ai pairing list line
+dryads-ai pairing approve line <CODE>
 ```
 
 Allowlists and policies:

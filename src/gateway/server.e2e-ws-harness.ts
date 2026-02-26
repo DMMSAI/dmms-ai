@@ -15,8 +15,8 @@ export type GatewayServerHarness = {
 };
 
 export async function startGatewayServerHarness(): Promise<GatewayServerHarness> {
-  const envSnapshot = captureEnv(["DMMS_AI_GATEWAY_TOKEN"]);
-  delete process.env.DMMS_AI_GATEWAY_TOKEN;
+  const envSnapshot = captureEnv(["DRYADS_AI_GATEWAY_TOKEN"]);
+  delete process.env.DRYADS_AI_GATEWAY_TOKEN;
   const port = await getFreePort();
   const server = await startGatewayServer(port);
 

@@ -1,6 +1,6 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
-import ai.dmmsai.android.gateway.GatewayEndpoint
+import ai.dryadsai.android.gateway.GatewayEndpoint
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -10,7 +10,7 @@ class ConnectionManagerTest {
   fun resolveTlsParamsForEndpoint_prefersStoredPinOverAdvertisedFingerprint() {
     val endpoint =
       GatewayEndpoint(
-        stableId = "_dmms-ai-gw._tcp.|local.|Test",
+        stableId = "_dryads-ai-gw._tcp.|local.|Test",
         name = "Test",
         host = "10.0.0.2",
         port = 18789,
@@ -33,7 +33,7 @@ class ConnectionManagerTest {
   fun resolveTlsParamsForEndpoint_doesNotTrustAdvertisedFingerprintWhenNoStoredPin() {
     val endpoint =
       GatewayEndpoint(
-        stableId = "_dmms-ai-gw._tcp.|local.|Test",
+        stableId = "_dryads-ai-gw._tcp.|local.|Test",
         name = "Test",
         host = "10.0.0.2",
         port = 18789,

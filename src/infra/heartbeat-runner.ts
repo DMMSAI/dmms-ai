@@ -22,7 +22,7 @@ import type { ReplyPayload } from "../auto-reply/types.js";
 import { getChannelPlugin } from "../channels/plugins/index.js";
 import type { ChannelHeartbeatDeps } from "../channels/plugins/types.js";
 import { parseDurationMs } from "../cli/parse-duration.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import {
   canonicalizeMainSessionAlias,
@@ -115,15 +115,15 @@ type HeartbeatAgentState = {
 
 export type HeartbeatRunner = {
   stop: () => void;
-  updateConfig: (cfg: DmmsAiConfig) => void;
+  updateConfig: (cfg: DryadsAiConfig) => void;
 };
 
-function hasExplicitHeartbeatAgents(cfg: DmmsAiConfig) {
+function hasExplicitHeartbeatAgents(cfg: DryadsAiConfig) {
   const list = cfg.agents?.list ?? [];
   return list.some((entry) => Boolean(entry?.heartbeat));
 }
 
-export function isHeartbeatEnabledForAgent(cfg: DmmsAiConfig, agentId?: string): boolean {
+export function isHeartbeatEnabledForAgent(cfg: DryadsAiConfig, agentId?: string): boolean {
   const resolvedAgentId = normalizeAgentId(agentId ?? resolveDefaultAgentId(cfg));
   const list = cfg.agents?.list ?? [];
   const hasExplicit = hasExplicitHeartbeatAgents(cfg);
@@ -135,7 +135,10 @@ export function isHeartbeatEnabledForAgent(cfg: DmmsAiConfig, agentId?: string):
   return resolvedAgentId === resolveDefaultAgentId(cfg);
 }
 
-function resolveHeartbeatConfig(cfg: DmmsAiConfig, agentId?: string): HeartbeatConfig | undefined {
+function resolveHeartbeatConfig(
+  cfg: DryadsAiConfig,
+  agentId?: string,
+): HeartbeatConfig | undefined {
   const defaults = cfg.agents?.defaults?.heartbeat;
   if (!agentId) {
     return defaults;
@@ -148,7 +151,7 @@ function resolveHeartbeatConfig(cfg: DmmsAiConfig, agentId?: string): HeartbeatC
 }
 
 export function resolveHeartbeatSummaryForAgent(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   agentId?: string,
 ): HeartbeatSummary {
   const defaults = cfg.agents?.defaults?.heartbeat;
@@ -195,7 +198,7 @@ export function resolveHeartbeatSummaryForAgent(
   };
 }
 
-function resolveHeartbeatAgents(cfg: DmmsAiConfig): HeartbeatAgent[] {
+function resolveHeartbeatAgents(cfg: DryadsAiConfig): HeartbeatAgent[] {
   const list = cfg.agents?.list ?? [];
   if (hasExplicitHeartbeatAgents(cfg)) {
     return list
@@ -211,7 +214,7 @@ function resolveHeartbeatAgents(cfg: DmmsAiConfig): HeartbeatAgent[] {
 }
 
 export function resolveHeartbeatIntervalMs(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   overrideEvery?: string,
   heartbeat?: HeartbeatConfig,
 ) {
@@ -239,11 +242,11 @@ export function resolveHeartbeatIntervalMs(
   return ms;
 }
 
-export function resolveHeartbeatPrompt(cfg: DmmsAiConfig, heartbeat?: HeartbeatConfig) {
+export function resolveHeartbeatPrompt(cfg: DryadsAiConfig, heartbeat?: HeartbeatConfig) {
   return resolveHeartbeatPromptText(heartbeat?.prompt ?? cfg.agents?.defaults?.heartbeat?.prompt);
 }
 
-function resolveHeartbeatAckMaxChars(cfg: DmmsAiConfig, heartbeat?: HeartbeatConfig) {
+function resolveHeartbeatAckMaxChars(cfg: DryadsAiConfig, heartbeat?: HeartbeatConfig) {
   return Math.max(
     0,
     heartbeat?.ackMaxChars ??
@@ -253,7 +256,7 @@ function resolveHeartbeatAckMaxChars(cfg: DmmsAiConfig, heartbeat?: HeartbeatCon
 }
 
 function resolveHeartbeatSession(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   agentId?: string,
   heartbeat?: HeartbeatConfig,
   forcedSessionKey?: string,
@@ -472,7 +475,7 @@ function normalizeHeartbeatReply(
 }
 
 export async function runHeartbeatOnce(opts: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   agentId?: string;
   sessionKey?: string;
   heartbeat?: HeartbeatConfig;
@@ -886,7 +889,7 @@ export async function runHeartbeatOnce(opts: {
 }
 
 export function startHeartbeatRunner(opts: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   runOnce?: typeof runHeartbeatOnce;
@@ -946,7 +949,7 @@ export function startHeartbeatRunner(opts: {
     state.timer.unref?.();
   };
 
-  const updateConfig = (cfg: DmmsAiConfig) => {
+  const updateConfig = (cfg: DryadsAiConfig) => {
     if (state.stopped) {
       return;
     }

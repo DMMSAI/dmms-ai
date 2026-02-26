@@ -13,17 +13,17 @@ import { registerPluginCommand } from "./commands.js";
 import { normalizePluginHttpPath } from "./http-path.js";
 import type { PluginRuntime } from "./runtime/types.js";
 import type {
-  DmmsAiPluginApi,
-  DmmsAiPluginChannelRegistration,
-  DmmsAiPluginCliRegistrar,
-  DmmsAiPluginCommandDefinition,
-  DmmsAiPluginHttpHandler,
-  DmmsAiPluginHttpRouteHandler,
-  DmmsAiPluginHookOptions,
+  DryadsAiPluginApi,
+  DryadsAiPluginChannelRegistration,
+  DryadsAiPluginCliRegistrar,
+  DryadsAiPluginCommandDefinition,
+  DryadsAiPluginHttpHandler,
+  DryadsAiPluginHttpRouteHandler,
+  DryadsAiPluginHookOptions,
   ProviderPlugin,
-  DmmsAiPluginService,
-  DmmsAiPluginToolContext,
-  DmmsAiPluginToolFactory,
+  DryadsAiPluginService,
+  DryadsAiPluginToolContext,
+  DryadsAiPluginToolFactory,
   PluginConfigUiHint,
   PluginDiagnostic,
   PluginLogger,
@@ -36,7 +36,7 @@ import type {
 
 export type PluginToolRegistration = {
   pluginId: string;
-  factory: DmmsAiPluginToolFactory;
+  factory: DryadsAiPluginToolFactory;
   names: string[];
   optional: boolean;
   source: string;
@@ -44,21 +44,21 @@ export type PluginToolRegistration = {
 
 export type PluginCliRegistration = {
   pluginId: string;
-  register: DmmsAiPluginCliRegistrar;
+  register: DryadsAiPluginCliRegistrar;
   commands: string[];
   source: string;
 };
 
 export type PluginHttpRegistration = {
   pluginId: string;
-  handler: DmmsAiPluginHttpHandler;
+  handler: DryadsAiPluginHttpHandler;
   source: string;
 };
 
 export type PluginHttpRouteRegistration = {
   pluginId?: string;
   path: string;
-  handler: DmmsAiPluginHttpRouteHandler;
+  handler: DryadsAiPluginHttpRouteHandler;
   source?: string;
 };
 
@@ -84,13 +84,13 @@ export type PluginHookRegistration = {
 
 export type PluginServiceRegistration = {
   pluginId: string;
-  service: DmmsAiPluginService;
+  service: DryadsAiPluginService;
   source: string;
 };
 
 export type PluginCommandRegistration = {
   pluginId: string;
-  command: DmmsAiPluginCommandDefinition;
+  command: DryadsAiPluginCommandDefinition;
   source: string;
 };
 
@@ -171,13 +171,13 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerTool = (
     record: PluginRecord,
-    tool: AnyAgentTool | DmmsAiPluginToolFactory,
+    tool: AnyAgentTool | DryadsAiPluginToolFactory,
     opts?: { name?: string; names?: string[]; optional?: boolean },
   ) => {
     const names = opts?.names ?? (opts?.name ? [opts.name] : []);
     const optional = opts?.optional === true;
-    const factory: DmmsAiPluginToolFactory =
-      typeof tool === "function" ? tool : (_ctx: DmmsAiPluginToolContext) => tool;
+    const factory: DryadsAiPluginToolFactory =
+      typeof tool === "function" ? tool : (_ctx: DryadsAiPluginToolContext) => tool;
 
     if (typeof tool !== "function") {
       names.push(tool.name);
@@ -200,8 +200,8 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     record: PluginRecord,
     events: string | string[],
     handler: Parameters<typeof registerInternalHook>[1],
-    opts: DmmsAiPluginHookOptions | undefined,
-    config: DmmsAiPluginApi["config"],
+    opts: DryadsAiPluginHookOptions | undefined,
+    config: DryadsAiPluginApi["config"],
   ) => {
     const eventList = Array.isArray(events) ? events : [events];
     const normalizedEvents = eventList.map((event) => event.trim()).filter(Boolean);
@@ -225,7 +225,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
             ...entry.hook,
             name,
             description,
-            source: "dmms-ai-plugin",
+            source: "dryads-ai-plugin",
             pluginId: record.id,
           },
           metadata: {
@@ -237,7 +237,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
           hook: {
             name,
             description,
-            source: "dmms-ai-plugin",
+            source: "dryads-ai-plugin",
             pluginId: record.id,
             filePath: record.source,
             baseDir: path.dirname(record.source),
@@ -288,7 +288,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     record.gatewayMethods.push(trimmed);
   };
 
-  const registerHttpHandler = (record: PluginRecord, handler: DmmsAiPluginHttpHandler) => {
+  const registerHttpHandler = (record: PluginRecord, handler: DryadsAiPluginHttpHandler) => {
     record.httpHandlers += 1;
     registry.httpHandlers.push({
       pluginId: record.id,
@@ -299,7 +299,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerHttpRoute = (
     record: PluginRecord,
-    params: { path: string; handler: DmmsAiPluginHttpRouteHandler },
+    params: { path: string; handler: DryadsAiPluginHttpRouteHandler },
   ) => {
     const normalizedPath = normalizePluginHttpPath(params.path);
     if (!normalizedPath) {
@@ -331,11 +331,11 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerChannel = (
     record: PluginRecord,
-    registration: DmmsAiPluginChannelRegistration | ChannelPlugin,
+    registration: DryadsAiPluginChannelRegistration | ChannelPlugin,
   ) => {
     const normalized =
-      typeof (registration as DmmsAiPluginChannelRegistration).plugin === "object"
-        ? (registration as DmmsAiPluginChannelRegistration)
+      typeof (registration as DryadsAiPluginChannelRegistration).plugin === "object"
+        ? (registration as DryadsAiPluginChannelRegistration)
         : { plugin: registration as ChannelPlugin };
     const plugin = normalized.plugin;
     const id = typeof plugin?.id === "string" ? plugin.id.trim() : String(plugin?.id ?? "").trim();
@@ -388,7 +388,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerCli = (
     record: PluginRecord,
-    registrar: DmmsAiPluginCliRegistrar,
+    registrar: DryadsAiPluginCliRegistrar,
     opts?: { commands?: string[] },
   ) => {
     const commands = (opts?.commands ?? []).map((cmd) => cmd.trim()).filter(Boolean);
@@ -401,7 +401,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     });
   };
 
-  const registerService = (record: PluginRecord, service: DmmsAiPluginService) => {
+  const registerService = (record: PluginRecord, service: DryadsAiPluginService) => {
     const id = service.id.trim();
     if (!id) {
       return;
@@ -414,7 +414,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     });
   };
 
-  const registerCommand = (record: PluginRecord, command: DmmsAiPluginCommandDefinition) => {
+  const registerCommand = (record: PluginRecord, command: DryadsAiPluginCommandDefinition) => {
     const name = command.name.trim();
     if (!name) {
       pushDiagnostic({
@@ -472,10 +472,10 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
   const createApi = (
     record: PluginRecord,
     params: {
-      config: DmmsAiPluginApi["config"];
+      config: DryadsAiPluginApi["config"];
       pluginConfig?: Record<string, unknown>;
     },
-  ): DmmsAiPluginApi => {
+  ): DryadsAiPluginApi => {
     return {
       id: record.id,
       name: record.name,

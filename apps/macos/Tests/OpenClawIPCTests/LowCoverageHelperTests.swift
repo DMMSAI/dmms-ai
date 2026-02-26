@@ -1,13 +1,13 @@
 import AppKit
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Foundation
 import Testing
 
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
 struct LowCoverageHelperTests {
-    private typealias ProtoAnyCodable = DmmsAiProtocol.AnyCodable
+    private typealias ProtoAnyCodable = DryadsAiProtocol.AnyCodable
 
     @Test func anyCodableHelperAccessors() throws {
         let payload: [String: ProtoAnyCodable] = [

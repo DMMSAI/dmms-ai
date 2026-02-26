@@ -31,22 +31,22 @@ export function registerMessageCommands(program: Command, ctx: ProgramContext) {
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['dmms-ai message send --target +15555550123 --message "Hi"', "Send a text message."],
+  ['dryads-ai message send --target +15555550123 --message "Hi"', "Send a text message."],
   [
-    'dmms-ai message send --target +15555550123 --message "Hi" --media photo.jpg',
+    'dryads-ai message send --target +15555550123 --message "Hi" --media photo.jpg',
     "Send a message with media.",
   ],
   [
-    'dmms-ai message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
+    'dryads-ai message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
     "Create a Discord poll.",
   ],
   [
-    'dmms-ai message react --channel discord --target 123 --message-id 456 --emoji "✅"',
+    'dryads-ai message react --channel discord --target 123 --message-id 456 --emoji "✅"',
     "React to a message.",
   ],
 ])}
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/message", "docs.dmms-ai.com/cli/message")}`,
+${theme.muted("Docs:")} ${formatDocsLink("/cli/message", "docs.dryads-ai.com/cli/message")}`,
     )
     .action(() => {
       message.help({ error: true });

@@ -1,4 +1,4 @@
-const DEFAULT_TAGLINE = "All your chats, one DMMS AI.";
+const DEFAULT_TAGLINE = "All your chats, one Dryads AI.";
 
 const HOLIDAY_TAGLINES = {
   newYear:
@@ -253,7 +253,7 @@ export function activeTaglines(options: TaglineOptions = {}): string[] {
 
 export function pickTagline(options: TaglineOptions = {}): string {
   const env = options.env ?? process.env;
-  const override = env?.DMMS_AI_TAGLINE_INDEX;
+  const override = env?.DRYADS_AI_TAGLINE_INDEX;
   if (override !== undefined) {
     const parsed = Number.parseInt(override, 10);
     if (!Number.isNaN(parsed) && parsed >= 0) {

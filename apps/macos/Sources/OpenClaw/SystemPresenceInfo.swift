@@ -1,6 +1,6 @@
 import CoreGraphics
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 
 enum SystemPresenceInfo {
     static func lastInputSeconds() -> Int? {

@@ -1,12 +1,12 @@
 {
-  "name": "@dmms-ai/lobster",
+  "name": "@dryads-ai/lobster",
   "version": "2026.2.18",
   "description": "Lobster workflow tool plugin (typed pipelines + resumable approvals)",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

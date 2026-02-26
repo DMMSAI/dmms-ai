@@ -57,7 +57,7 @@ export function registerPairingCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/pairing", "docs.dmms-ai.com/cli/pairing")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/pairing", "docs.dryads-ai.com/cli/pairing")}\n`,
     );
 
   pairing
@@ -124,12 +124,12 @@ export function registerPairingCli(program: Command) {
       const resolvedCode = opts.channel ? codeOrChannel : code;
       if (!opts.channel && !code) {
         throw new Error(
-          `Usage: ${formatCliCommand("dmms-ai pairing approve <channel> <code>")} (or: ${formatCliCommand("dmms-ai pairing approve --channel <channel> <code>")})`,
+          `Usage: ${formatCliCommand("dryads-ai pairing approve <channel> <code>")} (or: ${formatCliCommand("dryads-ai pairing approve --channel <channel> <code>")})`,
         );
       }
       if (opts.channel && code != null) {
         throw new Error(
-          `Too many arguments. Use: ${formatCliCommand("dmms-ai pairing approve --channel <channel> <code>")}`,
+          `Too many arguments. Use: ${formatCliCommand("dryads-ai pairing approve --channel <channel> <code>")}`,
         );
       }
       const channel = parseChannel(channelRaw, channels);

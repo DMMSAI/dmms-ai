@@ -1,10 +1,10 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct VoiceWakePreferencesTests {
     @Test func sanitizeTriggerWordsTrimsAndDropsEmpty() {
-        #expect(VoiceWakePreferences.sanitizeTriggerWords([" dmms-ai ", "", " \nclaude\t"]) == ["dmms-ai", "claude"])
+        #expect(VoiceWakePreferences.sanitizeTriggerWords([" dryads-ai ", "", " \nclaude\t"]) == ["dryads-ai", "claude"])
     }
 
     @Test func sanitizeTriggerWordsFallsBackToDefaultsWhenEmpty() {
@@ -24,7 +24,7 @@ import Testing
     }
 
     @Test func displayStringUsesSanitizedWords() {
-        #expect(VoiceWakePreferences.displayString(for: ["", " "]) == "dmms-ai, claude")
+        #expect(VoiceWakePreferences.displayString(for: ["", " "]) == "dryads-ai, claude")
     }
 
     @Test func loadAndSaveTriggerWordsRoundTrip() {

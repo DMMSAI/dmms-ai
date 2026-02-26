@@ -1,12 +1,12 @@
 import Foundation
 import os
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized) struct CanvasFileWatcherTests {
     private func makeTempDir() throws -> URL {
         let base = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let dir = base.appendingPathComponent("dmms-ai-canvaswatch-\(UUID().uuidString)", isDirectory: true)
+        let dir = base.appendingPathComponent("dryads-ai-canvaswatch-\(UUID().uuidString)", isDirectory: true)
         try FileManager().createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }

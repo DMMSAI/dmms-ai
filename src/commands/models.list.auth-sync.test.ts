@@ -7,10 +7,10 @@ import { clearConfigCache } from "../config/config.js";
 import { modelsListCommand } from "./models/list.list-command.js";
 
 const ENV_KEYS = [
-  "DMMS_AI_STATE_DIR",
-  "DMMS_AI_AGENT_DIR",
+  "DRYADS_AI_STATE_DIR",
+  "DRYADS_AI_AGENT_DIR",
   "PI_CODING_AGENT_DIR",
-  "DMMS_AI_CONFIG_PATH",
+  "DRYADS_AI_CONFIG_PATH",
   "OPENROUTER_API_KEY",
 ] as const;
 
@@ -41,19 +41,19 @@ async function pathExists(pathname: string): Promise<boolean> {
 describe("models list auth-profile sync", () => {
   it("marks models available when auth exists only in auth-profiles.json", async () => {
     const env = captureEnv();
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-models-list-auth-sync-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-models-list-auth-sync-"));
 
     try {
       const stateDir = path.join(root, "state");
       const agentDir = path.join(stateDir, "agents", "main", "agent");
-      const configPath = path.join(stateDir, "dmms-ai.json");
+      const configPath = path.join(stateDir, "dryads-ai.json");
       await fs.mkdir(agentDir, { recursive: true });
       await fs.writeFile(configPath, "{}\n", "utf8");
 
-      process.env.DMMS_AI_STATE_DIR = stateDir;
-      process.env.DMMS_AI_AGENT_DIR = agentDir;
+      process.env.DRYADS_AI_STATE_DIR = stateDir;
+      process.env.DRYADS_AI_AGENT_DIR = agentDir;
       process.env.PI_CODING_AGENT_DIR = agentDir;
-      process.env.DMMS_AI_CONFIG_PATH = configPath;
+      process.env.DRYADS_AI_CONFIG_PATH = configPath;
       delete process.env.OPENROUTER_API_KEY;
 
       saveAuthProfileStore(

@@ -13,7 +13,7 @@ function buildSkillsPrompt(workspaceDir: string, managedDir: string, bundledDir:
 }
 
 async function createWorkspaceSkillDirs() {
-  const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-"));
+  const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-"));
   return {
     workspaceDir,
     managedDir: path.join(workspaceDir, ".managed"),
@@ -25,7 +25,7 @@ describe("buildWorkspaceSkillsPrompt — .agents/skills/ directories", () => {
   let fakeHome: string;
 
   beforeEach(async () => {
-    fakeHome = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-home-"));
+    fakeHome = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-home-"));
     vi.spyOn(os, "homedir").mockReturnValue(fakeHome);
   });
 

@@ -1,19 +1,19 @@
 {
-  "name": "@dmms-ai/googlechat",
+  "name": "@dryads-ai/googlechat",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Google Chat channel plugin",
+  "description": "Dryads AI Google Chat channel plugin",
   "type": "module",
   "dependencies": {
     "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
   "peerDependencies": {
-    "dmms-ai": ">=2026.1.26"
+    "dryads-ai": ">=2026.1.26"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -32,7 +32,7 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@dmms-ai/googlechat",
+      "npmSpec": "@dryads-ai/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
     }

@@ -1,20 +1,20 @@
 import Foundation
-import DmmsAiProtocol
+import DryadsAiProtocol
 
-enum DmmsAiConfigFile {
-    private static let logger = Logger(subsystem: "ai.dmmsai", category: "config")
+enum DryadsAiConfigFile {
+    private static let logger = Logger(subsystem: "ai.dryadsai", category: "config")
     private static let configAuditFileName = "config-audit.jsonl"
 
     static func url() -> URL {
-        DmmsAiPaths.configURL
+        DryadsAiPaths.configURL
     }
 
     static func stateDirURL() -> URL {
-        DmmsAiPaths.stateDirURL
+        DryadsAiPaths.stateDirURL
     }
 
     static func defaultWorkspaceURL() -> URL {
-        DmmsAiPaths.workspaceURL
+        DryadsAiPaths.workspaceURL
     }
 
     static func loadDict() -> [String: Any] {
@@ -325,7 +325,7 @@ enum DmmsAiConfigFile {
     private static func appendConfigWriteAudit(_ fields: [String: Any]) {
         var record: [String: Any] = [
             "ts": ISO8601DateFormatter().string(from: Date()),
-            "source": "macos-dmms-ai-config-file",
+            "source": "macos-dryads-ai-config-file",
             "event": "config.write",
             "pid": ProcessInfo.processInfo.processIdentifier,
             "argv": Array(ProcessInfo.processInfo.arguments.prefix(8)),

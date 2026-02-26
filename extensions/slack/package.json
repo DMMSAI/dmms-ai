@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/slack",
+  "name": "@dryads-ai/slack",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Slack channel plugin",
+  "description": "Dryads AI Slack channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

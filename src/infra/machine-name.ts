@@ -24,7 +24,7 @@ function fallbackHostName() {
     os
       .hostname()
       .replace(/\.local$/i, "")
-      .trim() || "dmms-ai"
+      .trim() || "dryads-ai"
   );
 }
 

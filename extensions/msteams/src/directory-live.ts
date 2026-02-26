@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "dmms-ai/plugin-sdk";
+import type { ChannelDirectoryEntry } from "dryads-ai/plugin-sdk";
 import {
   escapeOData,
   fetchGraphJson,

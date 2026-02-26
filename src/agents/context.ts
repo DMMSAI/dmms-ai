@@ -2,8 +2,8 @@
 // the agent reports a model id. This includes custom models.json entries.
 
 import { loadConfig } from "../config/config.js";
-import { resolveDmmsAiAgentDir } from "./agent-paths.js";
-import { ensureDmmsAiModelsJson } from "./models-config.js";
+import { resolveDryadsAiAgentDir } from "./agent-paths.js";
+import { ensureDryadsAiModelsJson } from "./models-config.js";
 
 type ModelEntry = { id: string; contextWindow?: number };
 type ModelRegistryLike = {
@@ -71,14 +71,14 @@ const loadPromise = (async () => {
   }
 
   try {
-    await ensureDmmsAiModelsJson(cfg);
+    await ensureDryadsAiModelsJson(cfg);
   } catch {
     // Continue with best-effort discovery/overrides.
   }
 
   try {
     const { discoverAuthStorage, discoverModels } = await import("./pi-model-discovery.js");
-    const agentDir = resolveDmmsAiAgentDir();
+    const agentDir = resolveDryadsAiAgentDir();
     const authStorage = discoverAuthStorage(agentDir);
     const modelRegistry = discoverModels(authStorage, agentDir) as unknown as ModelRegistryLike;
     const models =

@@ -1,10 +1,10 @@
 import Foundation
-import DmmsAiChatUI
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiChatUI
+import DryadsAiKit
+import DryadsAiProtocol
 import OSLog
 
-private let gatewayConnectionLogger = Logger(subsystem: "ai.dmmsai", category: "gateway.connection")
+private let gatewayConnectionLogger = Logger(subsystem: "ai.dryadsai", category: "gateway.connection")
 
 enum GatewayAgentChannel: String, Codable, CaseIterable, Sendable {
     case last
@@ -277,7 +277,7 @@ actor GatewayConnection {
         return trimmed.isEmpty ? nil : trimmed
     }
 
-    private func sessionDefaultString(_ defaults: [String: DmmsAiProtocol.AnyCodable]?, key: String) -> String {
+    private func sessionDefaultString(_ defaults: [String: DryadsAiProtocol.AnyCodable]?, key: String) -> String {
         let raw = defaults?[key]?.value as? String
         return (raw ?? "").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
@@ -508,7 +508,7 @@ extension GatewayConnection {
 
     func healthOK(timeoutMs: Int = 8000) async throws -> Bool {
         let data = try await self.requestRaw(method: .health, timeoutMs: Double(timeoutMs))
-        return (try? self.decoder.decode(DmmsAiGatewayHealthOK.self, from: data))?.ok ?? true
+        return (try? self.decoder.decode(DryadsAiGatewayHealthOK.self, from: data))?.ok ?? true
     }
 
     // MARK: - Skills
@@ -553,13 +553,13 @@ extension GatewayConnection {
         keys: [String],
         limit: Int? = nil,
         maxChars: Int? = nil,
-        timeoutMs: Int? = nil) async throws -> DmmsAiSessionsPreviewPayload
+        timeoutMs: Int? = nil) async throws -> DryadsAiSessionsPreviewPayload
     {
         let resolvedKeys = keys
             .map { self.canonicalizeSessionKey($0) }
             .filter { !$0.isEmpty }
         if resolvedKeys.isEmpty {
-            return DmmsAiSessionsPreviewPayload(ts: 0, previews: [])
+            return DryadsAiSessionsPreviewPayload(ts: 0, previews: [])
         }
         var params: [String: AnyCodable] = ["keys": AnyCodable(resolvedKeys)]
         if let limit { params["limit"] = AnyCodable(limit) }
@@ -576,7 +576,7 @@ extension GatewayConnection {
     func chatHistory(
         sessionKey: String,
         limit: Int? = nil,
-        timeoutMs: Int? = nil) async throws -> DmmsAiChatHistoryPayload
+        timeoutMs: Int? = nil) async throws -> DryadsAiChatHistoryPayload
     {
         let resolvedKey = self.canonicalizeSessionKey(sessionKey)
         var params: [String: AnyCodable] = ["sessionKey": AnyCodable(resolvedKey)]
@@ -593,8 +593,8 @@ extension GatewayConnection {
         message: String,
         thinking: String,
         idempotencyKey: String,
-        attachments: [DmmsAiChatAttachmentPayload],
-        timeoutMs: Int = 30000) async throws -> DmmsAiChatSendResponse
+        attachments: [DryadsAiChatAttachmentPayload],
+        timeoutMs: Int = 30000) async throws -> DryadsAiChatSendResponse
     {
         let resolvedKey = self.canonicalizeSessionKey(sessionKey)
         var params: [String: AnyCodable] = [

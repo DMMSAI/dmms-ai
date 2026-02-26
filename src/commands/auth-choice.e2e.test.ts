@@ -14,7 +14,7 @@ import {
   createExitThrowingRuntime,
   createWizardPrompter,
   readAuthProfilesForAgent,
-  requireDmmsAiAgentDir,
+  requireDryadsAiAgentDir,
   setupAuthTestEnv,
 } from "./test-wizard-helpers.js";
 
@@ -44,8 +44,8 @@ type StoredAuthProfile = {
 
 describe("applyAuthChoice", () => {
   const lifecycle = createAuthTestLifecycle([
-    "DMMS_AI_STATE_DIR",
-    "DMMS_AI_AGENT_DIR",
+    "DRYADS_AI_STATE_DIR",
+    "DRYADS_AI_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "ANTHROPIC_API_KEY",
     "OPENROUTER_API_KEY",
@@ -58,7 +58,7 @@ describe("applyAuthChoice", () => {
     "CHUTES_CLIENT_ID",
   ]);
   async function setupTempState() {
-    const env = await setupAuthTestEnv("dmms-ai-auth-");
+    const env = await setupAuthTestEnv("dryads-ai-auth-");
     lifecycle.setStateDir(env.stateDir);
   }
   function createPrompter(overrides: Partial<WizardPrompter>): WizardPrompter {
@@ -90,7 +90,7 @@ describe("applyAuthChoice", () => {
   async function readAuthProfiles() {
     return await readAuthProfilesForAgent<{
       profiles?: Record<string, StoredAuthProfile>;
-    }>(requireDmmsAiAgentDir());
+    }>(requireDryadsAiAgentDir());
   }
   async function readAuthProfile(profileId: string) {
     return (await readAuthProfiles()).profiles?.[profileId];
@@ -486,7 +486,7 @@ describe("applyAuthChoice", () => {
     await setupTempState();
     process.env.LITELLM_API_KEY = "sk-litellm-test";
 
-    const authProfilePath = authProfilePathForAgent(requireDmmsAiAgentDir());
+    const authProfilePath = authProfilePathForAgent(requireDryadsAiAgentDir());
     await fs.writeFile(
       authProfilePath,
       JSON.stringify(

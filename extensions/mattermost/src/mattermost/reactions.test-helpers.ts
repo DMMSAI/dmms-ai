@@ -1,7 +1,7 @@
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
 import { expect, vi } from "vitest";
 
-export function createMattermostTestConfig(): DmmsAiConfig {
+export function createMattermostTestConfig(): DryadsAiConfig {
   return {
     channels: {
       mattermost: {

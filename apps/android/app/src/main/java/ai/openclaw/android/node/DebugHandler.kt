@@ -1,9 +1,9 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.content.Context
-import ai.dmmsai.android.BuildConfig
-import ai.dmmsai.android.gateway.DeviceIdentityStore
-import ai.dmmsai.android.gateway.GatewaySession
+import ai.dryadsai.android.BuildConfig
+import ai.dryadsai.android.gateway.DeviceIdentityStore
+import ai.dryadsai.android.gateway.GatewaySession
 import kotlinx.serialization.json.JsonPrimitive
 
 class DebugHandler(

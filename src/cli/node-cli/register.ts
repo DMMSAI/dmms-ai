@@ -27,13 +27,13 @@ export function registerNodeCli(program: Command) {
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
           [
-            "dmms-ai node run --host 127.0.0.1 --port 18789",
+            "dryads-ai node run --host 127.0.0.1 --port 18789",
             "Run the node host in the foreground.",
           ],
-          ["dmms-ai node status", "Check node host service status."],
-          ["dmms-ai node install", "Install the node host service."],
-          ["dmms-ai node restart", "Restart the installed node host service."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/node", "docs.dmms-ai.com/cli/node")}\n`,
+          ["dryads-ai node status", "Check node host service status."],
+          ["dryads-ai node install", "Install the node host service."],
+          ["dryads-ai node restart", "Restart the installed node host service."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/node", "docs.dryads-ai.com/cli/node")}\n`,
     );
 
   node

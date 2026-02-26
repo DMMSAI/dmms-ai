@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiDiscovery
+import DryadsAiDiscovery
 
 enum GatewayDiscoveryHelpers {
     static func sshTarget(for gateway: GatewayDiscoveryModel.DiscoveredGateway) -> String? {

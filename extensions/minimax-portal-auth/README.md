@@ -1,4 +1,4 @@
-# MiniMax OAuth (DMMS AI plugin)
+# MiniMax OAuth (Dryads AI plugin)
 
 OAuth provider plugin for **MiniMax** (OAuth).
 
@@ -7,19 +7,19 @@ OAuth provider plugin for **MiniMax** (OAuth).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-dmms-ai plugins enable minimax-portal-auth
+dryads-ai plugins enable minimax-portal-auth
 ```
 
 Restart the Gateway after enabling.
 
 ```bash
-dmms-ai gateway restart
+dryads-ai gateway restart
 ```
 
 ## Authenticate
 
 ```bash
-dmms-ai models auth login --provider minimax-portal --set-default
+dryads-ai models auth login --provider minimax-portal --set-default
 ```
 
 You will be prompted to select an endpoint:

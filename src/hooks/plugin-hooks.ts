@@ -1,6 +1,6 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { DmmsAiPluginApi } from "../plugins/types.js";
+import type { DryadsAiPluginApi } from "../plugins/types.js";
 import { shouldIncludeHook } from "./config.js";
 import type { InternalHookHandler } from "./internal-hooks.js";
 import type { HookEntry } from "./types.js";
@@ -13,19 +13,19 @@ export type PluginHookLoadResult = {
   errors: string[];
 };
 
-function resolveHookDir(api: DmmsAiPluginApi, dir: string): string {
+function resolveHookDir(api: DryadsAiPluginApi, dir: string): string {
   if (path.isAbsolute(dir)) {
     return dir;
   }
   return path.resolve(path.dirname(api.source), dir);
 }
 
-function normalizePluginHookEntry(api: DmmsAiPluginApi, entry: HookEntry): HookEntry {
+function normalizePluginHookEntry(api: DryadsAiPluginApi, entry: HookEntry): HookEntry {
   return {
     ...entry,
     hook: {
       ...entry.hook,
-      source: "dmms-ai-plugin",
+      source: "dryads-ai-plugin",
       pluginId: api.id,
     },
     metadata: {
@@ -38,7 +38,7 @@ function normalizePluginHookEntry(api: DmmsAiPluginApi, entry: HookEntry): HookE
 
 async function loadHookHandler(
   entry: HookEntry,
-  api: DmmsAiPluginApi,
+  api: DryadsAiPluginApi,
 ): Promise<InternalHookHandler | null> {
   try {
     const url = pathToFileURL(entry.hook.handlerPath).href;
@@ -58,13 +58,13 @@ async function loadHookHandler(
 }
 
 export async function registerPluginHooksFromDir(
-  api: DmmsAiPluginApi,
+  api: DryadsAiPluginApi,
   dir: string,
 ): Promise<PluginHookLoadResult> {
   const resolvedDir = resolveHookDir(api, dir);
   const hooks = loadHookEntriesFromDir({
     dir: resolvedDir,
-    source: "dmms-ai-plugin",
+    source: "dryads-ai-plugin",
     pluginId: api.id,
   });
 

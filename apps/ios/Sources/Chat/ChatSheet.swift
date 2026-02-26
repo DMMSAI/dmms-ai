@@ -1,17 +1,17 @@
-import DmmsAiChatUI
-import DmmsAiKit
+import DryadsAiChatUI
+import DryadsAiKit
 import SwiftUI
 
 struct ChatSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel: DmmsAiChatViewModel
+    @State private var viewModel: DryadsAiChatViewModel
     private let userAccent: Color?
     private let agentName: String?
 
     init(gateway: GatewayNodeSession, sessionKey: String, agentName: String? = nil, userAccent: Color? = nil) {
         let transport = IOSGatewayChatTransport(gateway: gateway)
         self._viewModel = State(
-            initialValue: DmmsAiChatViewModel(
+            initialValue: DryadsAiChatViewModel(
                 sessionKey: sessionKey,
                 transport: transport))
         self.userAccent = userAccent
@@ -20,7 +20,7 @@ struct ChatSheet: View {
 
     var body: some View {
         NavigationStack {
-            DmmsAiChatView(
+            DryadsAiChatView(
                 viewModel: self.viewModel,
                 showsSessionSwitcher: true,
                 userAccent: self.userAccent)

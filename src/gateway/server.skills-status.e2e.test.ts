@@ -8,8 +8,8 @@ installGatewayTestHooks({ scope: "suite" });
 
 describe("gateway skills.status", () => {
   it("does not expose raw config values to operator.read clients", async () => {
-    const envSnapshot = captureEnv(["DMMS_AI_BUNDLED_SKILLS_DIR"]);
-    process.env.DMMS_AI_BUNDLED_SKILLS_DIR = path.join(process.cwd(), "skills");
+    const envSnapshot = captureEnv(["DRYADS_AI_BUNDLED_SKILLS_DIR"]);
+    process.env.DRYADS_AI_BUNDLED_SKILLS_DIR = path.join(process.cwd(), "skills");
     const secret = "discord-token-secret-abc";
     const { writeConfigFile } = await import("../config/config.js");
     await writeConfigFile({

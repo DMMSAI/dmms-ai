@@ -1,6 +1,6 @@
 import Foundation
 
-public struct DmmsAiCanvasNavigateParams: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasNavigateParams: Codable, Sendable, Equatable {
     public var url: String
 
     public init(url: String) {
@@ -8,7 +8,7 @@ public struct DmmsAiCanvasNavigateParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCanvasPlacement: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasPlacement: Codable, Sendable, Equatable {
     public var x: Double?
     public var y: Double?
     public var width: Double?
@@ -22,17 +22,17 @@ public struct DmmsAiCanvasPlacement: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCanvasPresentParams: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasPresentParams: Codable, Sendable, Equatable {
     public var url: String?
-    public var placement: DmmsAiCanvasPlacement?
+    public var placement: DryadsAiCanvasPlacement?
 
-    public init(url: String? = nil, placement: DmmsAiCanvasPlacement? = nil) {
+    public init(url: String? = nil, placement: DryadsAiCanvasPlacement? = nil) {
         self.url = url
         self.placement = placement
     }
 }
 
-public struct DmmsAiCanvasEvalParams: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasEvalParams: Codable, Sendable, Equatable {
     public var javaScript: String
 
     public init(javaScript: String) {
@@ -40,7 +40,7 @@ public struct DmmsAiCanvasEvalParams: Codable, Sendable, Equatable {
     }
 }
 
-public enum DmmsAiCanvasSnapshotFormat: String, Codable, Sendable {
+public enum DryadsAiCanvasSnapshotFormat: String, Codable, Sendable {
     case png
     case jpeg
 
@@ -63,12 +63,12 @@ public enum DmmsAiCanvasSnapshotFormat: String, Codable, Sendable {
     }
 }
 
-public struct DmmsAiCanvasSnapshotParams: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasSnapshotParams: Codable, Sendable, Equatable {
     public var maxWidth: Int?
     public var quality: Double?
-    public var format: DmmsAiCanvasSnapshotFormat?
+    public var format: DryadsAiCanvasSnapshotFormat?
 
-    public init(maxWidth: Int? = nil, quality: Double? = nil, format: DmmsAiCanvasSnapshotFormat? = nil) {
+    public init(maxWidth: Int? = nil, quality: Double? = nil, format: DryadsAiCanvasSnapshotFormat? = nil) {
         self.maxWidth = maxWidth
         self.quality = quality
         self.format = format

@@ -1,15 +1,15 @@
 ---
 name: bootstrap-extra-files
 description: "Inject additional workspace bootstrap files via glob/path patterns"
-homepage: https://docs.dmms-ai.com/automation/hooks#bootstrap-extra-files
+homepage: https://docs.dryads-ai.com/automation/hooks#bootstrap-extra-files
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "📎",
         "events": ["agent:bootstrap"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with DMMS AI" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Dryads AI" }],
       },
   }
 ---

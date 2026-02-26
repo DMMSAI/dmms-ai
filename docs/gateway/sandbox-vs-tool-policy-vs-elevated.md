@@ -7,7 +7,7 @@ status: active
 
 # Sandbox vs Tool Policy vs Elevated
 
-DMMS AI has three related (but different) controls:
+Dryads AI has three related (but different) controls:
 
 1. **Sandbox** (`agents.defaults.sandbox.*` / `agents.list[].sandbox.*`) decides **where tools run** (Docker vs host).
 2. **Tool policy** (`tools.*`, `tools.sandbox.tools.*`, `agents.list[].tools.*`) decides **which tools are available/allowed**.
@@ -15,13 +15,13 @@ DMMS AI has three related (but different) controls:
 
 ## Quick debug
 
-Use the inspector to see what DMMS AI is _actually_ doing:
+Use the inspector to see what Dryads AI is _actually_ doing:
 
 ```bash
-dmms-ai sandbox explain
-dmms-ai sandbox explain --session agent:main:main
-dmms-ai sandbox explain --agent work
-dmms-ai sandbox explain --json
+dryads-ai sandbox explain
+dryads-ai sandbox explain --session agent:main:main
+dryads-ai sandbox explain --agent work
+dryads-ai sandbox explain --json
 ```
 
 It prints:
@@ -93,7 +93,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:dmms-ai`: all built-in DMMS AI tools (excludes provider plugins)
+- `group:dryads-ai`: all built-in Dryads AI tools (excludes provider plugins)
 
 ## Elevated: exec-only “run on host”
 

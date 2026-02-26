@@ -1,4 +1,4 @@
-package ai.dmmsai.android.voice
+package ai.dryadsai.android.voice
 
 object VoiceWakeCommandExtractor {
   fun extractCommand(text: String, triggerWords: List<String>): String? {

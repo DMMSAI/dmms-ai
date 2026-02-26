@@ -67,9 +67,9 @@ async function waitForCondition(check: () => boolean, timeoutMs = 2000) {
 
 describe("gateway server cron", () => {
   test("handles cron CRUD, normalization, and patch semantics", { timeout: 120_000 }, async () => {
-    const prevSkipCron = process.env.DMMS_AI_SKIP_CRON;
-    process.env.DMMS_AI_SKIP_CRON = "0";
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gw-cron-"));
+    const prevSkipCron = process.env.DRYADS_AI_SKIP_CRON;
+    process.env.DRYADS_AI_SKIP_CRON = "0";
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gw-cron-"));
     testState.cronStorePath = path.join(dir, "cron", "jobs.json");
     testState.sessionConfig = { mainKey: "primary" };
     testState.cronEnabled = false;
@@ -339,17 +339,17 @@ describe("gateway server cron", () => {
       testState.sessionConfig = undefined;
       testState.cronEnabled = undefined;
       if (prevSkipCron === undefined) {
-        delete process.env.DMMS_AI_SKIP_CRON;
+        delete process.env.DRYADS_AI_SKIP_CRON;
       } else {
-        process.env.DMMS_AI_SKIP_CRON = prevSkipCron;
+        process.env.DRYADS_AI_SKIP_CRON = prevSkipCron;
       }
     }
   });
 
   test("writes cron run history and auto-runs due jobs", async () => {
-    const prevSkipCron = process.env.DMMS_AI_SKIP_CRON;
-    process.env.DMMS_AI_SKIP_CRON = "0";
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gw-cron-log-"));
+    const prevSkipCron = process.env.DRYADS_AI_SKIP_CRON;
+    process.env.DRYADS_AI_SKIP_CRON = "0";
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gw-cron-log-"));
     testState.cronStorePath = path.join(dir, "cron", "jobs.json");
     testState.cronEnabled = undefined;
     await fs.mkdir(path.dirname(testState.cronStorePath), { recursive: true });
@@ -436,17 +436,17 @@ describe("gateway server cron", () => {
       testState.cronStorePath = undefined;
       testState.cronEnabled = undefined;
       if (prevSkipCron === undefined) {
-        delete process.env.DMMS_AI_SKIP_CRON;
+        delete process.env.DRYADS_AI_SKIP_CRON;
       } else {
-        process.env.DMMS_AI_SKIP_CRON = prevSkipCron;
+        process.env.DRYADS_AI_SKIP_CRON = prevSkipCron;
       }
     }
   }, 45_000);
 
   test("posts webhooks for delivery mode and legacy notify fallback only when summary exists", async () => {
-    const prevSkipCron = process.env.DMMS_AI_SKIP_CRON;
-    process.env.DMMS_AI_SKIP_CRON = "0";
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-gw-cron-webhook-"));
+    const prevSkipCron = process.env.DRYADS_AI_SKIP_CRON;
+    process.env.DRYADS_AI_SKIP_CRON = "0";
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-gw-cron-webhook-"));
     testState.cronStorePath = path.join(dir, "cron", "jobs.json");
     testState.cronEnabled = false;
     await fs.mkdir(path.dirname(testState.cronStorePath), { recursive: true });
@@ -469,7 +469,7 @@ describe("gateway server cron", () => {
       JSON.stringify({ version: 1, jobs: [legacyNotifyJob] }),
     );
 
-    const configPath = process.env.DMMS_AI_CONFIG_PATH;
+    const configPath = process.env.DRYADS_AI_CONFIG_PATH;
     expect(typeof configPath).toBe("string");
     await fs.mkdir(path.dirname(configPath as string), { recursive: true });
     await fs.writeFile(
@@ -614,9 +614,9 @@ describe("gateway server cron", () => {
       testState.cronStorePath = undefined;
       testState.cronEnabled = undefined;
       if (prevSkipCron === undefined) {
-        delete process.env.DMMS_AI_SKIP_CRON;
+        delete process.env.DRYADS_AI_SKIP_CRON;
       } else {
-        process.env.DMMS_AI_SKIP_CRON = prevSkipCron;
+        process.env.DRYADS_AI_SKIP_CRON = prevSkipCron;
       }
     }
   }, 60_000);

@@ -74,43 +74,43 @@ vi.mock("./progress.js", () => ({
 
 describe("daemon-cli coverage", () => {
   const originalEnv = {
-    DMMS_AI_STATE_DIR: process.env.DMMS_AI_STATE_DIR,
-    DMMS_AI_CONFIG_PATH: process.env.DMMS_AI_CONFIG_PATH,
-    DMMS_AI_GATEWAY_PORT: process.env.DMMS_AI_GATEWAY_PORT,
-    DMMS_AI_PROFILE: process.env.DMMS_AI_PROFILE,
+    DRYADS_AI_STATE_DIR: process.env.DRYADS_AI_STATE_DIR,
+    DRYADS_AI_CONFIG_PATH: process.env.DRYADS_AI_CONFIG_PATH,
+    DRYADS_AI_GATEWAY_PORT: process.env.DRYADS_AI_GATEWAY_PORT,
+    DRYADS_AI_PROFILE: process.env.DRYADS_AI_PROFILE,
   };
 
   beforeEach(() => {
-    process.env.DMMS_AI_STATE_DIR = "/tmp/dmms-ai-cli-state";
-    process.env.DMMS_AI_CONFIG_PATH = "/tmp/dmms-ai-cli-state/dmms-ai.json";
-    delete process.env.DMMS_AI_GATEWAY_PORT;
-    delete process.env.DMMS_AI_PROFILE;
+    process.env.DRYADS_AI_STATE_DIR = "/tmp/dryads-ai-cli-state";
+    process.env.DRYADS_AI_CONFIG_PATH = "/tmp/dryads-ai-cli-state/dryads-ai.json";
+    delete process.env.DRYADS_AI_GATEWAY_PORT;
+    delete process.env.DRYADS_AI_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    if (originalEnv.DMMS_AI_STATE_DIR !== undefined) {
-      process.env.DMMS_AI_STATE_DIR = originalEnv.DMMS_AI_STATE_DIR;
+    if (originalEnv.DRYADS_AI_STATE_DIR !== undefined) {
+      process.env.DRYADS_AI_STATE_DIR = originalEnv.DRYADS_AI_STATE_DIR;
     } else {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     }
 
-    if (originalEnv.DMMS_AI_CONFIG_PATH !== undefined) {
-      process.env.DMMS_AI_CONFIG_PATH = originalEnv.DMMS_AI_CONFIG_PATH;
+    if (originalEnv.DRYADS_AI_CONFIG_PATH !== undefined) {
+      process.env.DRYADS_AI_CONFIG_PATH = originalEnv.DRYADS_AI_CONFIG_PATH;
     } else {
-      delete process.env.DMMS_AI_CONFIG_PATH;
+      delete process.env.DRYADS_AI_CONFIG_PATH;
     }
 
-    if (originalEnv.DMMS_AI_GATEWAY_PORT !== undefined) {
-      process.env.DMMS_AI_GATEWAY_PORT = originalEnv.DMMS_AI_GATEWAY_PORT;
+    if (originalEnv.DRYADS_AI_GATEWAY_PORT !== undefined) {
+      process.env.DRYADS_AI_GATEWAY_PORT = originalEnv.DRYADS_AI_GATEWAY_PORT;
     } else {
-      delete process.env.DMMS_AI_GATEWAY_PORT;
+      delete process.env.DRYADS_AI_GATEWAY_PORT;
     }
 
-    if (originalEnv.DMMS_AI_PROFILE !== undefined) {
-      process.env.DMMS_AI_PROFILE = originalEnv.DMMS_AI_PROFILE;
+    if (originalEnv.DRYADS_AI_PROFILE !== undefined) {
+      process.env.DRYADS_AI_PROFILE = originalEnv.DRYADS_AI_PROFILE;
     } else {
-      delete process.env.DMMS_AI_PROFILE;
+      delete process.env.DRYADS_AI_PROFILE;
     }
   });
 
@@ -139,10 +139,10 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        DMMS_AI_PROFILE: "dev",
-        DMMS_AI_STATE_DIR: "/tmp/dmms-ai-daemon-state",
-        DMMS_AI_CONFIG_PATH: "/tmp/dmms-ai-daemon-state/dmms-ai.json",
-        DMMS_AI_GATEWAY_PORT: "19001",
+        DRYADS_AI_PROFILE: "dev",
+        DRYADS_AI_STATE_DIR: "/tmp/dryads-ai-daemon-state",
+        DRYADS_AI_CONFIG_PATH: "/tmp/dryads-ai-daemon-state/dryads-ai.json",
+        DRYADS_AI_GATEWAY_PORT: "19001",
       },
       sourcePath: "/tmp/bot.molt.gateway.plist",
     });

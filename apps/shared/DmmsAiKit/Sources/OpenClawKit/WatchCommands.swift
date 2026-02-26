@@ -1,11 +1,11 @@
 import Foundation
 
-public enum DmmsAiWatchCommand: String, Codable, Sendable {
+public enum DryadsAiWatchCommand: String, Codable, Sendable {
     case status = "watch.status"
     case notify = "watch.notify"
 }
 
-public struct DmmsAiWatchStatusPayload: Codable, Sendable, Equatable {
+public struct DryadsAiWatchStatusPayload: Codable, Sendable, Equatable {
     public var supported: Bool
     public var paired: Bool
     public var appInstalled: Bool
@@ -27,19 +27,19 @@ public struct DmmsAiWatchStatusPayload: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiWatchNotifyParams: Codable, Sendable, Equatable {
+public struct DryadsAiWatchNotifyParams: Codable, Sendable, Equatable {
     public var title: String
     public var body: String
-    public var priority: DmmsAiNotificationPriority?
+    public var priority: DryadsAiNotificationPriority?
 
-    public init(title: String, body: String, priority: DmmsAiNotificationPriority? = nil) {
+    public init(title: String, body: String, priority: DryadsAiNotificationPriority? = nil) {
         self.title = title
         self.body = body
         self.priority = priority
     }
 }
 
-public struct DmmsAiWatchNotifyPayload: Codable, Sendable, Equatable {
+public struct DryadsAiWatchNotifyPayload: Codable, Sendable, Equatable {
     public var deliveredImmediately: Bool
     public var queuedForDelivery: Bool
     public var transport: String

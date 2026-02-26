@@ -10,7 +10,7 @@ struct AboutSettings: View {
         VStack(spacing: 8) {
             let appIcon = NSApplication.shared.applicationIconImage ?? CritterIconRenderer.makeIcon(blink: 0)
             Button {
-                if let url = URL(string: "https://github.com/dmms-ai/dmms-ai") {
+                if let url = URL(string: "https://github.com/dryads-ai/dryads-ai") {
                     NSWorkspace.shared.open(url)
                 }
             } label: {
@@ -29,7 +29,7 @@ struct AboutSettings: View {
             }
 
             VStack(spacing: 3) {
-                Text("DMMS AI")
+                Text("Dryads AI")
                     .font(.title3.bold())
                 Text("Version \(self.versionString)")
                     .foregroundStyle(.secondary)
@@ -49,8 +49,8 @@ struct AboutSettings: View {
                 AboutLinkRow(
                     icon: "chevron.left.slash.chevron.right",
                     title: "GitHub",
-                    url: "https://github.com/dmms-ai/dmms-ai")
-                AboutLinkRow(icon: "globe", title: "Website", url: "https://dmms-ai.com")
+                    url: "https://github.com/dryads-ai/dryads-ai")
+                AboutLinkRow(icon: "globe", title: "Website", url: "https://dryads-ai.com")
                 AboutLinkRow(icon: "bird", title: "Twitter", url: "https://twitter.com/steipete")
                 AboutLinkRow(icon: "envelope", title: "Email", url: "mailto:peter@steipete.me")
             }
@@ -110,8 +110,8 @@ struct AboutSettings: View {
     private var buildTimestamp: String? {
         guard
             let raw =
-            (Bundle.main.object(forInfoDictionaryKey: "DmmsAiBuildTimestamp") as? String) ??
-            (Bundle.main.object(forInfoDictionaryKey: "DmmsAiBuildTimestamp") as? String)
+            (Bundle.main.object(forInfoDictionaryKey: "DryadsAiBuildTimestamp") as? String) ??
+            (Bundle.main.object(forInfoDictionaryKey: "DryadsAiBuildTimestamp") as? String)
         else { return nil }
         let parser = ISO8601DateFormatter()
         parser.formatOptions = [.withInternetDateTime]
@@ -125,8 +125,8 @@ struct AboutSettings: View {
     }
 
     private var gitCommit: String {
-        (Bundle.main.object(forInfoDictionaryKey: "DmmsAiGitCommit") as? String) ??
-            (Bundle.main.object(forInfoDictionaryKey: "DmmsAiGitCommit") as? String) ??
+        (Bundle.main.object(forInfoDictionaryKey: "DryadsAiGitCommit") as? String) ??
+            (Bundle.main.object(forInfoDictionaryKey: "DryadsAiGitCommit") as? String) ??
             "unknown"
     }
 

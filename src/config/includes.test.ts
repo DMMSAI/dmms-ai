@@ -11,17 +11,17 @@ import {
 
 const ROOT_DIR = path.parse(process.cwd()).root;
 const CONFIG_DIR = path.join(ROOT_DIR, "config");
-const ETC_DMMS_AI_DIR = path.join(ROOT_DIR, "etc", "dmms-ai");
+const ETC_DRYADS_AI_DIR = path.join(ROOT_DIR, "etc", "dryads-ai");
 const SHARED_DIR = path.join(ROOT_DIR, "shared");
 
-const DEFAULT_BASE_PATH = path.join(CONFIG_DIR, "dmms-ai.json");
+const DEFAULT_BASE_PATH = path.join(CONFIG_DIR, "dryads-ai.json");
 
 function configPath(...parts: string[]) {
   return path.join(CONFIG_DIR, ...parts);
 }
 
-function etcDmmsAiPath(...parts: string[]) {
-  return path.join(ETC_DMMS_AI_DIR, ...parts);
+function etcDryadsAiPath(...parts: string[]) {
+  return path.join(ETC_DRYADS_AI_DIR, ...parts);
 }
 
 function sharedPath(...parts: string[]) {
@@ -70,7 +70,7 @@ describe("resolveConfigIncludes", () => {
   });
 
   it("rejects absolute path outside config directory (CWE-22)", () => {
-    const absolute = etcDmmsAiPath("agents.json");
+    const absolute = etcDryadsAiPath("agents.json");
     const files = { [absolute]: { list: [{ id: "main" }] } };
     const obj = { agents: { $include: absolute } };
     expect(() => resolve(obj, files)).toThrow(ConfigIncludeError);
@@ -282,10 +282,10 @@ describe("resolveConfigIncludes", () => {
   it("rejects parent directory traversal escaping config directory (CWE-22)", () => {
     const files = { [sharedPath("common.json")]: { shared: true } };
     const obj = { $include: "../../shared/common.json" };
-    expect(() => resolve(obj, files, configPath("sub", "dmms-ai.json"))).toThrow(
+    expect(() => resolve(obj, files, configPath("sub", "dryads-ai.json"))).toThrow(
       ConfigIncludeError,
     );
-    expect(() => resolve(obj, files, configPath("sub", "dmms-ai.json"))).toThrow(
+    expect(() => resolve(obj, files, configPath("sub", "dryads-ai.json"))).toThrow(
       /escapes config directory/,
     );
   });
@@ -542,7 +542,7 @@ describe("security: path traversal protection (CWE-22)", () => {
     });
 
     it("allows include files when the config root path is a symlink", async () => {
-      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-includes-symlink-"));
+      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-includes-symlink-"));
       try {
         const realRoot = path.join(tempRoot, "real");
         const linkRoot = path.join(tempRoot, "link");
@@ -556,7 +556,7 @@ describe("security: path traversal protection (CWE-22)", () => {
 
         const result = resolveConfigIncludes(
           { $include: "./includes/extra.json5" },
-          path.join(linkRoot, "dmms-ai.json"),
+          path.join(linkRoot, "dryads-ai.json"),
         );
         expect(result).toEqual({ logging: { redactSensitive: "tools" } });
       } finally {

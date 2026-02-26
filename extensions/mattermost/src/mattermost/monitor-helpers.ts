@@ -1,5 +1,5 @@
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
-export { createDedupeCache, rawDataToString } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
+export { createDedupeCache, rawDataToString } from "dryads-ai/plugin-sdk";
 
 export type ResponsePrefixContext = {
   model?: string;
@@ -55,9 +55,9 @@ function normalizeAgentId(value: string | undefined | null): string {
   );
 }
 
-type AgentEntry = NonNullable<NonNullable<DmmsAiConfig["agents"]>["list"]>[number];
+type AgentEntry = NonNullable<NonNullable<DryadsAiConfig["agents"]>["list"]>[number];
 
-function listAgents(cfg: DmmsAiConfig): AgentEntry[] {
+function listAgents(cfg: DryadsAiConfig): AgentEntry[] {
   const list = cfg.agents?.list;
   if (!Array.isArray(list)) {
     return [];
@@ -65,12 +65,12 @@ function listAgents(cfg: DmmsAiConfig): AgentEntry[] {
   return list.filter((entry): entry is AgentEntry => Boolean(entry && typeof entry === "object"));
 }
 
-function resolveAgentEntry(cfg: DmmsAiConfig, agentId: string): AgentEntry | undefined {
+function resolveAgentEntry(cfg: DryadsAiConfig, agentId: string): AgentEntry | undefined {
   const id = normalizeAgentId(agentId);
   return listAgents(cfg).find((entry) => normalizeAgentId(entry.id) === id);
 }
 
-export function resolveIdentityName(cfg: DmmsAiConfig, agentId: string): string | undefined {
+export function resolveIdentityName(cfg: DryadsAiConfig, agentId: string): string | undefined {
   const entry = resolveAgentEntry(cfg, agentId);
   return entry?.identity?.name?.trim() || undefined;
 }

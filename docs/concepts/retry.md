@@ -38,7 +38,7 @@ title: "Retry Policy"
 
 ## Configuration
 
-Set retry policy per provider in `~/.dmms-ai/dmms-ai.json`:
+Set retry policy per provider in `~/.dryads-ai/dryads-ai.json`:
 
 ```json5
 {

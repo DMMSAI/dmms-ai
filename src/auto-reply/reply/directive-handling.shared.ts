@@ -82,7 +82,7 @@ export function formatElevatedUnavailableText(params: {
   }
   if (params.sessionKey) {
     lines.push(
-      `See: ${formatCliCommand(`dmms-ai sandbox explain --session ${params.sessionKey}`)}`,
+      `See: ${formatCliCommand(`dryads-ai sandbox explain --session ${params.sessionKey}`)}`,
     );
   }
   return lines.join("\n");

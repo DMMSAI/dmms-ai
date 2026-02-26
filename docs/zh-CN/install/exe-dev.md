@@ -2,7 +2,7 @@
 read_when:
   - 你想要一个便宜的常驻 Linux 主机来运行 Gateway 网关
   - 你想要远程控制 UI 访问而无需运行自己的 VPS
-summary: 在 exe.dev 上运行 DMMS AI Gateway 网关（VM + HTTPS 代理）以实现远程访问
+summary: 在 exe.dev 上运行 Dryads AI Gateway 网关（VM + HTTPS 代理）以实现远程访问
 title: exe.dev
 x-i18n:
   generated_at: "2026-02-03T07:51:36Z"
@@ -15,13 +15,13 @@ x-i18n:
 
 # exe.dev
 
-目标：DMMS AI Gateway 网关运行在 exe.dev VM 上，可从你的笔记本电脑通过以下地址访问：`https://<vm-name>.exe.xyz`
+目标：Dryads AI Gateway 网关运行在 exe.dev VM 上，可从你的笔记本电脑通过以下地址访问：`https://<vm-name>.exe.xyz`
 
 本页假设使用 exe.dev 的默认 **exeuntu** 镜像。如果你选择了不同的发行版，请相应地映射软件包。
 
 ## 新手快速路径
 
-1. [https://exe.new/dmms-ai](https://exe.new/dmms-ai)
+1. [https://exe.new/dryads-ai](https://exe.new/dryads-ai)
 2. 根据需要填写你的认证密钥/令牌
 3. 点击 VM 旁边的"Agent"，然后等待...
 4. ???
@@ -34,10 +34,10 @@ x-i18n:
 
 ## 使用 Shelley 自动安装
 
-Shelley，[exe.dev](https://exe.dev) 的智能体，可以使用我们的提示立即安装 DMMS AI。使用的提示如下：
+Shelley，[exe.dev](https://exe.dev) 的智能体，可以使用我们的提示立即安装 Dryads AI。使用的提示如下：
 
 ```
-Set up DMMS AI (https://docs.dmms-ai.com/install) on this VM. Use the non-interactive and accept-risk flags for dmms-ai onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "dmms-ai devices list" and "dmms-ai device approve <request id>". Make sure the dashboard shows that DMMS AI's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Dryads AI (https://docs.dryads-ai.com/install) on this VM. Use the non-interactive and accept-risk flags for dryads-ai onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "dryads-ai devices list" and "dryads-ai device approve <request id>". Make sure the dashboard shows that Dryads AI's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## 手动安装
@@ -56,7 +56,7 @@ ssh exe.dev new
 ssh <vm-name>.exe.xyz
 ```
 
-提示：保持此 VM **有状态**。DMMS AI 在 `~/.dmms-ai/` 和 `~/.dmms-ai/workspace/` 下存储状态。
+提示：保持此 VM **有状态**。Dryads AI 在 `~/.dryads-ai/` 和 `~/.dryads-ai/workspace/` 下存储状态。
 
 ## 2) 安装先决条件（在 VM 上）
 
@@ -65,15 +65,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3) 安装 DMMS AI
+## 3) 安装 Dryads AI
 
-运行 DMMS AI 安装脚本：
+运行 Dryads AI 安装脚本：
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash
+curl -fsSL https://dryads-ai.com/install.sh | bash
 ```
 
-## 4) 设置 nginx 将 DMMS AI 代理到端口 8000
+## 4) 设置 nginx 将 Dryads AI 代理到端口 8000
 
 编辑 `/etc/nginx/sites-enabled/default`：
 
@@ -107,9 +107,9 @@ server {
 }
 ```
 
-## 5) 访问 DMMS AI 并授予权限
+## 5) 访问 Dryads AI 并授予权限
 
-访问 `https://<vm-name>.exe.xyz/?token=YOUR-TOKEN-FROM-TERMINAL`（参阅新手引导中的控制 UI 输出）。使用 `dmms-ai devices list` 和 `dmms-ai devices approve <requestId>` 批准设备。如有疑问，从浏览器使用 Shelley！
+访问 `https://<vm-name>.exe.xyz/?token=YOUR-TOKEN-FROM-TERMINAL`（参阅新手引导中的控制 UI 输出）。使用 `dryads-ai devices list` 和 `dryads-ai devices approve <requestId>` 批准设备。如有疑问，从浏览器使用 Shelley！
 
 ## 远程访问
 
@@ -118,10 +118,10 @@ server {
 ## 更新
 
 ```bash
-npm i -g dmms-ai@latest
-dmms-ai doctor
-dmms-ai gateway restart
-dmms-ai health
+npm i -g dryads-ai@latest
+dryads-ai doctor
+dryads-ai gateway restart
+dryads-ai health
 ```
 
 指南：[更新](/install/updating)

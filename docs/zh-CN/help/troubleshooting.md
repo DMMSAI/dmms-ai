@@ -20,22 +20,22 @@ x-i18n:
 按顺序运行这些命令：
 
 ```bash
-dmms-ai status
-dmms-ai status --all
-dmms-ai gateway probe
-dmms-ai logs --follow
-dmms-ai doctor
+dryads-ai status
+dryads-ai status --all
+dryads-ai gateway probe
+dryads-ai logs --follow
+dryads-ai doctor
 ```
 
 如果 Gateway 网关可达，进行深度探测：
 
 ```bash
-dmms-ai status --deep
+dryads-ai status --deep
 ```
 
 ## 常见的“它坏了”情况
 
-### `dmms-ai: command not found`
+### `dryads-ai: command not found`
 
 几乎总是 Node/npm PATH 问题。从这里开始：
 
@@ -46,16 +46,16 @@ dmms-ai status --deep
 以详细模式重新运行安装程序以查看完整跟踪和 npm 输出：
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash -s -- --verbose
+curl -fsSL https://dryads-ai.com/install.sh | bash -s -- --verbose
 ```
 
 对于 beta 安装：
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash -s -- --beta --verbose
+curl -fsSL https://dryads-ai.com/install.sh | bash -s -- --beta --verbose
 ```
 
-你也可以设置 `DMMS_AI_VERBOSE=1` 代替标志。
+你也可以设置 `DRYADS_AI_VERBOSE=1` 代替标志。
 
 ### Gateway 网关“unauthorized”、无法连接或持续重连
 
@@ -67,10 +67,10 @@ curl -fsSL https://dmms-ai.com/install.sh | bash -s -- --beta --verbose
 - [Gateway 网关故障排除](/gateway/troubleshooting)
 - [控制 UI](/web/control-ui#insecure-http)
 
-### `docs.dmms-ai.com` 显示 SSL 错误（Comcast/Xfinity）
+### `docs.dryads-ai.com` 显示 SSL 错误（Comcast/Xfinity）
 
-一些 Comcast/Xfinity 连接通过 Xfinity Advanced Security 阻止 `docs.dmms-ai.com`。
-禁用 Advanced Security 或将 `docs.dmms-ai.com` 添加到允许列表，然后重试。
+一些 Comcast/Xfinity 连接通过 Xfinity Advanced Security 阻止 `docs.dryads-ai.com`。
+禁用 Advanced Security 或将 `docs.dryads-ai.com` 添加到允许列表，然后重试。
 
 - Xfinity Advanced Security 帮助：https://www.xfinity.com/support/articles/using-xfinity-xfi-advanced-security
 - 快速检查：尝试移动热点或 VPN 以确认这是 ISP 级别的过滤
@@ -89,7 +89,7 @@ curl -fsSL https://dmms-ai.com/install.sh | bash -s -- --beta --verbose
 
 这通常意味着 `agents.defaults.models` 配置为允许列表。当它非空时，只能选择那些提供商/模型键。
 
-- 检查允许列表：`dmms-ai config get agents.defaults.models`
+- 检查允许列表：`dryads-ai config get agents.defaults.models`
 - 添加你想要的模型（或清除允许列表）然后重试 `/model`
 - 使用 `/models` 浏览允许的提供商/模型
 
@@ -98,7 +98,7 @@ curl -fsSL https://dmms-ai.com/install.sh | bash -s -- --beta --verbose
 粘贴一份安全报告：
 
 ```bash
-dmms-ai status --all
+dryads-ai status --all
 ```
 
-如果可以的话，包含来自 `dmms-ai logs --follow` 的相关日志尾部。
+如果可以的话，包含来自 `dryads-ai logs --follow` 的相关日志尾部。

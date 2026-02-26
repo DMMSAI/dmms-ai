@@ -2,31 +2,31 @@
 summary: "Integrated browser control service + action commands"
 read_when:
   - Adding agent-controlled browser automation
-  - Debugging why dmms-ai is interfering with your own Chrome
+  - Debugging why dryads-ai is interfering with your own Chrome
   - Implementing browser settings + lifecycle in the macOS app
-title: "Browser (DMMS AI-managed)"
+title: "Browser (Dryads AI-managed)"
 ---
 
-# Browser (dmms-ai-managed)
+# Browser (dryads-ai-managed)
 
-DMMS AI can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
+Dryads AI can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
 It is isolated from your personal browser and is managed through a small local
 control service inside the Gateway (loopback only).
 
 Beginner view:
 
 - Think of it as a **separate, agent-only browser**.
-- The `dmms-ai` profile does **not** touch your personal browser profile.
+- The `dryads-ai` profile does **not** touch your personal browser profile.
 - The agent can **open tabs, read pages, click, and type** in a safe lane.
 - The default `chrome` profile uses the **system default Chromium browser** via the
-  extension relay; switch to `dmms-ai` for the isolated managed browser.
+  extension relay; switch to `dryads-ai` for the isolated managed browser.
 
 ## What you get
 
-- A separate browser profile named **dmms-ai** (orange accent by default).
+- A separate browser profile named **dryads-ai** (orange accent by default).
 - Deterministic tab control (list/open/focus/close).
 - Agent actions (click/type/drag/select), snapshots, screenshots, PDFs.
-- Optional multi-profile support (`dmms-ai`, `work`, `remote`, ...).
+- Optional multi-profile support (`dryads-ai`, `work`, `remote`, ...).
 
 This browser is **not** your daily driver. It is a safe, isolated surface for
 agent automation and verification.
@@ -34,26 +34,26 @@ agent automation and verification.
 ## Quick start
 
 ```bash
-dmms-ai browser --browser-profile dmms-ai status
-dmms-ai browser --browser-profile dmms-ai start
-dmms-ai browser --browser-profile dmms-ai open https://example.com
-dmms-ai browser --browser-profile dmms-ai snapshot
+dryads-ai browser --browser-profile dryads-ai status
+dryads-ai browser --browser-profile dryads-ai start
+dryads-ai browser --browser-profile dryads-ai open https://example.com
+dryads-ai browser --browser-profile dryads-ai snapshot
 ```
 
 If you get “Browser disabled”, enable it in config (see below) and restart the
 Gateway.
 
-## Profiles: `dmms-ai` vs `chrome`
+## Profiles: `dryads-ai` vs `chrome`
 
-- `dmms-ai`: managed, isolated browser (no extension required).
-- `chrome`: extension relay to your **system browser** (requires the DMMS AI
+- `dryads-ai`: managed, isolated browser (no extension required).
+- `chrome`: extension relay to your **system browser** (requires the Dryads AI
   extension to be attached to a tab).
 
-Set `browser.defaultProfile: "dmms-ai"` if you want managed mode by default.
+Set `browser.defaultProfile: "dryads-ai"` if you want managed mode by default.
 
 ## Configuration
 
-Browser settings live in `~/.dmms-ai/dmms-ai.json`.
+Browser settings live in `~/.dryads-ai/dryads-ai.json`.
 
 ```json5
 {
@@ -69,7 +69,7 @@ Browser settings live in `~/.dmms-ai/dmms-ai.json`.
     attachOnly: false,
     executablePath: "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
     profiles: {
-      dmms-ai: { cdpPort: 18800, color: "#FF4500" },
+      dryads-ai: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       remote: { cdpUrl: "http://10.0.0.42:9222", color: "#00AA00" },
     },
@@ -81,27 +81,27 @@ Notes:
 
 - The browser control service binds to loopback on a port derived from `gateway.port`
   (default: `18791`, which is gateway + 2). The relay uses the next port (`18792`).
-- If you override the Gateway port (`gateway.port` or `DMMS_AI_GATEWAY_PORT`),
+- If you override the Gateway port (`gateway.port` or `DRYADS_AI_GATEWAY_PORT`),
   the derived browser ports shift to stay in the same “family”.
 - `cdpUrl` defaults to the relay port when unset.
 - `remoteCdpTimeoutMs` applies to remote (non-loopback) CDP reachability checks.
 - `remoteCdpHandshakeTimeoutMs` applies to remote CDP WebSocket reachability checks.
 - `attachOnly: true` means “never launch a local browser; only attach if it is already running.”
 - `color` + per-profile `color` tint the browser UI so you can see which profile is active.
-- Default profile is `chrome` (extension relay). Use `defaultProfile: "dmms-ai"` for the managed browser.
+- Default profile is `chrome` (extension relay). Use `defaultProfile: "dryads-ai"` for the managed browser.
 - Auto-detect order: system default browser if Chromium-based; otherwise Chrome → Brave → Edge → Chromium → Chrome Canary.
-- Local `dmms-ai` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
+- Local `dryads-ai` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
 
 ## Use Brave (or another Chromium-based browser)
 
 If your **system default** browser is Chromium-based (Chrome/Brave/Edge/etc),
-DMMS AI uses it automatically. Set `browser.executablePath` to override
+Dryads AI uses it automatically. Set `browser.executablePath` to override
 auto-detection:
 
 CLI example:
 
 ```bash
-dmms-ai config set browser.executablePath "/usr/bin/google-chrome"
+dryads-ai config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 ```json5
@@ -132,20 +132,20 @@ dmms-ai config set browser.executablePath "/usr/bin/google-chrome"
 - **Local control (default):** the Gateway starts the loopback control service and can launch a local browser.
 - **Remote control (node host):** run a node host on the machine that has the browser; the Gateway proxies browser actions to it.
 - **Remote CDP:** set `browser.profiles.<name>.cdpUrl` (or `browser.cdpUrl`) to
-  attach to a remote Chromium-based browser. In this case, DMMS AI will not launch a local browser.
+  attach to a remote Chromium-based browser. In this case, Dryads AI will not launch a local browser.
 
 Remote CDP URLs can include auth:
 
 - Query tokens (e.g., `https://provider.example?token=<token>`)
 - HTTP Basic auth (e.g., `https://user:pass@provider.example`)
 
-DMMS AI preserves the auth when calling `/json/*` endpoints and when connecting
+Dryads AI preserves the auth when calling `/json/*` endpoints and when connecting
 to the CDP WebSocket. Prefer environment variables or secrets managers for
 tokens instead of committing them to config files.
 
 ## Node browser proxy (zero-config default)
 
-If you run a **node host** on the machine that has your browser, DMMS AI can
+If you run a **node host** on the machine that has your browser, Dryads AI can
 auto-route browser tool calls to that node without any extra browser config.
 This is the default path for remote gateways.
 
@@ -160,7 +160,7 @@ Notes:
 ## Browserless (hosted remote CDP)
 
 [Browserless](https://browserless.io) is a hosted Chromium service that exposes
-CDP endpoints over HTTPS. You can point a DMMS AI browser profile at a
+CDP endpoints over HTTPS. You can point a Dryads AI browser profile at a
 Browserless region endpoint and authenticate with your API key.
 
 Example:
@@ -192,7 +192,7 @@ Notes:
 Key ideas:
 
 - Browser control is loopback-only; access flows through the Gateway’s auth or node pairing.
-- If browser control is enabled and no auth is configured, DMMS AI auto-generates `gateway.auth.token` on startup and persists it to config.
+- If browser control is enabled and no auth is configured, Dryads AI auto-generates `gateway.auth.token` on startup and persists it to config.
 - Keep the Gateway and any node hosts on a private network (Tailscale); avoid public exposure.
 - Treat remote CDP URLs/tokens as secrets; prefer env vars or a secrets manager.
 
@@ -203,15 +203,15 @@ Remote CDP tips:
 
 ## Profiles (multi-browser)
 
-DMMS AI supports multiple named profiles (routing configs). Profiles can be:
+Dryads AI supports multiple named profiles (routing configs). Profiles can be:
 
-- **dmms-ai-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
+- **dryads-ai-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
 - **remote**: an explicit CDP URL (Chromium-based browser running elsewhere)
 - **extension relay**: your existing Chrome tab(s) via the local relay + Chrome extension
 
 Defaults:
 
-- The `dmms-ai` profile is auto-created if missing.
+- The `dryads-ai` profile is auto-created if missing.
 - The `chrome` profile is built-in for the Chrome extension relay (points at `http://127.0.0.1:18792` by default).
 - Local CDP ports allocate from **18800–18899** by default.
 - Deleting a profile moves its local data directory to Trash.
@@ -220,7 +220,7 @@ All control endpoints accept `?profile=<name>`; the CLI uses `--browser-profile`
 
 ## Chrome extension relay (use your existing Chrome)
 
-DMMS AI can also drive **your existing Chrome tabs** (no separate “dmms-ai” Chrome instance) via a local CDP relay + a Chrome extension.
+Dryads AI can also drive **your existing Chrome tabs** (no separate “dryads-ai” Chrome instance) via a local CDP relay + a Chrome extension.
 
 Full guide: [Chrome extension](/tools/chrome-extension)
 
@@ -228,7 +228,7 @@ Flow:
 
 - The Gateway runs locally (same machine) or a node host runs on the browser machine.
 - A local **relay server** listens at a loopback `cdpUrl` (default: `http://127.0.0.1:18792`).
-- You click the **DMMS AI Browser Relay** extension icon on a tab to attach (it does not auto-attach).
+- You click the **Dryads AI Browser Relay** extension icon on a tab to attach (it does not auto-attach).
 - The agent controls that tab via the normal `browser` tool, by selecting the right profile.
 
 If the Gateway runs elsewhere, run a node host on the browser machine so the Gateway can proxy browser actions.
@@ -246,22 +246,22 @@ Chrome extension relay takeover requires host browser control, so either:
 1. Load the extension (dev/unpacked):
 
 ```bash
-dmms-ai browser extension install
+dryads-ai browser extension install
 ```
 
 - Chrome → `chrome://extensions` → enable “Developer mode”
-- “Load unpacked” → select the directory printed by `dmms-ai browser extension path`
+- “Load unpacked” → select the directory printed by `dryads-ai browser extension path`
 - Pin the extension, then click it on the tab you want to control (badge shows `ON`).
 
 2. Use it:
 
-- CLI: `dmms-ai browser --browser-profile chrome tabs`
+- CLI: `dryads-ai browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 Optional: if you want a different name or relay port, create your own profile:
 
 ```bash
-dmms-ai browser create-profile \
+dryads-ai browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -281,7 +281,7 @@ Notes:
 
 ## Browser selection
 
-When launching locally, DMMS AI picks the first available:
+When launching locally, Dryads AI picks the first available:
 
 1. Chrome
 2. Brave
@@ -319,18 +319,18 @@ All endpoints accept `?profile=<name>`.
 If gateway auth is configured, browser HTTP routes require auth too:
 
 - `Authorization: Bearer <gateway token>`
-- `x-dmms-ai-password: <gateway password>` or HTTP Basic auth with that password
+- `x-dryads-ai-password: <gateway password>` or HTTP Basic auth with that password
 
 ### Playwright requirement
 
 Some features (navigate/act/AI snapshot/role snapshot, element screenshots, PDF) require
 Playwright. If Playwright isn’t installed, those endpoints return a clear 501
-error. ARIA snapshots and basic screenshots still work for dmms-ai-managed Chrome.
+error. ARIA snapshots and basic screenshots still work for dryads-ai-managed Chrome.
 For the Chrome extension relay driver, ARIA snapshots and screenshots require Playwright.
 
 If you see `Playwright is not available in this gateway build`, install the full
 Playwright package (not `playwright-core`) and restart the gateway, or reinstall
-DMMS AI with browser support.
+Dryads AI with browser support.
 
 #### Docker Playwright install
 
@@ -338,13 +338,13 @@ If your Gateway runs in Docker, avoid `npx playwright` (npm override conflicts).
 Use the bundled CLI instead:
 
 ```bash
-docker compose run --rm dmms-ai-cli \
+docker compose run --rm dryads-ai-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
 To persist browser downloads, set `PLAYWRIGHT_BROWSERS_PATH` (for example,
 `/home/node/.cache/ms-playwright`) and make sure `/home/node` is persisted via
-`DMMS_AI_HOME_VOLUME` or a bind mount. See [Docker](/install/docker).
+`DRYADS_AI_HOME_VOLUME` or a bind mount. See [Docker](/install/docker).
 
 ## How it works (internal)
 
@@ -366,95 +366,95 @@ All commands also accept `--json` for machine-readable output (stable payloads).
 
 Basics:
 
-- `dmms-ai browser status`
-- `dmms-ai browser start`
-- `dmms-ai browser stop`
-- `dmms-ai browser tabs`
-- `dmms-ai browser tab`
-- `dmms-ai browser tab new`
-- `dmms-ai browser tab select 2`
-- `dmms-ai browser tab close 2`
-- `dmms-ai browser open https://example.com`
-- `dmms-ai browser focus abcd1234`
-- `dmms-ai browser close abcd1234`
+- `dryads-ai browser status`
+- `dryads-ai browser start`
+- `dryads-ai browser stop`
+- `dryads-ai browser tabs`
+- `dryads-ai browser tab`
+- `dryads-ai browser tab new`
+- `dryads-ai browser tab select 2`
+- `dryads-ai browser tab close 2`
+- `dryads-ai browser open https://example.com`
+- `dryads-ai browser focus abcd1234`
+- `dryads-ai browser close abcd1234`
 
 Inspection:
 
-- `dmms-ai browser screenshot`
-- `dmms-ai browser screenshot --full-page`
-- `dmms-ai browser screenshot --ref 12`
-- `dmms-ai browser screenshot --ref e12`
-- `dmms-ai browser snapshot`
-- `dmms-ai browser snapshot --format aria --limit 200`
-- `dmms-ai browser snapshot --interactive --compact --depth 6`
-- `dmms-ai browser snapshot --efficient`
-- `dmms-ai browser snapshot --labels`
-- `dmms-ai browser snapshot --selector "#main" --interactive`
-- `dmms-ai browser snapshot --frame "iframe#main" --interactive`
-- `dmms-ai browser console --level error`
-- `dmms-ai browser errors --clear`
-- `dmms-ai browser requests --filter api --clear`
-- `dmms-ai browser pdf`
-- `dmms-ai browser responsebody "**/api" --max-chars 5000`
+- `dryads-ai browser screenshot`
+- `dryads-ai browser screenshot --full-page`
+- `dryads-ai browser screenshot --ref 12`
+- `dryads-ai browser screenshot --ref e12`
+- `dryads-ai browser snapshot`
+- `dryads-ai browser snapshot --format aria --limit 200`
+- `dryads-ai browser snapshot --interactive --compact --depth 6`
+- `dryads-ai browser snapshot --efficient`
+- `dryads-ai browser snapshot --labels`
+- `dryads-ai browser snapshot --selector "#main" --interactive`
+- `dryads-ai browser snapshot --frame "iframe#main" --interactive`
+- `dryads-ai browser console --level error`
+- `dryads-ai browser errors --clear`
+- `dryads-ai browser requests --filter api --clear`
+- `dryads-ai browser pdf`
+- `dryads-ai browser responsebody "**/api" --max-chars 5000`
 
 Actions:
 
-- `dmms-ai browser navigate https://example.com`
-- `dmms-ai browser resize 1280 720`
-- `dmms-ai browser click 12 --double`
-- `dmms-ai browser click e12 --double`
-- `dmms-ai browser type 23 "hello" --submit`
-- `dmms-ai browser press Enter`
-- `dmms-ai browser hover 44`
-- `dmms-ai browser scrollintoview e12`
-- `dmms-ai browser drag 10 11`
-- `dmms-ai browser select 9 OptionA OptionB`
-- `dmms-ai browser download e12 report.pdf`
-- `dmms-ai browser waitfordownload report.pdf`
-- `dmms-ai browser upload /tmp/dmms-ai/uploads/file.pdf`
-- `dmms-ai browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
-- `dmms-ai browser dialog --accept`
-- `dmms-ai browser wait --text "Done"`
-- `dmms-ai browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
-- `dmms-ai browser evaluate --fn '(el) => el.textContent' --ref 7`
-- `dmms-ai browser highlight e12`
-- `dmms-ai browser trace start`
-- `dmms-ai browser trace stop`
+- `dryads-ai browser navigate https://example.com`
+- `dryads-ai browser resize 1280 720`
+- `dryads-ai browser click 12 --double`
+- `dryads-ai browser click e12 --double`
+- `dryads-ai browser type 23 "hello" --submit`
+- `dryads-ai browser press Enter`
+- `dryads-ai browser hover 44`
+- `dryads-ai browser scrollintoview e12`
+- `dryads-ai browser drag 10 11`
+- `dryads-ai browser select 9 OptionA OptionB`
+- `dryads-ai browser download e12 report.pdf`
+- `dryads-ai browser waitfordownload report.pdf`
+- `dryads-ai browser upload /tmp/dryads-ai/uploads/file.pdf`
+- `dryads-ai browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
+- `dryads-ai browser dialog --accept`
+- `dryads-ai browser wait --text "Done"`
+- `dryads-ai browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
+- `dryads-ai browser evaluate --fn '(el) => el.textContent' --ref 7`
+- `dryads-ai browser highlight e12`
+- `dryads-ai browser trace start`
+- `dryads-ai browser trace stop`
 
 State:
 
-- `dmms-ai browser cookies`
-- `dmms-ai browser cookies set session abc123 --url "https://example.com"`
-- `dmms-ai browser cookies clear`
-- `dmms-ai browser storage local get`
-- `dmms-ai browser storage local set theme dark`
-- `dmms-ai browser storage session clear`
-- `dmms-ai browser set offline on`
-- `dmms-ai browser set headers --headers-json '{"X-Debug":"1"}'`
-- `dmms-ai browser set credentials user pass`
-- `dmms-ai browser set credentials --clear`
-- `dmms-ai browser set geo 37.7749 -122.4194 --origin "https://example.com"`
-- `dmms-ai browser set geo --clear`
-- `dmms-ai browser set media dark`
-- `dmms-ai browser set timezone America/New_York`
-- `dmms-ai browser set locale en-US`
-- `dmms-ai browser set device "iPhone 14"`
+- `dryads-ai browser cookies`
+- `dryads-ai browser cookies set session abc123 --url "https://example.com"`
+- `dryads-ai browser cookies clear`
+- `dryads-ai browser storage local get`
+- `dryads-ai browser storage local set theme dark`
+- `dryads-ai browser storage session clear`
+- `dryads-ai browser set offline on`
+- `dryads-ai browser set headers --headers-json '{"X-Debug":"1"}'`
+- `dryads-ai browser set credentials user pass`
+- `dryads-ai browser set credentials --clear`
+- `dryads-ai browser set geo 37.7749 -122.4194 --origin "https://example.com"`
+- `dryads-ai browser set geo --clear`
+- `dryads-ai browser set media dark`
+- `dryads-ai browser set timezone America/New_York`
+- `dryads-ai browser set locale en-US`
+- `dryads-ai browser set device "iPhone 14"`
 
 Notes:
 
 - `upload` and `dialog` are **arming** calls; run them before the click/press
   that triggers the chooser/dialog.
-- Download and trace output paths are constrained to DMMS AI temp roots:
-  - traces: `/tmp/dmms-ai` (fallback: `${os.tmpdir()}/dmms-ai`)
-  - downloads: `/tmp/dmms-ai/downloads` (fallback: `${os.tmpdir()}/dmms-ai/downloads`)
-- Upload paths are constrained to an DMMS AI temp uploads root:
-  - uploads: `/tmp/dmms-ai/uploads` (fallback: `${os.tmpdir()}/dmms-ai/uploads`)
+- Download and trace output paths are constrained to Dryads AI temp roots:
+  - traces: `/tmp/dryads-ai` (fallback: `${os.tmpdir()}/dryads-ai`)
+  - downloads: `/tmp/dryads-ai/downloads` (fallback: `${os.tmpdir()}/dryads-ai/downloads`)
+- Upload paths are constrained to an Dryads AI temp uploads root:
+  - uploads: `/tmp/dryads-ai/uploads` (fallback: `${os.tmpdir()}/dryads-ai/uploads`)
 - `upload` can also set file inputs directly via `--input-ref` or `--element`.
 - `snapshot`:
   - `--format ai` (default when Playwright is installed): returns an AI snapshot with numeric refs (`aria-ref="<n>"`).
   - `--format aria`: returns the accessibility tree (no refs; inspection only).
   - `--efficient` (or `--mode efficient`): compact role snapshot preset (interactive + compact + depth + lower maxChars).
-  - Config default (tool/CLI only): set `browser.snapshotDefaults.mode: "efficient"` to use efficient snapshots when the caller does not pass a mode (see [Gateway configuration](/gateway/configuration#browser-dmms-ai-managed-browser)).
+  - Config default (tool/CLI only): set `browser.snapshotDefaults.mode: "efficient"` to use efficient snapshots when the caller does not pass a mode (see [Gateway configuration](/gateway/configuration#browser-dryads-ai-managed-browser)).
   - Role snapshot options (`--interactive`, `--compact`, `--depth`, `--selector`) force a role-based snapshot with refs like `ref=e12`.
   - `--frame "<iframe selector>"` scopes role snapshots to an iframe (pairs with role refs like `e12`).
   - `--interactive` outputs a flat, easy-to-pick list of interactive elements (best for driving actions).
@@ -464,16 +464,16 @@ Notes:
 
 ## Snapshots and refs
 
-DMMS AI supports two “snapshot” styles:
+Dryads AI supports two “snapshot” styles:
 
-- **AI snapshot (numeric refs)**: `dmms-ai browser snapshot` (default; `--format ai`)
+- **AI snapshot (numeric refs)**: `dryads-ai browser snapshot` (default; `--format ai`)
   - Output: a text snapshot that includes numeric refs.
-  - Actions: `dmms-ai browser click 12`, `dmms-ai browser type 23 "hello"`.
+  - Actions: `dryads-ai browser click 12`, `dryads-ai browser type 23 "hello"`.
   - Internally, the ref is resolved via Playwright’s `aria-ref`.
 
-- **Role snapshot (role refs like `e12`)**: `dmms-ai browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
+- **Role snapshot (role refs like `e12`)**: `dryads-ai browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
   - Output: a role-based list/tree with `[ref=e12]` (and optional `[nth=1]`).
-  - Actions: `dmms-ai browser click e12`, `dmms-ai browser highlight e12`.
+  - Actions: `dryads-ai browser click e12`, `dryads-ai browser highlight e12`.
   - Internally, the ref is resolved via `getByRole(...)` (plus `nth()` for duplicates).
   - Add `--labels` to include a viewport screenshot with overlayed `e12` labels.
 
@@ -487,18 +487,18 @@ Ref behavior:
 You can wait on more than just time/text:
 
 - Wait for URL (globs supported by Playwright):
-  - `dmms-ai browser wait --url "**/dash"`
+  - `dryads-ai browser wait --url "**/dash"`
 - Wait for load state:
-  - `dmms-ai browser wait --load networkidle`
+  - `dryads-ai browser wait --load networkidle`
 - Wait for a JS predicate:
-  - `dmms-ai browser wait --fn "window.ready===true"`
+  - `dryads-ai browser wait --fn "window.ready===true"`
 - Wait for a selector to become visible:
-  - `dmms-ai browser wait "#main"`
+  - `dryads-ai browser wait "#main"`
 
 These can be combined:
 
 ```bash
-dmms-ai browser wait "#main" \
+dryads-ai browser wait "#main" \
   --url "**/dash" \
   --load networkidle \
   --fn "window.ready===true" \
@@ -509,16 +509,16 @@ dmms-ai browser wait "#main" \
 
 When an action fails (e.g. “not visible”, “strict mode violation”, “covered”):
 
-1. `dmms-ai browser snapshot --interactive`
+1. `dryads-ai browser snapshot --interactive`
 2. Use `click <ref>` / `type <ref>` (prefer role refs in interactive mode)
-3. If it still fails: `dmms-ai browser highlight <ref>` to see what Playwright is targeting
+3. If it still fails: `dryads-ai browser highlight <ref>` to see what Playwright is targeting
 4. If the page behaves oddly:
-   - `dmms-ai browser errors --clear`
-   - `dmms-ai browser requests --filter api --clear`
+   - `dryads-ai browser errors --clear`
+   - `dryads-ai browser requests --filter api --clear`
 5. For deep debugging: record a trace:
-   - `dmms-ai browser trace start`
+   - `dryads-ai browser trace start`
    - reproduce the issue
-   - `dmms-ai browser trace stop` (prints `TRACE:<path>`)
+   - `dryads-ai browser trace stop` (prints `TRACE:<path>`)
 
 ## JSON output
 
@@ -527,10 +527,10 @@ When an action fails (e.g. “not visible”, “strict mode violation”, “co
 Examples:
 
 ```bash
-dmms-ai browser status --json
-dmms-ai browser snapshot --interactive --json
-dmms-ai browser requests --filter api --json
-dmms-ai browser cookies --json
+dryads-ai browser status --json
+dryads-ai browser snapshot --interactive --json
+dryads-ai browser requests --filter api --json
+dryads-ai browser cookies --json
 ```
 
 Role snapshots in JSON include `refs` plus a small `stats` block (lines/chars/refs/interactive) so tools can reason about payload size and density.
@@ -553,8 +553,8 @@ These are useful for “make the site behave like X” workflows:
 
 ## Security & privacy
 
-- The dmms-ai browser profile may contain logged-in sessions; treat it as sensitive.
-- `browser act kind=evaluate` / `dmms-ai browser evaluate` and `wait --fn`
+- The dryads-ai browser profile may contain logged-in sessions; treat it as sensitive.
+- `browser act kind=evaluate` / `dryads-ai browser evaluate` and `wait --fn`
   execute arbitrary JavaScript in the page context. Prompt injection can steer
   this. Disable it with `browser.evaluateEnabled=false` if you do not need it.
 - For logins and anti-bot notes (X/Twitter, etc.), see [Browser login + X/Twitter posting](/tools/browser-login).
@@ -578,7 +578,7 @@ How it maps:
 - `browser act` uses the snapshot `ref` IDs to click/type/drag/select.
 - `browser screenshot` captures pixels (full page or element).
 - `browser` accepts:
-  - `profile` to choose a named browser profile (dmms-ai, chrome, or remote CDP).
+  - `profile` to choose a named browser profile (dryads-ai, chrome, or remote CDP).
   - `target` (`sandbox` | `host` | `node`) to select where the browser lives.
   - In sandboxed sessions, `target: "host"` requires `agents.defaults.sandbox.browser.allowHostControl=true`.
   - If `target` is omitted: sandboxed sessions default to `sandbox`, non-sandbox sessions default to `host`.

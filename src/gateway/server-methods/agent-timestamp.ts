@@ -1,5 +1,5 @@
 import { resolveUserTimezone } from "../../agents/date-time.js";
-import type { DmmsAiConfig } from "../../config/types.js";
+import type { DryadsAiConfig } from "../../config/types.js";
 import { formatZonedTimestamp } from "../../infra/format-time/format-datetime.ts";
 
 /**
@@ -71,9 +71,9 @@ export function injectTimestamp(message: string, opts?: TimestampInjectionOption
 }
 
 /**
- * Build TimestampInjectionOptions from an DmmsAiConfig.
+ * Build TimestampInjectionOptions from an DryadsAiConfig.
  */
-export function timestampOptsFromConfig(cfg: DmmsAiConfig): TimestampInjectionOptions {
+export function timestampOptsFromConfig(cfg: DryadsAiConfig): TimestampInjectionOptions {
   return {
     timezone: resolveUserTimezone(cfg.agents?.defaults?.userTimezone),
   };

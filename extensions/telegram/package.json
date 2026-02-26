@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/telegram",
+  "name": "@dryads-ai/telegram",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Telegram channel plugin",
+  "description": "Dryads AI Telegram channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

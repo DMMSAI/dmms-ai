@@ -6,7 +6,7 @@
 set -euo pipefail
 
 # Configuration
-SUBSYSTEM="ai.dmmsai"
+SUBSYSTEM="ai.dryadsai"
 DEFAULT_LEVEL="info"
 
 # Colors for output
@@ -48,17 +48,17 @@ SHOW_HELP=false
 # Function to show usage
 show_usage() {
     cat << EOF
-clawlog - DMMS AI Logging Utility
+clawlog - Dryads AI Logging Utility
 
 USAGE:
     clawlog [OPTIONS]
 
 DESCRIPTION:
-    View DMMS AI logs with full details (bypasses Apple's privacy redaction).
+    View Dryads AI logs with full details (bypasses Apple's privacy redaction).
     Requires sudo access configured for /usr/bin/log command.
 
 LOG FLOW ARCHITECTURE:
-    DMMS AI logs flow through the macOS unified log (subsystem: ai.dmmsai).
+    Dryads AI logs flow through the macOS unified log (subsystem: ai.dryadsai).
 
 LOG CATEGORIES (examples):
     • voicewake           - Voice wake detection/test harness

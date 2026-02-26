@@ -151,7 +151,7 @@ describe("getHealthSnapshot", () => {
   });
 
   it("treats telegram.tokenFile as configured", async () => {
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-health-"));
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-health-"));
     const tokenFile = path.join(tmpDir, "telegram-token");
     fs.writeFileSync(tokenFile, "t-file\n", "utf-8");
     const { calls, telegram } = await runSuccessfulTelegramProbe(

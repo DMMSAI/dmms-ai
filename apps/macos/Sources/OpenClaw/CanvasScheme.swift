@@ -1,7 +1,7 @@
 import Foundation
 
 enum CanvasScheme {
-    static let scheme = "dmms-ai-canvas"
+    static let scheme = "dryads-ai-canvas"
     static let allSchemes = [scheme]
 
     static func makeURL(session: String, path: String? = nil) -> URL? {

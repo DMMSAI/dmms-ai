@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   loadConfig,
   resolveConfigPath,
@@ -8,7 +8,7 @@ import {
 import { buildCleanupPlan } from "./cleanup-utils.js";
 
 export function resolveCleanupPlanFromDisk(): {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   stateDir: string;
   configPath: string;
   oauthDir: string;

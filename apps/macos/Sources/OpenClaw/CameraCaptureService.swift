@@ -1,8 +1,8 @@
 import AVFoundation
 import CoreGraphics
 import Foundation
-import DmmsAiIPC
-import DmmsAiKit
+import DryadsAiIPC
+import DryadsAiKit
 import OSLog
 
 actor CameraCaptureService {
@@ -36,7 +36,7 @@ actor CameraCaptureService {
         }
     }
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "camera")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "camera")
 
     func listDevices() -> [CameraDeviceInfo] {
         Self.availableCameras().map { device in
@@ -170,7 +170,7 @@ actor CameraCaptureService {
         await Self.warmUpCaptureSession()
 
         let tmpMovURL = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-camera-\(UUID().uuidString).mov")
+            .appendingPathComponent("dryads-ai-camera-\(UUID().uuidString).mov")
         defer { try? FileManager().removeItem(at: tmpMovURL) }
 
         let outputURL: URL = {
@@ -178,7 +178,7 @@ actor CameraCaptureService {
                 return URL(fileURLWithPath: outPath)
             }
             return FileManager().temporaryDirectory
-                .appendingPathComponent("dmms-ai-camera-\(UUID().uuidString).mp4")
+                .appendingPathComponent("dryads-ai-camera-\(UUID().uuidString).mp4")
         }()
 
         // Ensure we don't fail exporting due to an existing file.

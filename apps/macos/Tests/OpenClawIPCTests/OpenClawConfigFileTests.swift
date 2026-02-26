@@ -1,18 +1,18 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
-struct DmmsAiConfigFileTests {
+struct DryadsAiConfigFileTests {
     @Test
     func configPathRespectsEnvOverride() async {
         let override = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-config-\(UUID().uuidString)")
-            .appendingPathComponent("dmms-ai.json")
+            .appendingPathComponent("dryads-ai-config-\(UUID().uuidString)")
+            .appendingPathComponent("dryads-ai.json")
             .path
 
-        await TestIsolation.withEnvValues(["DMMS_AI_CONFIG_PATH": override]) {
-            #expect(DmmsAiConfigFile.url().path == override)
+        await TestIsolation.withEnvValues(["DRYADS_AI_CONFIG_PATH": override]) {
+            #expect(DryadsAiConfigFile.url().path == override)
         }
     }
 
@@ -20,22 +20,22 @@ struct DmmsAiConfigFileTests {
     @Test
     func remoteGatewayPortParsesAndMatchesHost() async {
         let override = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-config-\(UUID().uuidString)")
-            .appendingPathComponent("dmms-ai.json")
+            .appendingPathComponent("dryads-ai-config-\(UUID().uuidString)")
+            .appendingPathComponent("dryads-ai.json")
             .path
 
-        await TestIsolation.withEnvValues(["DMMS_AI_CONFIG_PATH": override]) {
-            DmmsAiConfigFile.saveDict([
+        await TestIsolation.withEnvValues(["DRYADS_AI_CONFIG_PATH": override]) {
+            DryadsAiConfigFile.saveDict([
                 "gateway": [
                     "remote": [
                         "url": "ws://gateway.ts.net:19999",
                     ],
                 ],
             ])
-            #expect(DmmsAiConfigFile.remoteGatewayPort() == 19999)
-            #expect(DmmsAiConfigFile.remoteGatewayPort(matchingHost: "gateway.ts.net") == 19999)
-            #expect(DmmsAiConfigFile.remoteGatewayPort(matchingHost: "gateway") == 19999)
-            #expect(DmmsAiConfigFile.remoteGatewayPort(matchingHost: "other.ts.net") == nil)
+            #expect(DryadsAiConfigFile.remoteGatewayPort() == 19999)
+            #expect(DryadsAiConfigFile.remoteGatewayPort(matchingHost: "gateway.ts.net") == 19999)
+            #expect(DryadsAiConfigFile.remoteGatewayPort(matchingHost: "gateway") == 19999)
+            #expect(DryadsAiConfigFile.remoteGatewayPort(matchingHost: "other.ts.net") == nil)
         }
     }
 
@@ -43,20 +43,20 @@ struct DmmsAiConfigFileTests {
     @Test
     func setRemoteGatewayUrlPreservesScheme() async {
         let override = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-config-\(UUID().uuidString)")
-            .appendingPathComponent("dmms-ai.json")
+            .appendingPathComponent("dryads-ai-config-\(UUID().uuidString)")
+            .appendingPathComponent("dryads-ai.json")
             .path
 
-        await TestIsolation.withEnvValues(["DMMS_AI_CONFIG_PATH": override]) {
-            DmmsAiConfigFile.saveDict([
+        await TestIsolation.withEnvValues(["DRYADS_AI_CONFIG_PATH": override]) {
+            DryadsAiConfigFile.saveDict([
                 "gateway": [
                     "remote": [
                         "url": "wss://old-host:111",
                     ],
                 ],
             ])
-            DmmsAiConfigFile.setRemoteGatewayUrl(host: "new-host", port: 2222)
-            let root = DmmsAiConfigFile.loadDict()
+            DryadsAiConfigFile.setRemoteGatewayUrl(host: "new-host", port: 2222)
+            let root = DryadsAiConfigFile.loadDict()
             let url = ((root["gateway"] as? [String: Any])?["remote"] as? [String: Any])?["url"] as? String
             #expect(url == "wss://new-host:2222")
         }
@@ -65,15 +65,15 @@ struct DmmsAiConfigFileTests {
     @Test
     func stateDirOverrideSetsConfigPath() async {
         let dir = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-state-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("dryads-ai-state-\(UUID().uuidString)", isDirectory: true)
             .path
 
         await TestIsolation.withEnvValues([
-            "DMMS_AI_CONFIG_PATH": nil,
-            "DMMS_AI_STATE_DIR": dir,
+            "DRYADS_AI_CONFIG_PATH": nil,
+            "DRYADS_AI_STATE_DIR": dir,
         ]) {
-            #expect(DmmsAiConfigFile.stateDirURL().path == dir)
-            #expect(DmmsAiConfigFile.url().path == "\(dir)/dmms-ai.json")
+            #expect(DryadsAiConfigFile.stateDirURL().path == dir)
+            #expect(DryadsAiConfigFile.url().path == "\(dir)/dryads-ai.json")
         }
     }
 
@@ -81,17 +81,17 @@ struct DmmsAiConfigFileTests {
     @Test
     func saveDictAppendsConfigAuditLog() async throws {
         let stateDir = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-state-\(UUID().uuidString)", isDirectory: true)
-        let configPath = stateDir.appendingPathComponent("dmms-ai.json")
+            .appendingPathComponent("dryads-ai-state-\(UUID().uuidString)", isDirectory: true)
+        let configPath = stateDir.appendingPathComponent("dryads-ai.json")
         let auditPath = stateDir.appendingPathComponent("logs/config-audit.jsonl")
 
         defer { try? FileManager().removeItem(at: stateDir) }
 
         try await TestIsolation.withEnvValues([
-            "DMMS_AI_STATE_DIR": stateDir.path,
-            "DMMS_AI_CONFIG_PATH": configPath.path,
+            "DRYADS_AI_STATE_DIR": stateDir.path,
+            "DRYADS_AI_CONFIG_PATH": configPath.path,
         ]) {
-            DmmsAiConfigFile.saveDict([
+            DryadsAiConfigFile.saveDict([
                 "gateway": ["mode": "local"],
             ])
 
@@ -109,7 +109,7 @@ struct DmmsAiConfigFileTests {
                 return
             }
             let auditRoot = try JSONSerialization.jsonObject(with: Data(last.utf8)) as? [String: Any]
-            #expect(auditRoot?["source"] as? String == "macos-dmms-ai-config-file")
+            #expect(auditRoot?["source"] as? String == "macos-dryads-ai-config-file")
             #expect(auditRoot?["event"] as? String == "config.write")
             #expect(auditRoot?["result"] as? String == "success")
             #expect(auditRoot?["configPath"] as? String == configPath.path)

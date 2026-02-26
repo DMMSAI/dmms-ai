@@ -6,7 +6,7 @@ import {
   stopDebugPolling,
 } from "./app-polling.ts";
 import { scheduleChatScroll, scheduleLogsScroll } from "./app-scroll.ts";
-import type { DmmsAiApp } from "./app.ts";
+import type { DryadsAiApp } from "./app.ts";
 import { loadAgentIdentities, loadAgentIdentity } from "./controllers/agent-identity.ts";
 import { loadAgentSkills } from "./controllers/agent-skills.ts";
 import { loadAgents } from "./controllers/agents.ts";
@@ -186,33 +186,33 @@ export async function refreshActiveTab(host: SettingsHost) {
     await loadChannelsTab(host);
   }
   if (host.tab === "instances") {
-    await loadPresence(host as unknown as DmmsAiApp);
+    await loadPresence(host as unknown as DryadsAiApp);
   }
   if (host.tab === "sessions") {
-    await loadSessions(host as unknown as DmmsAiApp);
+    await loadSessions(host as unknown as DryadsAiApp);
   }
   if (host.tab === "cron") {
     await loadCron(host);
   }
   if (host.tab === "skills") {
-    await loadSkills(host as unknown as DmmsAiApp);
+    await loadSkills(host as unknown as DryadsAiApp);
   }
   if (host.tab === "agents") {
-    await loadAgents(host as unknown as DmmsAiApp);
-    await loadConfig(host as unknown as DmmsAiApp);
+    await loadAgents(host as unknown as DryadsAiApp);
+    await loadConfig(host as unknown as DryadsAiApp);
     const agentIds = host.agentsList?.agents?.map((entry) => entry.id) ?? [];
     if (agentIds.length > 0) {
-      void loadAgentIdentities(host as unknown as DmmsAiApp, agentIds);
+      void loadAgentIdentities(host as unknown as DryadsAiApp, agentIds);
     }
     const agentId =
       host.agentsSelectedId ?? host.agentsList?.defaultId ?? host.agentsList?.agents?.[0]?.id;
     if (agentId) {
-      void loadAgentIdentity(host as unknown as DmmsAiApp, agentId);
+      void loadAgentIdentity(host as unknown as DryadsAiApp, agentId);
       if (host.agentsPanel === "skills") {
-        void loadAgentSkills(host as unknown as DmmsAiApp, agentId);
+        void loadAgentSkills(host as unknown as DryadsAiApp, agentId);
       }
       if (host.agentsPanel === "channels") {
-        void loadChannels(host as unknown as DmmsAiApp, false);
+        void loadChannels(host as unknown as DryadsAiApp, false);
       }
       if (host.agentsPanel === "cron") {
         void loadCron(host);
@@ -220,10 +220,10 @@ export async function refreshActiveTab(host: SettingsHost) {
     }
   }
   if (host.tab === "nodes") {
-    await loadNodes(host as unknown as DmmsAiApp);
-    await loadDevices(host as unknown as DmmsAiApp);
-    await loadConfig(host as unknown as DmmsAiApp);
-    await loadExecApprovals(host as unknown as DmmsAiApp);
+    await loadNodes(host as unknown as DryadsAiApp);
+    await loadDevices(host as unknown as DryadsAiApp);
+    await loadConfig(host as unknown as DryadsAiApp);
+    await loadExecApprovals(host as unknown as DryadsAiApp);
   }
   if (host.tab === "chat") {
     await refreshChat(host as unknown as Parameters<typeof refreshChat>[0]);
@@ -233,16 +233,16 @@ export async function refreshActiveTab(host: SettingsHost) {
     );
   }
   if (host.tab === "config") {
-    await loadConfigSchema(host as unknown as DmmsAiApp);
-    await loadConfig(host as unknown as DmmsAiApp);
+    await loadConfigSchema(host as unknown as DryadsAiApp);
+    await loadConfig(host as unknown as DryadsAiApp);
   }
   if (host.tab === "debug") {
-    await loadDebug(host as unknown as DmmsAiApp);
+    await loadDebug(host as unknown as DryadsAiApp);
     host.eventLog = host.eventLogBuffer;
   }
   if (host.tab === "logs") {
     host.logsAtBottom = true;
-    await loadLogs(host as unknown as DmmsAiApp, { reset: true });
+    await loadLogs(host as unknown as DryadsAiApp, { reset: true });
     scheduleLogsScroll(host as unknown as Parameters<typeof scheduleLogsScroll>[0], true);
   }
 }
@@ -251,7 +251,7 @@ export function inferBasePath() {
   if (typeof window === "undefined") {
     return "";
   }
-  const configured = window.__DMMS_AI_CONTROL_UI_BASE_PATH__;
+  const configured = window.__DRYADS_AI_CONTROL_UI_BASE_PATH__;
   if (typeof configured === "string" && configured.trim()) {
     return normalizeBasePath(configured);
   }
@@ -404,26 +404,26 @@ export function syncUrlWithSessionKey(host: SettingsHost, sessionKey: string, re
 
 export async function loadOverview(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as DmmsAiApp, false),
-    loadPresence(host as unknown as DmmsAiApp),
-    loadSessions(host as unknown as DmmsAiApp),
-    loadCronStatus(host as unknown as DmmsAiApp),
-    loadDebug(host as unknown as DmmsAiApp),
+    loadChannels(host as unknown as DryadsAiApp, false),
+    loadPresence(host as unknown as DryadsAiApp),
+    loadSessions(host as unknown as DryadsAiApp),
+    loadCronStatus(host as unknown as DryadsAiApp),
+    loadDebug(host as unknown as DryadsAiApp),
   ]);
 }
 
 export async function loadChannelsTab(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as DmmsAiApp, true),
-    loadConfigSchema(host as unknown as DmmsAiApp),
-    loadConfig(host as unknown as DmmsAiApp),
+    loadChannels(host as unknown as DryadsAiApp, true),
+    loadConfigSchema(host as unknown as DryadsAiApp),
+    loadConfig(host as unknown as DryadsAiApp),
   ]);
 }
 
 export async function loadCron(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as DmmsAiApp, false),
-    loadCronStatus(host as unknown as DmmsAiApp),
-    loadCronJobs(host as unknown as DmmsAiApp),
+    loadChannels(host as unknown as DryadsAiApp, false),
+    loadCronStatus(host as unknown as DryadsAiApp),
+    loadCronJobs(host as unknown as DryadsAiApp),
   ]);
 }

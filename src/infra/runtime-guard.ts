@@ -88,11 +88,11 @@ export function assertSupportedRuntime(
 
   runtime.error(
     [
-      "dmms-ai requires Node >=22.12.0.",
+      "dryads-ai requires Node >=22.12.0.",
       `Detected: ${runtimeLabel} (exec: ${execLabel}).`,
       `PATH searched: ${details.pathEnv}`,
       "Install Node: https://nodejs.org/en/download",
-      "Upgrade Node and re-run dmms-ai.",
+      "Upgrade Node and re-run dryads-ai.",
     ].join("\n"),
   );
   runtime.exit(1);

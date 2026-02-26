@@ -37,7 +37,7 @@ export function createWizardPrompter(
 }
 
 export async function setupAuthTestEnv(
-  prefix = "dmms-ai-auth-",
+  prefix = "dryads-ai-auth-",
   options?: { agentSubdir?: string },
 ): Promise<{
   stateDir: string;
@@ -45,8 +45,8 @@ export async function setupAuthTestEnv(
 }> {
   const stateDir = await makeTempWorkspace(prefix);
   const agentDir = path.join(stateDir, options?.agentSubdir ?? "agent");
-  process.env.DMMS_AI_STATE_DIR = stateDir;
-  process.env.DMMS_AI_AGENT_DIR = agentDir;
+  process.env.DRYADS_AI_STATE_DIR = stateDir;
+  process.env.DRYADS_AI_AGENT_DIR = agentDir;
   process.env.PI_CODING_AGENT_DIR = agentDir;
   await fs.mkdir(agentDir, { recursive: true });
   return { stateDir, agentDir };
@@ -74,10 +74,10 @@ export function createAuthTestLifecycle(envKeys: string[]): AuthTestLifecycle {
   };
 }
 
-export function requireDmmsAiAgentDir(): string {
-  const agentDir = process.env.DMMS_AI_AGENT_DIR;
+export function requireDryadsAiAgentDir(): string {
+  const agentDir = process.env.DRYADS_AI_AGENT_DIR;
   if (!agentDir) {
-    throw new Error("DMMS_AI_AGENT_DIR not set");
+    throw new Error("DRYADS_AI_AGENT_DIR not set");
   }
   return agentDir;
 }

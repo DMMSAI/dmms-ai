@@ -8,7 +8,7 @@ import {
   resolveConfiguredModelRef,
   resolveDefaultModelForAgent,
 } from "../agents/model-selection.js";
-import { type DmmsAiConfig, loadConfig } from "../config/config.js";
+import { type DryadsAiConfig, loadConfig } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import {
   buildGroupDisplayName,
@@ -96,7 +96,7 @@ function isWorkspaceRelativePath(value: string): boolean {
 }
 
 function resolveIdentityAvatarUrl(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   agentId: string,
   avatar: string | undefined,
 ): string | undefined {
@@ -317,7 +317,7 @@ function listExistingAgentIdsFromDisk(): string[] {
   }
 }
 
-function listConfiguredAgentIds(cfg: DmmsAiConfig): string[] {
+function listConfiguredAgentIds(cfg: DryadsAiConfig): string[] {
   const agents = cfg.agents?.list ?? [];
   if (agents.length > 0) {
     const ids = new Set<string>();
@@ -349,7 +349,7 @@ function listConfiguredAgentIds(cfg: DmmsAiConfig): string[] {
   return sorted;
 }
 
-export function listAgentsForGateway(cfg: DmmsAiConfig): {
+export function listAgentsForGateway(cfg: DryadsAiConfig): {
   defaultId: string;
   mainKey: string;
   scope: SessionScope;
@@ -418,11 +418,14 @@ function canonicalizeSessionKeyForAgent(agentId: string, key: string): string {
   return `agent:${normalizeAgentId(agentId)}:${lowered}`;
 }
 
-function resolveDefaultStoreAgentId(cfg: DmmsAiConfig): string {
+function resolveDefaultStoreAgentId(cfg: DryadsAiConfig): string {
   return normalizeAgentId(resolveDefaultAgentId(cfg));
 }
 
-export function resolveSessionStoreKey(params: { cfg: DmmsAiConfig; sessionKey: string }): string {
+export function resolveSessionStoreKey(params: {
+  cfg: DryadsAiConfig;
+  sessionKey: string;
+}): string {
   const raw = params.sessionKey.trim();
   if (!raw) {
     return raw;
@@ -456,7 +459,7 @@ export function resolveSessionStoreKey(params: { cfg: DmmsAiConfig; sessionKey: 
   return canonicalizeSessionKeyForAgent(agentId, lowered);
 }
 
-function resolveSessionStoreAgentId(cfg: DmmsAiConfig, canonicalKey: string): string {
+function resolveSessionStoreAgentId(cfg: DryadsAiConfig, canonicalKey: string): string {
   if (canonicalKey === "global" || canonicalKey === "unknown") {
     return resolveDefaultStoreAgentId(cfg);
   }
@@ -468,7 +471,7 @@ function resolveSessionStoreAgentId(cfg: DmmsAiConfig, canonicalKey: string): st
 }
 
 export function canonicalizeSpawnedByForAgent(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   agentId: string,
   spawnedBy?: string,
 ): string | undefined {
@@ -493,7 +496,7 @@ export function canonicalizeSpawnedByForAgent(
 }
 
 export function resolveGatewaySessionStoreTarget(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   key: string;
   scanLegacyKeys?: boolean;
   store?: Record<string, SessionEntry>;
@@ -549,7 +552,7 @@ export function resolveGatewaySessionStoreTarget(params: {
 
 // Merge with existing entry based on latest timestamp to ensure data consistency and avoid overwriting with less complete data.
 function mergeSessionEntryIntoCombined(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   combined: Record<string, SessionEntry>;
   entry: SessionEntry;
   agentId: string;
@@ -577,7 +580,7 @@ function mergeSessionEntryIntoCombined(params: {
   }
 }
 
-export function loadCombinedSessionStoreForGateway(cfg: DmmsAiConfig): {
+export function loadCombinedSessionStoreForGateway(cfg: DryadsAiConfig): {
   storePath: string;
   store: Record<string, SessionEntry>;
 } {
@@ -622,7 +625,7 @@ export function loadCombinedSessionStoreForGateway(cfg: DmmsAiConfig): {
   return { storePath, store: combined };
 }
 
-export function getSessionDefaults(cfg: DmmsAiConfig): GatewaySessionsDefaults {
+export function getSessionDefaults(cfg: DryadsAiConfig): GatewaySessionsDefaults {
   const resolved = resolveConfiguredModelRef({
     cfg,
     defaultProvider: DEFAULT_PROVIDER,
@@ -640,7 +643,7 @@ export function getSessionDefaults(cfg: DmmsAiConfig): GatewaySessionsDefaults {
 }
 
 export function resolveSessionModelRef(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   entry?:
     | SessionEntry
     | Pick<SessionEntry, "model" | "modelProvider" | "modelOverride" | "providerOverride">,
@@ -693,7 +696,7 @@ export function resolveSessionModelRef(
 }
 
 export function listSessionsFromStore(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   storePath: string;
   store: Record<string, SessionEntry>;
   opts: import("./protocol/index.js").SessionsListParams;

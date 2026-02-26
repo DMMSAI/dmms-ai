@@ -42,12 +42,12 @@ describe("rewriteUpdateFlagArgv", () => {
 
 describe("shouldRegisterPrimarySubcommand", () => {
   it("skips eager primary registration for help/version invocations", () => {
-    expect(shouldRegisterPrimarySubcommand(["node", "dmms-ai", "status", "--help"])).toBe(false);
-    expect(shouldRegisterPrimarySubcommand(["node", "dmms-ai", "-V"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "dryads-ai", "status", "--help"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "dryads-ai", "-V"])).toBe(false);
   });
 
   it("keeps eager primary registration for regular command runs", () => {
-    expect(shouldRegisterPrimarySubcommand(["node", "dmms-ai", "status"])).toBe(true);
+    expect(shouldRegisterPrimarySubcommand(["node", "dryads-ai", "status"])).toBe(true);
   });
 });
 
@@ -55,7 +55,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for root help/version", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "dmms-ai", "--help"],
+        argv: ["node", "dryads-ai", "--help"],
         primary: null,
         hasBuiltinPrimary: false,
       }),
@@ -65,7 +65,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for builtin subcommand help", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "dmms-ai", "config", "--help"],
+        argv: ["node", "dryads-ai", "config", "--help"],
         primary: "config",
         hasBuiltinPrimary: true,
       }),
@@ -75,7 +75,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for builtin command runs", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "dmms-ai", "sessions", "--json"],
+        argv: ["node", "dryads-ai", "sessions", "--json"],
         primary: "sessions",
         hasBuiltinPrimary: true,
       }),
@@ -85,7 +85,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("keeps plugin registration for non-builtin help", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "dmms-ai", "voicecall", "--help"],
+        argv: ["node", "dryads-ai", "voicecall", "--help"],
         primary: "voicecall",
         hasBuiltinPrimary: false,
       }),
@@ -95,7 +95,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("keeps plugin registration for non-builtin command runs", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "dmms-ai", "voicecall", "status"],
+        argv: ["node", "dryads-ai", "voicecall", "status"],
         primary: "voicecall",
         hasBuiltinPrimary: false,
       }),
@@ -105,19 +105,19 @@ describe("shouldSkipPluginCommandRegistration", () => {
 
 describe("shouldEnsureCliPath", () => {
   it("skips path bootstrap for help/version invocations", () => {
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "--help"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "-V"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "--help"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "-V"])).toBe(false);
   });
 
   it("skips path bootstrap for read-only fast paths", () => {
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "status"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "sessions", "--json"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "config", "get", "update"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "models", "status", "--json"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "status"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "sessions", "--json"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "config", "get", "update"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "models", "status", "--json"])).toBe(false);
   });
 
   it("keeps path bootstrap for mutating or unknown commands", () => {
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "message", "send"])).toBe(true);
-    expect(shouldEnsureCliPath(["node", "dmms-ai", "voicecall", "status"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "message", "send"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "dryads-ai", "voicecall", "status"])).toBe(true);
   });
 });

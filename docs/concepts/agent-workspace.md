@@ -11,7 +11,7 @@ title: "Agent Workspace"
 The workspace is the agent's home. It is the only working directory used for
 file tools and for workspace context. Keep it private and treat it as memory.
 
-This is separate from `~/.dmms-ai/`, which stores config, credentials, and
+This is separate from `~/.dryads-ai/`, which stores config, credentials, and
 sessions.
 
 **Important:** the workspace is the **default cwd**, not a hard sandbox. Tools
@@ -19,24 +19,24 @@ resolve relative paths against the workspace, but absolute paths can still reach
 elsewhere on the host unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) (and/or per‑agent sandbox config).
 When sandboxing is enabled and `workspaceAccess` is not `"rw"`, tools operate
-inside a sandbox workspace under `~/.dmms-ai/sandboxes`, not your host workspace.
+inside a sandbox workspace under `~/.dryads-ai/sandboxes`, not your host workspace.
 
 ## Default location
 
-- Default: `~/.dmms-ai/workspace`
-- If `DMMS_AI_PROFILE` is set and not `"default"`, the default becomes
-  `~/.dmms-ai/workspace-<profile>`.
-- Override in `~/.dmms-ai/dmms-ai.json`:
+- Default: `~/.dryads-ai/workspace`
+- If `DRYADS_AI_PROFILE` is set and not `"default"`, the default becomes
+  `~/.dryads-ai/workspace-<profile>`.
+- Override in `~/.dryads-ai/dryads-ai.json`:
 
 ```json5
 {
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
   },
 }
 ```
 
-`dmms-ai onboard`, `dmms-ai configure`, or `dmms-ai setup` will create the
+`dryads-ai onboard`, `dryads-ai configure`, or `dryads-ai setup` will create the
 workspace and seed the bootstrap files if they are missing.
 
 If you already manage the workspace files yourself, you can disable bootstrap
@@ -48,20 +48,20 @@ file creation:
 
 ## Extra workspace folders
 
-Older installs may have created `~/dmms-ai`. Keeping multiple workspace
+Older installs may have created `~/dryads-ai`. Keeping multiple workspace
 directories around can cause confusing auth or state drift, because only one
 workspace is active at a time.
 
 **Recommendation:** keep a single active workspace. If you no longer use the
-extra folders, archive or move them to Trash (for example `trash ~/dmms-ai`).
+extra folders, archive or move them to Trash (for example `trash ~/dryads-ai`).
 If you intentionally keep multiple workspaces, make sure
 `agents.defaults.workspace` points to the active one.
 
-`dmms-ai doctor` warns when it detects extra workspace directories.
+`dryads-ai doctor` warns when it detects extra workspace directories.
 
 ## Workspace file map (what each file means)
 
-These are the standard files DMMS AI expects inside the workspace:
+These are the standard files Dryads AI expects inside the workspace:
 
 - `AGENTS.md`
   - Operating instructions for the agent and how it should use memory.
@@ -114,21 +114,21 @@ See [Memory](/concepts/memory) for the workflow and automatic memory flush.
 - `canvas/` (optional)
   - Canvas UI files for node displays (for example `canvas/index.html`).
 
-If any bootstrap file is missing, DMMS AI injects a "missing file" marker into
+If any bootstrap file is missing, Dryads AI injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust limits with `agents.defaults.bootstrapMaxChars` (default: 20000) and
 `agents.defaults.bootstrapTotalMaxChars` (default: 150000).
-`dmms-ai setup` can recreate missing defaults without overwriting existing
+`dryads-ai setup` can recreate missing defaults without overwriting existing
 files.
 
 ## What is NOT in the workspace
 
-These live under `~/.dmms-ai/` and should NOT be committed to the workspace repo:
+These live under `~/.dryads-ai/` and should NOT be committed to the workspace repo:
 
-- `~/.dmms-ai/dmms-ai.json` (config)
-- `~/.dmms-ai/credentials/` (OAuth tokens, API keys)
-- `~/.dmms-ai/agents/<agentId>/sessions/` (session transcripts + metadata)
-- `~/.dmms-ai/skills/` (managed skills)
+- `~/.dryads-ai/dryads-ai.json` (config)
+- `~/.dryads-ai/credentials/` (OAuth tokens, API keys)
+- `~/.dryads-ai/agents/<agentId>/sessions/` (session transcripts + metadata)
+- `~/.dryads-ai/skills/` (managed skills)
 
 If you need to migrate sessions or config, copy them separately and keep them
 out of version control.
@@ -147,7 +147,7 @@ If git is installed, brand-new workspaces are initialized automatically. If this
 workspace is not already a repo, run:
 
 ```bash
-cd ~/.dmms-ai/workspace
+cd ~/.dryads-ai/workspace
 git init
 git add AGENTS.md SOUL.md TOOLS.md IDENTITY.md USER.md HEARTBEAT.md memory/
 git commit -m "Add agent workspace"
@@ -172,7 +172,7 @@ Option B: GitHub CLI (`gh`)
 
 ```bash
 gh auth login
-gh repo create dmms-ai-workspace --private --source . --remote origin --push
+gh repo create dryads-ai-workspace --private --source . --remote origin --push
 ```
 
 Option C: GitLab web UI
@@ -202,11 +202,11 @@ git push
 Even in a private repo, avoid storing secrets in the workspace:
 
 - API keys, OAuth tokens, passwords, or private credentials.
-- Anything under `~/.dmms-ai/`.
+- Anything under `~/.dryads-ai/`.
 - Raw dumps of chats or sensitive attachments.
 
 If you must store sensitive references, use placeholders and keep the real
-secret elsewhere (password manager, environment variables, or `~/.dmms-ai/`).
+secret elsewhere (password manager, environment variables, or `~/.dryads-ai/`).
 
 Suggested `.gitignore` starter:
 
@@ -220,10 +220,10 @@ Suggested `.gitignore` starter:
 
 ## Moving the workspace to a new machine
 
-1. Clone the repo to the desired path (default `~/.dmms-ai/workspace`).
-2. Set `agents.defaults.workspace` to that path in `~/.dmms-ai/dmms-ai.json`.
-3. Run `dmms-ai setup --workspace <path>` to seed any missing files.
-4. If you need sessions, copy `~/.dmms-ai/agents/<agentId>/sessions/` from the
+1. Clone the repo to the desired path (default `~/.dryads-ai/workspace`).
+2. Set `agents.defaults.workspace` to that path in `~/.dryads-ai/dryads-ai.json`.
+3. Run `dryads-ai setup --workspace <path>` to seed any missing files.
+4. If you need sessions, copy `~/.dryads-ai/agents/<agentId>/sessions/` from the
    old machine separately.
 
 ## Advanced notes

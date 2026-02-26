@@ -1,7 +1,7 @@
 import CoreLocation
 import Testing
 
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite("PermissionManager Location")
 struct PermissionManagerLocationTests {

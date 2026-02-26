@@ -5,7 +5,7 @@ import CoreGraphics
 import CoreLocation
 import Foundation
 import Observation
-import DmmsAiIPC
+import DryadsAiIPC
 import Speech
 import UserNotifications
 
@@ -373,14 +373,14 @@ final class LocationPermissionRequester: NSObject, CLLocationManagerDelegate {
 }
 
 enum AppleScriptPermission {
-    private static let logger = Logger(subsystem: "ai.dmmsai", category: "AppleScriptPermission")
+    private static let logger = Logger(subsystem: "ai.dryadsai", category: "AppleScriptPermission")
 
     /// Sends a benign AppleScript to Terminal to verify Automation permission.
     @MainActor
     static func isAuthorized() -> Bool {
         let script = """
         tell application "Terminal"
-            return "dmms-ai-ok"
+            return "dryads-ai-ok"
         end tell
         """
 

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai memory` (status/index/search)"
+summary: "CLI reference for `dryads-ai memory` (status/index/search)"
 read_when:
   - You want to index or search semantic memory
   - You’re debugging memory availability or indexing
 title: "memory"
 ---
 
-# `dmms-ai memory`
+# `dryads-ai memory`
 
 Manage semantic memory indexing and search.
 Provided by the active memory plugin (default: `memory-core`; set `plugins.slots.memory = "none"` to disable).
@@ -19,15 +19,15 @@ Related:
 ## Examples
 
 ```bash
-dmms-ai memory status
-dmms-ai memory status --deep
-dmms-ai memory status --deep --index
-dmms-ai memory status --deep --index --verbose
-dmms-ai memory index
-dmms-ai memory index --verbose
-dmms-ai memory search "release checklist"
-dmms-ai memory status --agent main
-dmms-ai memory index --agent main --verbose
+dryads-ai memory status
+dryads-ai memory status --deep
+dryads-ai memory status --deep --index
+dryads-ai memory status --deep --index --verbose
+dryads-ai memory index
+dryads-ai memory index --verbose
+dryads-ai memory search "release checklist"
+dryads-ai memory status --agent main
+dryads-ai memory index --agent main --verbose
 ```
 
 ## Options

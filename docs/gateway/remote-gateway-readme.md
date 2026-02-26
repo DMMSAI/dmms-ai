@@ -1,12 +1,12 @@
 ---
-summary: "SSH tunnel setup for DmmsAi.app connecting to a remote gateway"
+summary: "SSH tunnel setup for DryadsAi.app connecting to a remote gateway"
 read_when: "Connecting the macOS app to a remote gateway over SSH"
 title: "Remote Gateway Setup"
 ---
 
-# Running DmmsAi.app with a Remote Gateway
+# Running DryadsAi.app with a Remote Gateway
 
-DmmsAi.app uses SSH tunneling to connect to a remote gateway. This guide shows you how to set it up.
+DryadsAi.app uses SSH tunneling to connect to a remote gateway. This guide shows you how to set it up.
 
 ## Overview
 
@@ -14,7 +14,7 @@ DmmsAi.app uses SSH tunneling to connect to a remote gateway. This guide shows y
 flowchart TB
     subgraph Client["Client Machine"]
         direction TB
-        A["DmmsAi.app"]
+        A["DryadsAi.app"]
         B["ws://127.0.0.1:18789\n(local port)"]
         T["SSH Tunnel"]
 
@@ -58,7 +58,7 @@ ssh-copy-id -i ~/.ssh/id_rsa <REMOTE_USER>@<REMOTE_IP>
 ### Step 3: Set Gateway Token
 
 ```bash
-launchctl setenv DMMS_AI_GATEWAY_TOKEN "<your-token>"
+launchctl setenv DRYADS_AI_GATEWAY_TOKEN "<your-token>"
 ```
 
 ### Step 4: Start SSH Tunnel
@@ -67,11 +67,11 @@ launchctl setenv DMMS_AI_GATEWAY_TOKEN "<your-token>"
 ssh -N remote-gateway &
 ```
 
-### Step 5: Restart DmmsAi.app
+### Step 5: Restart DryadsAi.app
 
 ```bash
-# Quit DmmsAi.app (⌘Q), then reopen:
-open /path/to/DmmsAi.app
+# Quit DryadsAi.app (⌘Q), then reopen:
+open /path/to/DryadsAi.app
 ```
 
 The app will now connect to the remote gateway through the SSH tunnel.
@@ -119,7 +119,7 @@ The tunnel will now:
 - Restart if it crashes
 - Keep running in the background
 
-Legacy note: remove any leftover `com.dmms-ai.ssh-tunnel` LaunchAgent if present.
+Legacy note: remove any leftover `com.dryads-ai.ssh-tunnel` LaunchAgent if present.
 
 ---
 
@@ -155,4 +155,4 @@ launchctl bootout gui/$UID/bot.molt.ssh-tunnel
 | `KeepAlive`                          | Automatically restarts tunnel if it crashes                  |
 | `RunAtLoad`                          | Starts tunnel when the agent loads                           |
 
-DmmsAi.app connects to `ws://127.0.0.1:18789` on your client machine. The SSH tunnel forwards that connection to port 18789 on the remote machine where the Gateway is running.
+DryadsAi.app connects to `ws://127.0.0.1:18789` on your client machine. The SSH tunnel forwards that connection to port 18789 on the remote machine where the Gateway is running.

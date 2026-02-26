@@ -281,11 +281,11 @@ export async function runServiceRestart(params: {
     // Check for token drift before restart (service token vs config token)
     try {
       const command = await params.service.readCommand(process.env);
-      const serviceToken = command?.environment?.DMMS_AI_GATEWAY_TOKEN;
+      const serviceToken = command?.environment?.DRYADS_AI_GATEWAY_TOKEN;
       const cfg = loadConfig();
       const configToken =
         cfg.gateway?.auth?.token ||
-        process.env.DMMS_AI_GATEWAY_TOKEN ||
+        process.env.DRYADS_AI_GATEWAY_TOKEN ||
         process.env.CLAWDBOT_GATEWAY_TOKEN;
       const driftIssue = checkTokenDrift({ serviceToken, configToken });
       if (driftIssue) {

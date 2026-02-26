@@ -1,5 +1,5 @@
 import Observation
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 
 struct CronJobEditor: View {
@@ -12,11 +12,11 @@ struct CronJobEditor: View {
 
     let labelColumnWidth: CGFloat = 160
     static let introText =
-        "Create a schedule that wakes DMMS AI via the Gateway. "
+        "Create a schedule that wakes Dryads AI via the Gateway. "
             + "Use an isolated session for agent turns so your main chat stays clean."
     static let sessionTargetNote =
         "Main jobs post a system event into the current main session. "
-            + "Isolated jobs run DMMS AI in a dedicated session and can announce results to a channel."
+            + "Isolated jobs run Dryads AI in a dedicated session and can announce results to a channel."
     static let scheduleKindNote =
         "“At” runs once, “Every” repeats with a duration, “Cron” uses a 5-field Unix expression."
     static let isolatedPayloadNote =
@@ -303,7 +303,7 @@ struct CronJobEditor: View {
             Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: 14, verticalSpacing: 10) {
                 GridRow {
                     self.gridLabel("Message")
-                    TextField("What should DMMS AI do?", text: self.$agentMessage, axis: .vertical)
+                    TextField("What should Dryads AI do?", text: self.$agentMessage, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
                         .lineLimit(3...7)
                         .frame(maxWidth: .infinity)

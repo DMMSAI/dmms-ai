@@ -3,13 +3,13 @@ import type {
   ChannelOutboundAdapter,
   ChannelPlugin,
   ChannelSetupInput,
-  DmmsAiConfig,
-} from "dmms-ai/plugin-sdk";
+  DryadsAiConfig,
+} from "dryads-ai/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import { buildTlonAccountFields } from "./account-fields.js";
 import { tlonChannelConfigSchema } from "./config-schema.js";
 import { monitorTlonProvider } from "./monitor/index.js";
@@ -34,10 +34,10 @@ type TlonSetupInput = ChannelSetupInput & {
 };
 
 function applyTlonSetupConfig(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId: string;
   input: TlonSetupInput;
-}): DmmsAiConfig {
+}): DryadsAiConfig {
   const { cfg, accountId, input } = params;
   const useDefault = accountId === DEFAULT_ACCOUNT_ID;
   const namedConfig = applyAccountNameToChannelSection({
@@ -193,7 +193,7 @@ export const tlonPlugin: ChannelPlugin = {
               enabled,
             },
           },
-        } as DmmsAiConfig;
+        } as DryadsAiConfig;
       }
       return {
         ...cfg,
@@ -210,7 +210,7 @@ export const tlonPlugin: ChannelPlugin = {
             },
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     },
     deleteAccount: ({ cfg, accountId }) => {
       const useDefault = !accountId || accountId === "default";
@@ -226,7 +226,7 @@ export const tlonPlugin: ChannelPlugin = {
             ...cfg.channels,
             tlon: rest,
           },
-        } as DmmsAiConfig;
+        } as DryadsAiConfig;
       }
       // oxlint-disable-next-line no-unused-vars
       const { [accountId]: removed, ...remainingAccounts } = (cfg.channels?.tlon?.accounts ??
@@ -240,7 +240,7 @@ export const tlonPlugin: ChannelPlugin = {
             accounts: remainingAccounts,
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     },
     isConfigured: (account) => account.configured,
     describeAccount: (account) => ({

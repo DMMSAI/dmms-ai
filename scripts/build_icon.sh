@@ -2,16 +2,16 @@
 set -euo pipefail
 
 # Render the macOS .icon bundle to a padded .icns like Trimmy's pipeline.
-# Defaults target the DMMS AI assets so you can just run the script from repo root.
+# Defaults target the Dryads AI assets so you can just run the script from repo root.
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 ICON_FILE=${1:-"$ROOT_DIR/apps/macos/Icon.icon"}
-BASENAME=${2:-DMMS AI}
+BASENAME=${2:-Dryads AI}
 OUT_ROOT=${3:-"$ROOT_DIR/apps/macos/build/icon"}
 XCODE_APP=${XCODE_APP:-/Applications/Xcode.app}
 # Where the final .icns should live; override DEST_ICNS to change.
-DEST_ICNS=${DEST_ICNS:-"$ROOT_DIR/apps/macos/Sources/DMMS AI/Resources/DMMS AI.icns"}
+DEST_ICNS=${DEST_ICNS:-"$ROOT_DIR/apps/macos/Sources/Dryads AI/Resources/Dryads AI.icns"}
 
 ICTOOL="$XCODE_APP/Contents/Applications/Icon Composer.app/Contents/Executables/ictool"
 if [[ ! -x "$ICTOOL" ]]; then

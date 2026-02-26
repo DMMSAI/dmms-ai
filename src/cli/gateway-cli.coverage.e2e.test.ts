@@ -122,7 +122,7 @@ describe("gateway-cli coverage", () => {
     discoverGatewayBeacons.mockReset();
     discoverGatewayBeacons.mockResolvedValueOnce([
       {
-        instanceName: "Studio (DMMS AI)",
+        instanceName: "Studio (Dryads AI)",
         displayName: "Studio",
         domain: "local.",
         host: "studio.local",
@@ -153,10 +153,10 @@ describe("gateway-cli coverage", () => {
     discoverGatewayBeacons.mockReset();
     discoverGatewayBeacons.mockResolvedValueOnce([
       {
-        instanceName: "Studio (DMMS AI)",
+        instanceName: "Studio (Dryads AI)",
         displayName: "Studio",
-        domain: "dmms-ai.internal.",
-        host: "studio.dmms-ai.internal",
+        domain: "dryads-ai.internal.",
+        host: "studio.dryads-ai.internal",
         lanHost: "studio.local",
         tailnetDns: "studio.tailnet.ts.net",
         gatewayPort: 18789,
@@ -176,10 +176,10 @@ describe("gateway-cli coverage", () => {
     const out = runtimeLogs.join("\n");
     expect(out).toContain("Gateway Discovery");
     expect(out).toContain("Found 1 gateway(s)");
-    expect(out).toContain("- Studio dmms-ai.internal.");
+    expect(out).toContain("- Studio dryads-ai.internal.");
     expect(out).toContain("  tailnet: studio.tailnet.ts.net");
-    expect(out).toContain("  host: studio.dmms-ai.internal");
-    expect(out).toContain("  ws: ws://studio.dmms-ai.internal:18789");
+    expect(out).toContain("  host: studio.dryads-ai.internal");
+    expect(out).toContain("  ws: ws://studio.dryads-ai.internal:18789");
   });
 
   it("validates gateway discover timeout", async () => {
@@ -300,7 +300,7 @@ describe("gateway-cli coverage", () => {
   });
 
   it("uses env/config port when --port is omitted", async () => {
-    await withEnvOverride({ DMMS_AI_GATEWAY_PORT: "19001" }, async () => {
+    await withEnvOverride({ DRYADS_AI_GATEWAY_PORT: "19001" }, async () => {
       resetRuntimeCapture();
       startGatewayServer.mockClear();
 

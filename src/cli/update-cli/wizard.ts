@@ -24,7 +24,7 @@ import { updateCommand } from "./update-command.js";
 export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promise<void> {
   if (!process.stdin.isTTY) {
     defaultRuntime.error(
-      "Update wizard requires a TTY. Use `dmms-ai update --channel <stable|beta|dev>` instead.",
+      "Update wizard requires a TTY. Use `dryads-ai update --channel <stable|beta|dev>` instead.",
     );
     defaultRuntime.exit(1);
     return;
@@ -107,7 +107,7 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
         const empty = await isEmptyDir(gitDir);
         if (!empty) {
           defaultRuntime.error(
-            `DMMS_AI_GIT_DIR points at a non-git directory: ${gitDir}. Set DMMS_AI_GIT_DIR to an empty folder or an dmms-ai checkout.`,
+            `DRYADS_AI_GIT_DIR points at a non-git directory: ${gitDir}. Set DRYADS_AI_GIT_DIR to an empty folder or an dryads-ai checkout.`,
           );
           defaultRuntime.exit(1);
           return;
@@ -116,7 +116,7 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
 
       const ok = await confirm({
         message: stylePromptMessage(
-          `Create a git checkout at ${gitDir}? (override via DMMS_AI_GIT_DIR)`,
+          `Create a git checkout at ${gitDir}? (override via DRYADS_AI_GIT_DIR)`,
         ),
         initialValue: true,
       });

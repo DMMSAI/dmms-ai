@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "./config.js";
+import type { DryadsAiConfig } from "./config.js";
 import type { WhatsAppConfig } from "./types.js";
 
 export type MergeSectionOptions<T> = {
@@ -24,10 +24,10 @@ export function mergeConfigSection<T extends Record<string, unknown>>(
 }
 
 export function mergeWhatsAppConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   patch: Partial<WhatsAppConfig>,
   options?: MergeSectionOptions<WhatsAppConfig>,
-): DmmsAiConfig {
+): DryadsAiConfig {
   return {
     ...cfg,
     channels: {

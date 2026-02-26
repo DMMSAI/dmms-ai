@@ -44,13 +44,13 @@ Status: production-ready via WhatsApp Web (Baileys). Gateway owns linked session
   <Step title="Link WhatsApp (QR)">
 
 ```bash
-dmms-ai channels login --channel whatsapp
+dryads-ai channels login --channel whatsapp
 ```
 
     For a specific account:
 
 ```bash
-dmms-ai channels login --channel whatsapp --account work
+dryads-ai channels login --channel whatsapp --account work
 ```
 
   </Step>
@@ -58,7 +58,7 @@ dmms-ai channels login --channel whatsapp --account work
   <Step title="Start the gateway">
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
   </Step>
@@ -66,8 +66,8 @@ dmms-ai gateway
   <Step title="Approve first pairing request (if using pairing mode)">
 
 ```bash
-dmms-ai pairing list whatsapp
-dmms-ai pairing approve whatsapp <CODE>
+dryads-ai pairing list whatsapp
+dryads-ai pairing approve whatsapp <CODE>
 ```
 
     Pairing requests expire after 1 hour. Pending requests are capped at 3 per channel.
@@ -76,7 +76,7 @@ dmms-ai pairing approve whatsapp <CODE>
 </Steps>
 
 <Note>
-DMMS AI recommends running WhatsApp on a separate number when possible. (The channel metadata and onboarding flow are optimized for that setup, but personal-number setups are also supported.)
+Dryads AI recommends running WhatsApp on a separate number when possible. (The channel metadata and onboarding flow are optimized for that setup, but personal-number setups are also supported.)
 </Note>
 
 ## Deployment patterns
@@ -85,7 +85,7 @@ DMMS AI recommends running WhatsApp on a separate number when possible. (The cha
   <Accordion title="Dedicated number (recommended)">
     This is the cleanest operational mode:
 
-    - separate WhatsApp identity for DMMS AI
+    - separate WhatsApp identity for Dryads AI
     - clearer DM allowlists and routing boundaries
     - lower chance of self-chat confusion
 
@@ -116,7 +116,7 @@ DMMS AI recommends running WhatsApp on a separate number when possible. (The cha
   </Accordion>
 
   <Accordion title="WhatsApp Web-only channel scope">
-    The messaging platform channel is WhatsApp Web-based (`Baileys`) in current DMMS AI channel architecture.
+    The messaging platform channel is WhatsApp Web-based (`Baileys`) in current Dryads AI channel architecture.
 
     There is no separate Twilio WhatsApp messaging channel in the built-in chat-channel registry.
 
@@ -199,7 +199,7 @@ When the linked self number is also present in `allowFrom`, WhatsApp self-chat s
 
 - skip read receipts for self-chat turns
 - ignore mention-JID auto-trigger behavior that would otherwise ping yourself
-- if `messages.responsePrefix` is unset, self-chat replies default to `[{identity.name}]` or `[dmms-ai]`
+- if `messages.responsePrefix` is unset, self-chat replies default to `[{identity.name}]` or `[dryads-ai]`
 
 ## Message normalization and context
 
@@ -343,13 +343,13 @@ Behavior notes:
   </Accordion>
 
   <Accordion title="Credential paths and legacy compatibility">
-    - current auth path: `~/.dmms-ai/credentials/whatsapp/<accountId>/creds.json`
+    - current auth path: `~/.dryads-ai/credentials/whatsapp/<accountId>/creds.json`
     - backup file: `creds.json.bak`
-    - legacy default auth in `~/.dmms-ai/credentials/` is still recognized/migrated for default-account flows
+    - legacy default auth in `~/.dryads-ai/credentials/` is still recognized/migrated for default-account flows
   </Accordion>
 
   <Accordion title="Logout behavior">
-    `dmms-ai channels logout --channel whatsapp [--account <id>]` clears WhatsApp auth state for that account.
+    `dryads-ai channels logout --channel whatsapp [--account <id>]` clears WhatsApp auth state for that account.
 
     In legacy auth directories, `oauth.json` is preserved while Baileys auth files are removed.
 
@@ -373,8 +373,8 @@ Behavior notes:
     Fix:
 
     ```bash
-    dmms-ai channels login --channel whatsapp
-    dmms-ai channels status
+    dryads-ai channels login --channel whatsapp
+    dryads-ai channels status
     ```
 
   </Accordion>
@@ -385,8 +385,8 @@ Behavior notes:
     Fix:
 
     ```bash
-    dmms-ai doctor
-    dmms-ai logs --follow
+    dryads-ai doctor
+    dryads-ai logs --follow
     ```
 
     If needed, re-link with `channels login`.

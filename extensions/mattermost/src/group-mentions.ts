@@ -1,4 +1,4 @@
-import type { ChannelGroupContext } from "dmms-ai/plugin-sdk";
+import type { ChannelGroupContext } from "dryads-ai/plugin-sdk";
 import { resolveMattermostAccount } from "./mattermost/accounts.js";
 
 export function resolveMattermostGroupRequireMention(

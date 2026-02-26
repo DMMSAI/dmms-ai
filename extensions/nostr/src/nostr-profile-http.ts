@@ -8,7 +8,7 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { readJsonBodyWithLimit, requestBodyErrorToText } from "dmms-ai/plugin-sdk";
+import { readJsonBodyWithLimit, requestBodyErrorToText } from "dryads-ai/plugin-sdk";
 import { z } from "zod";
 import { publishNostrProfile, getNostrProfileState } from "./channel.js";
 import { NostrProfileSchema, type NostrProfile } from "./config-schema.js";

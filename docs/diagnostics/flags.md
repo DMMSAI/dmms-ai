@@ -43,13 +43,13 @@ Restart the gateway after changing flags.
 ## Env override (one-off)
 
 ```bash
-DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
+DRYADS_AI_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Disable all flags:
 
 ```bash
-DMMS_AI_DIAGNOSTICS=0
+DRYADS_AI_DIAGNOSTICS=0
 ```
 
 ## Where logs go
@@ -57,7 +57,7 @@ DMMS_AI_DIAGNOSTICS=0
 Flags emit logs into the standard diagnostics log file. By default:
 
 ```
-/tmp/dmms-ai/dmms-ai-YYYY-MM-DD.log
+/tmp/dryads-ai/dryads-ai-YYYY-MM-DD.log
 ```
 
 If you set `logging.file`, use that path instead. Logs are JSONL (one JSON object per line). Redaction still applies based on `logging.redactSensitive`.
@@ -67,22 +67,22 @@ If you set `logging.file`, use that path instead. Logs are JSONL (one JSON objec
 Pick the latest log file:
 
 ```bash
-ls -t /tmp/dmms-ai/dmms-ai-*.log | head -n 1
+ls -t /tmp/dryads-ai/dryads-ai-*.log | head -n 1
 ```
 
 Filter for Telegram HTTP diagnostics:
 
 ```bash
-rg "telegram http error" /tmp/dmms-ai/dmms-ai-*.log
+rg "telegram http error" /tmp/dryads-ai/dryads-ai-*.log
 ```
 
 Or tail while reproducing:
 
 ```bash
-tail -f /tmp/dmms-ai/dmms-ai-$(date +%F).log | rg "telegram http error"
+tail -f /tmp/dryads-ai/dryads-ai-$(date +%F).log | rg "telegram http error"
 ```
 
-For remote gateways, you can also use `dmms-ai logs --follow` (see [/cli/logs](/cli/logs)).
+For remote gateways, you can also use `dryads-ai logs --follow` (see [/cli/logs](/cli/logs)).
 
 ## Notes
 

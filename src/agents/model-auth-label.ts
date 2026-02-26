@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { SessionEntry } from "../config/sessions.js";
 import {
   ensureAuthProfileStore,
@@ -21,7 +21,7 @@ function formatApiKeySnippet(apiKey: string): string {
 
 export function resolveModelAuthLabel(params: {
   provider?: string;
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   sessionEntry?: SessionEntry;
   agentDir?: string;
 }): string | undefined {

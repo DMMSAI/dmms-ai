@@ -1,4 +1,4 @@
-package ai.dmmsai.android.voice
+package ai.dryadsai.android.voice
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -7,13 +7,13 @@ import org.junit.Test
 class VoiceWakeCommandExtractorTest {
   @Test
   fun extractsCommandAfterTriggerWord() {
-    val res = VoiceWakeCommandExtractor.extractCommand("Claude take a photo", listOf("dmms-ai", "claude"))
+    val res = VoiceWakeCommandExtractor.extractCommand("Claude take a photo", listOf("dryads-ai", "claude"))
     assertEquals("take a photo", res)
   }
 
   @Test
   fun extractsCommandWithPunctuation() {
-    val res = VoiceWakeCommandExtractor.extractCommand("hey dmms-ai, what's the weather?", listOf("dmms-ai"))
+    val res = VoiceWakeCommandExtractor.extractCommand("hey dryads-ai, what's the weather?", listOf("dryads-ai"))
     assertEquals("what's the weather?", res)
   }
 

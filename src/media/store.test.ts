@@ -13,11 +13,17 @@ describe("media store", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeAll(async () => {
-    envSnapshot = captureEnv(["HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "DMMS_AI_STATE_DIR"]);
-    home = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-test-home-"));
+    envSnapshot = captureEnv([
+      "HOME",
+      "USERPROFILE",
+      "HOMEDRIVE",
+      "HOMEPATH",
+      "DRYADS_AI_STATE_DIR",
+    ]);
+    home = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-test-home-"));
     process.env.HOME = home;
     process.env.USERPROFILE = home;
-    process.env.DMMS_AI_STATE_DIR = path.join(home, ".dmms-ai");
+    process.env.DRYADS_AI_STATE_DIR = path.join(home, ".dryads-ai");
     if (process.platform === "win32") {
       const match = home.match(/^([A-Za-z]:)(.*)$/);
       if (match) {
@@ -25,7 +31,7 @@ describe("media store", () => {
         process.env.HOMEPATH = match[2] || "\\";
       }
     }
-    await fs.mkdir(path.join(home, ".dmms-ai"), { recursive: true });
+    await fs.mkdir(path.join(home, ".dryads-ai"), { recursive: true });
     store = await import("./store.js");
   });
 
@@ -48,7 +54,7 @@ describe("media store", () => {
     await withTempStore(async (store, home) => {
       const dir = await store.ensureMediaDir();
       expect(isPathWithinBase(home, dir)).toBe(true);
-      expect(path.normalize(dir)).toContain(`${path.sep}.dmms-ai${path.sep}media`);
+      expect(path.normalize(dir)).toContain(`${path.sep}.dryads-ai${path.sep}media`);
       const stat = await fs.stat(dir);
       expect(stat.isDirectory()).toBe(true);
     });

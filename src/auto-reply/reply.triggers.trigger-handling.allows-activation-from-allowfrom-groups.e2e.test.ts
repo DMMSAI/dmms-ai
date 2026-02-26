@@ -63,7 +63,7 @@ describe("trigger handling", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: join(home, "dmms-ai"),
+              workspace: join(home, "dryads-ai"),
             },
           },
           channels: {

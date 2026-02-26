@@ -8,29 +8,29 @@ title: "Tailscale"
 
 # Tailscale (Gateway dashboard)
 
-DMMS AI can auto-configure Tailscale **Serve** (tailnet) or **Funnel** (public) for the
+Dryads AI can auto-configure Tailscale **Serve** (tailnet) or **Funnel** (public) for the
 Gateway dashboard and WebSocket port. This keeps the Gateway bound to loopback while
 Tailscale provides HTTPS, routing, and (for Serve) identity headers.
 
 ## Modes
 
 - `serve`: Tailnet-only Serve via `tailscale serve`. The gateway stays on `127.0.0.1`.
-- `funnel`: Public HTTPS via `tailscale funnel`. DMMS AI requires a shared password.
+- `funnel`: Public HTTPS via `tailscale funnel`. Dryads AI requires a shared password.
 - `off`: Default (no Tailscale automation).
 
 ## Auth
 
 Set `gateway.auth.mode` to control the handshake:
 
-- `token` (default when `DMMS_AI_GATEWAY_TOKEN` is set)
-- `password` (shared secret via `DMMS_AI_GATEWAY_PASSWORD` or config)
+- `token` (default when `DRYADS_AI_GATEWAY_TOKEN` is set)
+- `password` (shared secret via `DRYADS_AI_GATEWAY_PASSWORD` or config)
 
 When `tailscale.mode = "serve"` and `gateway.auth.allowTailscale` is `true`,
 valid Serve proxy requests can authenticate via Tailscale identity headers
-(`tailscale-user-login`) without supplying a token/password. DMMS AI verifies
+(`tailscale-user-login`) without supplying a token/password. Dryads AI verifies
 the identity by resolving the `x-forwarded-for` address via the local Tailscale
 daemon (`tailscale whois`) and matching it to the header before accepting it.
-DMMS AI only treats a request as Serve when it arrives from loopback with
+Dryads AI only treats a request as Serve when it arrives from loopback with
 Tailscale’s `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host`
 headers.
 To require explicit credentials, set `gateway.auth.allowTailscale: false` or
@@ -83,20 +83,20 @@ Note: loopback (`http://127.0.0.1:18789`) will **not** work in this mode.
 }
 ```
 
-Prefer `DMMS_AI_GATEWAY_PASSWORD` over committing a password to disk.
+Prefer `DRYADS_AI_GATEWAY_PASSWORD` over committing a password to disk.
 
 ## CLI examples
 
 ```bash
-dmms-ai gateway --tailscale serve
-dmms-ai gateway --tailscale funnel --auth password
+dryads-ai gateway --tailscale serve
+dryads-ai gateway --tailscale funnel --auth password
 ```
 
 ## Notes
 
 - Tailscale Serve/Funnel requires the `tailscale` CLI to be installed and logged in.
 - `tailscale.mode: "funnel"` refuses to start unless auth mode is `password` to avoid public exposure.
-- Set `gateway.tailscale.resetOnExit` if you want DMMS AI to undo `tailscale serve`
+- Set `gateway.tailscale.resetOnExit` if you want Dryads AI to undo `tailscale serve`
   or `tailscale funnel` configuration on shutdown.
 - `gateway.bind: "tailnet"` is a direct Tailnet bind (no HTTPS, no Serve/Funnel).
 - `gateway.bind: "auto"` prefers loopback; use `tailnet` if you want Tailnet-only.

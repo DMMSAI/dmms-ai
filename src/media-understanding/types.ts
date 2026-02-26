@@ -98,7 +98,7 @@ export type ImageDescriptionRequest = {
   profile?: string;
   preferredProfile?: string;
   agentDir: string;
-  cfg: import("../config/config.js").DmmsAiConfig;
+  cfg: import("../config/config.js").DryadsAiConfig;
 };
 
 export type ImageDescriptionResult = {

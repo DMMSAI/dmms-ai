@@ -38,7 +38,7 @@ function mockSnapshot(params?: {
 }) {
   const token = params?.token ?? "abc123";
   mocks.readConfigFileSnapshot.mockResolvedValue({
-    path: "/tmp/dmms-ai.json",
+    path: "/tmp/dryads-ai.json",
     exists: true,
     raw: "{}",
     parsed: {},

@@ -48,7 +48,7 @@ async function runBrowserToggle(
     defaultRuntime.log(JSON.stringify(status, null, 2));
     return;
   }
-  const name = status.profile ?? "dmms-ai";
+  const name = status.profile ?? "dryads-ai";
   defaultRuntime.log(info(`🦞 browser [${name}] running: ${status.running}`));
 }
 
@@ -94,7 +94,7 @@ export function registerBrowserManageCommands(
         const detectedDisplay = detectedPath ? shortenHomePath(detectedPath) : "auto";
         defaultRuntime.log(
           [
-            `profile: ${status.profile ?? "dmms-ai"}`,
+            `profile: ${status.profile ?? "dryads-ai"}`,
             `enabled: ${status.enabled}`,
             `running: ${status.running}`,
             `cdpPort: ${status.cdpPort}`,
@@ -429,7 +429,7 @@ export function registerBrowserManageCommands(
     .requiredOption("--name <name>", "Profile name (lowercase, numbers, hyphens)")
     .option("--color <hex>", "Profile color (hex format, e.g. #0066CC)")
     .option("--cdp-url <url>", "CDP URL for remote Chrome (http/https)")
-    .option("--driver <driver>", "Profile driver (dmms-ai|extension). Default: dmms-ai")
+    .option("--driver <driver>", "Profile driver (dryads-ai|extension). Default: dryads-ai")
     .action(
       async (opts: { name: string; color?: string; cdpUrl?: string; driver?: string }, cmd) => {
         const parent = parentOpts(cmd);

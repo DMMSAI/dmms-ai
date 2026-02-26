@@ -9,7 +9,7 @@ import {
   normalizeProviderId,
   resolveConfiguredModelRef,
 } from "../agents/model-selection.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { WizardPrompter, WizardSelectOption } from "../wizard/prompts.js";
 import { formatTokenK } from "./models/shared.js";
 import { OPENAI_CODEX_DEFAULT_MODEL } from "./openai-codex-model-default.js";
@@ -26,7 +26,7 @@ const PROVIDER_FILTER_THRESHOLD = 30;
 const HIDDEN_ROUTER_MODELS = new Set(["openrouter/auto"]);
 
 type PromptDefaultModelParams = {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   prompter: WizardPrompter;
   allowKeep?: boolean;
   includeManual?: boolean;
@@ -37,12 +37,12 @@ type PromptDefaultModelParams = {
   message?: string;
 };
 
-type PromptDefaultModelResult = { model?: string; config?: DmmsAiConfig };
+type PromptDefaultModelResult = { model?: string; config?: DryadsAiConfig };
 type PromptModelAllowlistResult = { models?: string[] };
 
 function hasAuthForProvider(
   provider: string,
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   store: ReturnType<typeof ensureAuthProfileStore>,
 ) {
   if (listProfilesForProvider(store, provider).length > 0) {
@@ -58,7 +58,7 @@ function hasAuthForProvider(
 }
 
 function createProviderAuthChecker(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   agentDir?: string;
 }): (provider: string) => boolean {
   const authStore = ensureAuthProfileStore(params.agentDir, {
@@ -76,7 +76,7 @@ function createProviderAuthChecker(params: {
   };
 }
 
-function resolveConfiguredModelRaw(cfg: DmmsAiConfig): string {
+function resolveConfiguredModelRaw(cfg: DryadsAiConfig): string {
   const raw = cfg.agents?.defaults?.model as { primary?: string } | string | undefined;
   if (typeof raw === "string") {
     return raw.trim();
@@ -84,7 +84,7 @@ function resolveConfiguredModelRaw(cfg: DmmsAiConfig): string {
   return raw?.primary?.trim() ?? "";
 }
 
-function resolveConfiguredModelKeys(cfg: DmmsAiConfig): string[] {
+function resolveConfiguredModelKeys(cfg: DryadsAiConfig): string[] {
   const models = cfg.agents?.defaults?.models ?? {};
   return Object.keys(models)
     .map((key) => String(key ?? "").trim())
@@ -352,7 +352,7 @@ export async function promptDefaultModel(
 }
 
 export async function promptModelAllowlist(params: {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   prompter: WizardPrompter;
   message?: string;
   agentDir?: string;
@@ -454,7 +454,7 @@ export async function promptModelAllowlist(params: {
   return { models: [] };
 }
 
-export function applyPrimaryModel(cfg: DmmsAiConfig, model: string): DmmsAiConfig {
+export function applyPrimaryModel(cfg: DryadsAiConfig, model: string): DryadsAiConfig {
   const defaults = cfg.agents?.defaults;
   const existingModel = defaults?.model;
   const existingModels = defaults?.models;
@@ -481,7 +481,7 @@ export function applyPrimaryModel(cfg: DmmsAiConfig, model: string): DmmsAiConfi
   };
 }
 
-export function applyModelAllowlist(cfg: DmmsAiConfig, models: string[]): DmmsAiConfig {
+export function applyModelAllowlist(cfg: DryadsAiConfig, models: string[]): DryadsAiConfig {
   const defaults = cfg.agents?.defaults;
   const normalized = normalizeModelKeys(models);
   if (normalized.length === 0) {
@@ -517,9 +517,9 @@ export function applyModelAllowlist(cfg: DmmsAiConfig, models: string[]): DmmsAi
 }
 
 export function applyModelFallbacksFromSelection(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   selection: string[],
-): DmmsAiConfig {
+): DryadsAiConfig {
   const normalized = normalizeModelKeys(selection);
   if (normalized.length <= 1) {
     return cfg;

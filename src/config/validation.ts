@@ -12,8 +12,8 @@ import { isRecord } from "../utils.js";
 import { findDuplicateAgentDirs, formatDuplicateAgentDirError } from "./agent-dirs.js";
 import { applyAgentDefaults, applyModelDefaults, applySessionDefaults } from "./defaults.js";
 import { findLegacyConfigIssues } from "./legacy.js";
-import type { DmmsAiConfig, ConfigValidationIssue } from "./types.js";
-import { DmmsAiSchema } from "./zod-schema.js";
+import type { DryadsAiConfig, ConfigValidationIssue } from "./types.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 const AVATAR_SCHEME_RE = /^[a-z][a-z0-9+.-]*:/i;
 const AVATAR_DATA_RE = /^data:/i;
@@ -33,7 +33,7 @@ function isWorkspaceAvatarPath(value: string, workspaceDir: string): boolean {
   return !path.isAbsolute(relative);
 }
 
-function validateIdentityAvatar(config: DmmsAiConfig): ConfigValidationIssue[] {
+function validateIdentityAvatar(config: DryadsAiConfig): ConfigValidationIssue[] {
   const agents = config.agents?.list;
   if (!Array.isArray(agents) || agents.length === 0) {
     return [];
@@ -89,7 +89,7 @@ function validateIdentityAvatar(config: DmmsAiConfig): ConfigValidationIssue[] {
  */
 export function validateConfigObjectRaw(
   raw: unknown,
-): { ok: true; config: DmmsAiConfig } | { ok: false; issues: ConfigValidationIssue[] } {
+): { ok: true; config: DryadsAiConfig } | { ok: false; issues: ConfigValidationIssue[] } {
   const legacyIssues = findLegacyConfigIssues(raw);
   if (legacyIssues.length > 0) {
     return {
@@ -100,7 +100,7 @@ export function validateConfigObjectRaw(
       })),
     };
   }
-  const validated = DmmsAiSchema.safeParse(raw);
+  const validated = DryadsAiSchema.safeParse(raw);
   if (!validated.success) {
     return {
       ok: false,
@@ -110,7 +110,7 @@ export function validateConfigObjectRaw(
       })),
     };
   }
-  const duplicates = findDuplicateAgentDirs(validated.data as DmmsAiConfig);
+  const duplicates = findDuplicateAgentDirs(validated.data as DryadsAiConfig);
   if (duplicates.length > 0) {
     return {
       ok: false,
@@ -122,19 +122,19 @@ export function validateConfigObjectRaw(
       ],
     };
   }
-  const avatarIssues = validateIdentityAvatar(validated.data as DmmsAiConfig);
+  const avatarIssues = validateIdentityAvatar(validated.data as DryadsAiConfig);
   if (avatarIssues.length > 0) {
     return { ok: false, issues: avatarIssues };
   }
   return {
     ok: true,
-    config: validated.data as DmmsAiConfig,
+    config: validated.data as DryadsAiConfig,
   };
 }
 
 export function validateConfigObject(
   raw: unknown,
-): { ok: true; config: DmmsAiConfig } | { ok: false; issues: ConfigValidationIssue[] } {
+): { ok: true; config: DryadsAiConfig } | { ok: false; issues: ConfigValidationIssue[] } {
   const result = validateConfigObjectRaw(raw);
   if (!result.ok) {
     return result;
@@ -148,7 +148,7 @@ export function validateConfigObject(
 export function validateConfigObjectWithPlugins(raw: unknown):
   | {
       ok: true;
-      config: DmmsAiConfig;
+      config: DryadsAiConfig;
       warnings: ConfigValidationIssue[];
     }
   | {
@@ -162,7 +162,7 @@ export function validateConfigObjectWithPlugins(raw: unknown):
 export function validateConfigObjectRawWithPlugins(raw: unknown):
   | {
       ok: true;
-      config: DmmsAiConfig;
+      config: DryadsAiConfig;
       warnings: ConfigValidationIssue[];
     }
   | {
@@ -179,7 +179,7 @@ function validateConfigObjectWithPluginsBase(
 ):
   | {
       ok: true;
-      config: DmmsAiConfig;
+      config: DryadsAiConfig;
       warnings: ConfigValidationIssue[];
     }
   | {

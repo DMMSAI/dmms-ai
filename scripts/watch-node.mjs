@@ -25,10 +25,10 @@ export async function runWatchMain(params = {}) {
 
   const childEnv = { ...deps.env };
   const watchSession = `${deps.now()}-${deps.process.pid}`;
-  childEnv.DMMS_AI_WATCH_MODE = "1";
-  childEnv.DMMS_AI_WATCH_SESSION = watchSession;
+  childEnv.DRYADS_AI_WATCH_MODE = "1";
+  childEnv.DRYADS_AI_WATCH_SESSION = watchSession;
   if (deps.args.length > 0) {
-    childEnv.DMMS_AI_WATCH_COMMAND = deps.args.join(" ");
+    childEnv.DRYADS_AI_WATCH_COMMAND = deps.args.join(" ");
   }
 
   const watchProcess = deps.spawn(deps.process.execPath, buildWatchArgs(deps.args), {

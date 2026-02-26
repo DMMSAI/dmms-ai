@@ -1,12 +1,12 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
 struct NixModeStableSuiteTests {
     @Test func resolvesFromStableSuiteForAppBundles() {
         let suite = UserDefaults(suiteName: launchdLabel)!
-        let key = "dmms-ai.nixMode"
+        let key = "dryads-ai.nixMode"
         let prev = suite.object(forKey: key)
         defer {
             if let prev { suite.set(prev, forKey: key) } else { suite.removeObject(forKey: key) }
@@ -27,7 +27,7 @@ struct NixModeStableSuiteTests {
 
     @Test func ignoresStableSuiteOutsideAppBundles() {
         let suite = UserDefaults(suiteName: launchdLabel)!
-        let key = "dmms-ai.nixMode"
+        let key = "dryads-ai.nixMode"
         let prev = suite.object(forKey: key)
         defer {
             if let prev { suite.set(prev, forKey: key) } else { suite.removeObject(forKey: key) }

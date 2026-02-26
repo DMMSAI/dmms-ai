@@ -7,7 +7,7 @@ import { parseSchtasksQuery, readScheduledTaskCommand, resolveTaskScriptPath } f
 describe("schtasks runtime parsing", () => {
   it("parses status and last run info", () => {
     const output = [
-      "TaskName: \\DMMS AI Gateway",
+      "TaskName: \\Dryads AI Gateway",
       "Status: Ready",
       "Last Run Time: 1/8/2026 1:23:45 AM",
       "Last Run Result: 0x0",
@@ -21,7 +21,7 @@ describe("schtasks runtime parsing", () => {
 
   it("parses running status", () => {
     const output = [
-      "TaskName: \\DMMS AI Gateway",
+      "TaskName: \\Dryads AI Gateway",
       "Status: Running",
       "Last Run Time: 1/8/2026 1:23:45 AM",
       "Last Run Result: 0x0",
@@ -35,32 +35,32 @@ describe("schtasks runtime parsing", () => {
 });
 
 describe("resolveTaskScriptPath", () => {
-  it("uses default path when DMMS_AI_PROFILE is unset", () => {
+  it("uses default path when DRYADS_AI_PROFILE is unset", () => {
     const env = { USERPROFILE: "C:\\Users\\test" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".dmms-ai", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".dryads-ai", "gateway.cmd"),
     );
   });
 
-  it("uses profile-specific path when DMMS_AI_PROFILE is set to a custom value", () => {
-    const env = { USERPROFILE: "C:\\Users\\test", DMMS_AI_PROFILE: "jbphoenix" };
+  it("uses profile-specific path when DRYADS_AI_PROFILE is set to a custom value", () => {
+    const env = { USERPROFILE: "C:\\Users\\test", DRYADS_AI_PROFILE: "jbphoenix" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".dmms-ai-jbphoenix", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".dryads-ai-jbphoenix", "gateway.cmd"),
     );
   });
 
-  it("prefers DMMS_AI_STATE_DIR over profile-derived defaults", () => {
+  it("prefers DRYADS_AI_STATE_DIR over profile-derived defaults", () => {
     const env = {
       USERPROFILE: "C:\\Users\\test",
-      DMMS_AI_PROFILE: "rescue",
-      DMMS_AI_STATE_DIR: "C:\\State\\dmms-ai",
+      DRYADS_AI_PROFILE: "rescue",
+      DRYADS_AI_STATE_DIR: "C:\\State\\dryads-ai",
     };
-    expect(resolveTaskScriptPath(env)).toBe(path.join("C:\\State\\dmms-ai", "gateway.cmd"));
+    expect(resolveTaskScriptPath(env)).toBe(path.join("C:\\State\\dryads-ai", "gateway.cmd"));
   });
 
   it("falls back to HOME when USERPROFILE is not set", () => {
-    const env = { HOME: "/home/test", DMMS_AI_PROFILE: "default" };
-    expect(resolveTaskScriptPath(env)).toBe(path.join("/home/test", ".dmms-ai", "gateway.cmd"));
+    const env = { HOME: "/home/test", DRYADS_AI_PROFILE: "default" };
+    expect(resolveTaskScriptPath(env)).toBe(path.join("/home/test", ".dryads-ai", "gateway.cmd"));
   });
 });
 
@@ -74,12 +74,12 @@ describe("readScheduledTaskCommand", () => {
     },
     run: (env: Record<string, string | undefined>) => Promise<void>,
   ) {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-schtasks-test-"));
     try {
       const extraEnv = typeof options.env === "function" ? options.env(tmpDir) : options.env;
       const env = {
         USERPROFILE: tmpDir,
-        DMMS_AI_PROFILE: "default",
+        DRYADS_AI_PROFILE: "default",
         ...extraEnv,
       };
       if (options.scriptLines) {
@@ -130,10 +130,10 @@ describe("readScheduledTaskCommand", () => {
       {
         scriptLines: [
           "@echo off",
-          "rem DMMS AI Gateway",
-          "cd /d C:\\Projects\\dmms-ai",
+          "rem Dryads AI Gateway",
+          "cd /d C:\\Projects\\dryads-ai",
           "set NODE_ENV=production",
-          "set DMMS_AI_PORT=18789",
+          "set DRYADS_AI_PORT=18789",
           "node gateway.js --verbose",
         ],
       },
@@ -141,10 +141,10 @@ describe("readScheduledTaskCommand", () => {
         const result = await readScheduledTaskCommand(env);
         expect(result).toEqual({
           programArguments: ["node", "gateway.js", "--verbose"],
-          workingDirectory: "C:\\Projects\\dmms-ai",
+          workingDirectory: "C:\\Projects\\dryads-ai",
           environment: {
             NODE_ENV: "production",
-            DMMS_AI_PORT: "18789",
+            DRYADS_AI_PORT: "18789",
           },
         });
       },
@@ -156,7 +156,7 @@ describe("readScheduledTaskCommand", () => {
       {
         scriptLines: [
           "@echo off",
-          '"C:\\Program Files\\nodejs\\node.exe" C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\dmms-ai\\dist\\index.js gateway --port 18789',
+          '"C:\\Program Files\\nodejs\\node.exe" C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\dryads-ai\\dist\\index.js gateway --port 18789',
         ],
       },
       async (env) => {
@@ -164,7 +164,7 @@ describe("readScheduledTaskCommand", () => {
         expect(result).toEqual({
           programArguments: [
             "C:\\Program Files\\nodejs\\node.exe",
-            "C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\dmms-ai\\dist\\index.js",
+            "C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\dryads-ai\\dist\\index.js",
             "gateway",
             "--port",
             "18789",
@@ -179,15 +179,15 @@ describe("readScheduledTaskCommand", () => {
       {
         scriptLines: [
           "@echo off",
-          '"\\\\fileserver\\DMMS AI Share\\node.exe" "\\\\fileserver\\DMMS AI Share\\dist\\index.js" gateway --port 18789',
+          '"\\\\fileserver\\Dryads AI Share\\node.exe" "\\\\fileserver\\Dryads AI Share\\dist\\index.js" gateway --port 18789',
         ],
       },
       async (env) => {
         const result = await readScheduledTaskCommand(env);
         expect(result).toEqual({
           programArguments: [
-            "\\\\fileserver\\DMMS AI Share\\node.exe",
-            "\\\\fileserver\\DMMS AI Share\\dist\\index.js",
+            "\\\\fileserver\\Dryads AI Share\\node.exe",
+            "\\\\fileserver\\Dryads AI Share\\dist\\index.js",
             "gateway",
             "--port",
             "18789",
@@ -197,10 +197,10 @@ describe("readScheduledTaskCommand", () => {
     );
   });
 
-  it("reads script from DMMS_AI_STATE_DIR override", async () => {
+  it("reads script from DRYADS_AI_STATE_DIR override", async () => {
     await withScheduledTaskScript(
       {
-        env: (tmpDir) => ({ DMMS_AI_STATE_DIR: path.join(tmpDir, "custom-state") }),
+        env: (tmpDir) => ({ DRYADS_AI_STATE_DIR: path.join(tmpDir, "custom-state") }),
         scriptLines: ["@echo off", "node gateway.js --from-state-dir"],
       },
       async (env) => {

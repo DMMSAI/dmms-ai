@@ -1,5 +1,5 @@
 import os from "node:os";
-import type { DmmsAiConfig } from "../config/types.js";
+import type { DryadsAiConfig } from "../config/types.js";
 
 const DEFAULT_GATEWAY_PORT = 18789;
 
@@ -86,8 +86,8 @@ function normalizeUrl(raw: string, schemeFallback: "ws" | "wss"): string | null 
   return `${schemeFallback}://${withoutPath}`;
 }
 
-function resolveGatewayPort(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): number {
-  const envRaw = env.DMMS_AI_GATEWAY_PORT?.trim() || env.CLAWDBOT_GATEWAY_PORT?.trim();
+function resolveGatewayPort(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): number {
+  const envRaw = env.DRYADS_AI_GATEWAY_PORT?.trim() || env.CLAWDBOT_GATEWAY_PORT?.trim();
   if (envRaw) {
     const parsed = Number.parseInt(envRaw, 10);
     if (Number.isFinite(parsed) && parsed > 0) {
@@ -102,7 +102,7 @@ function resolveGatewayPort(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): number {
 }
 
 function resolveScheme(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   opts?: {
     forceSecure?: boolean;
   },
@@ -243,14 +243,14 @@ async function resolveTailnetHost(
   return null;
 }
 
-function resolveAuth(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): ResolveAuthResult {
+function resolveAuth(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): ResolveAuthResult {
   const mode = cfg.gateway?.auth?.mode;
   const token =
-    env.DMMS_AI_GATEWAY_TOKEN?.trim() ||
+    env.DRYADS_AI_GATEWAY_TOKEN?.trim() ||
     env.CLAWDBOT_GATEWAY_TOKEN?.trim() ||
     cfg.gateway?.auth?.token?.trim();
   const password =
-    env.DMMS_AI_GATEWAY_PASSWORD?.trim() ||
+    env.DRYADS_AI_GATEWAY_PASSWORD?.trim() ||
     env.CLAWDBOT_GATEWAY_PASSWORD?.trim() ||
     cfg.gateway?.auth?.password?.trim();
 
@@ -276,7 +276,7 @@ function resolveAuth(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): ResolveAuthResu
 }
 
 async function resolveGatewayUrl(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   opts: {
     env: NodeJS.ProcessEnv;
     publicUrl?: string;
@@ -357,7 +357,7 @@ export function encodePairingSetupCode(payload: PairingSetupPayload): string {
 }
 
 export async function resolvePairingSetupFromConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   options: ResolvePairingSetupOptions = {},
 ): Promise<PairingSetupResolution> {
   const env = options.env ?? process.env;

@@ -265,7 +265,7 @@ export function createHooksRequestHandler(
       res.statusCode = 400;
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       res.end(
-        "Hook token must be provided via Authorization: Bearer <token> or X-DMMS AI-Token header (query parameters are not allowed).",
+        "Hook token must be provided via Authorization: Bearer <token> or X-Dryads AI-Token header (query parameters are not allowed).",
       );
       return true;
     }
@@ -483,6 +483,24 @@ export function createGatewayHttpServer(opts: {
       const configSnapshot = loadConfig();
       const trustedProxies = configSnapshot.gateway?.trustedProxies ?? [];
       const requestPath = new URL(req.url ?? "/", "http://localhost").pathname;
+
+      // Health check — unauthenticated, used by monitors and deploy scripts.
+      if (requestPath === "/api/health") {
+        const mem = process.memoryUsage();
+        const uptime = process.uptime();
+        const healthy = mem.heapUsed < 400 * 1024 * 1024; // under 400MB heap
+        sendJson(res, healthy ? 200 : 503, {
+          status: healthy ? "healthy" : "degraded",
+          uptime: Math.round(uptime),
+          memory: {
+            heapUsedMB: Math.round(mem.heapUsed / 1024 / 1024),
+            rss: Math.round(mem.rss / 1024 / 1024),
+          },
+          timestamp: new Date().toISOString(),
+        });
+        return;
+      }
+
       if (await handleHooksRequest(req, res)) {
         return;
       }

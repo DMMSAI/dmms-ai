@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 enum class LocationMode(val rawValue: String) {
   Off("off"),

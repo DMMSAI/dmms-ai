@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { applyAgentDefaultPrimaryModel } from "./model-default.js";
 
 export const OPENCODE_ZEN_DEFAULT_MODEL = "opencode/claude-opus-4-6";
@@ -7,8 +7,8 @@ const LEGACY_OPENCODE_ZEN_DEFAULT_MODELS = new Set([
   "opencode-zen/claude-opus-4-5",
 ]);
 
-export function applyOpencodeZenModelDefault(cfg: DmmsAiConfig): {
-  next: DmmsAiConfig;
+export function applyOpencodeZenModelDefault(cfg: DryadsAiConfig): {
+  next: DryadsAiConfig;
   changed: boolean;
 } {
   return applyAgentDefaultPrimaryModel({

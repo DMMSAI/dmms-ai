@@ -1,8 +1,8 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import os
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized)
 @MainActor

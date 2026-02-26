@@ -1,4 +1,4 @@
-package ai.dmmsai.android.chat
+package ai.dryadsai.android.chat
 
 data class ChatMessage(
   val id: String,

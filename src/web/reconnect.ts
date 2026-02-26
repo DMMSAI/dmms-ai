@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { BackoffPolicy } from "../infra/backoff.js";
 import { computeBackoff, sleepWithAbort } from "../infra/backoff.js";
 import { clamp } from "../utils.js";
@@ -17,7 +17,7 @@ export const DEFAULT_RECONNECT_POLICY: ReconnectPolicy = {
   maxAttempts: 12,
 };
 
-export function resolveHeartbeatSeconds(cfg: DmmsAiConfig, overrideSeconds?: number): number {
+export function resolveHeartbeatSeconds(cfg: DryadsAiConfig, overrideSeconds?: number): number {
   const candidate = overrideSeconds ?? cfg.web?.heartbeatSeconds;
   if (typeof candidate === "number" && candidate > 0) {
     return candidate;
@@ -26,7 +26,7 @@ export function resolveHeartbeatSeconds(cfg: DmmsAiConfig, overrideSeconds?: num
 }
 
 export function resolveReconnectPolicy(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   overrides?: Partial<ReconnectPolicy>,
 ): ReconnectPolicy {
   const reconnectOverrides = cfg.web?.reconnect ?? {};

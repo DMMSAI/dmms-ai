@@ -1,7 +1,7 @@
 import "./reply.directive.directive-behavior.e2e-mocks.js";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   assertModelSelection,
   installDirectiveBehaviorE2EHooks,
@@ -27,7 +27,7 @@ function makeMoonshotConfig(home: string, storePath: string) {
     agents: {
       defaults: {
         model: { primary: "anthropic/claude-opus-4-5" },
-        workspace: path.join(home, "dmms-ai"),
+        workspace: path.join(home, "dryads-ai"),
         models: {
           "anthropic/claude-opus-4-5": {},
           "moonshot/kimi-k2-0905-preview": {},
@@ -46,7 +46,7 @@ function makeMoonshotConfig(home: string, storePath: string) {
       },
     },
     session: { store: storePath },
-  } as unknown as DmmsAiConfig;
+  } as unknown as DryadsAiConfig;
 }
 
 describe("directive behavior", () => {
@@ -127,7 +127,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "minimax/MiniMax-M2.1" },
-              workspace: path.join(home, "dmms-ai"),
+              workspace: path.join(home, "dryads-ai"),
               models: {
                 "minimax/MiniMax-M2.1": {},
                 "minimax/MiniMax-M2.1-lightning": {},
@@ -153,7 +153,7 @@ describe("directive behavior", () => {
             },
           },
           session: { store: storePath },
-        } as unknown as DmmsAiConfig,
+        } as unknown as DryadsAiConfig,
       );
 
       assertModelSelection(storePath);
@@ -171,7 +171,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "minimax/MiniMax-M2.1" },
-              workspace: path.join(home, "dmms-ai"),
+              workspace: path.join(home, "dryads-ai"),
               models: {
                 "minimax/MiniMax-M2.1": {},
                 "minimax/MiniMax-M2.1-lightning": {},
@@ -193,7 +193,7 @@ describe("directive behavior", () => {
             },
           },
           session: { store: storePath },
-        } as unknown as DmmsAiConfig,
+        } as unknown as DryadsAiConfig,
       );
 
       assertModelSelection(storePath);

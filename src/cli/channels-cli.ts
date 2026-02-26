@@ -76,16 +76,16 @@ export function registerChannelsCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["dmms-ai channels list", "List configured channels and auth profiles."],
-          ["dmms-ai channels status --probe", "Run channel status checks and probes."],
+          ["dryads-ai channels list", "List configured channels and auth profiles."],
+          ["dryads-ai channels status --probe", "Run channel status checks and probes."],
           [
-            "dmms-ai channels add --channel telegram --token <token>",
+            "dryads-ai channels add --channel telegram --token <token>",
             "Add or update a channel account non-interactively.",
           ],
-          ["dmms-ai channels login --channel whatsapp", "Link a WhatsApp Web account."],
+          ["dryads-ai channels login --channel whatsapp", "Link a WhatsApp Web account."],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/channels",
-          "docs.dmms-ai.com/cli/channels",
+          "docs.dryads-ai.com/cli/channels",
         )}\n`,
     );
 

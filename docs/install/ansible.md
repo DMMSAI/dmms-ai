@@ -1,5 +1,5 @@
 ---
-summary: "Automated, hardened DMMS AI installation with Ansible, Tailscale VPN, and firewall isolation"
+summary: "Automated, hardened Dryads AI installation with Ansible, Tailscale VPN, and firewall isolation"
 read_when:
   - You want automated server deployment with security hardening
   - You need firewall-isolated setup with VPN access
@@ -9,19 +9,19 @@ title: "Ansible"
 
 # Ansible Installation
 
-The recommended way to deploy DMMS AI to production servers is via **[dmms-ai-ansible](https://github.com/dmms-ai/dmms-ai-ansible)** — an automated installer with security-first architecture.
+The recommended way to deploy Dryads AI to production servers is via **[dryads-ai-ansible](https://github.com/dryads-ai/dryads-ai-ansible)** — an automated installer with security-first architecture.
 
 ## Quick Start
 
 One-command install:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dmms-ai/dmms-ai-ansible/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/dryads-ai/dryads-ai-ansible/main/install.sh | bash
 ```
 
-> **📦 Full guide: [github.com/dmms-ai/dmms-ai-ansible](https://github.com/dmms-ai/dmms-ai-ansible)**
+> **📦 Full guide: [github.com/dryads-ai/dryads-ai-ansible](https://github.com/dryads-ai/dryads-ai-ansible)**
 >
-> The dmms-ai-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
+> The dryads-ai-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
 
 ## What You Get
 
@@ -47,22 +47,22 @@ The Ansible playbook installs and configures:
 2. **UFW firewall** (SSH + Tailscale ports only)
 3. **Docker CE + Compose V2** (for agent sandboxes)
 4. **Node.js 22.x + pnpm** (runtime dependencies)
-5. **DMMS AI** (host-based, not containerized)
+5. **Dryads AI** (host-based, not containerized)
 6. **Systemd service** (auto-start with security hardening)
 
 Note: The gateway runs **directly on the host** (not in Docker), but agent sandboxes use Docker for isolation. See [Sandboxing](/gateway/sandboxing) for details.
 
 ## Post-Install Setup
 
-After installation completes, switch to the dmms-ai user:
+After installation completes, switch to the dryads-ai user:
 
 ```bash
-sudo -i -u dmms-ai
+sudo -i -u dryads-ai
 ```
 
 The post-install script will guide you through:
 
-1. **Onboarding wizard**: Configure DMMS AI settings
+1. **Onboarding wizard**: Configure Dryads AI settings
 2. **Provider login**: Connect WhatsApp/Telegram/Discord/Signal
 3. **Gateway testing**: Verify the installation
 4. **Tailscale setup**: Connect to your VPN mesh
@@ -71,17 +71,17 @@ The post-install script will guide you through:
 
 ```bash
 # Check service status
-sudo systemctl status dmms-ai
+sudo systemctl status dryads-ai
 
 # View live logs
-sudo journalctl -u dmms-ai -f
+sudo journalctl -u dryads-ai -f
 
 # Restart gateway
-sudo systemctl restart dmms-ai
+sudo systemctl restart dryads-ai
 
-# Provider login (run as dmms-ai user)
-sudo -i -u dmms-ai
-dmms-ai channels login
+# Provider login (run as dryads-ai user)
+sudo -i -u dryads-ai
+dryads-ai channels login
 ```
 
 ## Security Architecture
@@ -118,8 +118,8 @@ If you prefer manual control over the automation:
 sudo apt update && sudo apt install -y ansible git
 
 # 2. Clone repository
-git clone https://github.com/dmms-ai/dmms-ai-ansible.git
-cd dmms-ai-ansible
+git clone https://github.com/dryads-ai/dryads-ai-ansible.git
+cd dryads-ai-ansible
 
 # 3. Install Ansible collections
 ansible-galaxy collection install -r requirements.yml
@@ -127,18 +127,18 @@ ansible-galaxy collection install -r requirements.yml
 # 4. Run playbook
 ./run-playbook.sh
 
-# Or run directly (then manually execute /tmp/dmms-ai-setup.sh after)
+# Or run directly (then manually execute /tmp/dryads-ai-setup.sh after)
 # ansible-playbook playbook.yml --ask-become-pass
 ```
 
-## Updating DMMS AI
+## Updating Dryads AI
 
-The Ansible installer sets up DMMS AI for manual updates. See [Updating](/install/updating) for the standard update flow.
+The Ansible installer sets up Dryads AI for manual updates. See [Updating](/install/updating) for the standard update flow.
 
 To re-run the Ansible playbook (e.g., for configuration changes):
 
 ```bash
-cd dmms-ai-ansible
+cd dryads-ai-ansible
 ./run-playbook.sh
 ```
 
@@ -158,14 +158,14 @@ If you're locked out:
 
 ```bash
 # Check logs
-sudo journalctl -u dmms-ai -n 100
+sudo journalctl -u dryads-ai -n 100
 
 # Verify permissions
-sudo ls -la /opt/dmms-ai
+sudo ls -la /opt/dryads-ai
 
 # Test manual start
-sudo -i -u dmms-ai
-cd ~/dmms-ai
+sudo -i -u dryads-ai
+cd ~/dryads-ai
 pnpm start
 ```
 
@@ -176,33 +176,33 @@ pnpm start
 sudo systemctl status docker
 
 # Check sandbox image
-sudo docker images | grep dmms-ai-sandbox
+sudo docker images | grep dryads-ai-sandbox
 
 # Build sandbox image if missing
-cd /opt/dmms-ai/dmms-ai
-sudo -u dmms-ai ./scripts/sandbox-setup.sh
+cd /opt/dryads-ai/dryads-ai
+sudo -u dryads-ai ./scripts/sandbox-setup.sh
 ```
 
 ### Provider login fails
 
-Make sure you're running as the `dmms-ai` user:
+Make sure you're running as the `dryads-ai` user:
 
 ```bash
-sudo -i -u dmms-ai
-dmms-ai channels login
+sudo -i -u dryads-ai
+dryads-ai channels login
 ```
 
 ## Advanced Configuration
 
 For detailed security architecture and troubleshooting:
 
-- [Security Architecture](https://github.com/dmms-ai/dmms-ai-ansible/blob/main/docs/security.md)
-- [Technical Details](https://github.com/dmms-ai/dmms-ai-ansible/blob/main/docs/architecture.md)
-- [Troubleshooting Guide](https://github.com/dmms-ai/dmms-ai-ansible/blob/main/docs/troubleshooting.md)
+- [Security Architecture](https://github.com/dryads-ai/dryads-ai-ansible/blob/main/docs/security.md)
+- [Technical Details](https://github.com/dryads-ai/dryads-ai-ansible/blob/main/docs/architecture.md)
+- [Troubleshooting Guide](https://github.com/dryads-ai/dryads-ai-ansible/blob/main/docs/troubleshooting.md)
 
 ## Related
 
-- [dmms-ai-ansible](https://github.com/dmms-ai/dmms-ai-ansible) — full deployment guide
+- [dryads-ai-ansible](https://github.com/dryads-ai/dryads-ai-ansible) — full deployment guide
 - [Docker](/install/docker) — containerized gateway setup
 - [Sandboxing](/gateway/sandboxing) — agent sandbox configuration
 - [Multi-Agent Sandbox & Tools](/tools/multi-agent-sandbox-tools) — per-agent isolation

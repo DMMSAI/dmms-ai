@@ -1,4 +1,4 @@
-import type { ChannelOutboundAdapter } from "dmms-ai/plugin-sdk";
+import type { ChannelOutboundAdapter } from "dryads-ai/plugin-sdk";
 import { sendMediaFeishu } from "./media.js";
 import { getFeishuRuntime } from "./runtime.js";
 import { sendMessageFeishu } from "./send.js";

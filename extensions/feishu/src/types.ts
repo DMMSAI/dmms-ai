@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "dmms-ai/plugin-sdk";
+import type { BaseProbeResult } from "dryads-ai/plugin-sdk";
 import type {
   FeishuConfigSchema,
   FeishuGroupSchema,

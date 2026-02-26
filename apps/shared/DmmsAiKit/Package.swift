@@ -3,15 +3,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "DmmsAiKit",
+    name: "DryadsAiKit",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
     ],
     products: [
-        .library(name: "DmmsAiProtocol", targets: ["DmmsAiProtocol"]),
-        .library(name: "DmmsAiKit", targets: ["DmmsAiKit"]),
-        .library(name: "DmmsAiChatUI", targets: ["DmmsAiChatUI"]),
+        .library(name: "DryadsAiProtocol", targets: ["DryadsAiProtocol"]),
+        .library(name: "DryadsAiKit", targets: ["DryadsAiKit"]),
+        .library(name: "DryadsAiChatUI", targets: ["DryadsAiChatUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/steipete/ElevenLabsKit", exact: "0.1.0"),
@@ -19,18 +19,18 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "DmmsAiProtocol",
-            path: "Sources/DmmsAiProtocol",
+            name: "DryadsAiProtocol",
+            path: "Sources/DryadsAiProtocol",
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .target(
-            name: "DmmsAiKit",
+            name: "DryadsAiKit",
             dependencies: [
-                "DmmsAiProtocol",
+                "DryadsAiProtocol",
                 .product(name: "ElevenLabsKit", package: "ElevenLabsKit"),
             ],
-            path: "Sources/DmmsAiKit",
+            path: "Sources/DryadsAiKit",
             resources: [
                 .process("Resources"),
             ],
@@ -38,22 +38,22 @@ let package = Package(
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .target(
-            name: "DmmsAiChatUI",
+            name: "DryadsAiChatUI",
             dependencies: [
-                "DmmsAiKit",
+                "DryadsAiKit",
                 .product(
                     name: "Textual",
                     package: "textual",
                     condition: .when(platforms: [.macOS, .iOS])),
             ],
-            path: "Sources/DmmsAiChatUI",
+            path: "Sources/DryadsAiChatUI",
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
             ]),
         .testTarget(
-            name: "DmmsAiKitTests",
-            dependencies: ["DmmsAiKit", "DmmsAiChatUI"],
-            path: "Tests/DmmsAiKitTests",
+            name: "DryadsAiKitTests",
+            dependencies: ["DryadsAiKit", "DryadsAiChatUI"],
+            path: "Tests/DryadsAiKitTests",
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency"),
                 .enableExperimentalFeature("SwiftTesting"),

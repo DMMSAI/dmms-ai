@@ -49,9 +49,9 @@ function createRemoteQrConfig(params?: { withTailscale?: boolean }) {
 describe("registerQrCli", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.stubEnv("DMMS_AI_GATEWAY_TOKEN", "");
+    vi.stubEnv("DRYADS_AI_GATEWAY_TOKEN", "");
     vi.stubEnv("CLAWDBOT_GATEWAY_TOKEN", "");
-    vi.stubEnv("DMMS_AI_GATEWAY_PASSWORD", "");
+    vi.stubEnv("DRYADS_AI_GATEWAY_PASSWORD", "");
     vi.stubEnv("CLAWDBOT_GATEWAY_PASSWORD", "");
   });
 
@@ -100,7 +100,7 @@ describe("registerQrCli", () => {
     expect(output).toContain("Pairing QR");
     expect(output).toContain("ASCII-QR");
     expect(output).toContain("Gateway:");
-    expect(output).toContain("dmms-ai devices approve <requestId>");
+    expect(output).toContain("dryads-ai devices approve <requestId>");
   });
 
   it("accepts --token override when config has no auth", async () => {

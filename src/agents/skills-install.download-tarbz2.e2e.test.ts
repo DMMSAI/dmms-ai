@@ -55,7 +55,7 @@ function mockTarExtractionFlow(params: {
 async function withTempWorkspace(
   run: (params: { workspaceDir: string; stateDir: string }) => Promise<void>,
 ) {
-  const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-skills-install-"));
+  const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-skills-install-"));
   try {
     const stateDir = setTempStateDir(workspaceDir);
     await run({ workspaceDir, stateDir });
@@ -85,18 +85,18 @@ async function writeTarBz2Skill(params: {
   });
 }
 
-function restoreDmmsAiStateDir(originalValue: string | undefined): void {
+function restoreDryadsAiStateDir(originalValue: string | undefined): void {
   if (originalValue === undefined) {
-    delete process.env.DMMS_AI_STATE_DIR;
+    delete process.env.DRYADS_AI_STATE_DIR;
     return;
   }
-  process.env.DMMS_AI_STATE_DIR = originalValue;
+  process.env.DRYADS_AI_STATE_DIR = originalValue;
 }
 
-const originalStateDir = process.env.DMMS_AI_STATE_DIR;
+const originalStateDir = process.env.DRYADS_AI_STATE_DIR;
 
 afterEach(() => {
-  restoreDmmsAiStateDir(originalStateDir);
+  restoreDryadsAiStateDir(originalStateDir);
 });
 
 vi.mock("../process/exec.js", () => ({

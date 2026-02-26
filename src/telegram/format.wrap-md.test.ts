@@ -219,11 +219,11 @@ describe("edge cases", () => {
   });
 
   it("keeps .co domains as links", () => {
-    const result = markdownToTelegramHtml("Visit t.co and dmms-ai.co");
+    const result = markdownToTelegramHtml("Visit t.co and dryads-ai.co");
     expect(result).toContain('<a href="http://t.co">');
-    expect(result).toContain('<a href="http://dmms-ai.co">');
+    expect(result).toContain('<a href="http://dryads-ai.co">');
     expect(result).not.toContain("<code>t.co</code>");
-    expect(result).not.toContain("<code>dmms-ai.co</code>");
+    expect(result).not.toContain("<code>dryads-ai.co</code>");
   });
 
   it("does not wrap non-TLD extensions", () => {

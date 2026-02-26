@@ -1,16 +1,16 @@
 {
-  "name": "@dmms-ai/nostr",
+  "name": "@dryads-ai/nostr",
   "version": "2026.2.18",
-  "description": "DMMS AI Nostr channel plugin for NIP-04 encrypted DMs",
+  "description": "Dryads AI Nostr channel plugin for NIP-04 encrypted DMs",
   "type": "module",
   "dependencies": {
     "nostr-tools": "^2.23.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@dmms-ai/nostr",
+      "npmSpec": "@dryads-ai/nostr",
       "localPath": "extensions/nostr",
       "defaultChoice": "npm"
     }

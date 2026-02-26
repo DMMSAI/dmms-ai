@@ -1,11 +1,11 @@
 import Foundation
-import DmmsAiIPC
+import DryadsAiIPC
 import Security
 import UserNotifications
 
 @MainActor
 struct NotificationManager {
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "notifications")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "notifications")
 
     private static let hasTimeSensitiveEntitlement: Bool = {
         guard let task = SecTaskCreateFromSelf(nil) else { return false }

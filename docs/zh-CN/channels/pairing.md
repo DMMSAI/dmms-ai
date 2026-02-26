@@ -2,7 +2,7 @@
 read_when:
   - 设置私信访问控制
   - 配对新的 iOS/Android 节点
-  - 审查 DMMS AI 安全态势
+  - 审查 Dryads AI 安全态势
 summary: 配对概述：批准谁可以向你发送私信 + 哪些节点可以加入
 title: 配对
 x-i18n:
@@ -16,7 +16,7 @@ x-i18n:
 
 # 配对
 
-"配对"是 DMMS AI 的显式**所有者批准**步骤。它用于两个地方：
+"配对"是 Dryads AI 的显式**所有者批准**步骤。它用于两个地方：
 
 1. **私信配对**（谁被允许与机器人对话）
 2. **节点配对**（哪些设备/节点被允许加入 Gateway 网关网络）
@@ -38,15 +38,15 @@ x-i18n:
 ### 批准发送者
 
 ```bash
-dmms-ai pairing list telegram
-dmms-ai pairing approve telegram <CODE>
+dryads-ai pairing list telegram
+dryads-ai pairing approve telegram <CODE>
 ```
 
 支持的渠道：`telegram`、`whatsapp`、`signal`、`imessage`、`discord`、`slack`。
 
 ### 状态存储位置
 
-存储在 `~/.dmms-ai/credentials/` 下：
+存储在 `~/.dryads-ai/credentials/` 下：
 
 - 待处理请求：`<channel>-pairing.json`
 - 已批准允许列表存储：`<channel>-allowFrom.json`
@@ -60,21 +60,21 @@ dmms-ai pairing approve telegram <CODE>
 ### 批准节点设备
 
 ```bash
-dmms-ai devices list
-dmms-ai devices approve <requestId>
-dmms-ai devices reject <requestId>
+dryads-ai devices list
+dryads-ai devices approve <requestId>
+dryads-ai devices reject <requestId>
 ```
 
 ### 状态存储位置
 
-存储在 `~/.dmms-ai/devices/` 下：
+存储在 `~/.dryads-ai/devices/` 下：
 
 - `pending.json`（短期；待处理请求会过期）
 - `paired.json`（已配对设备 + 令牌）
 
 ### 说明
 
-- 旧版 `node.pair.*` API（CLI：`dmms-ai nodes pending/approve`）是一个单独的 Gateway 网关拥有的配对存储。WS 节点仍然需要设备配对。
+- 旧版 `node.pair.*` API（CLI：`dryads-ai nodes pending/approve`）是一个单独的 Gateway 网关拥有的配对存储。WS 节点仍然需要设备配对。
 
 ## 相关文档
 

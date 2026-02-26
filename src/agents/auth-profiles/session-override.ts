@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { updateSessionStore, type SessionEntry } from "../../config/sessions.js";
 import {
   ensureAuthProfileStore,
@@ -39,7 +39,7 @@ export async function clearSessionAuthProfileOverride(params: {
 }
 
 export async function resolveSessionAuthProfileOverride(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   provider: string;
   agentDir: string;
   sessionEntry?: SessionEntry;

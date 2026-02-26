@@ -1,1 +1,1 @@
-console.warn("clawdbot renamed -> dmms-ai");
+console.warn("clawdbot renamed -> dryads-ai");

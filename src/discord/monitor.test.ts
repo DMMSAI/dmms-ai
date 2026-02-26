@@ -154,14 +154,14 @@ describe("DiscordMessageListener", () => {
 
 describe("discord allowlist helpers", () => {
   it("normalizes slugs", () => {
-    expect(normalizeDiscordSlug("Friends of DMMS AI")).toBe("friends-of-dmms-ai");
+    expect(normalizeDiscordSlug("Friends of Dryads AI")).toBe("friends-of-dryads-ai");
     expect(normalizeDiscordSlug("#General")).toBe("general");
     expect(normalizeDiscordSlug("Dev__Chat")).toBe("dev-chat");
   });
 
   it("matches ids or names", () => {
     const allow = normalizeDiscordAllowList(
-      ["123", "steipete", "Friends of DMMS AI"],
+      ["123", "steipete", "Friends of Dryads AI"],
       ["discord:", "user:", "guild:", "channel:"],
     );
     expect(allow).not.toBeNull();
@@ -170,7 +170,7 @@ describe("discord allowlist helpers", () => {
     }
     expect(allowListMatches(allow, { id: "123" })).toBe(true);
     expect(allowListMatches(allow, { name: "steipete" })).toBe(true);
-    expect(allowListMatches(allow, { name: "friends-of-dmms-ai" })).toBe(true);
+    expect(allowListMatches(allow, { name: "friends-of-dryads-ai" })).toBe(true);
     expect(allowListMatches(allow, { name: "other" })).toBe(false);
   });
 
@@ -188,26 +188,26 @@ describe("discord allowlist helpers", () => {
 describe("discord guild/channel resolution", () => {
   it("resolves guild entry by id", () => {
     const guildEntries = makeEntries({
-      "123": { slug: "friends-of-dmms-ai" },
+      "123": { slug: "friends-of-dryads-ai" },
     });
     const resolved = resolveDiscordGuildEntry({
-      guild: fakeGuild("123", "Friends of DMMS AI"),
+      guild: fakeGuild("123", "Friends of Dryads AI"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
-    expect(resolved?.slug).toBe("friends-of-dmms-ai");
+    expect(resolved?.slug).toBe("friends-of-dryads-ai");
   });
 
   it("resolves guild entry by slug key", () => {
     const guildEntries = makeEntries({
-      "friends-of-dmms-ai": { slug: "friends-of-dmms-ai" },
+      "friends-of-dryads-ai": { slug: "friends-of-dryads-ai" },
     });
     const resolved = resolveDiscordGuildEntry({
-      guild: fakeGuild("123", "Friends of DMMS AI"),
+      guild: fakeGuild("123", "Friends of Dryads AI"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
-    expect(resolved?.slug).toBe("friends-of-dmms-ai");
+    expect(resolved?.slug).toBe("friends-of-dryads-ai");
   });
 
   it("falls back to wildcard guild entry", () => {
@@ -215,7 +215,7 @@ describe("discord guild/channel resolution", () => {
       "*": { requireMention: false },
     });
     const resolved = resolveDiscordGuildEntry({
-      guild: fakeGuild("123", "Friends of DMMS AI"),
+      guild: fakeGuild("123", "Friends of Dryads AI"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
@@ -578,15 +578,15 @@ describe("discord group DM gating", () => {
   it("matches group DM allowlist", () => {
     expect(
       resolveGroupDmAllow({
-        channels: ["dmms-ai-dm"],
+        channels: ["dryads-ai-dm"],
         channelId: "1",
-        channelName: "DMMS AI DM",
-        channelSlug: "dmms-ai-dm",
+        channelName: "Dryads AI DM",
+        channelSlug: "dryads-ai-dm",
       }),
     ).toBe(true);
     expect(
       resolveGroupDmAllow({
-        channels: ["dmms-ai-dm"],
+        channels: ["dryads-ai-dm"],
         channelId: "1",
         channelName: "Other",
         channelSlug: "other",

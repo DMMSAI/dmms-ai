@@ -40,8 +40,8 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
     runtime.error(
       [
         "Non-interactive onboarding requires explicit risk acknowledgement.",
-        "Read: https://docs.dmms-ai.com/security",
-        `Re-run with: ${formatCliCommand("dmms-ai onboard --non-interactive --accept-risk ...")}`,
+        "Read: https://docs.dryads-ai.com/security",
+        `Re-run with: ${formatCliCommand("dryads-ai onboard --non-interactive --accept-risk ...")}`,
       ].join("\n"),
     );
     runtime.exit(1);
@@ -59,10 +59,10 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
   if (process.platform === "win32") {
     runtime.log(
       [
-        "Windows detected — DMMS AI runs great on WSL2!",
+        "Windows detected — Dryads AI runs great on WSL2!",
         "Native Windows might be trickier.",
         "Quick setup: wsl --install (one command, one reboot)",
-        "Guide: https://docs.dmms-ai.com/windows",
+        "Guide: https://docs.dryads-ai.com/windows",
       ].join("\n"),
     );
   }

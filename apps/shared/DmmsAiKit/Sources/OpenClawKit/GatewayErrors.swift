@@ -1,4 +1,4 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Foundation
 
 /// Structured error surfaced when the gateway responds with `{ ok: false }`.

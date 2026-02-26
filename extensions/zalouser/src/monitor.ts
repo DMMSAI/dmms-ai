@@ -1,11 +1,11 @@
 import type { ChildProcess } from "node:child_process";
-import type { DmmsAiConfig, MarkdownTableMode, RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, MarkdownTableMode, RuntimeEnv } from "dryads-ai/plugin-sdk";
 import {
   createReplyPrefixOptions,
   mergeAllowlist,
   resolveSenderCommandAuthorization,
   summarizeMapping,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import { getZalouserRuntime } from "./runtime.js";
 import { sendMessageZalouser } from "./send.js";
 import type { ResolvedZalouserAccount, ZcaFriend, ZcaGroup, ZcaMessage } from "./types.js";
@@ -13,7 +13,7 @@ import { parseJsonOutput, runZca, runZcaStreaming } from "./zca.js";
 
 export type ZalouserMonitorOptions = {
   account: ResolvedZalouserAccount;
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   runtime: RuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -161,7 +161,7 @@ function startZcaListener(
 async function processMessage(
   message: ZcaMessage,
   account: ResolvedZalouserAccount,
-  config: DmmsAiConfig,
+  config: DryadsAiConfig,
   core: ZalouserCoreRuntime,
   runtime: RuntimeEnv,
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void,
@@ -385,7 +385,7 @@ async function deliverZalouserReply(params: {
   isGroup: boolean;
   runtime: RuntimeEnv;
   core: ZalouserCoreRuntime;
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   accountId?: string;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
   tableMode?: MarkdownTableMode;

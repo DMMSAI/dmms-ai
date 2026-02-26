@@ -1,14 +1,14 @@
 ---
 summary: "Zalo Personal plugin: QR login + messaging via zca-cli (plugin install + channel config + CLI + tool)"
 read_when:
-  - You want Zalo Personal (unofficial) support in DMMS AI
+  - You want Zalo Personal (unofficial) support in Dryads AI
   - You are configuring or developing the zalouser plugin
 title: "Zalo Personal Plugin"
 ---
 
 # Zalo Personal (plugin)
 
-Zalo Personal support for DMMS AI via a plugin, using `zca-cli` to automate a normal Zalo user account.
+Zalo Personal support for Dryads AI via a plugin, using `zca-cli` to automate a normal Zalo user account.
 
 > **Warning:** Unofficial automation may lead to account suspension/ban. Use at your own risk.
 
@@ -27,7 +27,7 @@ If you use a remote Gateway, install/configure it on the **machine running the G
 ### Option A: install from npm
 
 ```bash
-dmms-ai plugins install @dmms-ai/zalouser
+dryads-ai plugins install @dryads-ai/zalouser
 ```
 
 Restart the Gateway afterwards.
@@ -35,7 +35,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev)
 
 ```bash
-dmms-ai plugins install ./extensions/zalouser
+dryads-ai plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -67,11 +67,11 @@ Channel config lives under `channels.zalouser` (not `plugins.entries.*`):
 ## CLI
 
 ```bash
-dmms-ai channels login --channel zalouser
-dmms-ai channels logout --channel zalouser
-dmms-ai channels status --probe
-dmms-ai message send --channel zalouser --target <threadId> --message "Hello from DMMS AI"
-dmms-ai directory peers list --channel zalouser --query "name"
+dryads-ai channels login --channel zalouser
+dryads-ai channels logout --channel zalouser
+dryads-ai channels status --probe
+dryads-ai message send --channel zalouser --target <threadId> --message "Hello from Dryads AI"
+dryads-ai directory peers list --channel zalouser --query "name"
 ```
 
 ## Agent tool

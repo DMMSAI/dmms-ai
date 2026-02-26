@@ -1,8 +1,8 @@
 ---
 read_when:
-  - 向新用户介绍 DMMS AI
-summary: DMMS AI 是一个多渠道 AI 智能体 Gateway 网关，可在任何操作系统上运行。
-title: DMMS AI
+  - 向新用户介绍 Dryads AI
+summary: Dryads AI 是一个多渠道 AI 智能体 Gateway 网关，可在任何操作系统上运行。
+title: Dryads AI
 x-i18n:
   generated_at: "2026-02-04T17:53:40Z"
   model: claude-opus-4-5
@@ -12,18 +12,18 @@ x-i18n:
   workflow: 15
 ---
 
-# DMMS AI 🦞
+# Dryads AI 🦞
 
 <p align="center">
     <img
-        src="/assets/dmms-ai-logo-text-dark.png"
-        alt="DMMS AI"
+        src="/assets/dryads-ai-logo-text-dark.png"
+        alt="Dryads AI"
         width="500"
         class="dark:hidden"
     />
     <img
-        src="/assets/dmms-ai-logo-text.png"
-        alt="DMMS AI"
+        src="/assets/dryads-ai-logo-text.png"
+        alt="Dryads AI"
         width="500"
         class="hidden dark:block"
     />
@@ -38,17 +38,17 @@ x-i18n:
 
 <Columns>
   <Card title="入门指南" href="/start/getting-started" icon="rocket">
-    安装 DMMS AI 并在几分钟内启动 Gateway 网关。
+    安装 Dryads AI 并在几分钟内启动 Gateway 网关。
   </Card>
   <Card title="运行向导" href="/start/wizard" icon="sparkles">
-    通过 `dmms-ai onboard` 和配对流程进行引导式设置。
+    通过 `dryads-ai onboard` 和配对流程进行引导式设置。
   </Card>
   <Card title="打开控制界面" href="/web/control-ui" icon="layout-dashboard">
     启动浏览器仪表板，管理聊天、配置和会话。
   </Card>
 </Columns>
 
-DMMS AI 通过单个 Gateway 网关进程将聊天应用连接到 Pi 等编程智能体。它为 DMMS AI 助手提供支持，并支持本地或远程部署。
+Dryads AI 通过单个 Gateway 网关进程将聊天应用连接到 Pi 等编程智能体。它为 Dryads AI 助手提供支持，并支持本地或远程部署。
 
 ## 工作原理
 
@@ -90,20 +90,20 @@ Gateway 网关是会话、路由和渠道连接的唯一事实来源。
 ## 快速开始
 
 <Steps>
-  <Step title="安装 DMMS AI">
+  <Step title="安装 Dryads AI">
     ```bash
-    npm install -g dmms-ai@latest
+    npm install -g dryads-ai@latest
     ```
   </Step>
   <Step title="新手引导并安装服务">
     ```bash
-    dmms-ai onboard --install-daemon
+    dryads-ai onboard --install-daemon
     ```
   </Step>
   <Step title="配对 WhatsApp 并启动 Gateway 网关">
     ```bash
-    dmms-ai channels login
-    dmms-ai gateway --port 18789
+    dryads-ai channels login
+    dryads-ai gateway --port 18789
     ```
   </Step>
 </Steps>
@@ -118,14 +118,14 @@ Gateway 网关启动后，打开浏览器控制界面。
 - 远程访问：[Web 界面](/web)和 [Tailscale](/gateway/tailscale)
 
 <p align="center">
-  <img src="whatsapp-dmms-ai.jpg" alt="DMMS AI" width="420" />
+  <img src="whatsapp-dryads-ai.jpg" alt="Dryads AI" width="420" />
 </p>
 
 ## 配置（可选）
 
-配置文件位于 `~/.dmms-ai/dmms-ai.json`。
+配置文件位于 `~/.dryads-ai/dryads-ai.json`。
 
-- 如果你**不做任何修改**，DMMS AI 将使用内置的 Pi 二进制文件以 RPC 模式运行，并按发送者创建独立会话。
+- 如果你**不做任何修改**，Dryads AI 将使用内置的 Pi 二进制文件以 RPC 模式运行，并按发送者创建独立会话。
 - 如果你想要限制访问，可以从 `channels.whatsapp.allowFrom` 和（针对群组的）提及规则开始配置。
 
 示例：
@@ -138,7 +138,7 @@ Gateway 网关启动后，打开浏览器控制界面。
       groups: { "*": { requireMention: true } },
     },
   },
-  messages: { groupChat: { mentionPatterns: ["@dmms-ai"] } },
+  messages: { groupChat: { mentionPatterns: ["@dryads-ai"] } },
 }
 ```
 

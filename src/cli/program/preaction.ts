@@ -31,7 +31,7 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     }
     const commandPath = getCommandPath(argv, 2);
     const hideBanner =
-      isTruthyEnvValue(process.env.DMMS_AI_HIDE_BANNER) ||
+      isTruthyEnvValue(process.env.DRYADS_AI_HIDE_BANNER) ||
       commandPath[0] === "update" ||
       commandPath[0] === "completion" ||
       (commandPath[0] === "plugins" && commandPath[1] === "update");

@@ -327,7 +327,7 @@ describe("monitorSlackProvider tool results", () => {
     slackTestState.config = {
       messages: {
         responsePrefix: "PFX",
-        groupChat: { mentionPatterns: ["\\bdmms-ai\\b"] },
+        groupChat: { mentionPatterns: ["\\bdryads-ai\\b"] },
       },
       channels: {
         slack: {
@@ -350,11 +350,11 @@ describe("monitorSlackProvider tool results", () => {
   }
 
   it("accepts channel messages when mentionPatterns match", async () => {
-    await expectMentionPatternMessageAccepted("dmms-ai: hello");
+    await expectMentionPatternMessageAccepted("dryads-ai: hello");
   });
 
   it("accepts channel messages when mentionPatterns match even if another user is mentioned", async () => {
-    await expectMentionPatternMessageAccepted("dmms-ai: hello <@U2>");
+    await expectMentionPatternMessageAccepted("dryads-ai: hello <@U2>");
   });
 
   it("treats replies to bot threads as implicit mentions", async () => {

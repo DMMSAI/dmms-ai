@@ -51,24 +51,24 @@ export function registerAgentCommands(program: Command, args: { agentChannelOpti
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['dmms-ai agent --to +15555550123 --message "status update"', "Start a new session."],
-  ['dmms-ai agent --agent ops --message "Summarize logs"', "Use a specific agent."],
+  ['dryads-ai agent --to +15555550123 --message "status update"', "Start a new session."],
+  ['dryads-ai agent --agent ops --message "Summarize logs"', "Use a specific agent."],
   [
-    'dmms-ai agent --session-id 1234 --message "Summarize inbox" --thinking medium',
+    'dryads-ai agent --session-id 1234 --message "Summarize inbox" --thinking medium',
     "Target a session with explicit thinking level.",
   ],
   [
-    'dmms-ai agent --to +15555550123 --message "Trace logs" --verbose on --json',
+    'dryads-ai agent --to +15555550123 --message "Trace logs" --verbose on --json',
     "Enable verbose logging and JSON output.",
   ],
-  ['dmms-ai agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
+  ['dryads-ai agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
   [
-    'dmms-ai agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
+    'dryads-ai agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
     "Send reply to a different channel/target.",
   ],
 ])}
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.dmms-ai.com/cli/agent")}`,
+${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.dryads-ai.com/cli/agent")}`,
     )
     .action(async (opts) => {
       const verboseLevel = typeof opts.verbose === "string" ? opts.verbose.toLowerCase() : "";
@@ -86,7 +86,7 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.dmms-ai.com/cli/age
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/agents", "docs.dmms-ai.com/cli/agents")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/agents", "docs.dryads-ai.com/cli/agents")}\n`,
     );
 
   agents
@@ -155,14 +155,17 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.dmms-ai.com/cli/age
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['dmms-ai agents set-identity --agent main --name "DMMS AI" --emoji "🦞"', "Set name + emoji."],
-  ["dmms-ai agents set-identity --agent main --avatar avatars/dmms-ai.png", "Set avatar path."],
   [
-    "dmms-ai agents set-identity --workspace ~/.dmms-ai/workspace --from-identity",
+    'dryads-ai agents set-identity --agent main --name "Dryads AI" --emoji "🦞"',
+    "Set name + emoji.",
+  ],
+  ["dryads-ai agents set-identity --agent main --avatar avatars/dryads-ai.png", "Set avatar path."],
+  [
+    "dryads-ai agents set-identity --workspace ~/.dryads-ai/workspace --from-identity",
     "Load from IDENTITY.md.",
   ],
   [
-    "dmms-ai agents set-identity --identity-file ~/.dmms-ai/workspace/IDENTITY.md --agent main",
+    "dryads-ai agents set-identity --identity-file ~/.dryads-ai/workspace/IDENTITY.md --agent main",
     "Use a specific IDENTITY.md.",
   ],
 ])}

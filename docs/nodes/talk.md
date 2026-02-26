@@ -47,7 +47,7 @@ Supported keys:
 - `seed`, `normalize`, `lang`, `output_format`, `latency_tier`
 - `once`
 
-## Config (`~/.dmms-ai/dmms-ai.json`)
+## Config (`~/.dryads-ai/dryads-ai.json`)
 
 ```json5
 {

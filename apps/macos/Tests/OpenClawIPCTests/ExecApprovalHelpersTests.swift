@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct ExecApprovalHelpersTests {
     @Test func parseDecisionTrimsAndRejectsInvalid() {

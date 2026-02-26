@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=dmms-ai-sandbox:bookworm-slim
+ARG BASE_IMAGE=dryads-ai-sandbox:bookworm-slim
 FROM ${BASE_IMAGE}
 
 USER root

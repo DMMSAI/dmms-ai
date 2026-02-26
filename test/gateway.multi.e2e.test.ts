@@ -93,10 +93,10 @@ const spawnGatewayInstance = async (name: string): Promise<GatewayInstance> => {
   const port = await getFreePort();
   const hookToken = `token-${name}-${randomUUID()}`;
   const gatewayToken = `gateway-${name}-${randomUUID()}`;
-  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `dmms-ai-e2e-${name}-`));
-  const configDir = path.join(homeDir, ".dmms-ai");
+  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `dryads-ai-e2e-${name}-`));
+  const configDir = path.join(homeDir, ".dryads-ai");
   await fs.mkdir(configDir, { recursive: true });
-  const configPath = path.join(configDir, "dmms-ai.json");
+  const configPath = path.join(configDir, "dryads-ai.json");
   const stateDir = path.join(configDir, "state");
   const config = {
     gateway: { port, auth: { mode: "token", token: gatewayToken } },
@@ -125,13 +125,13 @@ const spawnGatewayInstance = async (name: string): Promise<GatewayInstance> => {
         env: {
           ...process.env,
           HOME: homeDir,
-          DMMS_AI_CONFIG_PATH: configPath,
-          DMMS_AI_STATE_DIR: stateDir,
-          DMMS_AI_GATEWAY_TOKEN: "",
-          DMMS_AI_GATEWAY_PASSWORD: "",
-          DMMS_AI_SKIP_CHANNELS: "1",
-          DMMS_AI_SKIP_BROWSER_CONTROL_SERVER: "1",
-          DMMS_AI_SKIP_CANVAS_HOST: "1",
+          DRYADS_AI_CONFIG_PATH: configPath,
+          DRYADS_AI_STATE_DIR: stateDir,
+          DRYADS_AI_GATEWAY_TOKEN: "",
+          DRYADS_AI_GATEWAY_PASSWORD: "",
+          DRYADS_AI_SKIP_CHANNELS: "1",
+          DRYADS_AI_SKIP_BROWSER_CONTROL_SERVER: "1",
+          DRYADS_AI_SKIP_CANVAS_HOST: "1",
         },
         stdio: ["ignore", "pipe", "pipe"],
       },
@@ -356,7 +356,7 @@ describe("gateway multi-instance e2e", () => {
             text: "wake a",
             mode: "now",
           },
-          { "x-dmms-ai-token": gwA.hookToken },
+          { "x-dryads-ai-token": gwA.hookToken },
         ),
         postJson(
           `http://127.0.0.1:${gwB.port}/hooks/wake`,
@@ -364,7 +364,7 @@ describe("gateway multi-instance e2e", () => {
             text: "wake b",
             mode: "now",
           },
-          { "x-dmms-ai-token": gwB.hookToken },
+          { "x-dryads-ai-token": gwB.hookToken },
         ),
       ]);
       expect(hookResA.status).toBe(200);

@@ -63,7 +63,7 @@ function isGatewayArgv(args: string[]): boolean {
   const entryCandidates = [
     "dist/index.js",
     "dist/entry.js",
-    "dmms-ai.mjs",
+    "dryads-ai.mjs",
     "scripts/run-node.mjs",
     "src/index.ts",
   ];
@@ -72,7 +72,7 @@ function isGatewayArgv(args: string[]): boolean {
   }
 
   const exe = normalized[0] ?? "";
-  return exe.endsWith("/dmms-ai") || exe === "dmms-ai";
+  return exe.endsWith("/dryads-ai") || exe === "dryads-ai";
 }
 
 function readLinuxCmdline(pid: number): string[] | null {
@@ -168,7 +168,7 @@ export async function acquireGatewayLock(
   const env = opts.env ?? process.env;
   const allowInTests = opts.allowInTests === true;
   if (
-    env.DMMS_AI_ALLOW_MULTI_GATEWAY === "1" ||
+    env.DRYADS_AI_ALLOW_MULTI_GATEWAY === "1" ||
     (!allowInTests && (env.VITEST || env.NODE_ENV === "test"))
   ) {
     return null;

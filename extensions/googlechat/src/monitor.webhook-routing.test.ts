@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events";
 import type { IncomingMessage } from "node:http";
-import type { DmmsAiConfig, PluginRuntime } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, PluginRuntime } from "dryads-ai/plugin-sdk";
 import { describe, expect, it, vi } from "vitest";
 import { createMockServerResponse } from "../../../src/test-utils/mock-http-response.js";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
@@ -54,7 +54,7 @@ function registerTwoTargets() {
   const sinkA = vi.fn();
   const sinkB = vi.fn();
   const core = {} as PluginRuntime;
-  const config = {} as DmmsAiConfig;
+  const config = {} as DryadsAiConfig;
 
   const unregisterA = registerGoogleChatWebhookTarget({
     account: baseAccount("A"),

@@ -1,7 +1,7 @@
 import path from "node:path";
-import { resolvePreferredDmmsAiTmpDir } from "../infra/tmp-dmms-ai-dir.js";
+import { resolvePreferredDryadsAiTmpDir } from "../infra/tmp-dryads-ai-dir.js";
 
-export const DEFAULT_BROWSER_TMP_DIR = resolvePreferredDmmsAiTmpDir();
+export const DEFAULT_BROWSER_TMP_DIR = resolvePreferredDryadsAiTmpDir();
 export const DEFAULT_TRACE_DIR = DEFAULT_BROWSER_TMP_DIR;
 export const DEFAULT_DOWNLOAD_DIR = path.join(DEFAULT_BROWSER_TMP_DIR, "downloads");
 export const DEFAULT_UPLOAD_DIR = path.join(DEFAULT_BROWSER_TMP_DIR, "uploads");

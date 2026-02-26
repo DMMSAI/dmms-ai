@@ -21,7 +21,7 @@ description: |
 name: session-memory
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "disk",
         "events": ["command:new"],
@@ -33,17 +33,17 @@ metadata:
     expect(result.metadata).toBeDefined();
 
     const parsed = JSON5.parse(result.metadata ?? "");
-    expect(parsed.dmms - ai?.emoji).toBe("disk");
+    expect(parsed.dryads - ai?.emoji).toBe("disk");
   });
 
   it("preserves inline JSON values", () => {
     const content = `---
 name: inline-json
-metadata: {"dmms-ai": {"events": ["test"]}}
+metadata: {"dryads-ai": {"events": ["test"]}}
 ---
 `;
     const result = parseFrontmatterBlock(content);
-    expect(result.metadata).toBe('{"dmms-ai": {"events": ["test"]}}');
+    expect(result.metadata).toBe('{"dryads-ai": {"events": ["test"]}}');
   });
 
   it("stringifies YAML objects and arrays", () => {
@@ -55,7 +55,7 @@ tags:
   - alpha
   - beta
 metadata:
-  "dmms-ai":
+  "dryads-ai":
     events:
       - command:new
 ---
@@ -65,7 +65,7 @@ metadata:
     expect(result.retries).toBe("3");
     expect(JSON.parse(result.tags ?? "[]")).toEqual(["alpha", "beta"]);
     const parsed = JSON5.parse(result.metadata ?? "");
-    expect(parsed.dmms - ai?.events).toEqual(["command:new"]);
+    expect(parsed.dryads - ai?.events).toEqual(["command:new"]);
   });
 
   it("returns empty when frontmatter is missing", () => {

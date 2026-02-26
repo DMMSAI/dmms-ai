@@ -1,11 +1,11 @@
 #!/bin/bash
 # Claude Code Authentication Status Checker
-# Checks both Claude Code and DMMS AI auth status
+# Checks both Claude Code and Dryads AI auth status
 
 set -euo pipefail
 
 CLAUDE_CREDS="$HOME/.claude/.credentials.json"
-DMMS_AI_AUTH="$HOME/.dmms-ai/agents/main/agent/auth-profiles.json"
+DRYADS_AI_AUTH="$HOME/.dryads-ai/agents/main/agent/auth-profiles.json"
 
 # Colors for terminal output
 RED='\033[0;31m'
@@ -17,7 +17,7 @@ NC='\033[0m' # No Color
 OUTPUT_MODE="${1:-full}"
 
 fetch_models_status_json() {
-    dmms-ai models status --json 2>/dev/null || true
+    dryads-ai models status --json 2>/dev/null || true
 }
 
 STATUS_JSON="$(fetch_models_status_json)"
@@ -103,7 +103,7 @@ check_claude_code_auth() {
     calc_status_from_expires "$expires_at"
 }
 
-check_dmms_ai_auth() {
+check_dryads_ai_auth() {
     if [ "$USE_JSON" -eq 1 ]; then
         local api_keys
         api_keys=$(json_anthropic_api_key_count)
@@ -122,7 +122,7 @@ check_dmms_ai_auth() {
         return $?
     fi
 
-    if [ ! -f "$DMMS_AI_AUTH" ]; then
+    if [ ! -f "$DRYADS_AI_AUTH" ]; then
         echo "MISSING"
         return 1
     fi
@@ -131,7 +131,7 @@ check_dmms_ai_auth() {
     expires=$(jq -r '
         [.profiles | to_entries[] | select(.value.provider == "anthropic") | .value.expires]
         | max // 0
-    ' "$DMMS_AI_AUTH" 2>/dev/null || echo "0")
+    ' "$DRYADS_AI_AUTH" 2>/dev/null || echo "0")
 
     calc_status_from_expires "$expires"
 }
@@ -139,26 +139,26 @@ check_dmms_ai_auth() {
 # JSON output mode
 if [ "$OUTPUT_MODE" = "json" ]; then
     claude_status=$(check_claude_code_auth 2>/dev/null || true)
-    dmms_ai_status=$(check_dmms_ai_auth 2>/dev/null || true)
+    dryads_ai_status=$(check_dryads_ai_auth 2>/dev/null || true)
 
     claude_expires=0
-    dmms_ai_expires=0
+    dryads_ai_expires=0
     if [ "$USE_JSON" -eq 1 ]; then
         claude_expires=$(json_expires_for_claude_cli)
-        dmms_ai_expires=$(json_expires_for_anthropic_any)
+        dryads_ai_expires=$(json_expires_for_anthropic_any)
     else
         claude_expires=$(jq -r '.claudeAiOauth.expiresAt // 0' "$CLAUDE_CREDS" 2>/dev/null || echo "0")
-        dmms_ai_expires=$(jq -r '.profiles["anthropic:default"].expires // 0' "$DMMS_AI_AUTH" 2>/dev/null || echo "0")
+        dryads_ai_expires=$(jq -r '.profiles["anthropic:default"].expires // 0' "$DRYADS_AI_AUTH" 2>/dev/null || echo "0")
     fi
 
     jq -n \
         --arg cs "$claude_status" \
         --arg ce "$claude_expires" \
-        --arg bs "$dmms_ai_status" \
-        --arg be "$dmms_ai_expires" \
+        --arg bs "$dryads_ai_status" \
+        --arg be "$dryads_ai_expires" \
         '{
             claude_code: {status: $cs, expires_at_ms: ($ce | tonumber)},
-            dmms-ai: {status: $bs, expires_at_ms: ($be | tonumber)},
+            dryads-ai: {status: $bs, expires_at_ms: ($be | tonumber)},
             needs_reauth: (($cs | startswith("EXPIRED") or startswith("EXPIRING") or startswith("MISSING")) or ($bs | startswith("EXPIRED") or startswith("EXPIRING") or startswith("MISSING")))
         }'
     exit 0
@@ -167,19 +167,19 @@ fi
 # Simple output mode (for scripts/widgets)
 if [ "$OUTPUT_MODE" = "simple" ]; then
     claude_status=$(check_claude_code_auth 2>/dev/null || true)
-    dmms_ai_status=$(check_dmms_ai_auth 2>/dev/null || true)
+    dryads_ai_status=$(check_dryads_ai_auth 2>/dev/null || true)
 
     if [[ "$claude_status" == EXPIRED* ]] || [[ "$claude_status" == MISSING* ]]; then
         echo "CLAUDE_EXPIRED"
         exit 1
-    elif [[ "$dmms_ai_status" == EXPIRED* ]] || [[ "$dmms_ai_status" == MISSING* ]]; then
-        echo "DMMS_AI_EXPIRED"
+    elif [[ "$dryads_ai_status" == EXPIRED* ]] || [[ "$dryads_ai_status" == MISSING* ]]; then
+        echo "DRYADS_AI_EXPIRED"
         exit 1
     elif [[ "$claude_status" == EXPIRING* ]]; then
         echo "CLAUDE_EXPIRING"
         exit 2
-    elif [[ "$dmms_ai_status" == EXPIRING* ]]; then
-        echo "DMMS_AI_EXPIRING"
+    elif [[ "$dryads_ai_status" == EXPIRING* ]]; then
+        echo "DRYADS_AI_EXPIRING"
         exit 2
     else
         echo "OK"
@@ -228,7 +228,7 @@ else
 fi
 
 echo ""
-echo "DMMS AI Auth (~/.dmms-ai/agents/main/agent/auth-profiles.json):"
+echo "Dryads AI Auth (~/.dryads-ai/agents/main/agent/auth-profiles.json):"
 if [ "$USE_JSON" -eq 1 ]; then
     best_profile=$(json_best_anthropic_profile)
     expires=$(json_expires_for_anthropic_any)
@@ -239,11 +239,11 @@ else
         | map(select(.value.provider == "anthropic"))
         | sort_by(.value.expires) | reverse
         | .[0].key // "none"
-    ' "$DMMS_AI_AUTH" 2>/dev/null || echo "none")
+    ' "$DRYADS_AI_AUTH" 2>/dev/null || echo "none")
     expires=$(jq -r '
         [.profiles | to_entries[] | select(.value.provider == "anthropic") | .value.expires]
         | max // 0
-    ' "$DMMS_AI_AUTH" 2>/dev/null || echo "0")
+    ' "$DRYADS_AI_AUTH" 2>/dev/null || echo "0")
     api_keys=0
 fi
 
@@ -253,7 +253,7 @@ if [ "$expires" -le 0 ] && [ "$api_keys" -gt 0 ]; then
     echo -e "  Status: ${GREEN}OK${NC} (API key)"
 elif [ "$expires" -le 0 ]; then
     echo -e "  Status: ${RED}NOT FOUND${NC}"
-    echo "  Note: Run 'dmms-ai doctor --yes' to sync from Claude Code"
+    echo "  Note: Run 'dryads-ai doctor --yes' to sync from Claude Code"
 else
     now_ms=$(( $(date +%s) * 1000 ))
     diff_ms=$((expires - now_ms))
@@ -262,7 +262,7 @@ else
 
     if [ "$diff_ms" -lt 0 ]; then
         echo -e "  Status: ${RED}EXPIRED${NC}"
-        echo "  Note: Run 'dmms-ai doctor --yes' to sync from Claude Code"
+        echo "  Note: Run 'dryads-ai doctor --yes' to sync from Claude Code"
     elif [ "$diff_ms" -lt 3600000 ]; then
         echo -e "  Status: ${YELLOW}EXPIRING SOON (${mins}m remaining)${NC}"
     else
@@ -273,8 +273,8 @@ fi
 
 echo ""
 echo "=== Service Status ==="
-if systemctl --user is-active dmms-ai >/dev/null 2>&1; then
-    echo -e "DMMS AI service: ${GREEN}running${NC}"
+if systemctl --user is-active dryads-ai >/dev/null 2>&1; then
+    echo -e "Dryads AI service: ${GREEN}running${NC}"
 else
-    echo -e "DMMS AI service: ${RED}NOT running${NC}"
+    echo -e "Dryads AI service: ${RED}NOT running${NC}"
 fi

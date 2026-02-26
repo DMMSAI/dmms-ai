@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai channels` (accounts, status, login/logout, logs)"
+summary: "CLI reference for `dryads-ai channels` (accounts, status, login/logout, logs)"
 read_when:
   - You want to add/remove channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Mattermost (plugin)/Signal/iMessage)
   - You want to check channel status or tail channel logs
 title: "channels"
 ---
 
-# `dmms-ai channels`
+# `dryads-ai channels`
 
 Manage chat channel accounts and their runtime status on the Gateway.
 
@@ -18,43 +18,43 @@ Related docs:
 ## Common commands
 
 ```bash
-dmms-ai channels list
-dmms-ai channels status
-dmms-ai channels capabilities
-dmms-ai channels capabilities --channel discord --target channel:123
-dmms-ai channels resolve --channel slack "#general" "@jane"
-dmms-ai channels logs --channel all
+dryads-ai channels list
+dryads-ai channels status
+dryads-ai channels capabilities
+dryads-ai channels capabilities --channel discord --target channel:123
+dryads-ai channels resolve --channel slack "#general" "@jane"
+dryads-ai channels logs --channel all
 ```
 
 ## Add / remove accounts
 
 ```bash
-dmms-ai channels add --channel telegram --token <bot-token>
-dmms-ai channels remove --channel telegram --delete
+dryads-ai channels add --channel telegram --token <bot-token>
+dryads-ai channels remove --channel telegram --delete
 ```
 
-Tip: `dmms-ai channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
+Tip: `dryads-ai channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
 
 ## Login / logout (interactive)
 
 ```bash
-dmms-ai channels login --channel whatsapp
-dmms-ai channels logout --channel whatsapp
+dryads-ai channels login --channel whatsapp
+dryads-ai channels logout --channel whatsapp
 ```
 
 ## Troubleshooting
 
-- Run `dmms-ai status --deep` for a broad probe.
-- Use `dmms-ai doctor` for guided fixes.
-- `dmms-ai channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
+- Run `dryads-ai status --deep` for a broad probe.
+- Use `dryads-ai doctor` for guided fixes.
+- `dryads-ai channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
 
 ## Capabilities probe
 
 Fetch provider capability hints (intents/scopes where available) plus static feature support:
 
 ```bash
-dmms-ai channels capabilities
-dmms-ai channels capabilities --channel discord --target channel:123
+dryads-ai channels capabilities
+dryads-ai channels capabilities --channel discord --target channel:123
 ```
 
 Notes:
@@ -68,9 +68,9 @@ Notes:
 Resolve channel/user names to IDs using the provider directory:
 
 ```bash
-dmms-ai channels resolve --channel slack "#general" "@jane"
-dmms-ai channels resolve --channel discord "My Server/#support" "@someone"
-dmms-ai channels resolve --channel matrix "Project Room"
+dryads-ai channels resolve --channel slack "#general" "@jane"
+dryads-ai channels resolve --channel discord "My Server/#support" "@someone"
+dryads-ai channels resolve --channel matrix "Project Room"
 ```
 
 Notes:

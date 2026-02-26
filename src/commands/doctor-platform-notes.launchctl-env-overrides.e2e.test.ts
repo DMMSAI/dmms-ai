@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { noteMacLaunchctlGatewayEnvOverrides } from "./doctor-platform-notes.js";
 
 describe("noteMacLaunchctlGatewayEnvOverrides", () => {
   it("prints clear unsetenv instructions for token override", async () => {
     const noteFn = vi.fn();
     const getenv = vi.fn(async (name: string) =>
-      name === "DMMS_AI_GATEWAY_TOKEN" ? "launchctl-token" : undefined,
+      name === "DRYADS_AI_GATEWAY_TOKEN" ? "launchctl-token" : undefined,
     );
     const cfg = {
       gateway: {
@@ -14,7 +14,7 @@ describe("noteMacLaunchctlGatewayEnvOverrides", () => {
           token: "config-token",
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     await noteMacLaunchctlGatewayEnvOverrides(cfg, { platform: "darwin", getenv, noteFn });
 
@@ -24,15 +24,15 @@ describe("noteMacLaunchctlGatewayEnvOverrides", () => {
     const [message, title] = noteFn.mock.calls[0] ?? [];
     expect(title).toBe("Gateway (macOS)");
     expect(message).toContain("launchctl environment overrides detected");
-    expect(message).toContain("DMMS_AI_GATEWAY_TOKEN");
-    expect(message).toContain("launchctl unsetenv DMMS_AI_GATEWAY_TOKEN");
-    expect(message).not.toContain("DMMS_AI_GATEWAY_PASSWORD");
+    expect(message).toContain("DRYADS_AI_GATEWAY_TOKEN");
+    expect(message).toContain("launchctl unsetenv DRYADS_AI_GATEWAY_TOKEN");
+    expect(message).not.toContain("DRYADS_AI_GATEWAY_PASSWORD");
   });
 
   it("does nothing when config has no gateway credentials", async () => {
     const noteFn = vi.fn();
     const getenv = vi.fn(async () => "launchctl-token");
-    const cfg = {} as DmmsAiConfig;
+    const cfg = {} as DryadsAiConfig;
 
     await noteMacLaunchctlGatewayEnvOverrides(cfg, { platform: "darwin", getenv, noteFn });
 
@@ -49,7 +49,7 @@ describe("noteMacLaunchctlGatewayEnvOverrides", () => {
           token: "config-token",
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
 
     await noteMacLaunchctlGatewayEnvOverrides(cfg, { platform: "linux", getenv, noteFn });
 

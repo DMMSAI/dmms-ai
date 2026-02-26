@@ -9,16 +9,16 @@ import {
 } from "./update-offset-store.js";
 
 async function withTempStateDir<T>(fn: (dir: string) => Promise<T>) {
-  const previous = process.env.DMMS_AI_STATE_DIR;
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-tg-offset-"));
-  process.env.DMMS_AI_STATE_DIR = dir;
+  const previous = process.env.DRYADS_AI_STATE_DIR;
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-tg-offset-"));
+  process.env.DRYADS_AI_STATE_DIR = dir;
   try {
     return await fn(dir);
   } finally {
     if (previous === undefined) {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     } else {
-      process.env.DMMS_AI_STATE_DIR = previous;
+      process.env.DRYADS_AI_STATE_DIR = previous;
     }
     await fs.rm(dir, { recursive: true, force: true });
   }

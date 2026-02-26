@@ -2,7 +2,7 @@
 read_when:
   - 你想移除 Gateway 网关服务和/或本地状态
   - 你想先进行试运行
-summary: "`dmms-ai uninstall` 的 CLI 参考（移除 Gateway 网关服务 + 本地数据）"
+summary: "`dryads-ai uninstall` 的 CLI 参考（移除 Gateway 网关服务 + 本地数据）"
 title: uninstall
 x-i18n:
   generated_at: "2026-02-03T10:04:23Z"
@@ -13,12 +13,12 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai uninstall`
+# `dryads-ai uninstall`
 
 卸载 Gateway 网关服务 + 本地数据（CLI 保留）。
 
 ```bash
-dmms-ai uninstall
-dmms-ai uninstall --all --yes
-dmms-ai uninstall --dry-run
+dryads-ai uninstall
+dryads-ai uninstall --all --yes
+dryads-ai uninstall --dry-run
 ```

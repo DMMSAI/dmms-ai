@@ -24,7 +24,7 @@ describe("restart-helper", () => {
     it("creates a systemd restart script on Linux", async () => {
       Object.defineProperty(process, "platform", { value: "linux" });
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
+        DRYADS_AI_PROFILE: "default",
       });
 
       expect(scriptPath).toBeTruthy();
@@ -32,7 +32,7 @@ describe("restart-helper", () => {
 
       const content = await fs.readFile(scriptPath!, "utf-8");
       expect(content).toContain("#!/bin/sh");
-      expect(content).toContain("systemctl --user restart 'dmms-ai-gateway.service'");
+      expect(content).toContain("systemctl --user restart 'dryads-ai-gateway.service'");
       // Script should self-cleanup
       expect(content).toContain('rm -f "$0"');
 
@@ -41,11 +41,11 @@ describe("restart-helper", () => {
       }
     });
 
-    it("uses DMMS_AI_SYSTEMD_UNIT override for systemd scripts", async () => {
+    it("uses DRYADS_AI_SYSTEMD_UNIT override for systemd scripts", async () => {
       Object.defineProperty(process, "platform", { value: "linux" });
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
-        DMMS_AI_SYSTEMD_UNIT: "custom-gateway",
+        DRYADS_AI_PROFILE: "default",
+        DRYADS_AI_SYSTEMD_UNIT: "custom-gateway",
       });
 
       expect(scriptPath).toBeTruthy();
@@ -62,7 +62,7 @@ describe("restart-helper", () => {
       process.getuid = () => 501;
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
+        DRYADS_AI_PROFILE: "default",
       });
 
       expect(scriptPath).toBeTruthy();
@@ -70,7 +70,7 @@ describe("restart-helper", () => {
 
       const content = await fs.readFile(scriptPath!, "utf-8");
       expect(content).toContain("#!/bin/sh");
-      expect(content).toContain("launchctl kickstart -k 'gui/501/ai.dmmsai.gateway'");
+      expect(content).toContain("launchctl kickstart -k 'gui/501/ai.dryadsai.gateway'");
       expect(content).toContain('rm -f "$0"');
 
       if (scriptPath) {
@@ -78,18 +78,18 @@ describe("restart-helper", () => {
       }
     });
 
-    it("uses DMMS_AI_LAUNCHD_LABEL override on macOS", async () => {
+    it("uses DRYADS_AI_LAUNCHD_LABEL override on macOS", async () => {
       Object.defineProperty(process, "platform", { value: "darwin" });
       process.getuid = () => 501;
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
-        DMMS_AI_LAUNCHD_LABEL: "com.custom.dmms-ai",
+        DRYADS_AI_PROFILE: "default",
+        DRYADS_AI_LAUNCHD_LABEL: "com.custom.dryads-ai",
       });
 
       expect(scriptPath).toBeTruthy();
       const content = await fs.readFile(scriptPath!, "utf-8");
-      expect(content).toContain("launchctl kickstart -k 'gui/501/com.custom.dmms-ai'");
+      expect(content).toContain("launchctl kickstart -k 'gui/501/com.custom.dryads-ai'");
 
       if (scriptPath) {
         await fs.unlink(scriptPath);
@@ -100,7 +100,7 @@ describe("restart-helper", () => {
       Object.defineProperty(process, "platform", { value: "win32" });
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
+        DRYADS_AI_PROFILE: "default",
       });
 
       expect(scriptPath).toBeTruthy();
@@ -108,8 +108,8 @@ describe("restart-helper", () => {
 
       const content = await fs.readFile(scriptPath!, "utf-8");
       expect(content).toContain("@echo off");
-      expect(content).toContain('schtasks /End /TN "DMMS AI Gateway"');
-      expect(content).toContain('schtasks /Run /TN "DMMS AI Gateway"');
+      expect(content).toContain('schtasks /End /TN "Dryads AI Gateway"');
+      expect(content).toContain('schtasks /Run /TN "Dryads AI Gateway"');
       // Batch self-cleanup
       expect(content).toContain('del "%~f0"');
 
@@ -118,18 +118,18 @@ describe("restart-helper", () => {
       }
     });
 
-    it("uses DMMS_AI_WINDOWS_TASK_NAME override on Windows", async () => {
+    it("uses DRYADS_AI_WINDOWS_TASK_NAME override on Windows", async () => {
       Object.defineProperty(process, "platform", { value: "win32" });
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
-        DMMS_AI_WINDOWS_TASK_NAME: "DMMS AI Gateway (custom)",
+        DRYADS_AI_PROFILE: "default",
+        DRYADS_AI_WINDOWS_TASK_NAME: "Dryads AI Gateway (custom)",
       });
 
       expect(scriptPath).toBeTruthy();
       const content = await fs.readFile(scriptPath!, "utf-8");
-      expect(content).toContain('schtasks /End /TN "DMMS AI Gateway (custom)"');
-      expect(content).toContain('schtasks /Run /TN "DMMS AI Gateway (custom)"');
+      expect(content).toContain('schtasks /End /TN "Dryads AI Gateway (custom)"');
+      expect(content).toContain('schtasks /Run /TN "Dryads AI Gateway (custom)"');
 
       if (scriptPath) {
         await fs.unlink(scriptPath);
@@ -139,12 +139,12 @@ describe("restart-helper", () => {
     it("uses custom profile in service names", async () => {
       Object.defineProperty(process, "platform", { value: "linux" });
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "production",
+        DRYADS_AI_PROFILE: "production",
       });
 
       expect(scriptPath).toBeTruthy();
       const content = await fs.readFile(scriptPath!, "utf-8");
-      expect(content).toContain("dmms-ai-gateway-production.service");
+      expect(content).toContain("dryads-ai-gateway-production.service");
 
       if (scriptPath) {
         await fs.unlink(scriptPath);
@@ -156,12 +156,12 @@ describe("restart-helper", () => {
       process.getuid = () => 502;
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "staging",
+        DRYADS_AI_PROFILE: "staging",
       });
 
       expect(scriptPath).toBeTruthy();
       const content = await fs.readFile(scriptPath!, "utf-8");
-      expect(content).toContain("gui/502/ai.dmmsai.staging");
+      expect(content).toContain("gui/502/ai.dryadsai.staging");
 
       if (scriptPath) {
         await fs.unlink(scriptPath);
@@ -172,12 +172,12 @@ describe("restart-helper", () => {
       Object.defineProperty(process, "platform", { value: "win32" });
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "production",
+        DRYADS_AI_PROFILE: "production",
       });
 
       expect(scriptPath).toBeTruthy();
       const content = await fs.readFile(scriptPath!, "utf-8");
-      expect(content).toContain('schtasks /End /TN "DMMS AI Gateway (production)"');
+      expect(content).toContain('schtasks /End /TN "Dryads AI Gateway (production)"');
 
       if (scriptPath) {
         await fs.unlink(scriptPath);
@@ -197,7 +197,7 @@ describe("restart-helper", () => {
         .mockRejectedValueOnce(new Error("simulated write failure"));
 
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "default",
+        DRYADS_AI_PROFILE: "default",
       });
 
       expect(scriptPath).toBeNull();
@@ -207,7 +207,7 @@ describe("restart-helper", () => {
     it("escapes single quotes in profile names for shell scripts", async () => {
       Object.defineProperty(process, "platform", { value: "linux" });
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "it's-a-test",
+        DRYADS_AI_PROFILE: "it's-a-test",
       });
 
       expect(scriptPath).toBeTruthy();
@@ -224,7 +224,7 @@ describe("restart-helper", () => {
     it("rejects unsafe batch profile names on Windows", async () => {
       Object.defineProperty(process, "platform", { value: "win32" });
       const scriptPath = await prepareRestartScript({
-        DMMS_AI_PROFILE: "test&whoami",
+        DRYADS_AI_PROFILE: "test&whoami",
       });
 
       expect(scriptPath).toBeNull();

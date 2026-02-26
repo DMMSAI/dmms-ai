@@ -2,7 +2,7 @@ import { DEFAULT_CONTEXT_TOKENS } from "../agents/defaults.js";
 import { parseModelRef } from "../agents/model-selection.js";
 import { DEFAULT_AGENT_MAX_CONCURRENT, DEFAULT_SUBAGENT_MAX_CONCURRENT } from "./agent-limits.js";
 import { resolveTalkApiKey } from "./talk.js";
-import type { DmmsAiConfig } from "./types.js";
+import type { DryadsAiConfig } from "./types.js";
 import type { ModelDefinitionConfig } from "./types.models.js";
 
 type WarnState = { warned: boolean };
@@ -53,7 +53,7 @@ function resolveModelCost(
   };
 }
 
-function resolveAnthropicDefaultAuthMode(cfg: DmmsAiConfig): AnthropicAuthDefaultsMode | null {
+function resolveAnthropicDefaultAuthMode(cfg: DryadsAiConfig): AnthropicAuthDefaultsMode | null {
   const profiles = cfg.auth?.profiles ?? {};
   const anthropicProfiles = Object.entries(profiles).filter(
     ([, profile]) => profile?.provider === "anthropic",
@@ -110,7 +110,7 @@ export type SessionDefaultsOptions = {
   warnState?: WarnState;
 };
 
-export function applyMessageDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyMessageDefaults(cfg: DryadsAiConfig): DryadsAiConfig {
   const messages = cfg.messages;
   const hasAckScope = messages?.ackReactionScope !== undefined;
   if (hasAckScope) {
@@ -126,9 +126,9 @@ export function applyMessageDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
 }
 
 export function applySessionDefaults(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   options: SessionDefaultsOptions = {},
-): DmmsAiConfig {
+): DryadsAiConfig {
   const session = cfg.session;
   if (!session || session.mainKey === undefined) {
     return cfg;
@@ -138,7 +138,7 @@ export function applySessionDefaults(
   const warn = options.warn ?? console.warn;
   const warnState = options.warnState ?? defaultWarnState;
 
-  const next: DmmsAiConfig = {
+  const next: DryadsAiConfig = {
     ...cfg,
     session: { ...session, mainKey: "main" },
   };
@@ -151,7 +151,7 @@ export function applySessionDefaults(
   return next;
 }
 
-export function applyTalkApiKey(config: DmmsAiConfig): DmmsAiConfig {
+export function applyTalkApiKey(config: DryadsAiConfig): DryadsAiConfig {
   const resolved = resolveTalkApiKey();
   if (!resolved) {
     return config;
@@ -169,7 +169,7 @@ export function applyTalkApiKey(config: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyModelDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyModelDefaults(cfg: DryadsAiConfig): DryadsAiConfig {
   let mutated = false;
   let nextCfg = cfg;
 
@@ -291,7 +291,7 @@ export function applyModelDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyAgentDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyAgentDefaults(cfg: DryadsAiConfig): DryadsAiConfig {
   const agents = cfg.agents;
   const defaults = agents?.defaults;
   const hasMax =
@@ -332,7 +332,7 @@ export function applyAgentDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyLoggingDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyLoggingDefaults(cfg: DryadsAiConfig): DryadsAiConfig {
   const logging = cfg.logging;
   if (!logging) {
     return cfg;
@@ -349,7 +349,7 @@ export function applyLoggingDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyContextPruningDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyContextPruningDefaults(cfg: DryadsAiConfig): DryadsAiConfig {
   const defaults = cfg.agents?.defaults;
   if (!defaults) {
     return cfg;
@@ -440,7 +440,7 @@ export function applyContextPruningDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyCompactionDefaults(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyCompactionDefaults(cfg: DryadsAiConfig): DryadsAiConfig {
   const defaults = cfg.agents?.defaults;
   if (!defaults) {
     return cfg;

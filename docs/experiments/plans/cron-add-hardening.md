@@ -1,6 +1,6 @@
 ---
 summary: "Harden cron.add input handling, align schemas, and improve cron UI/agent tooling"
-owner: "dmms-ai"
+owner: "dryads-ai"
 status: "complete"
 last_updated: "2026-01-05"
 title: "Cron Add Hardening"

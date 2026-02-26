@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { DmmsAiSchema } from "./zod-schema.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 describe("skills entries config schema", () => {
   it("accepts custom fields under config", () => {
-    const res = DmmsAiSchema.safeParse({
+    const res = DryadsAiSchema.safeParse({
       skills: {
         entries: {
           "custom-skill": {
@@ -21,7 +21,7 @@ describe("skills entries config schema", () => {
   });
 
   it("rejects unknown top-level fields", () => {
-    const res = DmmsAiSchema.safeParse({
+    const res = DryadsAiSchema.safeParse({
       skills: {
         entries: {
           "custom-skill": {

@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { isTruthyEnvValue } from "../infra/env.js";
 import { startGmailWatcher } from "./gmail-watcher.js";
 
@@ -9,11 +9,11 @@ export type GMailWatcherLog = {
 };
 
 export async function startGmailWatcherWithLogs(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   log: GMailWatcherLog;
   onSkipped?: () => void;
 }) {
-  if (isTruthyEnvValue(process.env.DMMS_AI_SKIP_GMAIL_WATCHER)) {
+  if (isTruthyEnvValue(process.env.DRYADS_AI_SKIP_GMAIL_WATCHER)) {
     params.onSkipped?.();
     return;
   }

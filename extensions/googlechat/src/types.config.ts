@@ -1,3 +1,3 @@
-import type { GoogleChatAccountConfig, GoogleChatConfig } from "dmms-ai/plugin-sdk";
+import type { GoogleChatAccountConfig, GoogleChatConfig } from "dryads-ai/plugin-sdk";
 
 export type { GoogleChatAccountConfig, GoogleChatConfig };

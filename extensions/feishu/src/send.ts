@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "dmms-ai/plugin-sdk";
+import type { ClawdbotConfig } from "dryads-ai/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import type { MentionTarget } from "./mention.js";

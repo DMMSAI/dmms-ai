@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 function makeState(
-  profile: "remote" | "dmms-ai",
+  profile: "remote" | "dryads-ai",
 ): BrowserServerState & { profiles: Map<string, { lastTargetId?: string | null }> } {
   return {
     // oxlint-disable-next-line typescript/no-explicit-any
@@ -41,7 +41,7 @@ function makeState(
           cdpPort: 443,
           color: "#00AA00",
         },
-        "dmms-ai": { cdpPort: 18800, color: "#FF4500" },
+        "dryads-ai": { cdpPort: 18800, color: "#FF4500" },
       },
     },
     profiles: new Map(),
@@ -236,12 +236,12 @@ describe("browser server-context tab selection state", () => {
 
     global.fetch = withFetchPreconnect(fetchMock);
 
-    const state = makeState("dmms-ai");
+    const state = makeState("dryads-ai");
     const ctx = createBrowserRouteContext({ getState: () => state });
-    const dmmsAi = ctx.forProfile("dmms-ai");
+    const dryadsAi = ctx.forProfile("dryads-ai");
 
-    const opened = await dmmsAi.openTab("https://created.example");
+    const opened = await dryadsAi.openTab("https://created.example");
     expect(opened.targetId).toBe("CREATED");
-    expect(state.profiles.get("dmms-ai")?.lastTargetId).toBe("CREATED");
+    expect(state.profiles.get("dryads-ai")?.lastTargetId).toBe("CREATED");
   });
 });

@@ -8,9 +8,9 @@ import UniformTypeIdentifiers
 #endif
 
 @MainActor
-struct DmmsAiChatComposer: View {
-    @Bindable var viewModel: DmmsAiChatViewModel
-    let style: DmmsAiChatView.Style
+struct DryadsAiChatComposer: View {
+    @Bindable var viewModel: DryadsAiChatViewModel
+    let style: DryadsAiChatView.Style
     let showsSessionSwitcher: Bool
 
     #if !os(macOS)
@@ -54,21 +54,21 @@ struct DmmsAiChatComposer: View {
                         topTrailing: 0),
                     style: .continuous)
                 shape
-                    .fill(DmmsAiChatTheme.composerBackground)
-                    .overlay(shape.strokeBorder(DmmsAiChatTheme.composerBorder, lineWidth: 1))
+                    .fill(DryadsAiChatTheme.composerBackground)
+                    .overlay(shape.strokeBorder(DryadsAiChatTheme.composerBorder, lineWidth: 1))
                     .shadow(color: .black.opacity(0.12), radius: 12, y: 6)
             } else {
                 let shape = RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                 shape
-                    .fill(DmmsAiChatTheme.composerBackground)
-                    .overlay(shape.strokeBorder(DmmsAiChatTheme.composerBorder, lineWidth: 1))
+                    .fill(DryadsAiChatTheme.composerBackground)
+                    .overlay(shape.strokeBorder(DryadsAiChatTheme.composerBorder, lineWidth: 1))
                     .shadow(color: .black.opacity(0.12), radius: 12, y: 6)
             }
             #else
             let shape = RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
             shape
-                .fill(DmmsAiChatTheme.composerBackground)
-                .overlay(shape.strokeBorder(DmmsAiChatTheme.composerBorder, lineWidth: 1))
+                .fill(DryadsAiChatTheme.composerBackground)
+                .overlay(shape.strokeBorder(DryadsAiChatTheme.composerBorder, lineWidth: 1))
                 .shadow(color: .black.opacity(0.12), radius: 12, y: 6)
             #endif
         }
@@ -144,11 +144,11 @@ struct DmmsAiChatComposer: View {
             HStack(spacing: 6) {
                 ForEach(
                     self.viewModel.attachments,
-                    id: \DmmsAiPendingAttachment.id)
-                { (att: DmmsAiPendingAttachment) in
+                    id: \DryadsAiPendingAttachment.id)
+                { (att: DryadsAiPendingAttachment) in
                     HStack(spacing: 6) {
                         if let img = att.preview {
-                            DmmsAiPlatformImageFactory.image(img)
+                            DryadsAiPlatformImageFactory.image(img)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 22, height: 22)
@@ -181,7 +181,7 @@ struct DmmsAiChatComposer: View {
             self.editorOverlay
 
             Rectangle()
-                .fill(DmmsAiChatTheme.divider)
+                .fill(DryadsAiChatTheme.divider)
                 .frame(height: 1)
                 .padding(.horizontal, 2)
 
@@ -197,10 +197,10 @@ struct DmmsAiChatComposer: View {
         .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(DmmsAiChatTheme.composerField)
+                .fill(DryadsAiChatTheme.composerField)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .strokeBorder(DmmsAiChatTheme.composerBorder)))
+                        .strokeBorder(DryadsAiChatTheme.composerBorder)))
         .padding(self.editorPadding)
     }
 
@@ -217,7 +217,7 @@ struct DmmsAiChatComposer: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
-        .background(DmmsAiChatTheme.subtleCard)
+        .background(DryadsAiChatTheme.subtleCard)
         .clipShape(Capsule())
     }
 
@@ -230,7 +230,7 @@ struct DmmsAiChatComposer: View {
     private var editorOverlay: some View {
         ZStack(alignment: .topLeading) {
             if self.viewModel.input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                Text("Message DMMS AI…")
+                Text("Message Dryads AI…")
                     .foregroundStyle(.tertiary)
                     .padding(.horizontal, 4)
                     .padding(.vertical, 4)

@@ -1,7 +1,7 @@
 import AVFAudio
 import Foundation
 import Observation
-import DmmsAiKit
+import DryadsAiKit
 import Speech
 import SwabbleKit
 

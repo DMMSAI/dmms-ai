@@ -133,7 +133,7 @@ describe("cli program (nodes media)", () => {
     );
 
     await expectLoggedSingleMediaFile({
-      expectedPathPattern: /dmms-ai-camera-clip-front-.*\.mp4$/,
+      expectedPathPattern: /dryads-ai-camera-clip-front-.*\.mp4$/,
     });
   });
 
@@ -268,7 +268,7 @@ describe("cli program (nodes media)", () => {
     );
 
     await expectLoggedSingleMediaFile({
-      expectedPathPattern: /dmms-ai-canvas-snapshot-.*\.png$/,
+      expectedPathPattern: /dryads-ai-canvas-snapshot-.*\.png$/,
     });
   });
 
@@ -323,7 +323,7 @@ describe("cli program (nodes media)", () => {
       );
 
       await expectLoggedSingleMediaFile({
-        expectedPathPattern: /dmms-ai-camera-snap-front-.*\.jpg$/,
+        expectedPathPattern: /dryads-ai-camera-snap-front-.*\.jpg$/,
         expectedContent: "url-content",
       });
     });
@@ -344,7 +344,7 @@ describe("cli program (nodes media)", () => {
       );
 
       await expectLoggedSingleMediaFile({
-        expectedPathPattern: /dmms-ai-camera-clip-front-.*\.mp4$/,
+        expectedPathPattern: /dryads-ai-camera-clip-front-.*\.mp4$/,
         expectedContent: "url-content",
       });
     });

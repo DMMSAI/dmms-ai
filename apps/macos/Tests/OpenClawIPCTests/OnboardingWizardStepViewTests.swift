@@ -1,9 +1,9 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
-private typealias ProtoAnyCodable = DmmsAiProtocol.AnyCodable
+private typealias ProtoAnyCodable = DryadsAiProtocol.AnyCodable
 
 @Suite(.serialized)
 @MainActor

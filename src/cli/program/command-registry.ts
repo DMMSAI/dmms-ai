@@ -192,7 +192,7 @@ const coreEntries: CoreCliEntry[] = [
     commands: [
       {
         name: "browser",
-        description: "Manage DMMS AI's dedicated browser (Chrome/Chromium)",
+        description: "Manage Dryads AI's dedicated browser (Chrome/Chromium)",
         hasSubcommands: true,
       },
     ],

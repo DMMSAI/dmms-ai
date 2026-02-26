@@ -4,7 +4,7 @@ import {
   validateGatewayPasswordInput,
 } from "../commands/onboard-helpers.js";
 import type { GatewayAuthChoice } from "../commands/onboard-types.js";
-import type { GatewayBindMode, GatewayTailscaleMode, DmmsAiConfig } from "../config/config.js";
+import type { GatewayBindMode, GatewayTailscaleMode, DryadsAiConfig } from "../config/config.js";
 import {
   TAILSCALE_DOCS_LINES,
   TAILSCALE_EXPOSURE_OPTIONS,
@@ -36,8 +36,8 @@ const DEFAULT_DANGEROUS_NODE_DENY_COMMANDS = [
 
 type ConfigureGatewayOptions = {
   flow: WizardFlow;
-  baseConfig: DmmsAiConfig;
-  nextConfig: DmmsAiConfig;
+  baseConfig: DryadsAiConfig;
+  nextConfig: DryadsAiConfig;
   localPort: number;
   quickstartGateway: QuickstartGatewayDefaults;
   prompter: WizardPrompter;
@@ -45,7 +45,7 @@ type ConfigureGatewayOptions = {
 };
 
 type ConfigureGatewayResult = {
-  nextConfig: DmmsAiConfig;
+  nextConfig: DryadsAiConfig;
   settings: GatewayWizardSettings;
 };
 

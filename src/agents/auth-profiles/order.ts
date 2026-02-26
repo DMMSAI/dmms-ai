@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { findNormalizedProviderValue, normalizeProviderId } from "../model-selection.js";
 import { dedupeProfileIds, listProfilesForProvider } from "./profiles.js";
 import type { AuthProfileStore } from "./types.js";
@@ -9,7 +9,7 @@ import {
 } from "./usage.js";
 
 export function resolveAuthProfileOrder(params: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   store: AuthProfileStore;
   provider: string;
   preferredProfile?: string;

@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { DmmsAiConfig, PluginRuntime } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, PluginRuntime } from "dryads-ai/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sendBlueBubblesMedia } from "./media-send.js";
 import { setBlueBubblesRuntime } from "./runtime.js";
@@ -54,18 +54,18 @@ function createMockRuntime(): { runtime: PluginRuntime; mocks: RuntimeMocks } {
   };
 }
 
-function createConfig(overrides?: Record<string, unknown>): DmmsAiConfig {
+function createConfig(overrides?: Record<string, unknown>): DryadsAiConfig {
   return {
     channels: {
       bluebubbles: {
         ...overrides,
       },
     },
-  } as unknown as DmmsAiConfig;
+  } as unknown as DryadsAiConfig;
 }
 
 async function makeTempDir(): Promise<string> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-bb-media-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-bb-media-"));
   tempDirs.push(dir);
   return dir;
 }

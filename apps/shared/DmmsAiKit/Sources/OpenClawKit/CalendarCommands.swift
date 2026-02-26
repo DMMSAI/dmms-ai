@@ -1,11 +1,11 @@
 import Foundation
 
-public enum DmmsAiCalendarCommand: String, Codable, Sendable {
+public enum DryadsAiCalendarCommand: String, Codable, Sendable {
     case events = "calendar.events"
     case add = "calendar.add"
 }
 
-public struct DmmsAiCalendarEventsParams: Codable, Sendable, Equatable {
+public struct DryadsAiCalendarEventsParams: Codable, Sendable, Equatable {
     public var startISO: String?
     public var endISO: String?
     public var limit: Int?
@@ -17,7 +17,7 @@ public struct DmmsAiCalendarEventsParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCalendarAddParams: Codable, Sendable, Equatable {
+public struct DryadsAiCalendarAddParams: Codable, Sendable, Equatable {
     public var title: String
     public var startISO: String
     public var endISO: String
@@ -48,7 +48,7 @@ public struct DmmsAiCalendarAddParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCalendarEventPayload: Codable, Sendable, Equatable {
+public struct DryadsAiCalendarEventPayload: Codable, Sendable, Equatable {
     public var identifier: String
     public var title: String
     public var startISO: String
@@ -76,18 +76,18 @@ public struct DmmsAiCalendarEventPayload: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCalendarEventsPayload: Codable, Sendable, Equatable {
-    public var events: [DmmsAiCalendarEventPayload]
+public struct DryadsAiCalendarEventsPayload: Codable, Sendable, Equatable {
+    public var events: [DryadsAiCalendarEventPayload]
 
-    public init(events: [DmmsAiCalendarEventPayload]) {
+    public init(events: [DryadsAiCalendarEventPayload]) {
         self.events = events
     }
 }
 
-public struct DmmsAiCalendarAddPayload: Codable, Sendable, Equatable {
-    public var event: DmmsAiCalendarEventPayload
+public struct DryadsAiCalendarAddPayload: Codable, Sendable, Equatable {
+    public var event: DryadsAiCalendarEventPayload
 
-    public init(event: DmmsAiCalendarEventPayload) {
+    public init(event: DryadsAiCalendarEventPayload) {
         self.event = event
     }
 }

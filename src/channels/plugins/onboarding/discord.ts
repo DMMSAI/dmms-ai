@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 import type { DiscordGuildEntry } from "../../../config/types.discord.js";
 import type { DmPolicy } from "../../../config/types.js";
 import {
@@ -21,7 +21,7 @@ import { addWildcardAllowFrom, promptAccountId, promptResolvedAllowFrom } from "
 
 const channel = "discord" as const;
 
-function setDiscordDmPolicy(cfg: DmmsAiConfig, dmPolicy: DmPolicy) {
+function setDiscordDmPolicy(cfg: DryadsAiConfig, dmPolicy: DmPolicy) {
   const existingAllowFrom =
     cfg.channels?.discord?.allowFrom ?? cfg.channels?.discord?.dm?.allowFrom;
   const allowFrom = dmPolicy === "open" ? addWildcardAllowFrom(existingAllowFrom) : undefined;
@@ -56,10 +56,10 @@ async function noteDiscordTokenHelp(prompter: WizardPrompter): Promise<void> {
 }
 
 function patchDiscordConfigForAccount(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
   patch: Record<string, unknown>,
-): DmmsAiConfig {
+): DryadsAiConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -94,21 +94,21 @@ function patchDiscordConfigForAccount(
 }
 
 function setDiscordGroupPolicy(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): DmmsAiConfig {
+): DryadsAiConfig {
   return patchDiscordConfigForAccount(cfg, accountId, { groupPolicy });
 }
 
 function setDiscordGuildChannelAllowlist(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
   entries: Array<{
     guildKey: string;
     channelKey?: string;
   }>,
-): DmmsAiConfig {
+): DryadsAiConfig {
   const baseGuilds =
     accountId === DEFAULT_ACCOUNT_ID
       ? (cfg.channels?.discord?.guilds ?? {})
@@ -128,7 +128,7 @@ function setDiscordGuildChannelAllowlist(
   return patchDiscordConfigForAccount(cfg, accountId, { guilds });
 }
 
-function setDiscordAllowFrom(cfg: DmmsAiConfig, allowFrom: string[]): DmmsAiConfig {
+function setDiscordAllowFrom(cfg: DryadsAiConfig, allowFrom: string[]): DryadsAiConfig {
   return {
     ...cfg,
     channels: {
@@ -153,10 +153,10 @@ function parseDiscordAllowFromInput(raw: string): string[] {
 }
 
 async function promptDiscordAllowFrom(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<DmmsAiConfig> {
+}): Promise<DryadsAiConfig> {
   const accountId =
     params.accountId && normalizeAccountId(params.accountId)
       ? (normalizeAccountId(params.accountId) ?? DEFAULT_ACCOUNT_ID)

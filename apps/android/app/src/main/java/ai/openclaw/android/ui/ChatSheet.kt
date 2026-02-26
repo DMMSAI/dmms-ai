@@ -1,8 +1,8 @@
-package ai.dmmsai.android.ui
+package ai.dryadsai.android.ui
 
 import androidx.compose.runtime.Composable
-import ai.dmmsai.android.MainViewModel
-import ai.dmmsai.android.ui.chat.ChatSheetContent
+import ai.dryadsai.android.MainViewModel
+import ai.dryadsai.android.ui.chat.ChatSheetContent
 
 @Composable
 fun ChatSheet(viewModel: MainViewModel) {

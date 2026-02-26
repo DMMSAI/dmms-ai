@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { RuntimeEnv } from "dryads-ai/plugin-sdk";
 import { extractMessageText } from "./utils.js";
 
 export type TlonHistoryEntry = {

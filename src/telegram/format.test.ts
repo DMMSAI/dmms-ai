@@ -102,9 +102,9 @@ describe("markdownToTelegramHtml", () => {
   });
 
   it("keeps .co domains as links", () => {
-    const res = markdownToTelegramHtml("Visit t.co and dmms-ai.co");
+    const res = markdownToTelegramHtml("Visit t.co and dryads-ai.co");
     expect(res).toContain('<a href="http://t.co">t.co</a>');
-    expect(res).toContain('<a href="http://dmms-ai.co">dmms-ai.co</a>');
+    expect(res).toContain('<a href="http://dryads-ai.co">dryads-ai.co</a>');
   });
 
   it("renders spoiler tags", () => {

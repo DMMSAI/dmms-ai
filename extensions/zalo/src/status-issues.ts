@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "dmms-ai/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "dryads-ai/plugin-sdk";
 
 type ZaloAccountStatus = {
   accountId?: unknown;

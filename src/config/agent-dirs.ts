@@ -4,7 +4,7 @@ import { resolveRequiredHomeDir } from "../infra/home-dir.js";
 import { DEFAULT_AGENT_ID, normalizeAgentId } from "../routing/session-key.js";
 import { resolveUserPath } from "../utils.js";
 import { resolveStateDir } from "./paths.js";
-import type { DmmsAiConfig } from "./types.js";
+import type { DryadsAiConfig } from "./types.js";
 
 export type DuplicateAgentDir = {
   agentDir: string;
@@ -29,7 +29,7 @@ function canonicalizeAgentDir(agentDir: string): string {
   return resolved;
 }
 
-function collectReferencedAgentIds(cfg: DmmsAiConfig): string[] {
+function collectReferencedAgentIds(cfg: DryadsAiConfig): string[] {
   const ids = new Set<string>();
 
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents?.list : [];
@@ -57,7 +57,7 @@ function collectReferencedAgentIds(cfg: DmmsAiConfig): string[] {
 }
 
 function resolveEffectiveAgentDir(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   agentId: string,
   deps?: { env?: NodeJS.ProcessEnv; homedir?: () => string },
 ): string {
@@ -78,7 +78,7 @@ function resolveEffectiveAgentDir(
 }
 
 export function findDuplicateAgentDirs(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   deps?: { env?: NodeJS.ProcessEnv; homedir?: () => string },
 ): DuplicateAgentDir[] {
   const byDir = new Map<string, { agentDir: string; agentIds: string[] }>();

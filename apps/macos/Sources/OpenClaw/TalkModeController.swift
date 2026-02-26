@@ -5,7 +5,7 @@ import Observation
 final class TalkModeController {
     static let shared = TalkModeController()
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "talk.controller")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "talk.controller")
 
     private(set) var phase: TalkModePhase = .idle
     private(set) var isPaused: Bool = false

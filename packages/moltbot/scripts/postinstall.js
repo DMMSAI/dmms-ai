@@ -1,1 +1,1 @@
-console.warn("moltbot renamed -> dmms-ai");
+console.warn("moltbot renamed -> dryads-ai");

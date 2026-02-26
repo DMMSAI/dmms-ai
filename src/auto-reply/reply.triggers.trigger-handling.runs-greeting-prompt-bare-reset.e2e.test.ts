@@ -33,7 +33,7 @@ async function expectResetBlockedForNonOwner(params: {
       agents: {
         defaults: {
           model: { primary: "anthropic/claude-opus-4-5" },
-          workspace: join(home, "dmms-ai"),
+          workspace: join(home, "dryads-ai"),
         },
       },
       channels: {
@@ -42,7 +42,7 @@ async function expectResetBlockedForNonOwner(params: {
         },
       },
       session: {
-        store: join(tmpdir(), `dmms-ai-session-test-${Date.now()}.json`),
+        store: join(tmpdir(), `dryads-ai-session-test-${Date.now()}.json`),
       },
     },
   );

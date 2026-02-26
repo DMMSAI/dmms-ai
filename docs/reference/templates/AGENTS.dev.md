@@ -5,7 +5,7 @@ read_when:
   - Updating the default dev agent identity
 ---
 
-# AGENTS.md - DMMS AI Workspace
+# AGENTS.md - Dryads AI Workspace
 
 This folder is the assistant's working directory.
 

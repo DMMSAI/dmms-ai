@@ -129,16 +129,16 @@ describe("resolveSlackThreadTs", () => {
 
 describe("buildSlackSlashCommandMatcher", () => {
   it("matches with or without a leading slash", () => {
-    const matcher = buildSlackSlashCommandMatcher("dmms-ai");
+    const matcher = buildSlackSlashCommandMatcher("dryads-ai");
 
-    expect(matcher.test("dmms-ai")).toBe(true);
-    expect(matcher.test("/dmms-ai")).toBe(true);
+    expect(matcher.test("dryads-ai")).toBe(true);
+    expect(matcher.test("/dryads-ai")).toBe(true);
   });
 
   it("does not match similar names", () => {
-    const matcher = buildSlackSlashCommandMatcher("dmms-ai");
+    const matcher = buildSlackSlashCommandMatcher("dryads-ai");
 
-    expect(matcher.test("/dmms-ai-bot")).toBe(false);
-    expect(matcher.test("dmms-ai-bot")).toBe(false);
+    expect(matcher.test("/dryads-ai-bot")).toBe(false);
+    expect(matcher.test("dryads-ai-bot")).toBe(false);
   });
 });

@@ -1,17 +1,17 @@
-# @dmms-ai/zalo
+# @dryads-ai/zalo
 
-Zalo channel plugin for DMMS AI (Bot API).
+Zalo channel plugin for Dryads AI (Bot API).
 
 ## Install (local checkout)
 
 ```bash
-dmms-ai plugins install ./extensions/zalo
+dryads-ai plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-dmms-ai plugins install @dmms-ai/zalo
+dryads-ai plugins install @dryads-ai/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

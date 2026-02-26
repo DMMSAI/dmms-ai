@@ -47,7 +47,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
       expect(exitCalls).toEqual([1]);
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "[dmms-ai] FATAL unhandled rejection:",
+        "[dryads-ai] FATAL unhandled rejection:",
         expect.stringContaining("Out of memory"),
       );
     });
@@ -83,7 +83,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
       expect(exitCalls).toEqual([1]);
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "[dmms-ai] CONFIGURATION ERROR - requires fix:",
+        "[dryads-ai] CONFIGURATION ERROR - requires fix:",
         expect.stringContaining("Invalid config"),
       );
     });
@@ -109,7 +109,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
       expect(exitCalls).toEqual([]);
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "[dmms-ai] Non-fatal unhandled rejection (continuing):",
+        "[dryads-ai] Non-fatal unhandled rejection (continuing):",
         expect.stringContaining("fetch failed"),
       );
     });
@@ -132,7 +132,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
       expect(exitCalls).toEqual([1]);
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "[dmms-ai] Unhandled promise rejection:",
+        "[dryads-ai] Unhandled promise rejection:",
         expect.stringContaining("Something went wrong"),
       );
     });

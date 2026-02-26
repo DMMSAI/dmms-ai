@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { loadSessionStore, resolveStorePath } from "../../config/sessions.js";
 import { normalizeE164 } from "../../utils.js";
 import { normalizeChatChannelId } from "../registry.js";
@@ -6,7 +6,7 @@ import { normalizeChatChannelId } from "../registry.js";
 type HeartbeatRecipientsResult = { recipients: string[]; source: string };
 type HeartbeatRecipientsOpts = { to?: string; all?: boolean };
 
-function getSessionRecipients(cfg: DmmsAiConfig) {
+function getSessionRecipients(cfg: DryadsAiConfig) {
   const sessionCfg = cfg.session;
   const scope = sessionCfg?.scope ?? "per-sender";
   if (scope === "global") {
@@ -43,7 +43,7 @@ function getSessionRecipients(cfg: DmmsAiConfig) {
 }
 
 export function resolveWhatsAppHeartbeatRecipients(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   opts: HeartbeatRecipientsOpts = {},
 ): HeartbeatRecipientsResult {
   if (opts.to) {

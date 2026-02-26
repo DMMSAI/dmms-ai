@@ -4,7 +4,7 @@ Adds an **optional** agent tool `llm-task` for running **JSON-only** LLM tasks
 (drafting, summarizing, classifying) with optional JSON Schema validation.
 
 Designed to be called from workflow engines (for example, Lobster via
-`dmms-ai.invoke --each`) without adding new DMMS AI code per workflow.
+`dryads-ai.invoke --each`) without adding new Dryads AI code per workflow.
 
 ## Enable
 
@@ -89,9 +89,9 @@ Returns `details.json` containing the parsed JSON (and validates against
 
 ## Bundled extension note
 
-This extension depends on DMMS AI internal modules (the embedded agent runner).
-It is intended to ship as a **bundled** DMMS AI extension (like `lobster`) and
+This extension depends on Dryads AI internal modules (the embedded agent runner).
+It is intended to ship as a **bundled** Dryads AI extension (like `lobster`) and
 be enabled via `plugins.entries` + tool allowlists.
 
 It is **not** currently designed to be copied into
-`~/.dmms-ai/extensions` as a standalone plugin directory.
+`~/.dryads-ai/extensions` as a standalone plugin directory.

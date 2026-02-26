@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import SwiftUI
 
 struct ScreenTab: View {

@@ -86,9 +86,9 @@ async function removeMacApp(runtime: RuntimeEnv, dryRun?: boolean) {
   if (process.platform !== "darwin") {
     return;
   }
-  await removePath("/Applications/DmmsAi.app", runtime, {
+  await removePath("/Applications/DryadsAi.app", runtime, {
     dryRun,
-    label: "/Applications/DmmsAi.app",
+    label: "/Applications/DryadsAi.app",
   });
 }
 
@@ -115,12 +115,12 @@ export async function uninstallCommand(runtime: RuntimeEnv, opts: UninstallOptio
           label: "Gateway service",
           hint: "launchd / systemd / schtasks",
         },
-        { value: "state", label: "State + config", hint: "~/.dmms-ai" },
+        { value: "state", label: "State + config", hint: "~/.dryads-ai" },
         { value: "workspace", label: "Workspace", hint: "agent files" },
         {
           value: "app",
           label: "macOS app",
-          hint: "/Applications/DmmsAi.app",
+          hint: "/Applications/DryadsAi.app",
         },
       ],
       initialValues: ["service", "state", "workspace"],

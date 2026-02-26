@@ -3,7 +3,7 @@ name: sherpa-onnx-tts
 description: Local text-to-speech via sherpa-onnx (offline, no cloud)
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "🗣️",
         "os": ["darwin", "linux", "win32"],
@@ -63,10 +63,10 @@ Local TTS using the sherpa-onnx offline CLI.
 
 ## Install
 
-1. Download the runtime for your OS (extracts into `~/.dmms-ai/tools/sherpa-onnx-tts/runtime`)
-2. Download a voice model (extracts into `~/.dmms-ai/tools/sherpa-onnx-tts/models`)
+1. Download the runtime for your OS (extracts into `~/.dryads-ai/tools/sherpa-onnx-tts/runtime`)
+2. Download a voice model (extracts into `~/.dryads-ai/tools/sherpa-onnx-tts/models`)
 
-Update `~/.dmms-ai/dmms-ai.json`:
+Update `~/.dryads-ai/dryads-ai.json`:
 
 ```json5
 {
@@ -74,8 +74,8 @@ Update `~/.dmms-ai/dmms-ai.json`:
     entries: {
       "sherpa-onnx-tts": {
         env: {
-          SHERPA_ONNX_RUNTIME_DIR: "~/.dmms-ai/tools/sherpa-onnx-tts/runtime",
-          SHERPA_ONNX_MODEL_DIR: "~/.dmms-ai/tools/sherpa-onnx-tts/models/vits-piper-en_US-lessac-high",
+          SHERPA_ONNX_RUNTIME_DIR: "~/.dryads-ai/tools/sherpa-onnx-tts/runtime",
+          SHERPA_ONNX_MODEL_DIR: "~/.dryads-ai/tools/sherpa-onnx-tts/models/vits-piper-en_US-lessac-high",
         },
       },
     },

@@ -1,7 +1,7 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
-import ai.dmmsai.android.SecurePrefs
-import ai.dmmsai.android.gateway.GatewaySession
+import ai.dryadsai.android.SecurePrefs
+import ai.dryadsai.android.gateway.GatewaySession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

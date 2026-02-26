@@ -1,6 +1,6 @@
 # Bundled Hooks
 
-This directory contains hooks that ship with DMMS AI. These hooks are automatically discovered and can be enabled/disabled via CLI or configuration.
+This directory contains hooks that ship with Dryads AI. These hooks are automatically discovered and can be enabled/disabled via CLI or configuration.
 
 ## Available Hooks
 
@@ -10,12 +10,12 @@ Automatically saves session context to memory when you issue `/new`.
 
 **Events**: `command:new`
 **What it does**: Creates a dated memory file with LLM-generated slug based on conversation content.
-**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.dmms-ai/workspace`)
+**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.dryads-ai/workspace`)
 
 **Enable**:
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
 ### 📎 bootstrap-extra-files
@@ -29,7 +29,7 @@ Injects extra bootstrap files (for example monorepo `AGENTS.md`/`TOOLS.md`) duri
 **Enable**:
 
 ```bash
-dmms-ai hooks enable bootstrap-extra-files
+dryads-ai hooks enable bootstrap-extra-files
 ```
 
 ### 📝 command-logger
@@ -38,12 +38,12 @@ Logs all command events to a centralized audit file.
 
 **Events**: `command` (all commands)
 **What it does**: Appends JSONL entries to command log file.
-**Output**: `~/.dmms-ai/logs/commands.log`
+**Output**: `~/.dryads-ai/logs/commands.log`
 
 **Enable**:
 
 ```bash
-dmms-ai hooks enable command-logger
+dryads-ai hooks enable command-logger
 ```
 
 ### 🚀 boot-md
@@ -57,7 +57,7 @@ Runs `BOOT.md` whenever the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-dmms-ai hooks enable boot-md
+dryads-ai hooks enable boot-md
 ```
 
 ## Hook Structure
@@ -81,9 +81,9 @@ session-memory/
 ---
 name: my-hook
 description: "Short description"
-homepage: https://docs.dmms-ai.com/automation/hooks#my-hook
+homepage: https://docs.dryads-ai.com/automation/hooks#my-hook
 metadata:
-  { "dmms-ai": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "dryads-ai": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 # Hook Title
 
@@ -107,7 +107,7 @@ Documentation goes here...
 To create your own hooks, place them in:
 
 - **Workspace hooks**: `<workspace>/hooks/` (highest precedence)
-- **Managed hooks**: `~/.dmms-ai/hooks/` (shared across workspaces)
+- **Managed hooks**: `~/.dryads-ai/hooks/` (shared across workspaces)
 
 Custom hooks follow the same structure as bundled hooks.
 
@@ -116,31 +116,31 @@ Custom hooks follow the same structure as bundled hooks.
 List all hooks:
 
 ```bash
-dmms-ai hooks list
+dryads-ai hooks list
 ```
 
 Show hook details:
 
 ```bash
-dmms-ai hooks info session-memory
+dryads-ai hooks info session-memory
 ```
 
 Check hook status:
 
 ```bash
-dmms-ai hooks check
+dryads-ai hooks check
 ```
 
 Enable/disable:
 
 ```bash
-dmms-ai hooks enable session-memory
-dmms-ai hooks disable command-logger
+dryads-ai hooks enable session-memory
+dryads-ai hooks disable command-logger
 ```
 
 ## Configuration
 
-Hooks can be configured in `~/.dmms-ai/dmms-ai.json`:
+Hooks can be configured in `~/.dryads-ai/dryads-ai.json`:
 
 ```json
 {
@@ -213,11 +213,11 @@ export default myHandler;
 Test your hooks by:
 
 1. Place hook in workspace hooks directory
-2. Restart gateway: `pkill -9 -f 'dmms-ai.*gateway' && pnpm dmms-ai gateway`
-3. Enable the hook: `dmms-ai hooks enable my-hook`
+2. Restart gateway: `pkill -9 -f 'dryads-ai.*gateway' && pnpm dryads-ai gateway`
+3. Enable the hook: `dryads-ai hooks enable my-hook`
 4. Trigger the event (e.g., send `/new` command)
 5. Check gateway logs for hook execution
 
 ## Documentation
 
-Full documentation: https://docs.dmms-ai.com/automation/hooks
+Full documentation: https://docs.dryads-ai.com/automation/hooks

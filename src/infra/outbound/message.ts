@@ -1,5 +1,5 @@
 import { getChannelPlugin, normalizeChannelId } from "../../channels/plugins/index.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { loadConfig } from "../../config/config.js";
 import { callGateway, randomIdempotencyKey } from "../../gateway/call.js";
 import type { PollInput } from "../../polls.js";
@@ -43,7 +43,7 @@ type MessageSendParams = {
   dryRun?: boolean;
   bestEffort?: boolean;
   deps?: OutboundSendDeps;
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   gateway?: MessageGatewayOptions;
   idempotencyKey?: string;
   mirror?: {
@@ -79,7 +79,7 @@ type MessagePollParams = {
   silent?: boolean;
   isAnonymous?: boolean;
   dryRun?: boolean;
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   gateway?: MessageGatewayOptions;
   idempotencyKey?: string;
 };
@@ -104,7 +104,7 @@ export type MessagePollResult = {
 };
 
 async function resolveRequiredChannel(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   channel?: string;
 }): Promise<string> {
   const channel = params.channel?.trim()

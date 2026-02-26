@@ -1,14 +1,14 @@
 ---
 summary: "Voice Call plugin: outbound + inbound calls via Twilio/Telnyx/Plivo (plugin install + config + CLI)"
 read_when:
-  - You want to place an outbound voice call from DMMS AI
+  - You want to place an outbound voice call from Dryads AI
   - You are configuring or developing the voice-call plugin
 title: "Voice Call Plugin"
 ---
 
 # Voice Call (plugin)
 
-Voice calls for DMMS AI via a plugin. Supports outbound notifications and
+Voice calls for Dryads AI via a plugin. Supports outbound notifications and
 multi-turn conversations with inbound policies.
 
 Current providers:
@@ -23,7 +23,7 @@ Quick mental model:
 - Install plugin
 - Restart Gateway
 - Configure under `plugins.entries.voice-call.config`
-- Use `dmms-ai voicecall ...` or the `voice_call` tool
+- Use `dryads-ai voicecall ...` or the `voice_call` tool
 
 ## Where it runs (local vs remote)
 
@@ -36,7 +36,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-dmms-ai plugins install @dmms-ai/voice-call
+dryads-ai plugins install @dryads-ai/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -44,7 +44,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev, no copying)
 
 ```bash
-dmms-ai plugins install ./extensions/voice-call
+dryads-ai plugins install ./extensions/voice-call
 cd ./extensions/voice-call && pnpm install
 ```
 
@@ -290,13 +290,13 @@ Auto-responses use the agent system. Tune with:
 ## CLI
 
 ```bash
-dmms-ai voicecall call --to "+15555550123" --message "Hello from DMMS AI"
-dmms-ai voicecall continue --call-id <id> --message "Any questions?"
-dmms-ai voicecall speak --call-id <id> --message "One moment"
-dmms-ai voicecall end --call-id <id>
-dmms-ai voicecall status --call-id <id>
-dmms-ai voicecall tail
-dmms-ai voicecall expose --mode funnel
+dryads-ai voicecall call --to "+15555550123" --message "Hello from Dryads AI"
+dryads-ai voicecall continue --call-id <id> --message "Any questions?"
+dryads-ai voicecall speak --call-id <id> --message "One moment"
+dryads-ai voicecall end --call-id <id>
+dryads-ai voicecall status --call-id <id>
+dryads-ai voicecall tail
+dryads-ai voicecall expose --mode funnel
 ```
 
 ## Agent tool

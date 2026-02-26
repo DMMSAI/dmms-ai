@@ -14,28 +14,28 @@ Use this page for scheduler and delivery issues (`cron` + `heartbeat`).
 ## Command ladder
 
 ```bash
-dmms-ai status
-dmms-ai gateway status
-dmms-ai logs --follow
-dmms-ai doctor
-dmms-ai channels status --probe
+dryads-ai status
+dryads-ai gateway status
+dryads-ai logs --follow
+dryads-ai doctor
+dryads-ai channels status --probe
 ```
 
 Then run automation checks:
 
 ```bash
-dmms-ai cron status
-dmms-ai cron list
-dmms-ai system heartbeat last
+dryads-ai cron status
+dryads-ai cron list
+dryads-ai system heartbeat last
 ```
 
 ## Cron not firing
 
 ```bash
-dmms-ai cron status
-dmms-ai cron list
-dmms-ai cron runs --id <jobId> --limit 20
-dmms-ai logs --follow
+dryads-ai cron status
+dryads-ai cron list
+dryads-ai cron runs --id <jobId> --limit 20
+dryads-ai logs --follow
 ```
 
 Good output looks like:
@@ -53,10 +53,10 @@ Common signatures:
 ## Cron fired but no delivery
 
 ```bash
-dmms-ai cron runs --id <jobId> --limit 20
-dmms-ai cron list
-dmms-ai channels status --probe
-dmms-ai logs --follow
+dryads-ai cron runs --id <jobId> --limit 20
+dryads-ai cron list
+dryads-ai channels status --probe
+dryads-ai logs --follow
 ```
 
 Good output looks like:
@@ -74,10 +74,10 @@ Common signatures:
 ## Heartbeat suppressed or skipped
 
 ```bash
-dmms-ai system heartbeat last
-dmms-ai logs --follow
-dmms-ai config get agents.defaults.heartbeat
-dmms-ai channels status --probe
+dryads-ai system heartbeat last
+dryads-ai logs --follow
+dryads-ai config get agents.defaults.heartbeat
+dryads-ai channels status --probe
 ```
 
 Good output looks like:
@@ -95,11 +95,11 @@ Common signatures:
 ## Timezone and activeHours gotchas
 
 ```bash
-dmms-ai config get agents.defaults.heartbeat.activeHours
-dmms-ai config get agents.defaults.heartbeat.activeHours.timezone
-dmms-ai config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
-dmms-ai cron list
-dmms-ai logs --follow
+dryads-ai config get agents.defaults.heartbeat.activeHours
+dryads-ai config get agents.defaults.heartbeat.activeHours.timezone
+dryads-ai config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
+dryads-ai cron list
+dryads-ai logs --follow
 ```
 
 Quick rules:

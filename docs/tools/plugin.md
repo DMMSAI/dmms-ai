@@ -1,5 +1,5 @@
 ---
-summary: "DMMS AI plugins/extensions: discovery, config, and safety"
+summary: "Dryads AI plugins/extensions: discovery, config, and safety"
 read_when:
   - Adding or modifying plugins/extensions
   - Documenting plugin install or load rules
@@ -10,11 +10,11 @@ title: "Plugins"
 
 ## Quick start (new to plugins?)
 
-A plugin is just a **small code module** that extends DMMS AI with extra
+A plugin is just a **small code module** that extends Dryads AI with extra
 features (commands, tools, and Gateway RPC).
 
 Most of the time, you’ll use plugins when you want a feature that’s not built
-into core DMMS AI yet (or you want to keep optional features out of your main
+into core Dryads AI yet (or you want to keep optional features out of your main
 install).
 
 Fast path:
@@ -22,13 +22,13 @@ Fast path:
 1. See what’s already loaded:
 
 ```bash
-dmms-ai plugins list
+dryads-ai plugins list
 ```
 
 2. Install an official plugin (example: Voice Call):
 
 ```bash
-dmms-ai plugins install @dmms-ai/voice-call
+dryads-ai plugins install @dryads-ai/voice-call
 ```
 
 Npm specs are **registry-only** (package name + optional version/tag). Git/URL/file
@@ -41,21 +41,21 @@ Looking for third-party listings? See [Community plugins](/plugins/community).
 
 ## Available plugins (official)
 
-- Microsoft Teams is plugin-only as of 2026.1.15; install `@dmms-ai/msteams` if you use Teams.
+- Microsoft Teams is plugin-only as of 2026.1.15; install `@dryads-ai/msteams` if you use Teams.
 - Memory (Core) — bundled memory search plugin (enabled by default via `plugins.slots.memory`)
 - Memory (LanceDB) — bundled long-term memory plugin (auto-recall/capture; set `plugins.slots.memory = "memory-lancedb"`)
-- [Voice Call](/plugins/voice-call) — `@dmms-ai/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@dmms-ai/zalouser`
-- [Matrix](/channels/matrix) — `@dmms-ai/matrix`
-- [Nostr](/channels/nostr) — `@dmms-ai/nostr`
-- [Zalo](/channels/zalo) — `@dmms-ai/zalo`
-- [Microsoft Teams](/channels/msteams) — `@dmms-ai/msteams`
+- [Voice Call](/plugins/voice-call) — `@dryads-ai/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@dryads-ai/zalouser`
+- [Matrix](/channels/matrix) — `@dryads-ai/matrix`
+- [Nostr](/channels/nostr) — `@dryads-ai/nostr`
+- [Zalo](/channels/zalo) — `@dryads-ai/zalo`
+- [Microsoft Teams](/channels/msteams) — `@dryads-ai/msteams`
 - Google Antigravity OAuth (provider auth) — bundled as `google-antigravity-auth` (disabled by default)
 - Gemini CLI OAuth (provider auth) — bundled as `google-gemini-cli-auth` (disabled by default)
 - Qwen OAuth (provider auth) — bundled as `qwen-portal-auth` (disabled by default)
 - Copilot Proxy (provider auth) — local VS Code Copilot Proxy bridge; distinct from built-in `github-copilot` device login (bundled, disabled by default)
 
-DMMS AI plugins are **TypeScript modules** loaded at runtime via jiti. **Config
+Dryads AI plugins are **TypeScript modules** loaded at runtime via jiti. **Config
 validation does not execute plugin code**; it uses the plugin manifest and JSON
 Schema instead. See [Plugin manifest](/plugins/manifest).
 
@@ -79,7 +79,7 @@ Plugins can access selected core helpers via `api.runtime`. For telephony TTS:
 
 ```ts
 const result = await api.runtime.tts.textToSpeechTelephony({
-  text: "Hello from DMMS AI",
+  text: "Hello from Dryads AI",
   cfg: api.config,
 });
 ```
@@ -92,7 +92,7 @@ Notes:
 
 ## Discovery & precedence
 
-DMMS AI scans, in order:
+Dryads AI scans, in order:
 
 1. Config paths
 
@@ -100,23 +100,23 @@ DMMS AI scans, in order:
 
 2. Workspace extensions
 
-- `<workspace>/.dmms-ai/extensions/*.ts`
-- `<workspace>/.dmms-ai/extensions/*/index.ts`
+- `<workspace>/.dryads-ai/extensions/*.ts`
+- `<workspace>/.dryads-ai/extensions/*/index.ts`
 
 3. Global extensions
 
-- `~/.dmms-ai/extensions/*.ts`
-- `~/.dmms-ai/extensions/*/index.ts`
+- `~/.dryads-ai/extensions/*.ts`
+- `~/.dryads-ai/extensions/*/index.ts`
 
-4. Bundled extensions (shipped with DMMS AI, **disabled by default**)
+4. Bundled extensions (shipped with Dryads AI, **disabled by default**)
 
-- `<dmms-ai>/extensions/*`
+- `<dryads-ai>/extensions/*`
 
 Bundled plugins must be enabled explicitly via `plugins.entries.<id>.enabled`
-or `dmms-ai plugins enable <id>`. Installed plugins are enabled by default,
+or `dryads-ai plugins enable <id>`. Installed plugins are enabled by default,
 but can be disabled the same way.
 
-Each plugin must include a `dmms-ai.plugin.json` file in its root. If a path
+Each plugin must include a `dryads-ai.plugin.json` file in its root. If a path
 points at a file, the plugin root is the file's directory and must contain the
 manifest.
 
@@ -125,12 +125,12 @@ wins and lower-precedence copies are ignored.
 
 ### Package packs
 
-A plugin directory may include a `package.json` with `dmms-ai.extensions`:
+A plugin directory may include a `package.json` with `dryads-ai.extensions`:
 
 ```json
 {
   "name": "my-pack",
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": ["./src/safety.ts", "./src/tools.ts"]
   }
 }
@@ -142,21 +142,21 @@ becomes `name/<fileBase>`.
 If your plugin imports npm deps, install them in that directory so
 `node_modules` is available (`npm install` / `pnpm install`).
 
-Security note: `dmms-ai plugins install` installs plugin dependencies with
+Security note: `dryads-ai plugins install` installs plugin dependencies with
 `npm install --ignore-scripts` (no lifecycle scripts). Keep plugin dependency
 trees "pure JS/TS" and avoid packages that require `postinstall` builds.
 
 ### Channel catalog metadata
 
-Channel plugins can advertise onboarding metadata via `dmms-ai.channel` and
-install hints via `dmms-ai.install`. This keeps the core catalog data-free.
+Channel plugins can advertise onboarding metadata via `dryads-ai.channel` and
+install hints via `dryads-ai.install`. This keeps the core catalog data-free.
 
 Example:
 
 ```json
 {
-  "name": "@dmms-ai/nextcloud-talk",
-  "dmms-ai": {
+  "name": "@dryads-ai/nextcloud-talk",
+  "dryads-ai": {
     "extensions": ["./index.ts"],
     "channel": {
       "id": "nextcloud-talk",
@@ -169,7 +169,7 @@ Example:
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@dmms-ai/nextcloud-talk",
+      "npmSpec": "@dryads-ai/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -177,16 +177,16 @@ Example:
 }
 ```
 
-DMMS AI can also merge **external channel catalogs** (for example, an MPM
+Dryads AI can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
 
-- `~/.dmms-ai/mpm/plugins.json`
-- `~/.dmms-ai/mpm/catalog.json`
-- `~/.dmms-ai/plugins/catalog.json`
+- `~/.dryads-ai/mpm/plugins.json`
+- `~/.dryads-ai/mpm/catalog.json`
+- `~/.dryads-ai/plugins/catalog.json`
 
-Or point `DMMS_AI_PLUGIN_CATALOG_PATHS` (or `DMMS_AI_MPM_CATALOG_PATHS`) at
+Or point `DRYADS_AI_PLUGIN_CATALOG_PATHS` (or `DRYADS_AI_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
-contain `{ "entries": [ { "name": "@scope/pkg", "dmms-ai": { "channel": {...}, "install": {...} } } ] }`.
+contain `{ "entries": [ { "name": "@scope/pkg", "dryads-ai": { "channel": {...}, "install": {...} } } ] }`.
 
 ## Plugin IDs
 
@@ -195,7 +195,7 @@ Default plugin ids:
 - Package packs: `package.json` `name`
 - Standalone file: file base name (`~/.../voice-call.ts` → `voice-call`)
 
-If a plugin exports `id`, DMMS AI uses it but warns when it doesn’t match the
+If a plugin exports `id`, Dryads AI uses it but warns when it doesn’t match the
 configured id.
 
 ## Config
@@ -230,7 +230,7 @@ Validation rules (strict):
 - Unknown `channels.<id>` keys are **errors** unless a plugin manifest declares
   the channel id.
 - Plugin config is validated using the JSON Schema embedded in
-  `dmms-ai.plugin.json` (`configSchema`).
+  `dryads-ai.plugin.json` (`configSchema`).
 - If a plugin is disabled, its config is preserved and a **warning** is emitted.
 
 ## Plugin slots (exclusive categories)
@@ -255,7 +255,7 @@ are disabled with diagnostics.
 
 The Control UI uses `config.schema` (JSON Schema + `uiHints`) to render better forms.
 
-DMMS AI augments `uiHints` at runtime based on discovered plugins:
+Dryads AI augments `uiHints` at runtime based on discovered plugins:
 
 - Adds per-plugin labels for `plugins.entries.<id>` / `.enabled` / `.config`
 - Merges optional plugin-provided config field hints under:
@@ -287,24 +287,24 @@ Example:
 ## CLI
 
 ```bash
-dmms-ai plugins list
-dmms-ai plugins info <id>
-dmms-ai plugins install <path>                 # copy a local file/dir into ~/.dmms-ai/extensions/<id>
-dmms-ai plugins install ./extensions/voice-call # relative path ok
-dmms-ai plugins install ./plugin.tgz           # install from a local tarball
-dmms-ai plugins install ./plugin.zip           # install from a local zip
-dmms-ai plugins install -l ./extensions/voice-call # link (no copy) for dev
-dmms-ai plugins install @dmms-ai/voice-call # install from npm
-dmms-ai plugins update <id>
-dmms-ai plugins update --all
-dmms-ai plugins enable <id>
-dmms-ai plugins disable <id>
-dmms-ai plugins doctor
+dryads-ai plugins list
+dryads-ai plugins info <id>
+dryads-ai plugins install <path>                 # copy a local file/dir into ~/.dryads-ai/extensions/<id>
+dryads-ai plugins install ./extensions/voice-call # relative path ok
+dryads-ai plugins install ./plugin.tgz           # install from a local tarball
+dryads-ai plugins install ./plugin.zip           # install from a local zip
+dryads-ai plugins install -l ./extensions/voice-call # link (no copy) for dev
+dryads-ai plugins install @dryads-ai/voice-call # install from npm
+dryads-ai plugins update <id>
+dryads-ai plugins update --all
+dryads-ai plugins enable <id>
+dryads-ai plugins disable <id>
+dryads-ai plugins doctor
 ```
 
 `plugins update` only works for npm installs tracked under `plugins.installs`.
 
-Plugins may also register their own top‑level commands (example: `dmms-ai voicecall`).
+Plugins may also register their own top‑level commands (example: `dryads-ai voicecall`).
 
 ## Plugin API (overview)
 
@@ -321,7 +321,7 @@ event-driven automation without a separate hook pack install.
 ### Example
 
 ```
-import { registerPluginHooksFromDir } from "dmms-ai/plugin-sdk";
+import { registerPluginHooksFromDir } from "dryads-ai/plugin-sdk";
 
 export default function register(api) {
   registerPluginHooksFromDir(api, "./hooks");
@@ -332,18 +332,18 @@ Notes:
 
 - Hook directories follow the normal hook structure (`HOOK.md` + `handler.ts`).
 - Hook eligibility rules still apply (OS/bins/env/config requirements).
-- Plugin-managed hooks show up in `dmms-ai hooks list` with `plugin:<id>`.
-- You cannot enable/disable plugin-managed hooks via `dmms-ai hooks`; enable/disable the plugin instead.
+- Plugin-managed hooks show up in `dryads-ai hooks list` with `plugin:<id>`.
+- You cannot enable/disable plugin-managed hooks via `dryads-ai hooks`; enable/disable the plugin instead.
 
 ## Provider plugins (model auth)
 
 Plugins can register **model provider auth** flows so users can run OAuth or
-API-key setup inside DMMS AI (no external scripts needed).
+API-key setup inside Dryads AI (no external scripts needed).
 
 Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). These methods power:
 
-- `dmms-ai models auth login --provider <id> [--method <id>]`
+- `dryads-ai models auth login --provider <id> [--method <id>]`
 
 Example:
 
@@ -569,7 +569,7 @@ Command handler context:
 - `isAuthorizedSender`: Whether the sender is an authorized user
 - `args`: Arguments passed after the command (if `acceptsArgs: true`)
 - `commandBody`: The full command text
-- `config`: The current DMMS AI config
+- `config`: The current Dryads AI config
 
 Command options:
 
@@ -632,14 +632,14 @@ it’s present in your workspace/managed skills locations.
 
 Recommended packaging:
 
-- Main package: `dmms-ai` (this repo)
-- Plugins: separate npm packages under `@dmms-ai/*` (example: `@dmms-ai/voice-call`)
+- Main package: `dryads-ai` (this repo)
+- Plugins: separate npm packages under `@dryads-ai/*` (example: `@dryads-ai/voice-call`)
 
 Publishing contract:
 
-- Plugin `package.json` must include `dmms-ai.extensions` with one or more entry files.
+- Plugin `package.json` must include `dryads-ai.extensions` with one or more entry files.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `dmms-ai plugins install <npm-spec>` uses `npm pack`, extracts into `~/.dmms-ai/extensions/<id>/`, and enables it in config.
+- `dryads-ai plugins install <npm-spec>` uses `npm pack`, extracts into `~/.dryads-ai/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call
@@ -648,7 +648,7 @@ This repo includes a voice‑call plugin (Twilio or log fallback):
 
 - Source: `extensions/voice-call`
 - Skill: `skills/voice-call`
-- CLI: `dmms-ai voicecall start|status`
+- CLI: `dryads-ai voicecall start|status`
 - Tool: `voice_call`
 - RPC: `voicecall.start`, `voicecall.status`
 - Config (twilio): `provider: "twilio"` + `twilio.accountSid/authToken/from` (optional `statusCallbackUrl`, `twimlUrl`)
@@ -669,4 +669,4 @@ Plugins run in-process with the Gateway. Treat them as trusted code:
 Plugins can (and should) ship tests:
 
 - In-repo plugins can keep Vitest tests under `src/**` (example: `src/plugins/voice-call.plugin.test.ts`).
-- Separately published plugins should run their own CI (lint/build/test) and validate `dmms-ai.extensions` points at the built entrypoint (`dist/index.js`).
+- Separately published plugins should run their own CI (lint/build/test) and validate `dryads-ai.extensions` points at the built entrypoint (`dist/index.js`).

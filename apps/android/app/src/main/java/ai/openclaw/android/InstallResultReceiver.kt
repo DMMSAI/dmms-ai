@@ -1,4 +1,4 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -19,14 +19,14 @@ class InstallResultReceiver : BroadcastReceiver() {
         if (confirmIntent != null) {
           confirmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
           context.startActivity(confirmIntent)
-          Log.w("dmms-ai", "app.update: user confirmation requested, launching install dialog")
+          Log.w("dryads-ai", "app.update: user confirmation requested, launching install dialog")
         }
       }
       PackageInstaller.STATUS_SUCCESS -> {
-        Log.w("dmms-ai", "app.update: install SUCCESS")
+        Log.w("dryads-ai", "app.update: install SUCCESS")
       }
       else -> {
-        Log.e("dmms-ai", "app.update: install FAILED status=$status message=$message")
+        Log.e("dryads-ai", "app.update: install FAILED status=$status message=$message")
       }
     }
   }

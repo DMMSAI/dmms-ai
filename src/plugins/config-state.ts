@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { PluginRecord } from "./registry.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
@@ -63,7 +63,7 @@ const normalizePluginEntries = (entries: unknown): NormalizedPluginsConfig["entr
 };
 
 export const normalizePluginsConfig = (
-  config?: DmmsAiConfig["plugins"],
+  config?: DryadsAiConfig["plugins"],
 ): NormalizedPluginsConfig => {
   const memorySlot = normalizeSlotValue(config?.slots?.memory);
   return {
@@ -78,13 +78,13 @@ export const normalizePluginsConfig = (
   };
 };
 
-const hasExplicitMemorySlot = (plugins?: DmmsAiConfig["plugins"]) =>
+const hasExplicitMemorySlot = (plugins?: DryadsAiConfig["plugins"]) =>
   Boolean(plugins?.slots && Object.prototype.hasOwnProperty.call(plugins.slots, "memory"));
 
-const hasExplicitMemoryEntry = (plugins?: DmmsAiConfig["plugins"]) =>
+const hasExplicitMemoryEntry = (plugins?: DryadsAiConfig["plugins"]) =>
   Boolean(plugins?.entries && Object.prototype.hasOwnProperty.call(plugins.entries, "memory-core"));
 
-const hasExplicitPluginConfig = (plugins?: DmmsAiConfig["plugins"]) => {
+const hasExplicitPluginConfig = (plugins?: DryadsAiConfig["plugins"]) => {
   if (!plugins) {
     return false;
   }
@@ -110,9 +110,9 @@ const hasExplicitPluginConfig = (plugins?: DmmsAiConfig["plugins"]) => {
 };
 
 export function applyTestPluginDefaults(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   env: NodeJS.ProcessEnv = process.env,
-): DmmsAiConfig {
+): DryadsAiConfig {
   if (!env.VITEST) {
     return cfg;
   }
@@ -148,7 +148,7 @@ export function applyTestPluginDefaults(
 }
 
 export function isTestDefaultMemorySlotDisabled(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
   if (!env.VITEST) {

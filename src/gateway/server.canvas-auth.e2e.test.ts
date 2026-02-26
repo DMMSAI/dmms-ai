@@ -124,7 +124,7 @@ describe("gateway canvas host auth", () => {
           trustedProxies: ["127.0.0.1"],
         },
       },
-      prefix: "dmms-ai-canvas-auth-test-",
+      prefix: "dryads-ai-canvas-auth-test-",
       run: async () => {
         await withCanvasGatewayHarness({
           resolvedAuth,

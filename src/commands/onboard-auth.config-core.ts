@@ -26,7 +26,7 @@ import {
   VENICE_DEFAULT_MODEL_REF,
   VENICE_MODEL_CATALOG,
 } from "../agents/venice-models.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { ModelApi } from "../config/types.models.js";
 import {
   HUGGINGFACE_DEFAULT_MODEL_REF,
@@ -73,9 +73,9 @@ import {
 } from "./onboard-auth.models.js";
 
 export function applyZaiProviderConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params?: { endpoint?: string; modelId?: string },
-): DmmsAiConfig {
+): DryadsAiConfig {
   const modelId = params?.modelId?.trim() || ZAI_DEFAULT_MODEL_ID;
   const modelRef = `zai/${modelId}`;
 
@@ -129,16 +129,16 @@ export function applyZaiProviderConfig(
 }
 
 export function applyZaiConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params?: { endpoint?: string; modelId?: string },
-): DmmsAiConfig {
+): DryadsAiConfig {
   const modelId = params?.modelId?.trim() || ZAI_DEFAULT_MODEL_ID;
   const modelRef = modelId === ZAI_DEFAULT_MODEL_ID ? ZAI_DEFAULT_MODEL_REF : `zai/${modelId}`;
   const next = applyZaiProviderConfig(cfg, params);
   return applyAgentDefaultModelPrimary(next, modelRef);
 }
 
-export function applyOpenrouterProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyOpenrouterProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[OPENROUTER_DEFAULT_MODEL_REF] = {
     ...models[OPENROUTER_DEFAULT_MODEL_REF],
@@ -157,20 +157,23 @@ export function applyOpenrouterProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyOpenrouterConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyOpenrouterConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyOpenrouterProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, OPENROUTER_DEFAULT_MODEL_REF);
 }
 
-export function applyMoonshotProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyMoonshotProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   return applyMoonshotProviderConfigWithBaseUrl(cfg, MOONSHOT_BASE_URL);
 }
 
-export function applyMoonshotProviderConfigCn(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyMoonshotProviderConfigCn(cfg: DryadsAiConfig): DryadsAiConfig {
   return applyMoonshotProviderConfigWithBaseUrl(cfg, MOONSHOT_CN_BASE_URL);
 }
 
-function applyMoonshotProviderConfigWithBaseUrl(cfg: DmmsAiConfig, baseUrl: string): DmmsAiConfig {
+function applyMoonshotProviderConfigWithBaseUrl(
+  cfg: DryadsAiConfig,
+  baseUrl: string,
+): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[MOONSHOT_DEFAULT_MODEL_REF] = {
     ...models[MOONSHOT_DEFAULT_MODEL_REF],
@@ -189,17 +192,17 @@ function applyMoonshotProviderConfigWithBaseUrl(cfg: DmmsAiConfig, baseUrl: stri
   });
 }
 
-export function applyMoonshotConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyMoonshotConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyMoonshotProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, MOONSHOT_DEFAULT_MODEL_REF);
 }
 
-export function applyMoonshotConfigCn(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyMoonshotConfigCn(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyMoonshotProviderConfigCn(cfg);
   return applyAgentDefaultModelPrimary(next, MOONSHOT_DEFAULT_MODEL_REF);
 }
 
-export function applyKimiCodeProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyKimiCodeProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[KIMI_CODING_MODEL_REF] = {
     ...models[KIMI_CODING_MODEL_REF],
@@ -218,12 +221,12 @@ export function applyKimiCodeProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-export function applyKimiCodeConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyKimiCodeConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyKimiCodeProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, KIMI_CODING_MODEL_REF);
 }
 
-export function applySyntheticProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applySyntheticProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[SYNTHETIC_DEFAULT_MODEL_REF] = {
     ...models[SYNTHETIC_DEFAULT_MODEL_REF],
@@ -257,12 +260,12 @@ export function applySyntheticProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
   return applyOnboardAuthAgentModelsAndProviders(cfg, { agentModels: models, providers });
 }
 
-export function applySyntheticConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applySyntheticConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applySyntheticProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, SYNTHETIC_DEFAULT_MODEL_REF);
 }
 
-export function applyXiaomiProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyXiaomiProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[XIAOMI_DEFAULT_MODEL_REF] = {
     ...models[XIAOMI_DEFAULT_MODEL_REF],
@@ -280,7 +283,7 @@ export function applyXiaomiProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
   });
 }
 
-export function applyXiaomiConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyXiaomiConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyXiaomiProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, XIAOMI_DEFAULT_MODEL_REF);
 }
@@ -289,7 +292,7 @@ export function applyXiaomiConfig(cfg: DmmsAiConfig): DmmsAiConfig {
  * Apply Venice provider configuration without changing the default model.
  * Registers Venice models and sets up the provider, but preserves existing model selection.
  */
-export function applyVeniceProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyVeniceProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[VENICE_DEFAULT_MODEL_REF] = {
     ...models[VENICE_DEFAULT_MODEL_REF],
@@ -310,7 +313,7 @@ export function applyVeniceProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
  * Apply Venice provider configuration AND set Venice as the default model.
  * Use this when Venice is the primary provider choice during onboarding.
  */
-export function applyVeniceConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyVeniceConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyVeniceProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, VENICE_DEFAULT_MODEL_REF);
 }
@@ -319,7 +322,7 @@ export function applyVeniceConfig(cfg: DmmsAiConfig): DmmsAiConfig {
  * Apply Together provider configuration without changing the default model.
  * Registers Together models and sets up the provider, but preserves existing model selection.
  */
-export function applyTogetherProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyTogetherProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[TOGETHER_DEFAULT_MODEL_REF] = {
     ...models[TOGETHER_DEFAULT_MODEL_REF],
@@ -340,7 +343,7 @@ export function applyTogetherProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
  * Apply Together provider configuration AND set Together as the default model.
  * Use this when Together is the primary provider choice during onboarding.
  */
-export function applyTogetherConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyTogetherConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyTogetherProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, TOGETHER_DEFAULT_MODEL_REF);
 }
@@ -348,7 +351,7 @@ export function applyTogetherConfig(cfg: DmmsAiConfig): DmmsAiConfig {
 /**
  * Apply Hugging Face (Inference Providers) provider configuration without changing the default model.
  */
-export function applyHuggingfaceProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyHuggingfaceProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[HUGGINGFACE_DEFAULT_MODEL_REF] = {
     ...models[HUGGINGFACE_DEFAULT_MODEL_REF],
@@ -368,12 +371,12 @@ export function applyHuggingfaceProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig 
 /**
  * Apply Hugging Face provider configuration AND set Hugging Face as the default model.
  */
-export function applyHuggingfaceConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyHuggingfaceConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyHuggingfaceProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, HUGGINGFACE_DEFAULT_MODEL_REF);
 }
 
-export function applyXaiProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyXaiProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[XAI_DEFAULT_MODEL_REF] = {
     ...models[XAI_DEFAULT_MODEL_REF],
@@ -392,13 +395,13 @@ export function applyXaiProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
   });
 }
 
-export function applyXaiConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyXaiConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyXaiProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, XAI_DEFAULT_MODEL_REF);
 }
 
 export function applyAuthProfileConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params: {
     profileId: string;
     provider: string;
@@ -406,7 +409,7 @@ export function applyAuthProfileConfig(
     email?: string;
     preferProfileFirst?: boolean;
   },
-): DmmsAiConfig {
+): DryadsAiConfig {
   const profiles = {
     ...cfg.auth?.profiles,
     [params.profileId]: {
@@ -446,7 +449,7 @@ export function applyAuthProfileConfig(
   };
 }
 
-export function applyQianfanProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyQianfanProviderConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[QIANFAN_DEFAULT_MODEL_REF] = {
     ...models[QIANFAN_DEFAULT_MODEL_REF],
@@ -477,7 +480,7 @@ export function applyQianfanProviderConfig(cfg: DmmsAiConfig): DmmsAiConfig {
   });
 }
 
-export function applyQianfanConfig(cfg: DmmsAiConfig): DmmsAiConfig {
+export function applyQianfanConfig(cfg: DryadsAiConfig): DryadsAiConfig {
   const next = applyQianfanProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, QIANFAN_DEFAULT_MODEL_REF);
 }

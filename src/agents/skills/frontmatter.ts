@@ -3,15 +3,15 @@ import { parseFrontmatterBlock } from "../../markdown/frontmatter.js";
 import {
   getFrontmatterString,
   normalizeStringList,
-  parseDmmsAiManifestInstallBase,
+  parseDryadsAiManifestInstallBase,
   parseFrontmatterBool,
-  resolveDmmsAiManifestBlock,
-  resolveDmmsAiManifestInstall,
-  resolveDmmsAiManifestOs,
-  resolveDmmsAiManifestRequires,
+  resolveDryadsAiManifestBlock,
+  resolveDryadsAiManifestInstall,
+  resolveDryadsAiManifestOs,
+  resolveDryadsAiManifestRequires,
 } from "../../shared/frontmatter.js";
 import type {
-  DmmsAiSkillMetadata,
+  DryadsAiSkillMetadata,
   ParsedSkillFrontmatter,
   SkillEntry,
   SkillInstallSpec,
@@ -23,7 +23,7 @@ export function parseFrontmatter(content: string): ParsedSkillFrontmatter {
 }
 
 function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
-  const parsed = parseDmmsAiManifestInstallBase(input, ["brew", "node", "go", "uv", "download"]);
+  const parsed = parseDryadsAiManifestInstallBase(input, ["brew", "node", "go", "uv", "download"]);
   if (!parsed) {
     return undefined;
   }
@@ -73,16 +73,16 @@ function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
   return spec;
 }
 
-export function resolveDmmsAiMetadata(
+export function resolveDryadsAiMetadata(
   frontmatter: ParsedSkillFrontmatter,
-): DmmsAiSkillMetadata | undefined {
-  const metadataObj = resolveDmmsAiManifestBlock({ frontmatter });
+): DryadsAiSkillMetadata | undefined {
+  const metadataObj = resolveDryadsAiManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }
-  const requires = resolveDmmsAiManifestRequires(metadataObj);
-  const install = resolveDmmsAiManifestInstall(metadataObj, parseInstallSpec);
-  const osRaw = resolveDmmsAiManifestOs(metadataObj);
+  const requires = resolveDryadsAiManifestRequires(metadataObj);
+  const install = resolveDryadsAiManifestInstall(metadataObj, parseInstallSpec);
+  const osRaw = resolveDryadsAiManifestOs(metadataObj);
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,
     emoji: typeof metadataObj.emoji === "string" ? metadataObj.emoji : undefined,

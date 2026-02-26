@@ -222,7 +222,7 @@ function normalizeSystemdUnit(raw?: string, profile?: string): string {
   return unit.endsWith(".service") ? unit : `${unit}.service`;
 }
 
-export function triggerDmmsAiRestart(): RestartAttempt {
+export function triggerDryadsAiRestart(): RestartAttempt {
   if (process.env.VITEST || process.env.NODE_ENV === "test") {
     return { ok: true, method: "supervisor", detail: "test mode" };
   }
@@ -230,8 +230,8 @@ export function triggerDmmsAiRestart(): RestartAttempt {
   if (process.platform !== "darwin") {
     if (process.platform === "linux") {
       const unit = normalizeSystemdUnit(
-        process.env.DMMS_AI_SYSTEMD_UNIT,
-        process.env.DMMS_AI_PROFILE,
+        process.env.DRYADS_AI_SYSTEMD_UNIT,
+        process.env.DRYADS_AI_PROFILE,
       );
       const userArgs = ["--user", "restart", unit];
       tried.push(`systemctl ${userArgs.join(" ")}`);
@@ -265,8 +265,8 @@ export function triggerDmmsAiRestart(): RestartAttempt {
   }
 
   const label =
-    process.env.DMMS_AI_LAUNCHD_LABEL ||
-    resolveGatewayLaunchAgentLabel(process.env.DMMS_AI_PROFILE);
+    process.env.DRYADS_AI_LAUNCHD_LABEL ||
+    resolveGatewayLaunchAgentLabel(process.env.DRYADS_AI_PROFILE);
   const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
   const target = uid !== undefined ? `gui/${uid}/${label}` : label;
   const args = ["kickstart", "-k", target];

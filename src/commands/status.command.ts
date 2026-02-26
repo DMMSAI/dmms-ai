@@ -385,7 +385,7 @@ export async function statusCommand(
     },
   ];
 
-  runtime.log(theme.heading("DMMS AI status"));
+  runtime.log(theme.heading("Dryads AI status"));
   runtime.log("");
   runtime.log(theme.heading("Overview"));
   runtime.log(
@@ -442,8 +442,8 @@ export async function statusCommand(
       runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
     }
   }
-  runtime.log(theme.muted(`Full report: ${formatCliCommand("dmms-ai security audit")}`));
-  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("dmms-ai security audit --deep")}`));
+  runtime.log(theme.muted(`Full report: ${formatCliCommand("dryads-ai security audit")}`));
+  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("dryads-ai security audit --deep")}`));
 
   runtime.log("");
   runtime.log(theme.heading("Channels"));
@@ -607,8 +607,8 @@ export async function statusCommand(
   }
 
   runtime.log("");
-  runtime.log("FAQ: https://docs.dmms-ai.com/faq");
-  runtime.log("Troubleshooting: https://docs.dmms-ai.com/troubleshooting");
+  runtime.log("FAQ: https://docs.dryads-ai.com/faq");
+  runtime.log("Troubleshooting: https://docs.dryads-ai.com/troubleshooting");
   runtime.log("");
   const updateHint = formatUpdateAvailableHint(update);
   if (updateHint) {
@@ -616,11 +616,11 @@ export async function statusCommand(
     runtime.log("");
   }
   runtime.log("Next steps:");
-  runtime.log(`  Need to share?      ${formatCliCommand("dmms-ai status --all")}`);
-  runtime.log(`  Need to debug live? ${formatCliCommand("dmms-ai logs --follow")}`);
+  runtime.log(`  Need to share?      ${formatCliCommand("dryads-ai status --all")}`);
+  runtime.log(`  Need to debug live? ${formatCliCommand("dryads-ai logs --follow")}`);
   if (gatewayReachable) {
-    runtime.log(`  Need to test channels? ${formatCliCommand("dmms-ai status --deep")}`);
+    runtime.log(`  Need to test channels? ${formatCliCommand("dryads-ai status --deep")}`);
   } else {
-    runtime.log(`  Fix reachability first: ${formatCliCommand("dmms-ai gateway probe")}`);
+    runtime.log(`  Fix reachability first: ${formatCliCommand("dryads-ai gateway probe")}`);
   }
 }

@@ -1,19 +1,19 @@
 services:
-  dmms-ai-gateway:
-    image: ${DMMS_AI_IMAGE:-dmms-ai:local}
+  dryads-ai-gateway:
+    image: ${DRYADS_AI_IMAGE:-dryads-ai:local}
     environment:
       HOME: /home/node
       TERM: xterm-256color
-      DMMS_AI_GATEWAY_TOKEN: ${DMMS_AI_GATEWAY_TOKEN}
+      DRYADS_AI_GATEWAY_TOKEN: ${DRYADS_AI_GATEWAY_TOKEN}
       CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
       CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
       CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
     volumes:
-      - ${DMMS_AI_CONFIG_DIR}:/home/node/.dmms-ai
-      - ${DMMS_AI_WORKSPACE_DIR}:/home/node/.dmms-ai/workspace
+      - ${DRYADS_AI_CONFIG_DIR}:/home/node/.dryads-ai
+      - ${DRYADS_AI_WORKSPACE_DIR}:/home/node/.dryads-ai/workspace
     ports:
-      - "${DMMS_AI_GATEWAY_PORT:-18789}:18789"
-      - "${DMMS_AI_BRIDGE_PORT:-18790}:18790"
+      - "${DRYADS_AI_GATEWAY_PORT:-18789}:18789"
+      - "${DRYADS_AI_BRIDGE_PORT:-18790}:18790"
     init: true
     restart: unless-stopped
     command:
@@ -22,24 +22,24 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${DMMS_AI_GATEWAY_BIND:-lan}",
+        "${DRYADS_AI_GATEWAY_BIND:-lan}",
         "--port",
         "18789",
       ]
 
-  dmms-ai-cli:
-    image: ${DMMS_AI_IMAGE:-dmms-ai:local}
+  dryads-ai-cli:
+    image: ${DRYADS_AI_IMAGE:-dryads-ai:local}
     environment:
       HOME: /home/node
       TERM: xterm-256color
-      DMMS_AI_GATEWAY_TOKEN: ${DMMS_AI_GATEWAY_TOKEN}
+      DRYADS_AI_GATEWAY_TOKEN: ${DRYADS_AI_GATEWAY_TOKEN}
       BROWSER: echo
       CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
       CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
       CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
     volumes:
-      - ${DMMS_AI_CONFIG_DIR}:/home/node/.dmms-ai
-      - ${DMMS_AI_WORKSPACE_DIR}:/home/node/.dmms-ai/workspace
+      - ${DRYADS_AI_CONFIG_DIR}:/home/node/.dryads-ai
+      - ${DRYADS_AI_WORKSPACE_DIR}:/home/node/.dryads-ai/workspace
     stdin_open: true
     tty: true
     init: true

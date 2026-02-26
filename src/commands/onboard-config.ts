@@ -1,9 +1,9 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 export function applyOnboardingLocalWorkspaceConfig(
-  baseConfig: DmmsAiConfig,
+  baseConfig: DryadsAiConfig,
   workspaceDir: string,
-): DmmsAiConfig {
+): DryadsAiConfig {
   return {
     ...baseConfig,
     agents: {

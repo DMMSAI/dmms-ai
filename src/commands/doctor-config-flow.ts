@@ -7,9 +7,9 @@ import {
 } from "../channels/telegram/allow-from.js";
 import { fetchTelegramChatId } from "../channels/telegram/api.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
-  DmmsAiSchema,
+  DryadsAiSchema,
   CONFIG_PATH,
   migrateLegacyConfig,
   readConfigFileSnapshot,
@@ -75,11 +75,11 @@ function resolvePathTarget(root: unknown, path: Array<string | number>): unknown
   return current;
 }
 
-function stripUnknownConfigKeys(config: DmmsAiConfig): {
-  config: DmmsAiConfig;
+function stripUnknownConfigKeys(config: DryadsAiConfig): {
+  config: DryadsAiConfig;
   removed: string[];
 } {
-  const parsed = DmmsAiSchema.safeParse(config);
+  const parsed = DryadsAiSchema.safeParse(config);
   if (parsed.success) {
     return { config, removed: [] };
   }
@@ -111,7 +111,7 @@ function stripUnknownConfigKeys(config: DmmsAiConfig): {
   return { config: next, removed };
 }
 
-function noteOpencodeProviderOverrides(cfg: DmmsAiConfig) {
+function noteOpencodeProviderOverrides(cfg: DryadsAiConfig) {
   const providers = cfg.models?.providers;
   if (!providers) {
     return;
@@ -188,7 +188,7 @@ function asObjectRecord(value: unknown): Record<string, unknown> | null {
 }
 
 function collectTelegramAccountScopes(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
 ): Array<{ prefix: string; account: Record<string, unknown> }> {
   const scopes: Array<{ prefix: string; account: Record<string, unknown> }> = [];
   const telegram = asObjectRecord(cfg.channels?.telegram);
@@ -254,7 +254,7 @@ function collectTelegramAllowFromLists(
   return refs;
 }
 
-function scanTelegramAllowFromUsernameEntries(cfg: DmmsAiConfig): TelegramAllowFromUsernameHit[] {
+function scanTelegramAllowFromUsernameEntries(cfg: DryadsAiConfig): TelegramAllowFromUsernameHit[] {
   const hits: TelegramAllowFromUsernameHit[] = [];
 
   const scanList = (pathLabel: string, list: unknown) => {
@@ -282,8 +282,8 @@ function scanTelegramAllowFromUsernameEntries(cfg: DmmsAiConfig): TelegramAllowF
   return hits;
 }
 
-async function maybeRepairTelegramAllowFromUsernames(cfg: DmmsAiConfig): Promise<{
-  config: DmmsAiConfig;
+async function maybeRepairTelegramAllowFromUsernames(cfg: DryadsAiConfig): Promise<{
+  config: DryadsAiConfig;
   changes: string[];
 }> {
   const hits = scanTelegramAllowFromUsernameEntries(cfg);
@@ -424,7 +424,7 @@ type DiscordIdListRef = {
 };
 
 function collectDiscordAccountScopes(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
 ): Array<{ prefix: string; account: Record<string, unknown> }> {
   const scopes: Array<{ prefix: string; account: Record<string, unknown> }> = [];
   const discord = asObjectRecord(cfg.channels?.discord);
@@ -504,7 +504,7 @@ function collectDiscordIdLists(
   return refs;
 }
 
-function scanDiscordNumericIdEntries(cfg: DmmsAiConfig): DiscordNumericIdHit[] {
+function scanDiscordNumericIdEntries(cfg: DryadsAiConfig): DiscordNumericIdHit[] {
   const hits: DiscordNumericIdHit[] = [];
   const scanList = (pathLabel: string, list: unknown) => {
     if (!Array.isArray(list)) {
@@ -527,8 +527,8 @@ function scanDiscordNumericIdEntries(cfg: DmmsAiConfig): DiscordNumericIdHit[] {
   return hits;
 }
 
-function maybeRepairDiscordNumericIds(cfg: DmmsAiConfig): {
-  config: DmmsAiConfig;
+function maybeRepairDiscordNumericIds(cfg: DryadsAiConfig): {
+  config: DryadsAiConfig;
   changes: string[];
 } {
   const hits = scanDiscordNumericIdEntries(cfg);
@@ -579,8 +579,8 @@ function maybeRepairDiscordNumericIds(cfg: DmmsAiConfig): {
  * users (or integrations) set dmPolicy to "open" without realising that an explicit
  * allowFrom wildcard is also required.
  */
-function maybeRepairOpenPolicyAllowFrom(cfg: DmmsAiConfig): {
-  config: DmmsAiConfig;
+function maybeRepairOpenPolicyAllowFrom(cfg: DryadsAiConfig): {
+  config: DryadsAiConfig;
   changes: string[];
 } {
   const channels = cfg.channels;
@@ -711,8 +711,8 @@ async function maybeMigrateLegacyConfig(): Promise<string[]> {
     return changes;
   }
 
-  const targetDir = path.join(home, ".dmms-ai");
-  const targetPath = path.join(targetDir, "dmms-ai.json");
+  const targetDir = path.join(home, ".dryads-ai");
+  const targetPath = path.join(targetDir, "dryads-ai.json");
   try {
     await fs.access(targetPath);
     return changes;
@@ -771,7 +771,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
 
   let snapshot = await readConfigFileSnapshot();
   const baseCfg = snapshot.config ?? {};
-  let cfg: DmmsAiConfig = baseCfg;
+  let cfg: DryadsAiConfig = baseCfg;
   let candidate = structuredClone(baseCfg);
   let pendingChanges = false;
   let shouldWriteConfig = false;
@@ -806,7 +806,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       }
     } else {
       fixHints.push(
-        `Run "${formatCliCommand("dmms-ai doctor --fix")}" to apply legacy migrations.`,
+        `Run "${formatCliCommand("dryads-ai doctor --fix")}" to apply legacy migrations.`,
       );
     }
   }
@@ -819,7 +819,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     if (shouldRepair) {
       cfg = normalized.config;
     } else {
-      fixHints.push(`Run "${formatCliCommand("dmms-ai doctor --fix")}" to apply these changes.`);
+      fixHints.push(`Run "${formatCliCommand("dryads-ai doctor --fix")}" to apply these changes.`);
     }
   }
 
@@ -831,7 +831,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     if (shouldRepair) {
       cfg = autoEnable.config;
     } else {
-      fixHints.push(`Run "${formatCliCommand("dmms-ai doctor --fix")}" to apply these changes.`);
+      fixHints.push(`Run "${formatCliCommand("dryads-ai doctor --fix")}" to apply these changes.`);
     }
   }
 
@@ -865,7 +865,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(
         [
           `- Telegram allowFrom contains ${hits.length} non-numeric entries (e.g. ${hits[0]?.entry ?? "@"}); Telegram authorization requires numeric sender IDs.`,
-          `- Run "${formatCliCommand("dmms-ai doctor --fix")}" to auto-resolve @username entries to numeric IDs (requires a Telegram bot token).`,
+          `- Run "${formatCliCommand("dryads-ai doctor --fix")}" to auto-resolve @username entries to numeric IDs (requires a Telegram bot token).`,
         ].join("\n"),
         "Doctor warnings",
       );
@@ -876,7 +876,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(
         [
           `- Discord allowlists contain ${discordHits.length} numeric entries (e.g. ${discordHits[0]?.path}=${discordHits[0]?.entry}).`,
-          `- Discord IDs must be strings; run "${formatCliCommand("dmms-ai doctor --fix")}" to convert numeric IDs to quoted strings.`,
+          `- Discord IDs must be strings; run "${formatCliCommand("dryads-ai doctor --fix")}" to convert numeric IDs to quoted strings.`,
         ].join("\n"),
         "Doctor warnings",
       );
@@ -887,7 +887,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(
         [
           ...allowFromScan.changes,
-          `- Run "${formatCliCommand("dmms-ai doctor --fix")}" to add missing allowFrom wildcards.`,
+          `- Run "${formatCliCommand("dryads-ai doctor --fix")}" to add missing allowFrom wildcards.`,
         ].join("\n"),
         "Doctor warnings",
       );
@@ -904,7 +904,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(lines, "Doctor changes");
     } else {
       note(lines, "Unknown config keys");
-      fixHints.push('Run "dmms-ai doctor --fix" to remove these keys.');
+      fixHints.push('Run "dryads-ai doctor --fix" to remove these keys.');
     }
   }
 

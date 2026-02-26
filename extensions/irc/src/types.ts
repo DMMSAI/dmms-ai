@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "dmms-ai/plugin-sdk";
+import type { BaseProbeResult } from "dryads-ai/plugin-sdk";
 import type {
   BlockStreamingCoalesceConfig,
   DmConfig,
@@ -7,8 +7,8 @@ import type {
   GroupToolPolicyBySenderConfig,
   GroupToolPolicyConfig,
   MarkdownConfig,
-  DmmsAiConfig,
-} from "dmms-ai/plugin-sdk";
+  DryadsAiConfig,
+} from "dryads-ai/plugin-sdk";
 
 export type IrcChannelConfig = {
   requireMention?: boolean;
@@ -64,8 +64,8 @@ export type IrcConfig = IrcAccountConfig & {
   accounts?: Record<string, IrcAccountConfig>;
 };
 
-export type CoreConfig = DmmsAiConfig & {
-  channels?: DmmsAiConfig["channels"] & {
+export type CoreConfig = DryadsAiConfig & {
+  channels?: DryadsAiConfig["channels"] & {
     irc?: IrcConfig;
   };
 };

@@ -1,5 +1,5 @@
-import type { DmmsAiConfig } from "dmms-ai/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "dmms-ai/plugin-sdk/account-id";
+import type { DryadsAiConfig } from "dryads-ai/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "dryads-ai/plugin-sdk/account-id";
 import type { MattermostAccountConfig, MattermostChatMode } from "../types.js";
 import { normalizeMattermostBaseUrl } from "./client.js";
 
@@ -23,7 +23,7 @@ export type ResolvedMattermostAccount = {
   blockStreamingCoalesce?: MattermostAccountConfig["blockStreamingCoalesce"];
 };
 
-function listConfiguredAccountIds(cfg: DmmsAiConfig): string[] {
+function listConfiguredAccountIds(cfg: DryadsAiConfig): string[] {
   const accounts = cfg.channels?.mattermost?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
@@ -31,7 +31,7 @@ function listConfiguredAccountIds(cfg: DmmsAiConfig): string[] {
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listMattermostAccountIds(cfg: DmmsAiConfig): string[] {
+export function listMattermostAccountIds(cfg: DryadsAiConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -39,7 +39,7 @@ export function listMattermostAccountIds(cfg: DmmsAiConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultMattermostAccountId(cfg: DmmsAiConfig): string {
+export function resolveDefaultMattermostAccountId(cfg: DryadsAiConfig): string {
   const ids = listMattermostAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) {
     return DEFAULT_ACCOUNT_ID;
@@ -48,7 +48,7 @@ export function resolveDefaultMattermostAccountId(cfg: DmmsAiConfig): string {
 }
 
 function resolveAccountConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
 ): MattermostAccountConfig | undefined {
   const accounts = cfg.channels?.mattermost?.accounts;
@@ -59,7 +59,7 @@ function resolveAccountConfig(
 }
 
 function mergeMattermostAccountConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   accountId: string,
 ): MattermostAccountConfig {
   const { accounts: _ignored, ...base } = (cfg.channels?.mattermost ??
@@ -82,7 +82,7 @@ function resolveMattermostRequireMention(config: MattermostAccountConfig): boole
 }
 
 export function resolveMattermostAccount(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId?: string | null;
 }): ResolvedMattermostAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -121,7 +121,7 @@ export function resolveMattermostAccount(params: {
   };
 }
 
-export function listEnabledMattermostAccounts(cfg: DmmsAiConfig): ResolvedMattermostAccount[] {
+export function listEnabledMattermostAccounts(cfg: DryadsAiConfig): ResolvedMattermostAccount[] {
   return listMattermostAccountIds(cfg)
     .map((accountId) => resolveMattermostAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

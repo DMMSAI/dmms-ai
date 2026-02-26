@@ -32,7 +32,7 @@ describe("buildInboundMetaSystemPrompt", () => {
     } as TemplateContext);
 
     const payload = parseInboundMetaPayload(prompt);
-    expect(payload["schema"]).toBe("dmms-ai.inbound_meta.v1");
+    expect(payload["schema"]).toBe("dryads-ai.inbound_meta.v1");
     expect(payload["message_id"]).toBe("123");
     expect(payload["message_id_full"]).toBeUndefined();
     expect(payload["reply_to_id"]).toBe("99");
@@ -120,7 +120,7 @@ describe("buildInboundUserContextPrefix", () => {
   it("omits conversation label block for direct chats", () => {
     const text = buildInboundUserContextPrefix({
       ChatType: "direct",
-      ConversationLabel: "dmms-ai-tui",
+      ConversationLabel: "dryads-ai-tui",
     } as TemplateContext);
 
     expect(text).toBe("");

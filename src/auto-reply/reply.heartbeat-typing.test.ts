@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { createTempHomeHarness, makeReplyConfig } from "./reply.test-harness.js";
 
 const runEmbeddedPiAgentMock = vi.fn();
@@ -40,7 +40,7 @@ vi.mock("../web/session.js", () => webMocks);
 import { getReplyFromConfig } from "./reply.js";
 
 const { withTempHome } = createTempHomeHarness({
-  prefix: "dmms-ai-typing-",
+  prefix: "dryads-ai-typing-",
   beforeEachCase: () => runEmbeddedPiAgentMock.mockClear(),
 });
 
@@ -50,7 +50,7 @@ afterEach(() => {
 
 describe("getReplyFromConfig typing (heartbeat)", () => {
   beforeEach(() => {
-    vi.stubEnv("DMMS_AI_TEST_FAST", "1");
+    vi.stubEnv("DRYADS_AI_TEST_FAST", "1");
   });
 
   it("starts typing for normal runs", async () => {
@@ -64,7 +64,7 @@ describe("getReplyFromConfig typing (heartbeat)", () => {
       await getReplyFromConfig(
         { Body: "hi", From: "+1000", To: "+2000", Provider: "whatsapp" },
         { onReplyStart, isHeartbeat: false },
-        makeReplyConfig(home) as unknown as DmmsAiConfig,
+        makeReplyConfig(home) as unknown as DryadsAiConfig,
       );
 
       expect(onReplyStart).toHaveBeenCalled();
@@ -82,7 +82,7 @@ describe("getReplyFromConfig typing (heartbeat)", () => {
       await getReplyFromConfig(
         { Body: "hi", From: "+1000", To: "+2000", Provider: "whatsapp" },
         { onReplyStart, isHeartbeat: true },
-        makeReplyConfig(home) as unknown as DmmsAiConfig,
+        makeReplyConfig(home) as unknown as DryadsAiConfig,
       );
 
       expect(onReplyStart).not.toHaveBeenCalled();

@@ -1,4 +1,4 @@
-import type { LookupFn } from "dmms-ai/plugin-sdk";
+import type { LookupFn } from "dryads-ai/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { UrbitSSEClient } from "./sse-client.js";
 

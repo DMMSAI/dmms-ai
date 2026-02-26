@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { buildSlackThreadingToolContext } from "./threading-tool-context.js";
 
-const emptyCfg = {} as DmmsAiConfig;
+const emptyCfg = {} as DryadsAiConfig;
 
 describe("buildSlackThreadingToolContext", () => {
   it("uses top-level replyToMode by default", () => {
@@ -10,7 +10,7 @@ describe("buildSlackThreadingToolContext", () => {
       channels: {
         slack: { replyToMode: "first" },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -27,7 +27,7 @@ describe("buildSlackThreadingToolContext", () => {
           replyToModeByChatType: { direct: "all" },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -44,7 +44,7 @@ describe("buildSlackThreadingToolContext", () => {
           replyToModeByChatType: { direct: "all" },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -60,7 +60,7 @@ describe("buildSlackThreadingToolContext", () => {
           replyToMode: "first",
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -77,7 +77,7 @@ describe("buildSlackThreadingToolContext", () => {
           dm: { replyToMode: "all" },
         },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -91,7 +91,7 @@ describe("buildSlackThreadingToolContext", () => {
       channels: {
         slack: { replyToMode: "off" },
       },
-    } as DmmsAiConfig;
+    } as DryadsAiConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,

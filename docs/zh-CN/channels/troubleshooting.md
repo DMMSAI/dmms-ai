@@ -18,8 +18,8 @@ x-i18n:
 首先运行：
 
 ```bash
-dmms-ai doctor
-dmms-ai channels status --probe
+dryads-ai doctor
+dryads-ai channels status --probe
 ```
 
 `channels status --probe` 会在检测到常见渠道配置错误时输出警告，并包含小型实时检查（凭据、部分权限/成员资格）。

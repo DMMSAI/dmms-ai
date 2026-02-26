@@ -9,7 +9,7 @@ type EnvSnapshot = {
   userProfile: string | undefined;
   homeDrive: string | undefined;
   homePath: string | undefined;
-  dmmsAiHome: string | undefined;
+  dryadsAiHome: string | undefined;
   stateDir: string | undefined;
 };
 
@@ -19,8 +19,8 @@ function snapshotEnv(): EnvSnapshot {
     userProfile: process.env.USERPROFILE,
     homeDrive: process.env.HOMEDRIVE,
     homePath: process.env.HOMEPATH,
-    dmmsAiHome: process.env.DMMS_AI_HOME,
-    stateDir: process.env.DMMS_AI_STATE_DIR,
+    dryadsAiHome: process.env.DRYADS_AI_HOME,
+    stateDir: process.env.DRYADS_AI_STATE_DIR,
   };
 }
 
@@ -36,8 +36,8 @@ function restoreEnv(snapshot: EnvSnapshot) {
   restoreKey("USERPROFILE", snapshot.userProfile);
   restoreKey("HOMEDRIVE", snapshot.homeDrive);
   restoreKey("HOMEPATH", snapshot.homePath);
-  restoreKey("DMMS_AI_HOME", snapshot.dmmsAiHome);
-  restoreKey("DMMS_AI_STATE_DIR", snapshot.stateDir);
+  restoreKey("DRYADS_AI_HOME", snapshot.dryadsAiHome);
+  restoreKey("DRYADS_AI_STATE_DIR", snapshot.stateDir);
 }
 
 function snapshotExtraEnv(keys: string[]): Record<string, string | undefined> {
@@ -61,9 +61,9 @@ function restoreExtraEnv(snapshot: Record<string, string | undefined>) {
 function setTempHome(base: string) {
   process.env.HOME = base;
   process.env.USERPROFILE = base;
-  // Ensure tests using HOME isolation aren't affected by leaked DMMS_AI_HOME.
-  delete process.env.DMMS_AI_HOME;
-  process.env.DMMS_AI_STATE_DIR = path.join(base, ".dmms-ai");
+  // Ensure tests using HOME isolation aren't affected by leaked DRYADS_AI_HOME.
+  delete process.env.DRYADS_AI_HOME;
+  process.env.DRYADS_AI_STATE_DIR = path.join(base, ".dryads-ai");
 
   if (process.platform !== "win32") {
     return;
@@ -80,7 +80,7 @@ export async function withTempHome<T>(
   fn: (home: string) => Promise<T>,
   opts: { env?: Record<string, EnvValue>; prefix?: string } = {},
 ): Promise<T> {
-  const base = await fs.mkdtemp(path.join(os.tmpdir(), opts.prefix ?? "dmms-ai-test-home-"));
+  const base = await fs.mkdtemp(path.join(os.tmpdir(), opts.prefix ?? "dryads-ai-test-home-"));
   const snapshot = snapshotEnv();
   const envKeys = Object.keys(opts.env ?? {});
   for (const key of envKeys) {
@@ -91,7 +91,7 @@ export async function withTempHome<T>(
   const envSnapshot = snapshotExtraEnv(envKeys);
 
   setTempHome(base);
-  await fs.mkdir(path.join(base, ".dmms-ai", "agents", "main", "sessions"), { recursive: true });
+  await fs.mkdir(path.join(base, ".dryads-ai", "agents", "main", "sessions"), { recursive: true });
   if (opts.env) {
     for (const [key, raw] of Object.entries(opts.env)) {
       const value = typeof raw === "function" ? raw(base) : raw;

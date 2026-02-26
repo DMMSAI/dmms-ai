@@ -1,1 +1,1 @@
-export * from "dmms-ai";
+export * from "dryads-ai";

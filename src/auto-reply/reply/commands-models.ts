@@ -7,7 +7,7 @@ import {
   resolveConfiguredModelRef,
   resolveModelRefFromString,
 } from "../../agents/model-selection.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import {
   buildModelsKeyboard,
   buildProviderKeyboard,
@@ -31,7 +31,7 @@ export type ModelsProviderData = {
  * Build provider/model data from config and catalog.
  * Exported for reuse by callback handlers.
  */
-export async function buildModelsProviderData(cfg: DmmsAiConfig): Promise<ModelsProviderData> {
+export async function buildModelsProviderData(cfg: DryadsAiConfig): Promise<ModelsProviderData> {
   const resolvedDefault = resolveConfiguredModelRef({
     cfg,
     defaultProvider: DEFAULT_PROVIDER,
@@ -178,7 +178,7 @@ function parseModelsArgs(raw: string): {
 }
 
 export async function resolveModelsCommandReply(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   commandBodyNormalized: string;
   surface?: string;
   currentModel?: string;

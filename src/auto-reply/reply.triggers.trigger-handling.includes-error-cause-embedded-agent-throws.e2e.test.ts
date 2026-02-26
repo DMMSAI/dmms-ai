@@ -67,7 +67,7 @@ describe("trigger handling", () => {
 
       const text = Array.isArray(res) ? res[0]?.text : res?.text;
       expect(text).toBe(
-        "⚠️ Agent failed before reply: sandbox is not defined.\nLogs: dmms-ai logs --follow",
+        "⚠️ Agent failed before reply: sandbox is not defined.\nLogs: dryads-ai logs --follow",
       );
       expect(runEmbeddedPiAgentMock).toHaveBeenCalledOnce();
     });

@@ -5,8 +5,8 @@ import { captureEnv } from "../test-utils/env.js";
 let envSnapshot: ReturnType<typeof captureEnv>;
 
 beforeAll(() => {
-  envSnapshot = captureEnv(["DMMS_AI_PROFILE"]);
-  process.env.DMMS_AI_PROFILE = "isolated";
+  envSnapshot = captureEnv(["DRYADS_AI_PROFILE"]);
+  process.env.DRYADS_AI_PROFILE = "isolated";
 });
 
 afterAll(() => {
@@ -152,7 +152,7 @@ vi.mock("../memory/manager.js", () => ({
         files: 2,
         chunks: 3,
         dirty: false,
-        workspaceDir: "/tmp/dmms-ai",
+        workspaceDir: "/tmp/dryads-ai",
         dbPath: "/tmp/memory.sqlite",
         provider: "openai",
         model: "text-embedding-3-small",
@@ -243,8 +243,8 @@ vi.mock("../gateway/session-utils.js", async (importOriginal) => {
     listAgentsForGateway: mocks.listAgentsForGateway,
   };
 });
-vi.mock("../infra/dmms-ai-root.js", () => ({
-  resolveDmmsAiPackageRoot: vi.fn().mockResolvedValue("/tmp/dmms-ai"),
+vi.mock("../infra/dryads-ai-root.js", () => ({
+  resolveDryadsAiPackageRoot: vi.fn().mockResolvedValue("/tmp/dryads-ai"),
 }));
 vi.mock("../infra/os-summary.js", () => ({
   resolveOsSummary: () => ({
@@ -256,11 +256,11 @@ vi.mock("../infra/os-summary.js", () => ({
 }));
 vi.mock("../infra/update-check.js", () => ({
   checkUpdateStatus: vi.fn().mockResolvedValue({
-    root: "/tmp/dmms-ai",
+    root: "/tmp/dryads-ai",
     installKind: "git",
     packageManager: "pnpm",
     git: {
-      root: "/tmp/dmms-ai",
+      root: "/tmp/dryads-ai",
       branch: "main",
       upstream: "origin/main",
       dirty: false,
@@ -271,8 +271,8 @@ vi.mock("../infra/update-check.js", () => ({
     deps: {
       manager: "pnpm",
       status: "ok",
-      lockfilePath: "/tmp/dmms-ai/pnpm-lock.yaml",
-      markerPath: "/tmp/dmms-ai/node_modules/.modules.yaml",
+      lockfilePath: "/tmp/dryads-ai/pnpm-lock.yaml",
+      markerPath: "/tmp/dryads-ai/node_modules/.modules.yaml",
     },
     registry: { latestVersion: "0.0.0" },
   }),
@@ -374,7 +374,7 @@ describe("statusCommand", () => {
     runtimeLogMock.mockClear();
     await statusCommand({}, runtime as never);
     const logs = runtimeLogMock.mock.calls.map((c: unknown[]) => String(c[0]));
-    expect(logs.some((l: string) => l.includes("DMMS AI status"))).toBe(true);
+    expect(logs.some((l: string) => l.includes("Dryads AI status"))).toBe(true);
     expect(logs.some((l: string) => l.includes("Overview"))).toBe(true);
     expect(logs.some((l: string) => l.includes("Security audit"))).toBe(true);
     expect(logs.some((l: string) => l.includes("Summary:"))).toBe(true);
@@ -394,17 +394,17 @@ describe("statusCommand", () => {
     expect(
       logs.some(
         (l: string) =>
-          l.includes("dmms-ai status --all") ||
-          l.includes("dmms-ai --profile isolated status --all") ||
-          l.includes("dmms-ai status --all") ||
-          l.includes("dmms-ai --profile isolated status --all"),
+          l.includes("dryads-ai status --all") ||
+          l.includes("dryads-ai --profile isolated status --all") ||
+          l.includes("dryads-ai status --all") ||
+          l.includes("dryads-ai --profile isolated status --all"),
       ),
     ).toBe(true);
   });
 
   it("shows gateway auth when reachable", async () => {
-    const prevToken = process.env.DMMS_AI_GATEWAY_TOKEN;
-    process.env.DMMS_AI_GATEWAY_TOKEN = "abcd1234";
+    const prevToken = process.env.DRYADS_AI_GATEWAY_TOKEN;
+    process.env.DRYADS_AI_GATEWAY_TOKEN = "abcd1234";
     try {
       mocks.probeGateway.mockResolvedValueOnce({
         ok: true,
@@ -423,9 +423,9 @@ describe("statusCommand", () => {
       expect(logs.some((l: string) => l.includes("auth token"))).toBe(true);
     } finally {
       if (prevToken === undefined) {
-        delete process.env.DMMS_AI_GATEWAY_TOKEN;
+        delete process.env.DRYADS_AI_GATEWAY_TOKEN;
       } else {
-        process.env.DMMS_AI_GATEWAY_TOKEN = prevToken;
+        process.env.DRYADS_AI_GATEWAY_TOKEN = prevToken;
       }
     }
   });

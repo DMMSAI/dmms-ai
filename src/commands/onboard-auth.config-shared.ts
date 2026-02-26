@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { AgentModelEntryConfig } from "../config/types.agent-defaults.js";
 import type {
   ModelApi,
@@ -18,12 +18,12 @@ function extractAgentDefaultModelFallbacks(model: unknown): string[] | undefined
 }
 
 export function applyOnboardAuthAgentModelsAndProviders(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params: {
     agentModels: Record<string, AgentModelEntryConfig>;
     providers: Record<string, ModelProviderConfig>;
   },
-): DmmsAiConfig {
+): DryadsAiConfig {
   return {
     ...cfg,
     agents: {
@@ -40,7 +40,10 @@ export function applyOnboardAuthAgentModelsAndProviders(
   };
 }
 
-export function applyAgentDefaultModelPrimary(cfg: DmmsAiConfig, primary: string): DmmsAiConfig {
+export function applyAgentDefaultModelPrimary(
+  cfg: DryadsAiConfig,
+  primary: string,
+): DryadsAiConfig {
   const existingFallbacks = extractAgentDefaultModelFallbacks(cfg.agents?.defaults?.model);
   return {
     ...cfg,
@@ -58,7 +61,7 @@ export function applyAgentDefaultModelPrimary(cfg: DmmsAiConfig, primary: string
 }
 
 export function applyProviderConfigWithDefaultModels(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params: {
     agentModels: Record<string, AgentModelEntryConfig>;
     providerId: string;
@@ -67,7 +70,7 @@ export function applyProviderConfigWithDefaultModels(
     defaultModels: ModelDefinitionConfig[];
     defaultModelId?: string;
   },
-): DmmsAiConfig {
+): DryadsAiConfig {
   const providers = { ...cfg.models?.providers } as Record<string, ModelProviderConfig>;
   const existingProvider = providers[params.providerId] as ModelProviderConfig | undefined;
 
@@ -101,7 +104,7 @@ export function applyProviderConfigWithDefaultModels(
 }
 
 export function applyProviderConfigWithDefaultModel(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params: {
     agentModels: Record<string, AgentModelEntryConfig>;
     providerId: string;
@@ -110,7 +113,7 @@ export function applyProviderConfigWithDefaultModel(
     defaultModel: ModelDefinitionConfig;
     defaultModelId?: string;
   },
-): DmmsAiConfig {
+): DryadsAiConfig {
   return applyProviderConfigWithDefaultModels(cfg, {
     agentModels: params.agentModels,
     providerId: params.providerId,
@@ -122,7 +125,7 @@ export function applyProviderConfigWithDefaultModel(
 }
 
 export function applyProviderConfigWithModelCatalog(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   params: {
     agentModels: Record<string, AgentModelEntryConfig>;
     providerId: string;
@@ -130,7 +133,7 @@ export function applyProviderConfigWithModelCatalog(
     baseUrl: string;
     catalogModels: ModelDefinitionConfig[];
   },
-): DmmsAiConfig {
+): DryadsAiConfig {
   const providers = { ...cfg.models?.providers } as Record<string, ModelProviderConfig>;
   const existingProvider = providers[params.providerId] as ModelProviderConfig | undefined;
   const existingModels: ModelDefinitionConfig[] = Array.isArray(existingProvider?.models)

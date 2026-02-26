@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { readJsonFileWithFallback, writeJsonFileAtomically } from "dmms-ai/plugin-sdk";
+import { readJsonFileWithFallback, writeJsonFileAtomically } from "dryads-ai/plugin-sdk";
 import { withFileLock as withPathLock } from "./file-lock.js";
 
 const STORE_LOCK_OPTIONS = {

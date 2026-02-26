@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiIPC
+import DryadsAiIPC
 
 enum ShellExecutor {
     struct ShellResult {

@@ -16,7 +16,7 @@ x-i18n:
 
 # 日志
 
-DMMS AI 在两个地方记录日志：
+Dryads AI 在两个地方记录日志：
 
 - **文件日志**（JSON 行）由 Gateway 网关写入。
 - **控制台输出**显示在终端和控制 UI 中。
@@ -27,16 +27,16 @@ DMMS AI 在两个地方记录日志：
 
 默认情况下，Gateway 网关在以下位置写入滚动日志文件：
 
-`/tmp/dmms-ai/dmms-ai-YYYY-MM-DD.log`
+`/tmp/dryads-ai/dryads-ai-YYYY-MM-DD.log`
 
 日期使用 Gateway 网关主机的本地时区。
 
-你可以在 `~/.dmms-ai/dmms-ai.json` 中覆盖此设置：
+你可以在 `~/.dryads-ai/dryads-ai.json` 中覆盖此设置：
 
 ```json
 {
   "logging": {
-    "file": "/path/to/dmms-ai.log"
+    "file": "/path/to/dryads-ai.log"
   }
 }
 ```
@@ -48,7 +48,7 @@ DMMS AI 在两个地方记录日志：
 使用 CLI 通过 RPC 跟踪 Gateway 网关日志文件：
 
 ```bash
-dmms-ai logs --follow
+dryads-ai logs --follow
 ```
 
 输出模式：
@@ -69,7 +69,7 @@ dmms-ai logs --follow
 如果 Gateway 网关无法访问，CLI 会打印一个简短提示运行：
 
 ```bash
-dmms-ai doctor
+dryads-ai doctor
 ```
 
 ### 控制 UI（Web）
@@ -82,7 +82,7 @@ dmms-ai doctor
 要过滤渠道活动（WhatsApp/Telegram 等），使用：
 
 ```bash
-dmms-ai channels logs --channel whatsapp
+dryads-ai channels logs --channel whatsapp
 ```
 
 ## 日志格式
@@ -103,13 +103,13 @@ dmms-ai channels logs --channel whatsapp
 
 ## 配置日志
 
-所有日志配置都在 `~/.dmms-ai/dmms-ai.json` 的 `logging` 下。
+所有日志配置都在 `~/.dryads-ai/dryads-ai.json` 的 `logging` 下。
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/dmms-ai/dmms-ai-YYYY-MM-DD.log",
+    "file": "/tmp/dryads-ai/dryads-ai-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -152,7 +152,7 @@ dmms-ai channels logs --channel whatsapp
 
 - **OpenTelemetry（OTel）**：追踪、指标和日志的数据模型 + SDK。
 - **OTLP**：用于将 OTel 数据导出到收集器/后端的线路协议。
-- DMMS AI 目前通过 **OTLP/HTTP（protobuf）** 导出。
+- Dryads AI 目前通过 **OTLP/HTTP（protobuf）** 导出。
 
 ### 导出的信号
 
@@ -211,7 +211,7 @@ dmms-ai channels logs --channel whatsapp
 环境变量覆盖（一次性）：
 
 ```
-DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
+DRYADS_AI_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 注意：
@@ -240,7 +240,7 @@ DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "dmms-ai-gateway",
+      "serviceName": "dryads-ai-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -253,7 +253,7 @@ DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
 
 注意：
 
-- 你也可以使用 `dmms-ai plugins enable diagnostics-otel` 启用插件。
+- 你也可以使用 `dryads-ai plugins enable diagnostics-otel` 启用插件。
 - `protocol` 目前仅支持 `http/protobuf`。`grpc` 被忽略。
 - 指标包括令牌使用、成本、上下文大小、运行持续时间和消息流计数器/直方图（webhooks、队列、会话状态、队列深度/等待）。
 - 追踪/指标可以通过 `traces` / `metrics` 切换（默认：开启）。启用时，追踪包括模型使用 span 加上 webhook/消息处理 span。
@@ -264,45 +264,45 @@ DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
 
 模型使用：
 
-- `dmms-ai.tokens`（计数器，属性：`dmms-ai.token`、`dmms-ai.channel`、`dmms-ai.provider`、`dmms-ai.model`）
-- `dmms-ai.cost.usd`（计数器，属性：`dmms-ai.channel`、`dmms-ai.provider`、`dmms-ai.model`）
-- `dmms-ai.run.duration_ms`（直方图，属性：`dmms-ai.channel`、`dmms-ai.provider`、`dmms-ai.model`）
-- `dmms-ai.context.tokens`（直方图，属性：`dmms-ai.context`、`dmms-ai.channel`、`dmms-ai.provider`、`dmms-ai.model`）
+- `dryads-ai.tokens`（计数器，属性：`dryads-ai.token`、`dryads-ai.channel`、`dryads-ai.provider`、`dryads-ai.model`）
+- `dryads-ai.cost.usd`（计数器，属性：`dryads-ai.channel`、`dryads-ai.provider`、`dryads-ai.model`）
+- `dryads-ai.run.duration_ms`（直方图，属性：`dryads-ai.channel`、`dryads-ai.provider`、`dryads-ai.model`）
+- `dryads-ai.context.tokens`（直方图，属性：`dryads-ai.context`、`dryads-ai.channel`、`dryads-ai.provider`、`dryads-ai.model`）
 
 消息流：
 
-- `dmms-ai.webhook.received`（计数器，属性：`dmms-ai.channel`、`dmms-ai.webhook`）
-- `dmms-ai.webhook.error`（计数器，属性：`dmms-ai.channel`、`dmms-ai.webhook`）
-- `dmms-ai.webhook.duration_ms`（直方图，属性：`dmms-ai.channel`、`dmms-ai.webhook`）
-- `dmms-ai.message.queued`（计数器，属性：`dmms-ai.channel`、`dmms-ai.source`）
-- `dmms-ai.message.processed`（计数器，属性：`dmms-ai.channel`、`dmms-ai.outcome`）
-- `dmms-ai.message.duration_ms`（直方图，属性：`dmms-ai.channel`、`dmms-ai.outcome`）
+- `dryads-ai.webhook.received`（计数器，属性：`dryads-ai.channel`、`dryads-ai.webhook`）
+- `dryads-ai.webhook.error`（计数器，属性：`dryads-ai.channel`、`dryads-ai.webhook`）
+- `dryads-ai.webhook.duration_ms`（直方图，属性：`dryads-ai.channel`、`dryads-ai.webhook`）
+- `dryads-ai.message.queued`（计数器，属性：`dryads-ai.channel`、`dryads-ai.source`）
+- `dryads-ai.message.processed`（计数器，属性：`dryads-ai.channel`、`dryads-ai.outcome`）
+- `dryads-ai.message.duration_ms`（直方图，属性：`dryads-ai.channel`、`dryads-ai.outcome`）
 
 队列 + 会话：
 
-- `dmms-ai.queue.lane.enqueue`（计数器，属性：`dmms-ai.lane`）
-- `dmms-ai.queue.lane.dequeue`（计数器，属性：`dmms-ai.lane`）
-- `dmms-ai.queue.depth`（直方图，属性：`dmms-ai.lane` 或 `dmms-ai.channel=heartbeat`）
-- `dmms-ai.queue.wait_ms`（直方图，属性：`dmms-ai.lane`）
-- `dmms-ai.session.state`（计数器，属性：`dmms-ai.state`、`dmms-ai.reason`）
-- `dmms-ai.session.stuck`（计数器，属性：`dmms-ai.state`）
-- `dmms-ai.session.stuck_age_ms`（直方图，属性：`dmms-ai.state`）
-- `dmms-ai.run.attempt`（计数器，属性：`dmms-ai.attempt`）
+- `dryads-ai.queue.lane.enqueue`（计数器，属性：`dryads-ai.lane`）
+- `dryads-ai.queue.lane.dequeue`（计数器，属性：`dryads-ai.lane`）
+- `dryads-ai.queue.depth`（直方图，属性：`dryads-ai.lane` 或 `dryads-ai.channel=heartbeat`）
+- `dryads-ai.queue.wait_ms`（直方图，属性：`dryads-ai.lane`）
+- `dryads-ai.session.state`（计数器，属性：`dryads-ai.state`、`dryads-ai.reason`）
+- `dryads-ai.session.stuck`（计数器，属性：`dryads-ai.state`）
+- `dryads-ai.session.stuck_age_ms`（直方图，属性：`dryads-ai.state`）
+- `dryads-ai.run.attempt`（计数器，属性：`dryads-ai.attempt`）
 
 ### 导出的 span（名称 + 关键属性）
 
-- `dmms-ai.model.usage`
-  - `dmms-ai.channel`、`dmms-ai.provider`、`dmms-ai.model`
-  - `dmms-ai.sessionKey`、`dmms-ai.sessionId`
-  - `dmms-ai.tokens.*`（input/output/cache_read/cache_write/total）
-- `dmms-ai.webhook.processed`
-  - `dmms-ai.channel`、`dmms-ai.webhook`、`dmms-ai.chatId`
-- `dmms-ai.webhook.error`
-  - `dmms-ai.channel`、`dmms-ai.webhook`、`dmms-ai.chatId`、`dmms-ai.error`
-- `dmms-ai.message.processed`
-  - `dmms-ai.channel`、`dmms-ai.outcome`、`dmms-ai.chatId`、`dmms-ai.messageId`、`dmms-ai.sessionKey`、`dmms-ai.sessionId`、`dmms-ai.reason`
-- `dmms-ai.session.stuck`
-  - `dmms-ai.state`、`dmms-ai.ageMs`、`dmms-ai.queueDepth`、`dmms-ai.sessionKey`、`dmms-ai.sessionId`
+- `dryads-ai.model.usage`
+  - `dryads-ai.channel`、`dryads-ai.provider`、`dryads-ai.model`
+  - `dryads-ai.sessionKey`、`dryads-ai.sessionId`
+  - `dryads-ai.tokens.*`（input/output/cache_read/cache_write/total）
+- `dryads-ai.webhook.processed`
+  - `dryads-ai.channel`、`dryads-ai.webhook`、`dryads-ai.chatId`
+- `dryads-ai.webhook.error`
+  - `dryads-ai.channel`、`dryads-ai.webhook`、`dryads-ai.chatId`、`dryads-ai.error`
+- `dryads-ai.message.processed`
+  - `dryads-ai.channel`、`dryads-ai.outcome`、`dryads-ai.chatId`、`dryads-ai.messageId`、`dryads-ai.sessionKey`、`dryads-ai.sessionId`、`dryads-ai.reason`
+- `dryads-ai.session.stuck`
+  - `dryads-ai.state`、`dryads-ai.ageMs`、`dryads-ai.queueDepth`、`dryads-ai.sessionKey`、`dryads-ai.sessionId`
 
 ### 采样 + 刷新
 
@@ -324,6 +324,6 @@ DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
 
 ## 故障排除提示
 
-- **Gateway 网关无法访问？** 先运行 `dmms-ai doctor`。
+- **Gateway 网关无法访问？** 先运行 `dryads-ai doctor`。
 - **日志为空？** 检查 Gateway 网关是否正在运行并写入 `logging.file` 中的文件路径。
 - **需要更多细节？** 将 `logging.level` 设置为 `debug` 或 `trace` 并重试。

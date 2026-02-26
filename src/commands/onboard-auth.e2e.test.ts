@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import type { OAuthCredentials } from "@mariozechner/pi-ai";
 import { afterEach, describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   applyAuthProfileConfig,
   applyLitellmProviderConfig,
@@ -42,7 +42,7 @@ function createLegacyProviderConfig(params: {
   modelName?: string;
   baseUrl?: string;
   apiKey?: string;
-}): DmmsAiConfig {
+}): DryadsAiConfig {
   return {
     models: {
       providers: {
@@ -64,7 +64,7 @@ function createLegacyProviderConfig(params: {
         },
       },
     },
-  } as DmmsAiConfig;
+  } as DryadsAiConfig;
 }
 
 const EXPECTED_FALLBACKS = ["anthropic/claude-opus-4-5"] as const;
@@ -105,18 +105,18 @@ function expectAliasPreserved(
 
 describe("writeOAuthCredentials", () => {
   const lifecycle = createAuthTestLifecycle([
-    "DMMS_AI_STATE_DIR",
-    "DMMS_AI_AGENT_DIR",
+    "DRYADS_AI_STATE_DIR",
+    "DRYADS_AI_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
-    "DMMS_AI_OAUTH_DIR",
+    "DRYADS_AI_OAUTH_DIR",
   ]);
 
   afterEach(async () => {
     await lifecycle.cleanup();
   });
 
-  it("writes auth-profiles.json under DMMS_AI_AGENT_DIR when set", async () => {
-    const env = await setupAuthTestEnv("dmms-ai-oauth-");
+  it("writes auth-profiles.json under DRYADS_AI_AGENT_DIR when set", async () => {
+    const env = await setupAuthTestEnv("dryads-ai-oauth-");
     lifecycle.setStateDir(env.stateDir);
 
     const creds = {
@@ -144,8 +144,8 @@ describe("writeOAuthCredentials", () => {
 
 describe("setMinimaxApiKey", () => {
   const lifecycle = createAuthTestLifecycle([
-    "DMMS_AI_STATE_DIR",
-    "DMMS_AI_AGENT_DIR",
+    "DRYADS_AI_STATE_DIR",
+    "DRYADS_AI_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
   ]);
 
@@ -153,8 +153,8 @@ describe("setMinimaxApiKey", () => {
     await lifecycle.cleanup();
   });
 
-  it("writes to DMMS_AI_AGENT_DIR when set", async () => {
-    const env = await setupAuthTestEnv("dmms-ai-minimax-", { agentSubdir: "custom-agent" });
+  it("writes to DRYADS_AI_AGENT_DIR when set", async () => {
+    const env = await setupAuthTestEnv("dryads-ai-minimax-", { agentSubdir: "custom-agent" });
     lifecycle.setStateDir(env.stateDir);
 
     await setMinimaxApiKey("sk-minimax-test");

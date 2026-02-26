@@ -1,5 +1,5 @@
 ---
-summary: "Mattermost bot setup and DMMS AI config"
+summary: "Mattermost bot setup and Dryads AI config"
 read_when:
   - Setting up Mattermost
   - Debugging Mattermost routing
@@ -19,17 +19,17 @@ Mattermost ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-dmms-ai plugins install @dmms-ai/mattermost
+dryads-ai plugins install @dryads-ai/mattermost
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-dmms-ai plugins install ./extensions/mattermost
+dryads-ai plugins install ./extensions/mattermost
 ```
 
 If you choose Mattermost during configure/onboarding and a git checkout is detected,
-DMMS AI will offer the local install path automatically.
+Dryads AI will offer the local install path automatically.
 
 Details: [Plugins](/tools/plugin)
 
@@ -38,7 +38,7 @@ Details: [Plugins](/tools/plugin)
 1. Install the Mattermost plugin.
 2. Create a Mattermost bot account and copy the **bot token**.
 3. Copy the Mattermost **base URL** (e.g., `https://chat.example.com`).
-4. Configure DMMS AI and start the gateway.
+4. Configure Dryads AI and start the gateway.
 
 Minimal config:
 
@@ -94,8 +94,8 @@ Notes:
 
 - Default: `channels.mattermost.dmPolicy = "pairing"` (unknown senders get a pairing code).
 - Approve via:
-  - `dmms-ai pairing list mattermost`
-  - `dmms-ai pairing approve mattermost <CODE>`
+  - `dryads-ai pairing list mattermost`
+  - `dryads-ai pairing approve mattermost <CODE>`
 - Public DMs: `channels.mattermost.dmPolicy="open"` plus `channels.mattermost.allowFrom=["*"]`.
 
 ## Channels (groups)
@@ -106,7 +106,7 @@ Notes:
 
 ## Targets for outbound delivery
 
-Use these target formats with `dmms-ai message send` or cron/webhooks:
+Use these target formats with `dryads-ai message send` or cron/webhooks:
 
 - `channel:<id>` for a channel
 - `user:<id>` for a DM

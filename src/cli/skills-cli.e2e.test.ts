@@ -13,10 +13,10 @@ describe("skills-cli (e2e)", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeAll(() => {
-    envSnapshot = captureEnv(["DMMS_AI_BUNDLED_SKILLS_DIR"]);
-    tempWorkspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-skills-test-"));
-    tempBundledDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-bundled-skills-test-"));
-    process.env.DMMS_AI_BUNDLED_SKILLS_DIR = tempBundledDir;
+    envSnapshot = captureEnv(["DRYADS_AI_BUNDLED_SKILLS_DIR"]);
+    tempWorkspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-skills-test-"));
+    tempBundledDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-bundled-skills-test-"));
+    process.env.DRYADS_AI_BUNDLED_SKILLS_DIR = tempBundledDir;
   });
 
   afterAll(() => {
@@ -36,7 +36,7 @@ describe("skills-cli (e2e)", () => {
         skill: {
           name: "peekaboo",
           description: "Capture UI screenshots",
-          source: "dmms-ai-bundled",
+          source: "dryads-ai-bundled",
           filePath: path.join(baseDir, "SKILL.md"),
           baseDir,
         } as SkillEntry["skill"],

@@ -55,7 +55,10 @@ type NodeDaemonStatusOptions = {
 };
 
 function renderNodeServiceStartHints(): string[] {
-  const base = [formatCliCommand("dmms-ai node install"), formatCliCommand("dmms-ai node start")];
+  const base = [
+    formatCliCommand("dryads-ai node install"),
+    formatCliCommand("dryads-ai node start"),
+  ];
   switch (process.platform) {
     case "darwin":
       return [
@@ -143,7 +146,7 @@ export async function runNodeDaemonInstall(opts: NodeDaemonInstallOptions) {
     });
     if (!json) {
       defaultRuntime.log(`Node service already ${service.loadedText}.`);
-      defaultRuntime.log(`Reinstall with: ${formatCliCommand("dmms-ai node install --force")}`);
+      defaultRuntime.log(`Reinstall with: ${formatCliCommand("dryads-ai node install --force")}`);
     }
     return;
   }
@@ -284,7 +287,7 @@ export async function runNodeDaemonStatus(opts: NodeDaemonStatusOptions = {}) {
   };
   const hintEnv = {
     ...baseEnv,
-    DMMS_AI_LOG_PREFIX: baseEnv.DMMS_AI_LOG_PREFIX ?? "node",
+    DRYADS_AI_LOG_PREFIX: baseEnv.DRYADS_AI_LOG_PREFIX ?? "node",
   } as NodeJS.ProcessEnv;
 
   if (runtime?.missingUnit) {

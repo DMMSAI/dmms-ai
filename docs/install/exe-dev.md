@@ -1,5 +1,5 @@
 ---
-summary: "Run DMMS AI Gateway on exe.dev (VM + HTTPS proxy) for remote access"
+summary: "Run Dryads AI Gateway on exe.dev (VM + HTTPS proxy) for remote access"
 read_when:
   - You want a cheap always-on Linux host for the Gateway
   - You want remote Control UI access without running your own VPS
@@ -8,13 +8,13 @@ title: "exe.dev"
 
 # exe.dev
 
-Goal: DMMS AI Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
+Goal: Dryads AI Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
 
 This page assumes exe.dev's default **exeuntu** image. If you picked a different distro, map packages accordingly.
 
 ## Beginner quick path
 
-1. [https://exe.new/dmms-ai](https://exe.new/dmms-ai)
+1. [https://exe.new/dryads-ai](https://exe.new/dryads-ai)
 2. Fill in your auth key/token as needed
 3. Click on "Agent" next to your VM, and wait...
 4. ???
@@ -27,11 +27,11 @@ This page assumes exe.dev's default **exeuntu** image. If you picked a different
 
 ## Automated Install with Shelley
 
-Shelley, [exe.dev](https://exe.dev)'s agent, can install DMMS AI instantly with our
+Shelley, [exe.dev](https://exe.dev)'s agent, can install Dryads AI instantly with our
 prompt. The prompt used is as below:
 
 ```
-Set up DMMS AI (https://docs.dmms-ai.com/install) on this VM. Use the non-interactive and accept-risk flags for dmms-ai onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "dmms-ai devices list" and "dmms-ai device approve <request id>". Make sure the dashboard shows that DMMS AI's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Dryads AI (https://docs.dryads-ai.com/install) on this VM. Use the non-interactive and accept-risk flags for dryads-ai onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "dryads-ai devices list" and "dryads-ai device approve <request id>". Make sure the dashboard shows that Dryads AI's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## Manual installation
@@ -50,7 +50,7 @@ Then connect:
 ssh <vm-name>.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. DMMS AI stores state under `~/.dmms-ai/` and `~/.dmms-ai/workspace/`.
+Tip: keep this VM **stateful**. Dryads AI stores state under `~/.dryads-ai/` and `~/.dryads-ai/workspace/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -59,15 +59,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3) Install DMMS AI
+## 3) Install Dryads AI
 
-Run the DMMS AI install script:
+Run the Dryads AI install script:
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash
+curl -fsSL https://dryads-ai.com/install.sh | bash
 ```
 
-## 4) Setup nginx to proxy DMMS AI to port 8000
+## 4) Setup nginx to proxy Dryads AI to port 8000
 
 Edit `/etc/nginx/sites-enabled/default` with
 
@@ -101,12 +101,12 @@ server {
 }
 ```
 
-## 5) Access DMMS AI and grant privileges
+## 5) Access Dryads AI and grant privileges
 
 Access `https://<vm-name>.exe.xyz/` (see the Control UI output from onboarding). If it prompts for auth, paste the
-token from `gateway.auth.token` on the VM (retrieve with `dmms-ai config get gateway.auth.token`, or generate one
-with `dmms-ai doctor --generate-gateway-token`). Approve devices with `dmms-ai devices list` and
-`dmms-ai devices approve <requestId>`. When in doubt, use Shelley from your browser!
+token from `gateway.auth.token` on the VM (retrieve with `dryads-ai config get gateway.auth.token`, or generate one
+with `dryads-ai doctor --generate-gateway-token`). Approve devices with `dryads-ai devices list` and
+`dryads-ai devices approve <requestId>`. When in doubt, use Shelley from your browser!
 
 ## Remote Access
 
@@ -117,10 +117,10 @@ with email auth.
 ## Updating
 
 ```bash
-npm i -g dmms-ai@latest
-dmms-ai doctor
-dmms-ai gateway restart
-dmms-ai health
+npm i -g dryads-ai@latest
+dryads-ai doctor
+dryads-ai gateway restart
+dryads-ai health
 ```
 
 Guide: [Updating](/install/updating)

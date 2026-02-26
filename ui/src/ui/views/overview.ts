@@ -54,13 +54,13 @@ export function renderOverview(props: OverviewProps) {
         <div class="muted" style="margin-top: 8px">
           ${t("overview.auth.required")}
           <div style="margin-top: 6px">
-            <span class="mono">dmms-ai dashboard --no-open</span> → tokenized URL<br />
-            <span class="mono">dmms-ai doctor --generate-gateway-token</span> → set token
+            <span class="mono">dryads-ai dashboard --no-open</span> → tokenized URL<br />
+            <span class="mono">dryads-ai doctor --generate-gateway-token</span> → set token
           </div>
           <div style="margin-top: 6px">
             <a
               class="session-link"
-              href="https://docs.dmms-ai.com/web/dashboard"
+              href="https://docs.dryads-ai.com/web/dashboard"
               target="_blank"
               rel="noreferrer"
               title="Control UI auth docs (opens in new tab)"
@@ -72,11 +72,11 @@ export function renderOverview(props: OverviewProps) {
     }
     return html`
       <div class="muted" style="margin-top: 8px">
-        ${t("overview.auth.failed", { command: "dmms-ai dashboard --no-open" })}
+        ${t("overview.auth.failed", { command: "dryads-ai dashboard --no-open" })}
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.dmms-ai.com/web/dashboard"
+            href="https://docs.dryads-ai.com/web/dashboard"
             target="_blank"
             rel="noreferrer"
             title="Control UI auth docs (opens in new tab)"
@@ -108,7 +108,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.dmms-ai.com/gateway/tailscale"
+            href="https://docs.dryads-ai.com/gateway/tailscale"
             target="_blank"
             rel="noreferrer"
             title="Tailscale Serve docs (opens in new tab)"
@@ -117,7 +117,7 @@ export function renderOverview(props: OverviewProps) {
           <span class="muted"> · </span>
           <a
             class="session-link"
-            href="https://docs.dmms-ai.com/web/control-ui#insecure-http"
+            href="https://docs.dryads-ai.com/web/control-ui#insecure-http"
             target="_blank"
             rel="noreferrer"
             title="Insecure HTTP docs (opens in new tab)"
@@ -159,7 +159,7 @@ export function renderOverview(props: OverviewProps) {
                       const v = (e.target as HTMLInputElement).value;
                       props.onSettingsChange({ ...props.settings, token: v });
                     }}
-                    placeholder="DMMS_AI_GATEWAY_TOKEN"
+                    placeholder="DRYADS_AI_GATEWAY_TOKEN"
                   />
                 </label>
                 <label class="field">

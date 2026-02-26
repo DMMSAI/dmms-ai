@@ -1,7 +1,7 @@
 ---
 summary: "How the installer scripts work (install.sh, install-cli.sh, install.ps1), flags, and automation"
 read_when:
-  - You want to understand `dmms-ai.com/install.sh`
+  - You want to understand `dryads-ai.com/install.sh`
   - You want to automate installs (CI / headless)
   - You want to install from a GitHub checkout
 title: "Installer Internals"
@@ -9,51 +9,51 @@ title: "Installer Internals"
 
 # Installer internals
 
-DMMS AI ships three installer scripts, served from `dmms-ai.com`.
+Dryads AI ships three installer scripts, served from `dryads-ai.com`.
 
-| Script                             | Platform             | What it does                                                                                |
-| ---------------------------------- | -------------------- | ------------------------------------------------------------------------------------------- |
-| [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs DMMS AI via npm (default) or git, and can run onboarding. |
-| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + DMMS AI into a local prefix (`~/.dmms-ai`). No root required.               |
-| [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs DMMS AI via npm (default) or git, and can run onboarding. |
+| Script                             | Platform             | What it does                                                                                  |
+| ---------------------------------- | -------------------- | --------------------------------------------------------------------------------------------- |
+| [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs Dryads AI via npm (default) or git, and can run onboarding. |
+| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + Dryads AI into a local prefix (`~/.dryads-ai`). No root required.             |
+| [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs Dryads AI via npm (default) or git, and can run onboarding. |
 
 ## Quick commands
 
 <Tabs>
   <Tab title="install.sh">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash
     ```
 
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash -s -- --help
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash -s -- --help
     ```
 
   </Tab>
   <Tab title="install-cli.sh">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash
     ```
 
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash -s -- --help
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash -s -- --help
     ```
 
   </Tab>
   <Tab title="install.ps1">
     ```powershell
-    iwr -useb https://dmms-ai.com/install.ps1 | iex
+    iwr -useb https://dryads-ai.com/install.ps1 | iex
     ```
 
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -Tag beta -NoOnboard -DryRun
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -Tag beta -NoOnboard -DryRun
     ```
 
   </Tab>
 </Tabs>
 
 <Note>
-If install succeeds but `dmms-ai` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
+If install succeeds but `dryads-ai` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
 </Note>
 
 ---
@@ -76,12 +76,12 @@ Recommended for most interactive installs on macOS/Linux/WSL.
   <Step title="Ensure Git">
     Installs Git if missing.
   </Step>
-  <Step title="Install DMMS AI">
+  <Step title="Install Dryads AI">
     - `npm` method (default): global npm install
-    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/dmms-ai`
+    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/dryads-ai`
   </Step>
   <Step title="Post-install tasks">
-    - Runs `dmms-ai doctor --non-interactive` on upgrades and git installs (best effort)
+    - Runs `dryads-ai doctor --non-interactive` on upgrades and git installs (best effort)
     - Attempts onboarding when appropriate (TTY available, onboarding not disabled, and bootstrap/config checks pass)
     - Defaults `SHARP_IGNORE_GLOBAL_LIBVIPS=1`
   </Step>
@@ -89,7 +89,7 @@ Recommended for most interactive installs on macOS/Linux/WSL.
 
 ### Source checkout detection
 
-If run inside an DMMS AI checkout (`package.json` + `pnpm-workspace.yaml`), the script offers:
+If run inside an Dryads AI checkout (`package.json` + `pnpm-workspace.yaml`), the script offers:
 
 - use checkout (`git`), or
 - use global install (`npm`)
@@ -103,22 +103,22 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 <Tabs>
   <Tab title="Default">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash
     ```
   </Tab>
   <Tab title="Skip onboarding">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash -s -- --no-onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash -s -- --no-onboard
     ```
   </Tab>
   <Tab title="Git install">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash -s -- --install-method git
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash -s -- --install-method git
     ```
   </Tab>
   <Tab title="Dry run">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash -s -- --dry-run
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash -s -- --dry-run
     ```
   </Tab>
 </Tabs>
@@ -126,39 +126,39 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 <AccordionGroup>
   <Accordion title="Flags reference">
 
-| Flag                            | Description                                               |
-| ------------------------------- | --------------------------------------------------------- |
-| `--install-method npm\|git`     | Choose install method (default: `npm`). Alias: `--method` |
-| `--npm`                         | Shortcut for npm method                                   |
-| `--git`                         | Shortcut for git method. Alias: `--github`                |
-| `--version <version\|dist-tag>` | npm version or dist-tag (default: `latest`)               |
-| `--beta`                        | Use beta dist-tag if available, else fallback to `latest` |
-| `--git-dir <path>`              | Checkout directory (default: `~/dmms-ai`). Alias: `--dir` |
-| `--no-git-update`               | Skip `git pull` for existing checkout                     |
-| `--no-prompt`                   | Disable prompts                                           |
-| `--no-onboard`                  | Skip onboarding                                           |
-| `--onboard`                     | Enable onboarding                                         |
-| `--dry-run`                     | Print actions without applying changes                    |
-| `--verbose`                     | Enable debug output (`set -x`, npm notice-level logs)     |
-| `--help`                        | Show usage (`-h`)                                         |
+| Flag                            | Description                                                 |
+| ------------------------------- | ----------------------------------------------------------- |
+| `--install-method npm\|git`     | Choose install method (default: `npm`). Alias: `--method`   |
+| `--npm`                         | Shortcut for npm method                                     |
+| `--git`                         | Shortcut for git method. Alias: `--github`                  |
+| `--version <version\|dist-tag>` | npm version or dist-tag (default: `latest`)                 |
+| `--beta`                        | Use beta dist-tag if available, else fallback to `latest`   |
+| `--git-dir <path>`              | Checkout directory (default: `~/dryads-ai`). Alias: `--dir` |
+| `--no-git-update`               | Skip `git pull` for existing checkout                       |
+| `--no-prompt`                   | Disable prompts                                             |
+| `--no-onboard`                  | Skip onboarding                                             |
+| `--onboard`                     | Enable onboarding                                           |
+| `--dry-run`                     | Print actions without applying changes                      |
+| `--verbose`                     | Enable debug output (`set -x`, npm notice-level logs)       |
+| `--help`                        | Show usage (`-h`)                                           |
 
   </Accordion>
 
   <Accordion title="Environment variables reference">
 
-| Variable                                   | Description                                   |
-| ------------------------------------------ | --------------------------------------------- |
-| `DMMS_AI_INSTALL_METHOD=git\|npm`          | Install method                                |
-| `DMMS_AI_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
-| `DMMS_AI_BETA=0\|1`                        | Use beta if available                         |
-| `DMMS_AI_GIT_DIR=<path>`                   | Checkout directory                            |
-| `DMMS_AI_GIT_UPDATE=0\|1`                  | Toggle git updates                            |
-| `DMMS_AI_NO_PROMPT=1`                      | Disable prompts                               |
-| `DMMS_AI_NO_ONBOARD=1`                     | Skip onboarding                               |
-| `DMMS_AI_DRY_RUN=1`                        | Dry run mode                                  |
-| `DMMS_AI_VERBOSE=1`                        | Debug mode                                    |
-| `DMMS_AI_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
-| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`         | Control sharp/libvips behavior (default: `1`) |
+| Variable                                     | Description                                   |
+| -------------------------------------------- | --------------------------------------------- |
+| `DRYADS_AI_INSTALL_METHOD=git\|npm`          | Install method                                |
+| `DRYADS_AI_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
+| `DRYADS_AI_BETA=0\|1`                        | Use beta if available                         |
+| `DRYADS_AI_GIT_DIR=<path>`                   | Checkout directory                            |
+| `DRYADS_AI_GIT_UPDATE=0\|1`                  | Toggle git updates                            |
+| `DRYADS_AI_NO_PROMPT=1`                      | Disable prompts                               |
+| `DRYADS_AI_NO_ONBOARD=1`                     | Skip onboarding                               |
+| `DRYADS_AI_DRY_RUN=1`                        | Dry run mode                                  |
+| `DRYADS_AI_VERBOSE=1`                        | Debug mode                                    |
+| `DRYADS_AI_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
+| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`           | Control sharp/libvips behavior (default: `1`) |
 
   </Accordion>
 </AccordionGroup>
@@ -168,7 +168,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 ## install-cli.sh
 
 <Info>
-Designed for environments where you want everything under a local prefix (default `~/.dmms-ai`) and no system Node dependency.
+Designed for environments where you want everything under a local prefix (default `~/.dryads-ai`) and no system Node dependency.
 </Info>
 
 ### Flow (install-cli.sh)
@@ -180,8 +180,8 @@ Designed for environments where you want everything under a local prefix (defaul
   <Step title="Ensure Git">
     If Git is missing, attempts install via apt/dnf/yum on Linux or Homebrew on macOS.
   </Step>
-  <Step title="Install DMMS AI under prefix">
-    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/dmms-ai`.
+  <Step title="Install Dryads AI under prefix">
+    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/dryads-ai`.
   </Step>
 </Steps>
 
@@ -190,22 +190,22 @@ Designed for environments where you want everything under a local prefix (defaul
 <Tabs>
   <Tab title="Default">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash
     ```
   </Tab>
   <Tab title="Custom prefix + version">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash -s -- --prefix /opt/dmms-ai --version latest
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash -s -- --prefix /opt/dryads-ai --version latest
     ```
   </Tab>
   <Tab title="Automation JSON output">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash -s -- --json --prefix /opt/dmms-ai
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash -s -- --json --prefix /opt/dryads-ai
     ```
   </Tab>
   <Tab title="Run onboarding">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash -s -- --onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash -s -- --onboard
     ```
   </Tab>
 </Tabs>
@@ -215,11 +215,11 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Flag                   | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
-| `--prefix <path>`      | Install prefix (default: `~/.dmms-ai`)                                          |
-| `--version <ver>`      | DMMS AI version or dist-tag (default: `latest`)                                 |
+| `--prefix <path>`      | Install prefix (default: `~/.dryads-ai`)                                        |
+| `--version <ver>`      | Dryads AI version or dist-tag (default: `latest`)                               |
 | `--node-version <ver>` | Node version (default: `22.22.0`)                                               |
 | `--json`               | Emit NDJSON events                                                              |
-| `--onboard`            | Run `dmms-ai onboard` after install                                             |
+| `--onboard`            | Run `dryads-ai onboard` after install                                           |
 | `--no-onboard`         | Skip onboarding (default)                                                       |
 | `--set-npm-prefix`     | On Linux, force npm prefix to `~/.npm-global` if current prefix is not writable |
 | `--help`               | Show usage (`-h`)                                                               |
@@ -228,15 +228,15 @@ Designed for environments where you want everything under a local prefix (defaul
 
   <Accordion title="Environment variables reference">
 
-| Variable                                   | Description                                                                       |
-| ------------------------------------------ | --------------------------------------------------------------------------------- |
-| `DMMS_AI_PREFIX=<path>`                    | Install prefix                                                                    |
-| `DMMS_AI_VERSION=<ver>`                    | DMMS AI version or dist-tag                                                       |
-| `DMMS_AI_NODE_VERSION=<ver>`               | Node version                                                                      |
-| `DMMS_AI_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
-| `DMMS_AI_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
-| `DMMS_AI_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
-| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`         | Control sharp/libvips behavior (default: `1`)                                     |
+| Variable                                     | Description                                                                       |
+| -------------------------------------------- | --------------------------------------------------------------------------------- |
+| `DRYADS_AI_PREFIX=<path>`                    | Install prefix                                                                    |
+| `DRYADS_AI_VERSION=<ver>`                    | Dryads AI version or dist-tag                                                     |
+| `DRYADS_AI_NODE_VERSION=<ver>`               | Node version                                                                      |
+| `DRYADS_AI_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
+| `DRYADS_AI_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
+| `DRYADS_AI_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
+| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`           | Control sharp/libvips behavior (default: `1`)                                     |
 
   </Accordion>
 </AccordionGroup>
@@ -254,12 +254,12 @@ Designed for environments where you want everything under a local prefix (defaul
   <Step title="Ensure Node.js 22+">
     If missing, attempts install via winget, then Chocolatey, then Scoop.
   </Step>
-  <Step title="Install DMMS AI">
+  <Step title="Install Dryads AI">
     - `npm` method (default): global npm install using selected `-Tag`
-    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\dmms-ai.cmd`
+    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\dryads-ai.cmd`
   </Step>
   <Step title="Post-install tasks">
-    Adds needed bin directory to user PATH when possible, then runs `dmms-ai doctor --non-interactive` on upgrades and git installs (best effort).
+    Adds needed bin directory to user PATH when possible, then runs `dryads-ai doctor --non-interactive` on upgrades and git installs (best effort).
   </Step>
 </Steps>
 
@@ -268,29 +268,29 @@ Designed for environments where you want everything under a local prefix (defaul
 <Tabs>
   <Tab title="Default">
     ```powershell
-    iwr -useb https://dmms-ai.com/install.ps1 | iex
+    iwr -useb https://dryads-ai.com/install.ps1 | iex
     ```
   </Tab>
   <Tab title="Git install">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -InstallMethod git
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -InstallMethod git
     ```
   </Tab>
   <Tab title="Custom git directory">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -InstallMethod git -GitDir "C:\dmms-ai"
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -InstallMethod git -GitDir "C:\dryads-ai"
     ```
   </Tab>
   <Tab title="Dry run">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -DryRun
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -DryRun
     ```
   </Tab>
   <Tab title="Debug trace">
     ```powershell
     # install.ps1 has no dedicated -Verbose flag yet.
     Set-PSDebug -Trace 1
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -NoOnboard
     Set-PSDebug -Trace 0
     ```
   </Tab>
@@ -299,26 +299,26 @@ Designed for environments where you want everything under a local prefix (defaul
 <AccordionGroup>
   <Accordion title="Flags reference">
 
-| Flag                      | Description                                           |
-| ------------------------- | ----------------------------------------------------- |
-| `-InstallMethod npm\|git` | Install method (default: `npm`)                       |
-| `-Tag <tag>`              | npm dist-tag (default: `latest`)                      |
-| `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\dmms-ai`) |
-| `-NoOnboard`              | Skip onboarding                                       |
-| `-NoGitUpdate`            | Skip `git pull`                                       |
-| `-DryRun`                 | Print actions only                                    |
+| Flag                      | Description                                             |
+| ------------------------- | ------------------------------------------------------- |
+| `-InstallMethod npm\|git` | Install method (default: `npm`)                         |
+| `-Tag <tag>`              | npm dist-tag (default: `latest`)                        |
+| `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\dryads-ai`) |
+| `-NoOnboard`              | Skip onboarding                                         |
+| `-NoGitUpdate`            | Skip `git pull`                                         |
+| `-DryRun`                 | Print actions only                                      |
 
   </Accordion>
 
   <Accordion title="Environment variables reference">
 
-| Variable                          | Description        |
-| --------------------------------- | ------------------ |
-| `DMMS_AI_INSTALL_METHOD=git\|npm` | Install method     |
-| `DMMS_AI_GIT_DIR=<path>`          | Checkout directory |
-| `DMMS_AI_NO_ONBOARD=1`            | Skip onboarding    |
-| `DMMS_AI_GIT_UPDATE=0`            | Disable git pull   |
-| `DMMS_AI_DRY_RUN=1`               | Dry run mode       |
+| Variable                            | Description        |
+| ----------------------------------- | ------------------ |
+| `DRYADS_AI_INSTALL_METHOD=git\|npm` | Install method     |
+| `DRYADS_AI_GIT_DIR=<path>`          | Checkout directory |
+| `DRYADS_AI_NO_ONBOARD=1`            | Skip onboarding    |
+| `DRYADS_AI_GIT_UPDATE=0`            | Disable git pull   |
+| `DRYADS_AI_DRY_RUN=1`               | Dry run mode       |
 
   </Accordion>
 </AccordionGroup>
@@ -336,23 +336,23 @@ Use non-interactive flags/env vars for predictable runs.
 <Tabs>
   <Tab title="install.sh (non-interactive npm)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash -s -- --no-prompt --no-onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash -s -- --no-prompt --no-onboard
     ```
   </Tab>
   <Tab title="install.sh (non-interactive git)">
     ```bash
-    DMMS_AI_INSTALL_METHOD=git DMMS_AI_NO_PROMPT=1 \
-      curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash
+    DRYADS_AI_INSTALL_METHOD=git DRYADS_AI_NO_PROMPT=1 \
+      curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash
     ```
   </Tab>
   <Tab title="install-cli.sh (JSON)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install-cli.sh | bash -s -- --json --prefix /opt/dmms-ai
+    curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install-cli.sh | bash -s -- --json --prefix /opt/dryads-ai
     ```
   </Tab>
   <Tab title="install.ps1 (skip onboarding)">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -NoOnboard
     ```
   </Tab>
 </Tabs>
@@ -374,7 +374,7 @@ Use non-interactive flags/env vars for predictable runs.
     The scripts default `SHARP_IGNORE_GLOBAL_LIBVIPS=1` to avoid sharp building against system libvips. To override:
 
     ```bash
-    SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL --proto '=https' --tlsv1.2 https://dmms-ai.com/install.sh | bash
+    SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL --proto '=https' --tlsv1.2 https://dryads-ai.com/install.sh | bash
     ```
 
   </Accordion>
@@ -383,7 +383,7 @@ Use non-interactive flags/env vars for predictable runs.
     Install Git for Windows, reopen PowerShell, rerun installer.
   </Accordion>
 
-  <Accordion title='Windows: "dmms-ai is not recognized"'>
+  <Accordion title='Windows: "dryads-ai is not recognized"'>
     Run `npm config get prefix`, append `\bin`, add that directory to user PATH, then reopen PowerShell.
   </Accordion>
 
@@ -393,13 +393,13 @@ Use non-interactive flags/env vars for predictable runs.
 
     ```powershell
     Set-PSDebug -Trace 1
-    & ([scriptblock]::Create((iwr -useb https://dmms-ai.com/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://dryads-ai.com/install.ps1))) -NoOnboard
     Set-PSDebug -Trace 0
     ```
 
   </Accordion>
 
-  <Accordion title="dmms-ai not found after install">
+  <Accordion title="dryads-ai not found after install">
     Usually a PATH issue. See [Node.js troubleshooting](/install/node#troubleshooting).
   </Accordion>
 </AccordionGroup>

@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { resolveDmmsAiPackageRoot } from "../infra/dmms-ai-root.js";
+import { resolveDryadsAiPackageRoot } from "../infra/dryads-ai-root.js";
 
-export async function resolveDmmsAiDocsPath(params: {
+export async function resolveDryadsAiDocsPath(params: {
   workspaceDir?: string;
   argv1?: string;
   cwd?: string;
@@ -16,7 +16,7 @@ export async function resolveDmmsAiDocsPath(params: {
     }
   }
 
-  const packageRoot = await resolveDmmsAiPackageRoot({
+  const packageRoot = await resolveDryadsAiPackageRoot({
     cwd: params.cwd,
     argv1: params.argv1,
     moduleUrl: params.moduleUrl,

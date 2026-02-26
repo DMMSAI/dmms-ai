@@ -20,7 +20,7 @@ vi.mock("../infra/env.js", () => ({
 }));
 
 vi.mock("../infra/path-env.js", () => ({
-  ensureDmmsAiCliOnPath: ensurePathMock,
+  ensureDryadsAiCliOnPath: ensurePathMock,
 }));
 
 vi.mock("../infra/runtime-guard.js", () => ({
@@ -40,9 +40,9 @@ describe("runCli exit behavior", () => {
       throw new Error(`unexpected process.exit(${String(code)})`);
     }) as typeof process.exit);
 
-    await runCli(["node", "dmms-ai", "status"]);
+    await runCli(["node", "dryads-ai", "status"]);
 
-    expect(tryRouteCliMock).toHaveBeenCalledWith(["node", "dmms-ai", "status"]);
+    expect(tryRouteCliMock).toHaveBeenCalledWith(["node", "dryads-ai", "status"]);
     expect(exitSpy).not.toHaveBeenCalled();
     exitSpy.mockRestore();
   });

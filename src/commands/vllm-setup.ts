@@ -1,5 +1,5 @@
 import { upsertAuthProfileWithLock } from "../agents/auth-profiles.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
 export const VLLM_DEFAULT_BASE_URL = "http://127.0.0.1:8000/v1";
@@ -13,10 +13,10 @@ export const VLLM_DEFAULT_COST = {
 };
 
 export async function promptAndConfigureVllm(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   agentDir?: string;
-}): Promise<{ config: DmmsAiConfig; modelId: string; modelRef: string }> {
+}): Promise<{ config: DryadsAiConfig; modelId: string; modelRef: string }> {
   const baseUrlRaw = await params.prompter.text({
     message: "vLLM base URL",
     initialValue: VLLM_DEFAULT_BASE_URL,
@@ -47,7 +47,7 @@ export async function promptAndConfigureVllm(params: {
     agentDir: params.agentDir,
   });
 
-  const nextConfig: DmmsAiConfig = {
+  const nextConfig: DryadsAiConfig = {
     ...params.cfg,
     models: {
       ...params.cfg.models,

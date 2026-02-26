@@ -7,7 +7,7 @@ import { loadHookEntriesFromDir } from "./workspace.js";
 
 describe("hooks workspace", () => {
   it("ignores package.json hook paths that traverse outside package directory", () => {
-    const root = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-hooks-workspace-"));
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-hooks-workspace-"));
     const hooksRoot = path.join(root, "hooks");
     fs.mkdirSync(hooksRoot, { recursive: true });
 
@@ -33,12 +33,12 @@ describe("hooks workspace", () => {
       ),
     );
 
-    const entries = loadHookEntriesFromDir({ dir: hooksRoot, source: "dmms-ai-workspace" });
+    const entries = loadHookEntriesFromDir({ dir: hooksRoot, source: "dryads-ai-workspace" });
     expect(entries.some((e) => e.hook.name === "outside")).toBe(false);
   });
 
   it("accepts package.json hook paths within package directory", () => {
-    const root = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-hooks-workspace-ok-"));
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-hooks-workspace-ok-"));
     const hooksRoot = path.join(root, "hooks");
     fs.mkdirSync(hooksRoot, { recursive: true });
 
@@ -63,7 +63,7 @@ describe("hooks workspace", () => {
       ),
     );
 
-    const entries = loadHookEntriesFromDir({ dir: hooksRoot, source: "dmms-ai-workspace" });
+    const entries = loadHookEntriesFromDir({ dir: hooksRoot, source: "dryads-ai-workspace" });
     expect(entries.some((e) => e.hook.name === "nested")).toBe(true);
   });
 });

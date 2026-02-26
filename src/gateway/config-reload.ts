@@ -1,6 +1,6 @@
 import chokidar from "chokidar";
 import { type ChannelId, listChannelPlugins } from "../channels/plugins/index.js";
-import type { DmmsAiConfig, ConfigFileSnapshot, GatewayReloadMode } from "../config/config.js";
+import type { DryadsAiConfig, ConfigFileSnapshot, GatewayReloadMode } from "../config/config.js";
 import { getActivePluginRegistry } from "../plugins/runtime.js";
 import { isPlainObject } from "../utils.js";
 
@@ -157,7 +157,7 @@ export function diffConfigPaths(prev: unknown, next: unknown, prefix = ""): stri
   return [prefix || "<root>"];
 }
 
-export function resolveGatewayReloadSettings(cfg: DmmsAiConfig): GatewayReloadSettings {
+export function resolveGatewayReloadSettings(cfg: DryadsAiConfig): GatewayReloadSettings {
   const rawMode = cfg.gateway?.reload?.mode;
   const mode =
     rawMode === "off" || rawMode === "restart" || rawMode === "hot" || rawMode === "hybrid"
@@ -247,10 +247,10 @@ export type GatewayConfigReloader = {
 };
 
 export function startGatewayConfigReloader(opts: {
-  initialConfig: DmmsAiConfig;
+  initialConfig: DryadsAiConfig;
   readSnapshot: () => Promise<ConfigFileSnapshot>;
-  onHotReload: (plan: GatewayReloadPlan, nextConfig: DmmsAiConfig) => Promise<void>;
-  onRestart: (plan: GatewayReloadPlan, nextConfig: DmmsAiConfig) => void;
+  onHotReload: (plan: GatewayReloadPlan, nextConfig: DryadsAiConfig) => Promise<void>;
+  onRestart: (plan: GatewayReloadPlan, nextConfig: DryadsAiConfig) => void;
   log: {
     info: (msg: string) => void;
     warn: (msg: string) => void;

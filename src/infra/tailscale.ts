@@ -150,7 +150,7 @@ export async function getTailnetHostname(exec: typeof runExec = runExec, detecte
 let cachedTailscaleBinary: string | null = null;
 
 export async function getTailscaleBinary(): Promise<string> {
-  const forcedBinary = process.env.DMMS_AI_TEST_TAILSCALE_BINARY?.trim();
+  const forcedBinary = process.env.DRYADS_AI_TEST_TAILSCALE_BINARY?.trim();
   if (forcedBinary) {
     cachedTailscaleBinary = forcedBinary;
     return forcedBinary;
@@ -372,7 +372,7 @@ export async function ensureFunnel(
     runtime.error("Failed to enable Tailscale Funnel. Is it allowed on your tailnet?");
     runtime.error(
       info(
-        `Tip: Funnel is optional for DMMS AI. You can keep running the web gateway without it: \`${formatCliCommand("dmms-ai gateway")}\``,
+        `Tip: Funnel is optional for Dryads AI. You can keep running the web gateway without it: \`${formatCliCommand("dryads-ai gateway")}\``,
       ),
     );
     if (shouldLogVerbose()) {

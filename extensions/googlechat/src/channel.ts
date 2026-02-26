@@ -16,9 +16,9 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ChannelStatusIssue,
-  type DmmsAiConfig,
-} from "dmms-ai/plugin-sdk";
-import { GoogleChatConfigSchema } from "dmms-ai/plugin-sdk";
+  type DryadsAiConfig,
+} from "dryads-ai/plugin-sdk";
+import { GoogleChatConfigSchema } from "dryads-ai/plugin-sdk";
 import {
   listGoogleChatAccountIds,
   resolveDefaultGoogleChatAccountId,
@@ -348,7 +348,7 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
               ...configPatch,
             },
           },
-        } as DmmsAiConfig;
+        } as DryadsAiConfig;
       }
       return {
         ...next,
@@ -367,7 +367,7 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
             },
           },
         },
-      } as DmmsAiConfig;
+      } as DryadsAiConfig;
     },
   },
   outbound: {

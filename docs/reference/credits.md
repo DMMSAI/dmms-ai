@@ -7,7 +7,7 @@ title: "Credits"
 
 ## The name
 
-DMMS AI = CLAW + TARDIS, because every space lobster needs a time and space machine.
+Dryads AI = CLAW + TARDIS, because every space lobster needs a time and space machine.
 
 ## Credits
 

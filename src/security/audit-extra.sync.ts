@@ -13,7 +13,7 @@ import { getBlockedBindReason } from "../agents/sandbox/validate-sandbox-securit
 import { resolveToolProfilePolicy } from "../agents/tool-policy.js";
 import { resolveBrowserConfig } from "../browser/config.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { AgentToolsConfig } from "../config/types.tools.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { resolveNodeCommandAllowlist } from "../gateway/node-command-policy.js";
@@ -34,7 +34,7 @@ const SMALL_MODEL_PARAM_B_MAX = 300;
 // Helpers
 // --------------------------------------------------------------------------
 
-function summarizeGroupPolicy(cfg: DmmsAiConfig): {
+function summarizeGroupPolicy(cfg: DryadsAiConfig): {
   open: number;
   allowlist: number;
   other: number;
@@ -79,7 +79,7 @@ function looksLikeEnvRef(value: string): boolean {
   return v.startsWith("${") && v.endsWith("}");
 }
 
-function isGatewayRemotelyExposed(cfg: DmmsAiConfig): boolean {
+function isGatewayRemotelyExposed(cfg: DryadsAiConfig): boolean {
   const bind = typeof cfg.gateway?.bind === "string" ? cfg.gateway.bind : "loopback";
   if (bind !== "loopback") {
     return true;
@@ -101,7 +101,7 @@ function addModel(models: ModelRef[], raw: unknown, source: string) {
   models.push({ id, source });
 }
 
-function collectModels(cfg: DmmsAiConfig): ModelRef[] {
+function collectModels(cfg: DryadsAiConfig): ModelRef[] {
   const out: ModelRef[] = [];
   addModel(out, cfg.agents?.defaults?.model?.primary, "agents.defaults.model.primary");
   for (const f of cfg.agents?.defaults?.model?.fallbacks ?? []) {
@@ -182,8 +182,8 @@ function normalizeNodeCommand(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function listKnownNodeCommands(cfg: DmmsAiConfig): Set<string> {
-  const baseCfg: DmmsAiConfig = {
+function listKnownNodeCommands(cfg: DryadsAiConfig): Set<string> {
+  const baseCfg: DryadsAiConfig = {
     ...cfg,
     gateway: {
       ...cfg.gateway,
@@ -225,7 +225,7 @@ function looksLikeNodeCommandPattern(value: string): boolean {
 }
 
 function resolveToolPolicies(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   agentTools?: AgentToolsConfig;
   sandboxMode?: "off" | "non-main" | "all";
   agentId?: string | null;
@@ -255,7 +255,7 @@ function resolveToolPolicies(params: {
   return policies;
 }
 
-function hasWebSearchKey(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
+function hasWebSearchKey(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): boolean {
   const search = cfg.tools?.web?.search;
   return Boolean(
     search?.apiKey ||
@@ -266,7 +266,7 @@ function hasWebSearchKey(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
   );
 }
 
-function isWebSearchEnabled(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
+function isWebSearchEnabled(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): boolean {
   const enabled = cfg.tools?.web?.search?.enabled;
   if (enabled === false) {
     return false;
@@ -277,7 +277,7 @@ function isWebSearchEnabled(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean 
   return hasWebSearchKey(cfg, env);
 }
 
-function isWebFetchEnabled(cfg: DmmsAiConfig): boolean {
+function isWebFetchEnabled(cfg: DryadsAiConfig): boolean {
   const enabled = cfg.tools?.web?.fetch?.enabled;
   if (enabled === false) {
     return false;
@@ -285,7 +285,7 @@ function isWebFetchEnabled(cfg: DmmsAiConfig): boolean {
   return true;
 }
 
-function isBrowserEnabled(cfg: DmmsAiConfig): boolean {
+function isBrowserEnabled(cfg: DryadsAiConfig): boolean {
   try {
     return resolveBrowserConfig(cfg.browser, cfg).enabled;
   } catch {
@@ -293,7 +293,7 @@ function isBrowserEnabled(cfg: DmmsAiConfig): boolean {
   }
 }
 
-function listGroupPolicyOpen(cfg: DmmsAiConfig): string[] {
+function listGroupPolicyOpen(cfg: DryadsAiConfig): string[] {
   const out: string[] = [];
   const channels = cfg.channels as Record<string, unknown> | undefined;
   if (!channels || typeof channels !== "object") {
@@ -327,7 +327,7 @@ function listGroupPolicyOpen(cfg: DmmsAiConfig): string[] {
 // Exported collectors
 // --------------------------------------------------------------------------
 
-export function collectAttackSurfaceSummaryFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectAttackSurfaceSummaryFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const group = summarizeGroupPolicy(cfg);
   const elevated = cfg.tools?.elevated?.enabled !== false;
   const webhooksEnabled = cfg.hooks?.enabled === true;
@@ -366,13 +366,13 @@ export function collectSyncedFolderFindings(params: {
       severity: "warn",
       title: "State/config path looks like a synced folder",
       detail: `stateDir=${params.stateDir}, configPath=${params.configPath}. Synced folders (iCloud/Dropbox/OneDrive/Google Drive) can leak tokens and transcripts onto other devices.`,
-      remediation: `Keep DMMS_AI_STATE_DIR on a local-only volume and re-run "${formatCliCommand("dmms-ai security audit --fix")}".`,
+      remediation: `Keep DRYADS_AI_STATE_DIR on a local-only volume and re-run "${formatCliCommand("dryads-ai security audit --fix")}".`,
     });
   }
   return findings;
 }
 
-export function collectSecretsInConfigFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectSecretsInConfigFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const password =
     typeof cfg.gateway?.auth?.password === "string" ? cfg.gateway.auth.password.trim() : "";
@@ -384,7 +384,7 @@ export function collectSecretsInConfigFindings(cfg: DmmsAiConfig): SecurityAudit
       detail:
         "gateway.auth.password is set in the config file; prefer environment variables for secrets when possible.",
       remediation:
-        "Prefer DMMS_AI_GATEWAY_PASSWORD (env) and remove gateway.auth.password from disk.",
+        "Prefer DRYADS_AI_GATEWAY_PASSWORD (env) and remove gateway.auth.password from disk.",
     });
   }
 
@@ -403,7 +403,7 @@ export function collectSecretsInConfigFindings(cfg: DmmsAiConfig): SecurityAudit
 }
 
 export function collectHooksHardeningFindings(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
@@ -426,17 +426,17 @@ export function collectHooksHardeningFindings(
     tailscaleMode: cfg.gateway?.tailscale?.mode ?? "off",
     env,
   });
-  const dmmsAiGatewayToken =
-    typeof env.DMMS_AI_GATEWAY_TOKEN === "string" && env.DMMS_AI_GATEWAY_TOKEN.trim()
-      ? env.DMMS_AI_GATEWAY_TOKEN.trim()
+  const dryadsAiGatewayToken =
+    typeof env.DRYADS_AI_GATEWAY_TOKEN === "string" && env.DRYADS_AI_GATEWAY_TOKEN.trim()
+      ? env.DRYADS_AI_GATEWAY_TOKEN.trim()
       : null;
   const gatewayToken =
     gatewayAuth.mode === "token" &&
     typeof gatewayAuth.token === "string" &&
     gatewayAuth.token.trim()
       ? gatewayAuth.token.trim()
-      : dmmsAiGatewayToken
-        ? dmmsAiGatewayToken
+      : dryadsAiGatewayToken
+        ? dryadsAiGatewayToken
         : null;
   if (token && gatewayToken && token === gatewayToken) {
     findings.push({
@@ -509,7 +509,7 @@ export function collectHooksHardeningFindings(
 }
 
 export function collectGatewayHttpSessionKeyOverrideFindings(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
 ): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const chatCompletionsEnabled = cfg.gateway?.http?.endpoints?.chatCompletions?.enabled === true;
@@ -528,14 +528,14 @@ export function collectGatewayHttpSessionKeyOverrideFindings(
     severity: "info",
     title: "HTTP API session-key override is enabled",
     detail:
-      `${enabledEndpoints.join(", ")} accept x-dmms-ai-session-key for per-request session routing. ` +
+      `${enabledEndpoints.join(", ")} accept x-dryads-ai-session-key for per-request session routing. ` +
       "Treat API credential holders as trusted principals.",
   });
 
   return findings;
 }
 
-export function collectSandboxDockerNoopFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectSandboxDockerNoopFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const configuredPaths: string[] = [];
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents.list : [];
@@ -585,7 +585,7 @@ export function collectSandboxDockerNoopFindings(cfg: DmmsAiConfig): SecurityAud
   return findings;
 }
 
-export function collectSandboxDangerousConfigFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectSandboxDangerousConfigFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents.list : [];
 
@@ -683,7 +683,7 @@ export function collectSandboxDangerousConfigFindings(cfg: DmmsAiConfig): Securi
   return findings;
 }
 
-export function collectNodeDenyCommandPatternFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectNodeDenyCommandPatternFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const denyListRaw = cfg.gateway?.nodes?.denyCommands;
   if (!Array.isArray(denyListRaw) || denyListRaw.length === 0) {
@@ -732,7 +732,7 @@ export function collectNodeDenyCommandPatternFindings(cfg: DmmsAiConfig): Securi
   return findings;
 }
 
-export function collectMinimalProfileOverrideFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectMinimalProfileOverrideFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   if (cfg.tools?.profile !== "minimal") {
     return findings;
@@ -768,7 +768,7 @@ export function collectMinimalProfileOverrideFindings(cfg: DmmsAiConfig): Securi
   return findings;
 }
 
-export function collectModelHygieneFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectModelHygieneFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const models = collectModels(cfg);
   if (models.length === 0) {
@@ -854,7 +854,7 @@ export function collectModelHygieneFindings(cfg: DmmsAiConfig): SecurityAuditFin
 }
 
 export function collectSmallModelRiskFindings(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   env: NodeJS.ProcessEnv;
 }): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
@@ -948,7 +948,7 @@ export function collectSmallModelRiskFindings(params: {
   return findings;
 }
 
-export function collectExposureMatrixFindings(cfg: DmmsAiConfig): SecurityAuditFinding[] {
+export function collectExposureMatrixFindings(cfg: DryadsAiConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const openGroups = listGroupPolicyOpen(cfg);
   if (openGroups.length === 0) {

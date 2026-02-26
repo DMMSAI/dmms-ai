@@ -10,7 +10,7 @@ import {
 } from "../channels/registry.js";
 import { isRecord } from "../utils.js";
 import { hasAnyWhatsAppAuth } from "../web/accounts.js";
-import type { DmmsAiConfig } from "./config.js";
+import type { DryadsAiConfig } from "./config.js";
 import { ensurePluginAllowlisted } from "./plugins-allowlist.js";
 
 type PluginEnableChange = {
@@ -19,7 +19,7 @@ type PluginEnableChange = {
 };
 
 export type PluginAutoEnableResult = {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   changes: string[];
 };
 
@@ -64,7 +64,7 @@ function accountsHaveKeys(value: unknown, keys: string[]): boolean {
 }
 
 function resolveChannelConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   channelId: string,
 ): Record<string, unknown> | null {
   const channels = cfg.channels as Record<string, unknown> | undefined;
@@ -72,7 +72,7 @@ function resolveChannelConfig(
   return isRecord(entry) ? entry : null;
 }
 
-function isTelegramConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
+function isTelegramConfigured(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): boolean {
   if (hasNonEmptyString(env.TELEGRAM_BOT_TOKEN)) {
     return true;
   }
@@ -89,7 +89,7 @@ function isTelegramConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolea
   return recordHasKeys(entry);
 }
 
-function isDiscordConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
+function isDiscordConfigured(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): boolean {
   if (hasNonEmptyString(env.DISCORD_BOT_TOKEN)) {
     return true;
   }
@@ -106,7 +106,7 @@ function isDiscordConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean
   return recordHasKeys(entry);
 }
 
-function isIrcConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
+function isIrcConfigured(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): boolean {
   if (hasNonEmptyString(env.IRC_HOST) && hasNonEmptyString(env.IRC_NICK)) {
     return true;
   }
@@ -123,7 +123,7 @@ function isIrcConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
   return recordHasKeys(entry);
 }
 
-function isSlackConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
+function isSlackConfigured(cfg: DryadsAiConfig, env: NodeJS.ProcessEnv): boolean {
   if (
     hasNonEmptyString(env.SLACK_BOT_TOKEN) ||
     hasNonEmptyString(env.SLACK_APP_TOKEN) ||
@@ -148,7 +148,7 @@ function isSlackConfigured(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): boolean {
   return recordHasKeys(entry);
 }
 
-function isSignalConfigured(cfg: DmmsAiConfig): boolean {
+function isSignalConfigured(cfg: DryadsAiConfig): boolean {
   const entry = resolveChannelConfig(cfg, "signal");
   if (!entry) {
     return false;
@@ -168,7 +168,7 @@ function isSignalConfigured(cfg: DmmsAiConfig): boolean {
   return recordHasKeys(entry);
 }
 
-function isIMessageConfigured(cfg: DmmsAiConfig): boolean {
+function isIMessageConfigured(cfg: DryadsAiConfig): boolean {
   const entry = resolveChannelConfig(cfg, "imessage");
   if (!entry) {
     return false;
@@ -179,7 +179,7 @@ function isIMessageConfigured(cfg: DmmsAiConfig): boolean {
   return recordHasKeys(entry);
 }
 
-function isWhatsAppConfigured(cfg: DmmsAiConfig): boolean {
+function isWhatsAppConfigured(cfg: DryadsAiConfig): boolean {
   if (hasAnyWhatsAppAuth(cfg)) {
     return true;
   }
@@ -190,13 +190,13 @@ function isWhatsAppConfigured(cfg: DmmsAiConfig): boolean {
   return recordHasKeys(entry);
 }
 
-function isGenericChannelConfigured(cfg: DmmsAiConfig, channelId: string): boolean {
+function isGenericChannelConfigured(cfg: DryadsAiConfig, channelId: string): boolean {
   const entry = resolveChannelConfig(cfg, channelId);
   return recordHasKeys(entry);
 }
 
 export function isChannelConfigured(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   channelId: string,
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
@@ -220,7 +220,7 @@ export function isChannelConfigured(
   }
 }
 
-function collectModelRefs(cfg: DmmsAiConfig): string[] {
+function collectModelRefs(cfg: DryadsAiConfig): string[] {
   const refs: string[] = [];
   const pushModelRef = (value: unknown) => {
     if (typeof value === "string" && value.trim()) {
@@ -274,7 +274,7 @@ function extractProviderFromModelRef(value: string): string | null {
   return normalizeProviderId(trimmed.slice(0, slash));
 }
 
-function isProviderConfigured(cfg: DmmsAiConfig, providerId: string): boolean {
+function isProviderConfigured(cfg: DryadsAiConfig, providerId: string): boolean {
   const normalized = normalizeProviderId(providerId);
 
   const profiles = cfg.auth?.profiles;
@@ -310,7 +310,10 @@ function isProviderConfigured(cfg: DmmsAiConfig, providerId: string): boolean {
   return false;
 }
 
-function resolveConfiguredPlugins(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): PluginEnableChange[] {
+function resolveConfiguredPlugins(
+  cfg: DryadsAiConfig,
+  env: NodeJS.ProcessEnv,
+): PluginEnableChange[] {
   const changes: PluginEnableChange[] = [];
   const channelIds = new Set(CHANNEL_PLUGIN_IDS);
   const configuredChannels = cfg.channels as Record<string, unknown> | undefined;
@@ -344,12 +347,12 @@ function resolveConfiguredPlugins(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv): Pl
   return changes;
 }
 
-function isPluginExplicitlyDisabled(cfg: DmmsAiConfig, pluginId: string): boolean {
+function isPluginExplicitlyDisabled(cfg: DryadsAiConfig, pluginId: string): boolean {
   const entry = cfg.plugins?.entries?.[pluginId];
   return entry?.enabled === false;
 }
 
-function isPluginDenied(cfg: DmmsAiConfig, pluginId: string): boolean {
+function isPluginDenied(cfg: DryadsAiConfig, pluginId: string): boolean {
   const deny = cfg.plugins?.deny;
   return Array.isArray(deny) && deny.includes(pluginId);
 }
@@ -364,7 +367,7 @@ function resolvePreferredOverIds(pluginId: string): string[] {
 }
 
 function shouldSkipPreferredPluginAutoEnable(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   entry: PluginEnableChange,
   configured: PluginEnableChange[],
 ): boolean {
@@ -386,7 +389,7 @@ function shouldSkipPreferredPluginAutoEnable(
   return false;
 }
 
-function registerPluginEntry(cfg: DmmsAiConfig, pluginId: string): DmmsAiConfig {
+function registerPluginEntry(cfg: DryadsAiConfig, pluginId: string): DryadsAiConfig {
   const entries = {
     ...cfg.plugins?.entries,
     [pluginId]: {
@@ -414,7 +417,7 @@ function formatAutoEnableChange(entry: PluginEnableChange): string {
 }
 
 export function applyPluginAutoEnable(params: {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   env?: NodeJS.ProcessEnv;
 }): PluginAutoEnableResult {
   const env = params.env ?? process.env;

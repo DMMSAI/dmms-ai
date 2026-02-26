@@ -1,5 +1,5 @@
-# Tlon (DMMS AI plugin)
+# Tlon (Dryads AI plugin)
 
-Tlon/Urbit channel plugin for DMMS AI. Supports DMs, group mentions, and thread replies.
+Tlon/Urbit channel plugin for Dryads AI. Supports DMs, group mentions, and thread replies.
 
-Docs: https://docs.dmms-ai.com/channels/tlon
+Docs: https://docs.dryads-ai.com/channels/tlon

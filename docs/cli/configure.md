@@ -1,19 +1,19 @@
 ---
-summary: "CLI reference for `dmms-ai configure` (interactive configuration prompts)"
+summary: "CLI reference for `dryads-ai configure` (interactive configuration prompts)"
 read_when:
   - You want to tweak credentials, devices, or agent defaults interactively
 title: "configure"
 ---
 
-# `dmms-ai configure`
+# `dryads-ai configure`
 
 Interactive prompt to set up credentials, devices, and agent defaults.
 
 Note: The **Model** section now includes a multi-select for the
 `agents.defaults.models` allowlist (what shows up in `/model` and the model picker).
 
-Tip: `dmms-ai config` without a subcommand opens the same wizard. Use
-`dmms-ai config get|set|unset` for non-interactive edits.
+Tip: `dryads-ai config` without a subcommand opens the same wizard. Use
+`dryads-ai config get|set|unset` for non-interactive edits.
 
 Related:
 
@@ -28,6 +28,6 @@ Notes:
 ## Examples
 
 ```bash
-dmms-ai configure
-dmms-ai configure --section models --section channels
+dryads-ai configure
+dryads-ai configure --section models --section channels
 ```

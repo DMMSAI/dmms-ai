@@ -74,7 +74,7 @@ describe("auditGatewayServiceConfig", () => {
         programArguments: ["/usr/bin/node", "gateway"],
         environment: {
           PATH: "/usr/local/bin:/usr/bin:/bin",
-          DMMS_AI_GATEWAY_TOKEN: "old-token",
+          DRYADS_AI_GATEWAY_TOKEN: "old-token",
         },
       },
     });
@@ -92,7 +92,7 @@ describe("auditGatewayServiceConfig", () => {
         programArguments: ["/usr/bin/node", "gateway"],
         environment: {
           PATH: "/usr/local/bin:/usr/bin:/bin",
-          DMMS_AI_GATEWAY_TOKEN: "new-token",
+          DRYADS_AI_GATEWAY_TOKEN: "new-token",
         },
       },
     });

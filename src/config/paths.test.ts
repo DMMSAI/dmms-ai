@@ -12,10 +12,10 @@ import {
 } from "./paths.js";
 
 describe("oauth paths", () => {
-  it("prefers DMMS_AI_OAUTH_DIR over DMMS_AI_STATE_DIR", () => {
+  it("prefers DRYADS_AI_OAUTH_DIR over DRYADS_AI_STATE_DIR", () => {
     const env = {
-      DMMS_AI_OAUTH_DIR: "/custom/oauth",
-      DMMS_AI_STATE_DIR: "/custom/state",
+      DRYADS_AI_OAUTH_DIR: "/custom/oauth",
+      DRYADS_AI_STATE_DIR: "/custom/state",
     } as NodeJS.ProcessEnv;
 
     expect(resolveOAuthDir(env, "/custom/state")).toBe(path.resolve("/custom/oauth"));
@@ -24,9 +24,9 @@ describe("oauth paths", () => {
     );
   });
 
-  it("derives oauth path from DMMS_AI_STATE_DIR when unset", () => {
+  it("derives oauth path from DRYADS_AI_STATE_DIR when unset", () => {
     const env = {
-      DMMS_AI_STATE_DIR: "/custom/state",
+      DRYADS_AI_STATE_DIR: "/custom/state",
     } as NodeJS.ProcessEnv;
 
     expect(resolveOAuthDir(env, "/custom/state")).toBe(path.join("/custom/state", "credentials"));
@@ -37,37 +37,37 @@ describe("oauth paths", () => {
 });
 
 describe("state + config path candidates", () => {
-  it("uses DMMS_AI_STATE_DIR when set", () => {
+  it("uses DRYADS_AI_STATE_DIR when set", () => {
     const env = {
-      DMMS_AI_STATE_DIR: "/new/state",
+      DRYADS_AI_STATE_DIR: "/new/state",
     } as NodeJS.ProcessEnv;
 
     expect(resolveStateDir(env, () => "/home/test")).toBe(path.resolve("/new/state"));
   });
 
-  it("uses DMMS_AI_HOME for default state/config locations", () => {
+  it("uses DRYADS_AI_HOME for default state/config locations", () => {
     const env = {
-      DMMS_AI_HOME: "/srv/dmms-ai-home",
+      DRYADS_AI_HOME: "/srv/dryads-ai-home",
     } as NodeJS.ProcessEnv;
 
-    const resolvedHome = path.resolve("/srv/dmms-ai-home");
-    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".dmms-ai"));
+    const resolvedHome = path.resolve("/srv/dryads-ai-home");
+    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".dryads-ai"));
 
     const candidates = resolveDefaultConfigCandidates(env);
-    expect(candidates[0]).toBe(path.join(resolvedHome, ".dmms-ai", "dmms-ai.json"));
+    expect(candidates[0]).toBe(path.join(resolvedHome, ".dryads-ai", "dryads-ai.json"));
   });
 
-  it("prefers DMMS_AI_HOME over HOME for default state/config locations", () => {
+  it("prefers DRYADS_AI_HOME over HOME for default state/config locations", () => {
     const env = {
-      DMMS_AI_HOME: "/srv/dmms-ai-home",
+      DRYADS_AI_HOME: "/srv/dryads-ai-home",
       HOME: "/home/other",
     } as NodeJS.ProcessEnv;
 
-    const resolvedHome = path.resolve("/srv/dmms-ai-home");
-    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".dmms-ai"));
+    const resolvedHome = path.resolve("/srv/dryads-ai-home");
+    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".dryads-ai"));
 
     const candidates = resolveDefaultConfigCandidates(env);
-    expect(candidates[0]).toBe(path.join(resolvedHome, ".dmms-ai", "dmms-ai.json"));
+    expect(candidates[0]).toBe(path.join(resolvedHome, ".dryads-ai", "dryads-ai.json"));
   });
 
   it("orders default config candidates in a stable order", () => {
@@ -75,19 +75,19 @@ describe("state + config path candidates", () => {
     const resolvedHome = path.resolve(home);
     const candidates = resolveDefaultConfigCandidates({} as NodeJS.ProcessEnv, () => home);
     const expected = [
-      path.join(resolvedHome, ".dmms-ai", "dmms-ai.json"),
-      path.join(resolvedHome, ".dmms-ai", "clawdbot.json"),
-      path.join(resolvedHome, ".dmms-ai", "moldbot.json"),
-      path.join(resolvedHome, ".dmms-ai", "moltbot.json"),
-      path.join(resolvedHome, ".clawdbot", "dmms-ai.json"),
+      path.join(resolvedHome, ".dryads-ai", "dryads-ai.json"),
+      path.join(resolvedHome, ".dryads-ai", "clawdbot.json"),
+      path.join(resolvedHome, ".dryads-ai", "moldbot.json"),
+      path.join(resolvedHome, ".dryads-ai", "moltbot.json"),
+      path.join(resolvedHome, ".clawdbot", "dryads-ai.json"),
       path.join(resolvedHome, ".clawdbot", "clawdbot.json"),
       path.join(resolvedHome, ".clawdbot", "moldbot.json"),
       path.join(resolvedHome, ".clawdbot", "moltbot.json"),
-      path.join(resolvedHome, ".moldbot", "dmms-ai.json"),
+      path.join(resolvedHome, ".moldbot", "dryads-ai.json"),
       path.join(resolvedHome, ".moldbot", "clawdbot.json"),
       path.join(resolvedHome, ".moldbot", "moldbot.json"),
       path.join(resolvedHome, ".moldbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "dmms-ai.json"),
+      path.join(resolvedHome, ".moltbot", "dryads-ai.json"),
       path.join(resolvedHome, ".moltbot", "clawdbot.json"),
       path.join(resolvedHome, ".moltbot", "moldbot.json"),
       path.join(resolvedHome, ".moltbot", "moltbot.json"),
@@ -95,10 +95,10 @@ describe("state + config path candidates", () => {
     expect(candidates).toEqual(expected);
   });
 
-  it("prefers ~/.dmms-ai when it exists and legacy dir is missing", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-state-"));
+  it("prefers ~/.dryads-ai when it exists and legacy dir is missing", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-state-"));
     try {
-      const newDir = path.join(root, ".dmms-ai");
+      const newDir = path.join(root, ".dryads-ai");
       await fs.mkdir(newDir, { recursive: true });
       const resolved = resolveStateDir({} as NodeJS.ProcessEnv, () => root);
       expect(resolved).toBe(newDir);
@@ -108,11 +108,11 @@ describe("state + config path candidates", () => {
   });
 
   it("CONFIG_PATH prefers existing config when present", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-config-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-config-"));
     try {
-      const legacyDir = path.join(root, ".dmms-ai");
+      const legacyDir = path.join(root, ".dryads-ai");
       await fs.mkdir(legacyDir, { recursive: true });
-      const legacyPath = path.join(legacyDir, "dmms-ai.json");
+      const legacyPath = path.join(legacyDir, "dryads-ai.json");
       await fs.writeFile(legacyPath, "{}", "utf-8");
 
       const resolved = resolveConfigPathCandidate({} as NodeJS.ProcessEnv, () => root);
@@ -123,17 +123,17 @@ describe("state + config path candidates", () => {
   });
 
   it("respects state dir overrides when config is missing", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-config-override-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-config-override-"));
     try {
-      const legacyDir = path.join(root, ".dmms-ai");
+      const legacyDir = path.join(root, ".dryads-ai");
       await fs.mkdir(legacyDir, { recursive: true });
-      const legacyConfig = path.join(legacyDir, "dmms-ai.json");
+      const legacyConfig = path.join(legacyDir, "dryads-ai.json");
       await fs.writeFile(legacyConfig, "{}", "utf-8");
 
       const overrideDir = path.join(root, "override");
-      const env = { DMMS_AI_STATE_DIR: overrideDir } as NodeJS.ProcessEnv;
+      const env = { DRYADS_AI_STATE_DIR: overrideDir } as NodeJS.ProcessEnv;
       const resolved = resolveConfigPath(env, overrideDir, () => root);
-      expect(resolved).toBe(path.join(overrideDir, "dmms-ai.json"));
+      expect(resolved).toBe(path.join(overrideDir, "dryads-ai.json"));
     } finally {
       await fs.rm(root, { recursive: true, force: true });
     }

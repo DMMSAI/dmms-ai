@@ -19,11 +19,11 @@ vi.mock("./trash.js", () => ({
 }));
 
 vi.mock("./chrome.js", () => ({
-  resolveDmmsAiUserDataDir: vi.fn(() => "/tmp/dmms-ai-test/dmms-ai/user-data"),
+  resolveDryadsAiUserDataDir: vi.fn(() => "/tmp/dryads-ai-test/dryads-ai/user-data"),
 }));
 
 import { loadConfig, writeConfigFile } from "../config/config.js";
-import { resolveDmmsAiUserDataDir } from "./chrome.js";
+import { resolveDryadsAiUserDataDir } from "./chrome.js";
 import { movePathToTrash } from "./trash.js";
 
 function createCtx(resolved: BrowserServerState["resolved"]) {
@@ -99,9 +99,9 @@ describe("BrowserProfilesService", () => {
 
     vi.mocked(loadConfig).mockReturnValue({
       browser: {
-        defaultProfile: "dmms-ai",
+        defaultProfile: "dryads-ai",
         profiles: {
-          "dmms-ai": { cdpPort: 18800, color: "#FF4500" },
+          "dryads-ai": { cdpPort: 18800, color: "#FF4500" },
           remote: { cdpUrl: "http://10.0.0.42:9222", color: "#0066CC" },
         },
       },
@@ -125,18 +125,18 @@ describe("BrowserProfilesService", () => {
 
     vi.mocked(loadConfig).mockReturnValue({
       browser: {
-        defaultProfile: "dmms-ai",
+        defaultProfile: "dryads-ai",
         profiles: {
-          "dmms-ai": { cdpPort: 18800, color: "#FF4500" },
+          "dryads-ai": { cdpPort: 18800, color: "#FF4500" },
           work: { cdpPort: 18801, color: "#0066CC" },
         },
       },
     });
 
-    const tempDir = fs.mkdtempSync(path.join("/tmp", "dmms-ai-profile-"));
+    const tempDir = fs.mkdtempSync(path.join("/tmp", "dryads-ai-profile-"));
     const userDataDir = path.join(tempDir, "work", "user-data");
     fs.mkdirSync(path.dirname(userDataDir), { recursive: true });
-    vi.mocked(resolveDmmsAiUserDataDir).mockReturnValue(userDataDir);
+    vi.mocked(resolveDryadsAiUserDataDir).mockReturnValue(userDataDir);
 
     const service = createBrowserProfilesService(ctx);
     const result = await service.deleteProfile("work");

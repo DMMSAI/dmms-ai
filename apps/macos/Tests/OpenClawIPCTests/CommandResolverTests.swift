@@ -1,7 +1,7 @@
 import Darwin
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized) struct CommandResolverTests {
     private func makeDefaults() -> UserDefaults {
@@ -24,18 +24,18 @@ import Testing
         try FileManager().setAttributes([.posixPermissions: 0o755], ofItemAtPath: path.path)
     }
 
-    @Test func prefersDmmsAiBinary() async throws {
+    @Test func prefersDryadsAiBinary() async throws {
         let defaults = self.makeDefaults()
         defaults.set(AppState.ConnectionMode.local.rawValue, forKey: connectionModeKey)
 
         let tmp = try makeTempDir()
         CommandResolver.setProjectRoot(tmp.path)
 
-        let dmmsAiPath = tmp.appendingPathComponent("node_modules/.bin/dmms-ai")
-        try self.makeExec(at: dmmsAiPath)
+        let dryadsAiPath = tmp.appendingPathComponent("node_modules/.bin/dryads-ai")
+        try self.makeExec(at: dryadsAiPath)
 
-        let cmd = CommandResolver.dmmsAiCommand(subcommand: "gateway", defaults: defaults, configRoot: [:])
-        #expect(cmd.prefix(2).elementsEqual([dmmsAiPath.path, "gateway"]))
+        let cmd = CommandResolver.dryadsAiCommand(subcommand: "gateway", defaults: defaults, configRoot: [:])
+        #expect(cmd.prefix(2).elementsEqual([dryadsAiPath.path, "gateway"]))
     }
 
     @Test func fallsBackToNodeAndScript() async throws {
@@ -46,13 +46,13 @@ import Testing
         CommandResolver.setProjectRoot(tmp.path)
 
         let nodePath = tmp.appendingPathComponent("node_modules/.bin/node")
-        let scriptPath = tmp.appendingPathComponent("bin/dmms-ai.js")
+        let scriptPath = tmp.appendingPathComponent("bin/dryads-ai.js")
         try self.makeExec(at: nodePath)
         try "#!/bin/sh\necho v22.0.0\n".write(to: nodePath, atomically: true, encoding: .utf8)
         try FileManager().setAttributes([.posixPermissions: 0o755], ofItemAtPath: nodePath.path)
         try self.makeExec(at: scriptPath)
 
-        let cmd = CommandResolver.dmmsAiCommand(
+        let cmd = CommandResolver.dryadsAiCommand(
             subcommand: "rpc",
             defaults: defaults,
             configRoot: [:],
@@ -76,9 +76,9 @@ import Testing
         let pnpmPath = tmp.appendingPathComponent("node_modules/.bin/pnpm")
         try self.makeExec(at: pnpmPath)
 
-        let cmd = CommandResolver.dmmsAiCommand(subcommand: "rpc", defaults: defaults, configRoot: [:])
+        let cmd = CommandResolver.dryadsAiCommand(subcommand: "rpc", defaults: defaults, configRoot: [:])
 
-        #expect(cmd.prefix(4).elementsEqual([pnpmPath.path, "--silent", "dmms-ai", "rpc"]))
+        #expect(cmd.prefix(4).elementsEqual([pnpmPath.path, "--silent", "dryads-ai", "rpc"]))
     }
 
     @Test func pnpmKeepsExtraArgsAfterSubcommand() async throws {
@@ -91,13 +91,13 @@ import Testing
         let pnpmPath = tmp.appendingPathComponent("node_modules/.bin/pnpm")
         try self.makeExec(at: pnpmPath)
 
-        let cmd = CommandResolver.dmmsAiCommand(
+        let cmd = CommandResolver.dryadsAiCommand(
             subcommand: "health",
             extraArgs: ["--json", "--timeout", "5"],
             defaults: defaults,
             configRoot: [:])
 
-        #expect(cmd.prefix(5).elementsEqual([pnpmPath.path, "--silent", "dmms-ai", "health", "--json"]))
+        #expect(cmd.prefix(5).elementsEqual([pnpmPath.path, "--silent", "dryads-ai", "health", "--json"]))
         #expect(cmd.suffix(2).elementsEqual(["--timeout", "5"]))
     }
 
@@ -112,11 +112,11 @@ import Testing
     @Test func buildsSSHCommandForRemoteMode() async throws {
         let defaults = self.makeDefaults()
         defaults.set(AppState.ConnectionMode.remote.rawValue, forKey: connectionModeKey)
-        defaults.set("dmms-ai@example.com:2222", forKey: remoteTargetKey)
+        defaults.set("dryads-ai@example.com:2222", forKey: remoteTargetKey)
         defaults.set("/tmp/id_ed25519", forKey: remoteIdentityKey)
-        defaults.set("/srv/dmms-ai", forKey: remoteProjectRootKey)
+        defaults.set("/srv/dryads-ai", forKey: remoteProjectRootKey)
 
-        let cmd = CommandResolver.dmmsAiCommand(
+        let cmd = CommandResolver.dryadsAiCommand(
             subcommand: "status",
             extraArgs: ["--json"],
             defaults: defaults,
@@ -124,16 +124,16 @@ import Testing
 
         #expect(cmd.first == "/usr/bin/ssh")
         if let marker = cmd.firstIndex(of: "--") {
-            #expect(cmd[marker + 1] == "dmms-ai@example.com")
+            #expect(cmd[marker + 1] == "dryads-ai@example.com")
         } else {
             #expect(Bool(false))
         }
         #expect(cmd.contains("-i"))
         #expect(cmd.contains("/tmp/id_ed25519"))
         if let script = cmd.last {
-            #expect(script.contains("PRJ='/srv/dmms-ai'"))
+            #expect(script.contains("PRJ='/srv/dryads-ai'"))
             #expect(script.contains("cd \"$PRJ\""))
-            #expect(script.contains("dmms-ai"))
+            #expect(script.contains("dryads-ai"))
             #expect(script.contains("status"))
             #expect(script.contains("--json"))
             #expect(script.contains("CLI="))
@@ -149,20 +149,20 @@ import Testing
     @Test func configRootLocalOverridesRemoteDefaults() async throws {
         let defaults = self.makeDefaults()
         defaults.set(AppState.ConnectionMode.remote.rawValue, forKey: connectionModeKey)
-        defaults.set("dmms-ai@example.com:2222", forKey: remoteTargetKey)
+        defaults.set("dryads-ai@example.com:2222", forKey: remoteTargetKey)
 
         let tmp = try makeTempDir()
         CommandResolver.setProjectRoot(tmp.path)
 
-        let dmmsAiPath = tmp.appendingPathComponent("node_modules/.bin/dmms-ai")
-        try self.makeExec(at: dmmsAiPath)
+        let dryadsAiPath = tmp.appendingPathComponent("node_modules/.bin/dryads-ai")
+        try self.makeExec(at: dryadsAiPath)
 
-        let cmd = CommandResolver.dmmsAiCommand(
+        let cmd = CommandResolver.dryadsAiCommand(
             subcommand: "daemon",
             defaults: defaults,
             configRoot: ["gateway": ["mode": "local"]])
 
-        #expect(cmd.first == dmmsAiPath.path)
+        #expect(cmd.first == dryadsAiPath.path)
         #expect(cmd.count >= 2)
         if cmd.count >= 2 {
             #expect(cmd[1] == "daemon")

@@ -6,7 +6,7 @@ import {
   loadSkillsFromDir,
   type Skill,
 } from "@mariozechner/pi-coding-agent";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { CONFIG_DIR, resolveUserPath } from "../../utils.js";
 import { resolveSandboxPath } from "../sandbox-paths.js";
@@ -15,7 +15,7 @@ import { shouldIncludeSkill } from "./config.js";
 import { normalizeSkillFilter } from "./filter.js";
 import {
   parseFrontmatter,
-  resolveDmmsAiMetadata,
+  resolveDryadsAiMetadata,
   resolveSkillInvocationPolicy,
 } from "./frontmatter.js";
 import { resolvePluginSkillDirs } from "./plugin-skills.js";
@@ -66,7 +66,7 @@ function debugSkillCommandOnce(
 
 function filterSkillEntries(
   entries: SkillEntry[],
-  config?: DmmsAiConfig,
+  config?: DryadsAiConfig,
   skillFilter?: string[],
   eligibility?: SkillEligibilityContext,
 ): SkillEntry[] {
@@ -135,7 +135,7 @@ type ResolvedSkillsLimits = {
   maxSkillFileBytes: number;
 };
 
-function resolveSkillsLimits(config?: DmmsAiConfig): ResolvedSkillsLimits {
+function resolveSkillsLimits(config?: DryadsAiConfig): ResolvedSkillsLimits {
   const limits = config?.skills?.limits;
   return {
     maxCandidatesPerRoot: limits?.maxCandidatesPerRoot ?? DEFAULT_MAX_CANDIDATES_PER_ROOT,
@@ -221,7 +221,7 @@ function unwrapLoadedSkills(loaded: unknown): Skill[] {
 function loadSkillEntries(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
   },
@@ -337,19 +337,19 @@ function loadSkillEntries(
   const bundledSkills = bundledSkillsDir
     ? loadSkills({
         dir: bundledSkillsDir,
-        source: "dmms-ai-bundled",
+        source: "dryads-ai-bundled",
       })
     : [];
   const extraSkills = mergedExtraDirs.flatMap((dir) => {
     const resolved = resolveUserPath(dir);
     return loadSkills({
       dir: resolved,
-      source: "dmms-ai-extra",
+      source: "dryads-ai-extra",
     });
   });
   const managedSkills = loadSkills({
     dir: managedSkillsDir,
-    source: "dmms-ai-managed",
+    source: "dryads-ai-managed",
   });
   const personalAgentsSkillsDir = path.resolve(os.homedir(), ".agents", "skills");
   const personalAgentsSkills = loadSkills({
@@ -363,7 +363,7 @@ function loadSkillEntries(
   });
   const workspaceSkills = loadSkills({
     dir: workspaceSkillsDir,
-    source: "dmms-ai-workspace",
+    source: "dryads-ai-workspace",
   });
 
   const merged = new Map<string, Skill>();
@@ -398,14 +398,14 @@ function loadSkillEntries(
     return {
       skill,
       frontmatter,
-      metadata: resolveDmmsAiMetadata(frontmatter),
+      metadata: resolveDryadsAiMetadata(frontmatter),
       invocation: resolveSkillInvocationPolicy(frontmatter),
     };
   });
   return skillEntries;
 }
 
-function applySkillsPromptLimits(params: { skills: Skill[]; config?: DmmsAiConfig }): {
+function applySkillsPromptLimits(params: { skills: Skill[]; config?: DryadsAiConfig }): {
   skillsForPrompt: Skill[];
   truncated: boolean;
   truncatedReason: "count" | "chars" | null;
@@ -446,7 +446,7 @@ function applySkillsPromptLimits(params: { skills: Skill[]; config?: DmmsAiConfi
 export function buildWorkspaceSkillSnapshot(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];
@@ -474,7 +474,7 @@ export function buildWorkspaceSkillSnapshot(
   });
 
   const truncationNote = truncated
-    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`dmms-ai skills check\` to audit.`
+    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`dryads-ai skills check\` to audit.`
     : "";
 
   const prompt = [
@@ -500,7 +500,7 @@ export function buildWorkspaceSkillSnapshot(
 export function buildWorkspaceSkillsPrompt(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];
@@ -526,7 +526,7 @@ export function buildWorkspaceSkillsPrompt(
     config: opts?.config,
   });
   const truncationNote = truncated
-    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`dmms-ai skills check\` to audit.`
+    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`dryads-ai skills check\` to audit.`
     : "";
   return [remoteNote, truncationNote, formatSkillsForPrompt(compactSkillPaths(skillsForPrompt))]
     .filter(Boolean)
@@ -536,7 +536,7 @@ export function buildWorkspaceSkillsPrompt(
 export function resolveSkillsPromptForRun(params: {
   skillsSnapshot?: SkillSnapshot;
   entries?: SkillEntry[];
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   workspaceDir: string;
 }): string {
   const snapshotPrompt = params.skillsSnapshot?.prompt?.trim();
@@ -556,7 +556,7 @@ export function resolveSkillsPromptForRun(params: {
 export function loadWorkspaceSkillEntries(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
   },
@@ -606,7 +606,7 @@ function resolveSyncedSkillDestinationPath(params: {
 export async function syncSkillsToWorkspace(params: {
   sourceWorkspaceDir: string;
   targetWorkspaceDir: string;
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   managedSkillsDir?: string;
   bundledSkillsDir?: string;
 }) {
@@ -665,7 +665,7 @@ export async function syncSkillsToWorkspace(params: {
 
 export function filterWorkspaceSkillEntries(
   entries: SkillEntry[],
-  config?: DmmsAiConfig,
+  config?: DryadsAiConfig,
 ): SkillEntry[] {
   return filterSkillEntries(entries, config);
 }
@@ -673,7 +673,7 @@ export function filterWorkspaceSkillEntries(
 export function buildWorkspaceSkillCommandSpecs(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];

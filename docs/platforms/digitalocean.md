@@ -1,16 +1,16 @@
 ---
-summary: "DMMS AI on DigitalOcean (simple paid VPS option)"
+summary: "Dryads AI on DigitalOcean (simple paid VPS option)"
 read_when:
-  - Setting up DMMS AI on DigitalOcean
-  - Looking for cheap VPS hosting for DMMS AI
+  - Setting up Dryads AI on DigitalOcean
+  - Looking for cheap VPS hosting for Dryads AI
 title: "DigitalOcean"
 ---
 
-# DMMS AI on DigitalOcean
+# Dryads AI on DigitalOcean
 
 ## Goal
 
-Run a persistent DMMS AI Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
+Run a persistent Dryads AI Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
 
 If you want a $0/month option and don’t mind ARM + provider-specific setup, see the [Oracle Cloud guide](/platforms/oracle).
 
@@ -56,7 +56,7 @@ If you want a $0/month option and don’t mind ARM + provider-specific setup, se
 ssh root@YOUR_DROPLET_IP
 ```
 
-## 3) Install DMMS AI
+## 3) Install Dryads AI
 
 ```bash
 # Update system
@@ -66,17 +66,17 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
-# Install DMMS AI
-curl -fsSL https://dmms-ai.com/install.sh | bash
+# Install Dryads AI
+curl -fsSL https://dryads-ai.com/install.sh | bash
 
 # Verify
-dmms-ai --version
+dryads-ai --version
 ```
 
 ## 4) Run Onboarding
 
 ```bash
-dmms-ai onboard --install-daemon
+dryads-ai onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -90,13 +90,13 @@ The wizard will walk you through:
 
 ```bash
 # Check status
-dmms-ai status
+dryads-ai status
 
 # Check service
-systemctl --user status dmms-ai-gateway.service
+systemctl --user status dryads-ai-gateway.service
 
 # View logs
-journalctl --user -u dmms-ai-gateway.service -f
+journalctl --user -u dryads-ai-gateway.service -f
 ```
 
 ## 6) Access the Dashboard
@@ -120,8 +120,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-dmms-ai config set gateway.tailscale.mode serve
-dmms-ai gateway restart
+dryads-ai config set gateway.tailscale.mode serve
+dryads-ai gateway restart
 ```
 
 Open: `https://<magicdns>/`
@@ -134,8 +134,8 @@ Notes:
 **Option C: Tailnet bind (no Serve)**
 
 ```bash
-dmms-ai config set gateway.bind tailnet
-dmms-ai gateway restart
+dryads-ai config set gateway.bind tailnet
+dryads-ai gateway restart
 ```
 
 Open: `http://<tailscale-ip>:18789` (token required).
@@ -145,14 +145,14 @@ Open: `http://<tailscale-ip>:18789` (token required).
 ### Telegram
 
 ```bash
-dmms-ai pairing list telegram
-dmms-ai pairing approve telegram <CODE>
+dryads-ai pairing list telegram
+dryads-ai pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-dmms-ai channels login whatsapp
+dryads-ai channels login whatsapp
 # Scan QR code
 ```
 
@@ -194,13 +194,13 @@ htop
 
 All state lives in:
 
-- `~/.dmms-ai/` — config, credentials, session data
-- `~/.dmms-ai/workspace/` — workspace (SOUL.md, memory, etc.)
+- `~/.dryads-ai/` — config, credentials, session data
+- `~/.dryads-ai/workspace/` — workspace (SOUL.md, memory, etc.)
 
 These survive reboots. Back them up periodically:
 
 ```bash
-tar -czvf dmms-ai-backup.tar.gz ~/.dmms-ai ~/.dmms-ai/workspace
+tar -czvf dryads-ai-backup.tar.gz ~/.dryads-ai ~/.dryads-ai/workspace
 ```
 
 ---
@@ -230,9 +230,9 @@ For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips
 ### Gateway won't start
 
 ```bash
-dmms-ai gateway status
-dmms-ai doctor --non-interactive
-journalctl -u dmms-ai --no-pager -n 50
+dryads-ai gateway status
+dryads-ai doctor --non-interactive
+journalctl -u dryads-ai --no-pager -n 50
 ```
 
 ### Port already in use

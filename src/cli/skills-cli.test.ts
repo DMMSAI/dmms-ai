@@ -210,10 +210,10 @@ describe("skills-cli", () => {
     let buildWorkspaceSkillStatus: typeof import("../agents/skills-status.js").buildWorkspaceSkillStatus;
 
     beforeAll(async () => {
-      envSnapshot = captureEnv(["DMMS_AI_BUNDLED_SKILLS_DIR"]);
-      tempWorkspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-skills-test-"));
-      tempBundledDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-bundled-skills-test-"));
-      process.env.DMMS_AI_BUNDLED_SKILLS_DIR = tempBundledDir;
+      envSnapshot = captureEnv(["DRYADS_AI_BUNDLED_SKILLS_DIR"]);
+      tempWorkspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-skills-test-"));
+      tempBundledDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-bundled-skills-test-"));
+      process.env.DRYADS_AI_BUNDLED_SKILLS_DIR = tempBundledDir;
       ({ buildWorkspaceSkillStatus } = await import("../agents/skills-status.js"));
     });
 
@@ -234,7 +234,7 @@ describe("skills-cli", () => {
           skill: {
             name: "peekaboo",
             description: "Capture UI screenshots",
-            source: "dmms-ai-bundled",
+            source: "dryads-ai-bundled",
             filePath: path.join(baseDir, "SKILL.md"),
             baseDir,
           } as SkillEntry["skill"],

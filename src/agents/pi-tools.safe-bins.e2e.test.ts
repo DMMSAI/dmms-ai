@@ -2,16 +2,16 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { ExecApprovalsResolved } from "../infra/exec-approvals.js";
 import { captureEnv } from "../test-utils/env.js";
 
-const bundledPluginsDirSnapshot = captureEnv(["DMMS_AI_BUNDLED_PLUGINS_DIR"]);
+const bundledPluginsDirSnapshot = captureEnv(["DRYADS_AI_BUNDLED_PLUGINS_DIR"]);
 
 beforeAll(() => {
-  process.env.DMMS_AI_BUNDLED_PLUGINS_DIR = path.join(
+  process.env.DRYADS_AI_BUNDLED_PLUGINS_DIR = path.join(
     os.tmpdir(),
-    "dmms-ai-test-no-bundled-extensions",
+    "dryads-ai-test-no-bundled-extensions",
   );
 });
 
@@ -67,15 +67,15 @@ vi.mock("../infra/exec-approvals.js", async (importOriginal) => {
   return { ...mod, resolveExecApprovals: () => approvals };
 });
 
-describe("createDmmsAiCodingTools safeBins", () => {
+describe("createDryadsAiCodingTools safeBins", () => {
   it("threads tools.exec.safeBins into exec allowlist checks", async () => {
     if (process.platform === "win32") {
       return;
     }
 
-    const { createDmmsAiCodingTools } = await import("./pi-tools.js");
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-safe-bins-"));
-    const cfg: DmmsAiConfig = {
+    const { createDryadsAiCodingTools } = await import("./pi-tools.js");
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-safe-bins-"));
+    const cfg: DryadsAiConfig = {
       tools: {
         exec: {
           host: "gateway",
@@ -86,7 +86,7 @@ describe("createDmmsAiCodingTools safeBins", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: tmpDir,
@@ -96,10 +96,10 @@ describe("createDmmsAiCodingTools safeBins", () => {
     expect(execTool).toBeDefined();
 
     const marker = `safe-bins-${Date.now()}`;
-    const envSnapshot = captureEnv(["DMMS_AI_SHELL_ENV_TIMEOUT_MS"]);
+    const envSnapshot = captureEnv(["DRYADS_AI_SHELL_ENV_TIMEOUT_MS"]);
     const result = await (async () => {
       try {
-        process.env.DMMS_AI_SHELL_ENV_TIMEOUT_MS = "1000";
+        process.env.DRYADS_AI_SHELL_ENV_TIMEOUT_MS = "1000";
         return await execTool!.execute("call1", {
           command: `echo ${marker}`,
           workdir: tmpDir,
@@ -120,13 +120,13 @@ describe("createDmmsAiCodingTools safeBins", () => {
       return;
     }
 
-    const { createDmmsAiCodingTools } = await import("./pi-tools.js");
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-safe-bins-expand-"));
+    const { createDryadsAiCodingTools } = await import("./pi-tools.js");
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-safe-bins-expand-"));
 
     const secret = `TOP_SECRET_${Date.now()}`;
     fs.writeFileSync(path.join(tmpDir, "secret.txt"), `${secret}\n`, "utf8");
 
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         exec: {
           host: "gateway",
@@ -137,7 +137,7 @@ describe("createDmmsAiCodingTools safeBins", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: tmpDir,

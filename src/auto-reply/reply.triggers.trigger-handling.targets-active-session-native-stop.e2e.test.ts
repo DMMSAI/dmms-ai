@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { join } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { loadSessionStore } from "../config/sessions.js";
 import {
   getAbortEmbeddedPiRunMock,
@@ -182,7 +182,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "dmms-ai"),
+            workspace: join(home, "dryads-ai"),
           },
           list: [{ id: "coding", model: "minimax/MiniMax-M2.1" }],
         },
@@ -192,7 +192,7 @@ describe("trigger handling", () => {
           },
         },
         session: { store: join(home, "sessions.json") },
-      } as unknown as DmmsAiConfig;
+      } as unknown as DryadsAiConfig;
 
       const res = await getReplyFromConfig(
         {

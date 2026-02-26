@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import path from "node:path";
 import type { AgentMessage, StreamFn } from "@mariozechner/pi-agent-core";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import { resolveUserPath } from "../utils.js";
 import { parseBooleanValue } from "../utils/boolean.js";
@@ -50,7 +50,7 @@ export type CacheTrace = {
 };
 
 type CacheTraceInit = {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   env?: NodeJS.ProcessEnv;
   runId?: string;
   sessionId?: string;
@@ -77,17 +77,19 @@ const writers = new Map<string, CacheTraceWriter>();
 function resolveCacheTraceConfig(params: CacheTraceInit): CacheTraceConfig {
   const env = params.env ?? process.env;
   const config = params.cfg?.diagnostics?.cacheTrace;
-  const envEnabled = parseBooleanValue(env.DMMS_AI_CACHE_TRACE);
+  const envEnabled = parseBooleanValue(env.DRYADS_AI_CACHE_TRACE);
   const enabled = envEnabled ?? config?.enabled ?? false;
-  const fileOverride = config?.filePath?.trim() || env.DMMS_AI_CACHE_TRACE_FILE?.trim();
+  const fileOverride = config?.filePath?.trim() || env.DRYADS_AI_CACHE_TRACE_FILE?.trim();
   const filePath = fileOverride
     ? resolveUserPath(fileOverride)
     : path.join(resolveStateDir(env), "logs", "cache-trace.jsonl");
 
   const includeMessages =
-    parseBooleanValue(env.DMMS_AI_CACHE_TRACE_MESSAGES) ?? config?.includeMessages;
-  const includePrompt = parseBooleanValue(env.DMMS_AI_CACHE_TRACE_PROMPT) ?? config?.includePrompt;
-  const includeSystem = parseBooleanValue(env.DMMS_AI_CACHE_TRACE_SYSTEM) ?? config?.includeSystem;
+    parseBooleanValue(env.DRYADS_AI_CACHE_TRACE_MESSAGES) ?? config?.includeMessages;
+  const includePrompt =
+    parseBooleanValue(env.DRYADS_AI_CACHE_TRACE_PROMPT) ?? config?.includePrompt;
+  const includeSystem =
+    parseBooleanValue(env.DRYADS_AI_CACHE_TRACE_SYSTEM) ?? config?.includeSystem;
 
   return {
     enabled,

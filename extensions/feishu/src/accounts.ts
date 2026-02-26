@@ -1,5 +1,5 @@
-import type { ClawdbotConfig } from "dmms-ai/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "dmms-ai/plugin-sdk/account-id";
+import type { ClawdbotConfig } from "dryads-ai/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "dryads-ai/plugin-sdk/account-id";
 import type {
   FeishuConfig,
   FeishuAccountConfig,

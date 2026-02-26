@@ -1,6 +1,6 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
-import ai.dmmsai.android.gateway.GatewaySession
+import ai.dryadsai.android.gateway.GatewaySession
 
 class ScreenHandler(
   private val screenRecorder: ScreenRecordManager,

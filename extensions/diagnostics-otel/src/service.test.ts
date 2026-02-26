@@ -96,16 +96,17 @@ vi.mock("@opentelemetry/semantic-conventions", () => ({
   },
 }));
 
-vi.mock("dmms-ai/plugin-sdk", async () => {
-  const actual = await vi.importActual<typeof import("dmms-ai/plugin-sdk")>("dmms-ai/plugin-sdk");
+vi.mock("dryads-ai/plugin-sdk", async () => {
+  const actual =
+    await vi.importActual<typeof import("dryads-ai/plugin-sdk")>("dryads-ai/plugin-sdk");
   return {
     ...actual,
     registerLogTransport: registerLogTransportMock,
   };
 });
 
-import type { DmmsAiPluginServiceContext } from "dmms-ai/plugin-sdk";
-import { emitDiagnosticEvent } from "dmms-ai/plugin-sdk";
+import type { DryadsAiPluginServiceContext } from "dryads-ai/plugin-sdk";
+import { emitDiagnosticEvent } from "dryads-ai/plugin-sdk";
 import { createDiagnosticsOtelService } from "./service.js";
 
 describe("diagnostics-otel service", () => {
@@ -131,7 +132,7 @@ describe("diagnostics-otel service", () => {
     });
 
     const service = createDiagnosticsOtelService();
-    const ctx: DmmsAiPluginServiceContext = {
+    const ctx: DryadsAiPluginServiceContext = {
       config: {
         diagnostics: {
           enabled: true,
@@ -151,7 +152,7 @@ describe("diagnostics-otel service", () => {
         error: vi.fn(),
         debug: vi.fn(),
       },
-      stateDir: "/tmp/dmms-ai-diagnostics-otel-test",
+      stateDir: "/tmp/dryads-ai-diagnostics-otel-test",
     };
     await service.start(ctx);
 
@@ -195,22 +196,26 @@ describe("diagnostics-otel service", () => {
       attempt: 2,
     });
 
-    expect(telemetryState.counters.get("dmms-ai.webhook.received")?.add).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("dmms-ai.webhook.duration_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("dmms-ai.message.queued")?.add).toHaveBeenCalled();
-    expect(telemetryState.counters.get("dmms-ai.message.processed")?.add).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("dmms-ai.message.duration_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("dmms-ai.queue.wait_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("dmms-ai.session.stuck")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("dryads-ai.webhook.received")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("dmms-ai.session.stuck_age_ms")?.record,
+      telemetryState.histograms.get("dryads-ai.webhook.duration_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.counters.get("dmms-ai.run.attempt")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("dryads-ai.message.queued")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("dryads-ai.message.processed")?.add).toHaveBeenCalled();
+    expect(
+      telemetryState.histograms.get("dryads-ai.message.duration_ms")?.record,
+    ).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("dryads-ai.queue.wait_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.counters.get("dryads-ai.session.stuck")?.add).toHaveBeenCalled();
+    expect(
+      telemetryState.histograms.get("dryads-ai.session.stuck_age_ms")?.record,
+    ).toHaveBeenCalled();
+    expect(telemetryState.counters.get("dryads-ai.run.attempt")?.add).toHaveBeenCalled();
 
     const spanNames = telemetryState.tracer.startSpan.mock.calls.map((call) => call[0]);
-    expect(spanNames).toContain("dmms-ai.webhook.processed");
-    expect(spanNames).toContain("dmms-ai.message.processed");
-    expect(spanNames).toContain("dmms-ai.session.stuck");
+    expect(spanNames).toContain("dryads-ai.webhook.processed");
+    expect(spanNames).toContain("dryads-ai.message.processed");
+    expect(spanNames).toContain("dryads-ai.session.stuck");
 
     expect(registerLogTransportMock).toHaveBeenCalledTimes(1);
     expect(registeredTransports).toHaveLength(1);

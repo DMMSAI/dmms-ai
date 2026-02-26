@@ -46,9 +46,9 @@ const parseArgs = (): Args => {
 
 const loadAuthProfiles = (agentId: string) => {
   const stateRoot =
-    process.env.DMMS_AI_STATE_DIR?.trim() ||
+    process.env.DRYADS_AI_STATE_DIR?.trim() ||
     process.env.CLAWDBOT_STATE_DIR?.trim() ||
-    path.join(os.homedir(), ".dmms-ai");
+    path.join(os.homedir(), ".dryads-ai");
   const authPath = path.join(stateRoot, "agents", agentId, "agent", "auth-profiles.json");
   if (!fs.existsSync(authPath)) {
     throw new Error(`Missing: ${authPath}`);
@@ -83,7 +83,7 @@ const fetchAnthropicOAuthUsage = async (token: string) => {
       Accept: "application/json",
       "anthropic-version": "2023-06-01",
       "anthropic-beta": "oauth-2025-04-20",
-      "User-Agent": "dmms-ai-debug",
+      "User-Agent": "dryads-ai-debug",
     },
   });
   const text = await res.text();

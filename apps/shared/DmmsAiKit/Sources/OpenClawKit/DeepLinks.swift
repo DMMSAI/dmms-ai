@@ -88,7 +88,7 @@ public struct AgentDeepLink: Codable, Sendable, Equatable {
 public enum DeepLinkParser {
     public static func parse(_ url: URL) -> DeepLinkRoute? {
         guard let scheme = url.scheme?.lowercased(),
-              scheme == "dmms-ai"
+              scheme == "dryads-ai"
         else {
             return nil
         }

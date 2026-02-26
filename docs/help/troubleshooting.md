@@ -1,7 +1,7 @@
 ---
-summary: "Symptom first troubleshooting hub for DMMS AI"
+summary: "Symptom first troubleshooting hub for Dryads AI"
 read_when:
-  - DMMS AI is not working and you need the fastest path to a fix
+  - Dryads AI is not working and you need the fastest path to a fix
   - You want a triage flow before diving into deep runbooks
 title: "Troubleshooting"
 ---
@@ -15,30 +15,30 @@ If you only have 2 minutes, use this page as a triage front door.
 Run this exact ladder in order:
 
 ```bash
-dmms-ai status
-dmms-ai status --all
-dmms-ai gateway probe
-dmms-ai gateway status
-dmms-ai doctor
-dmms-ai channels status --probe
-dmms-ai logs --follow
+dryads-ai status
+dryads-ai status --all
+dryads-ai gateway probe
+dryads-ai gateway status
+dryads-ai doctor
+dryads-ai channels status --probe
+dryads-ai logs --follow
 ```
 
 Good output in one line:
 
-- `dmms-ai status` → shows configured channels and no obvious auth errors.
-- `dmms-ai status --all` → full report is present and shareable.
-- `dmms-ai gateway probe` → expected gateway target is reachable.
-- `dmms-ai gateway status` → `Runtime: running` and `RPC probe: ok`.
-- `dmms-ai doctor` → no blocking config/service errors.
-- `dmms-ai channels status --probe` → channels report `connected` or `ready`.
-- `dmms-ai logs --follow` → steady activity, no repeating fatal errors.
+- `dryads-ai status` → shows configured channels and no obvious auth errors.
+- `dryads-ai status --all` → full report is present and shareable.
+- `dryads-ai gateway probe` → expected gateway target is reachable.
+- `dryads-ai gateway status` → `Runtime: running` and `RPC probe: ok`.
+- `dryads-ai doctor` → no blocking config/service errors.
+- `dryads-ai channels status --probe` → channels report `connected` or `ready`.
+- `dryads-ai logs --follow` → steady activity, no repeating fatal errors.
 
 ## Decision tree
 
 ```mermaid
 flowchart TD
-  A[DMMS AI is not working] --> B{What breaks first}
+  A[Dryads AI is not working] --> B{What breaks first}
   B --> C[No replies]
   B --> D[Dashboard or Control UI will not connect]
   B --> E[Gateway will not start or service not running]
@@ -59,11 +59,11 @@ flowchart TD
 <AccordionGroup>
   <Accordion title="No replies">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai channels status --probe
-    dmms-ai pairing list <channel>
-    dmms-ai logs --follow
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai channels status --probe
+    dryads-ai pairing list <channel>
+    dryads-ai logs --follow
     ```
 
     Good output looks like:
@@ -89,16 +89,16 @@ flowchart TD
 
   <Accordion title="Dashboard or Control UI will not connect">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai logs --follow
-    dmms-ai doctor
-    dmms-ai channels status --probe
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai logs --follow
+    dryads-ai doctor
+    dryads-ai channels status --probe
     ```
 
     Good output looks like:
 
-    - `Dashboard: http://...` is shown in `dmms-ai gateway status`
+    - `Dashboard: http://...` is shown in `dryads-ai gateway status`
     - `RPC probe: ok`
     - No auth loop in logs
 
@@ -118,11 +118,11 @@ flowchart TD
 
   <Accordion title="Gateway will not start or service installed but not running">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai logs --follow
-    dmms-ai doctor
-    dmms-ai channels status --probe
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai logs --follow
+    dryads-ai doctor
+    dryads-ai channels status --probe
     ```
 
     Good output looks like:
@@ -147,11 +147,11 @@ flowchart TD
 
   <Accordion title="Channel connects but messages do not flow">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai logs --follow
-    dmms-ai doctor
-    dmms-ai channels status --probe
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai logs --follow
+    dryads-ai doctor
+    dryads-ai channels status --probe
     ```
 
     Good output looks like:
@@ -175,12 +175,12 @@ flowchart TD
 
   <Accordion title="Cron or heartbeat did not fire or did not deliver">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai cron status
-    dmms-ai cron list
-    dmms-ai cron runs --id <jobId> --limit 20
-    dmms-ai logs --follow
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai cron status
+    dryads-ai cron list
+    dryads-ai cron runs --id <jobId> --limit 20
+    dryads-ai logs --follow
     ```
 
     Good output looks like:
@@ -206,11 +206,11 @@ flowchart TD
 
   <Accordion title="Node is paired but tool fails camera canvas screen exec">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai nodes status
-    dmms-ai nodes describe --node <idOrNameOrIp>
-    dmms-ai logs --follow
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai nodes status
+    dryads-ai nodes describe --node <idOrNameOrIp>
+    dryads-ai logs --follow
     ```
 
     Good output looks like:
@@ -236,17 +236,17 @@ flowchart TD
 
   <Accordion title="Browser tool fails">
     ```bash
-    dmms-ai status
-    dmms-ai gateway status
-    dmms-ai browser status
-    dmms-ai logs --follow
-    dmms-ai doctor
+    dryads-ai status
+    dryads-ai gateway status
+    dryads-ai browser status
+    dryads-ai logs --follow
+    dryads-ai doctor
     ```
 
     Good output looks like:
 
     - Browser status shows `running: true` and a chosen browser/profile.
-    - `dmms-ai` profile starts or `chrome` relay has an attached tab.
+    - `dryads-ai` profile starts or `chrome` relay has an attached tab.
 
     Common log signatures:
 

@@ -41,7 +41,7 @@ function createCommandWithTimeoutResult() {
 
 function createLegacyConfigSnapshot() {
   return {
-    path: "/tmp/dmms-ai.json",
+    path: "/tmp/dryads-ai.json",
     exists: false,
     raw: null,
     parsed: {},
@@ -57,7 +57,7 @@ export const confirm = vi.fn().mockResolvedValue(true) as unknown as MockFn;
 export const select = vi.fn().mockResolvedValue("node") as unknown as MockFn;
 export const note = vi.fn() as unknown as MockFn;
 export const writeConfigFile = vi.fn().mockResolvedValue(undefined) as unknown as MockFn;
-export const resolveDmmsAiPackageRoot = vi.fn().mockResolvedValue(null) as unknown as MockFn;
+export const resolveDryadsAiPackageRoot = vi.fn().mockResolvedValue(null) as unknown as MockFn;
 export const runGatewayUpdate = vi
   .fn()
   .mockResolvedValue(createGatewayUpdateResult()) as unknown as MockFn;
@@ -157,7 +157,7 @@ export const runLegacyStateMigrations = vi.fn().mockResolvedValue({
 }) as unknown as MockFn;
 
 const DEFAULT_CONFIG_SNAPSHOT = {
-  path: "/tmp/dmms-ai.json",
+  path: "/tmp/dryads-ai.json",
   exists: true,
   raw: "{}",
   parsed: {},
@@ -180,14 +180,14 @@ vi.mock("../agents/skills-status.js", () => ({
 }));
 
 vi.mock("../plugins/loader.js", () => ({
-  loadDmmsAiPlugins: () => ({ plugins: [], diagnostics: [] }),
+  loadDryadsAiPlugins: () => ({ plugins: [], diagnostics: [] }),
 }));
 
 vi.mock("../config/config.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../config/config.js")>();
   return {
     ...actual,
-    CONFIG_PATH: "/tmp/dmms-ai.json",
+    CONFIG_PATH: "/tmp/dryads-ai.json",
     createConfigIO,
     readConfigFileSnapshot,
     writeConfigFile,
@@ -222,8 +222,8 @@ vi.mock("../process/exec.js", () => ({
   runCommandWithTimeout,
 }));
 
-vi.mock("../infra/dmms-ai-root.js", () => ({
-  resolveDmmsAiPackageRoot,
+vi.mock("../infra/dryads-ai-root.js", () => ({
+  resolveDryadsAiPackageRoot,
 }));
 
 vi.mock("../infra/update-runner.js", () => ({
@@ -367,7 +367,7 @@ beforeEach(() => {
 
   readConfigFileSnapshot.mockReset();
   writeConfigFile.mockReset().mockResolvedValue(undefined);
-  resolveDmmsAiPackageRoot.mockReset().mockResolvedValue(null);
+  resolveDryadsAiPackageRoot.mockReset().mockResolvedValue(null);
   runGatewayUpdate.mockReset().mockResolvedValue(createGatewayUpdateResult());
   legacyReadConfigFileSnapshot.mockReset().mockResolvedValue(createLegacyConfigSnapshot());
   createConfigIO.mockReset().mockImplementation(() => ({
@@ -396,11 +396,11 @@ beforeEach(() => {
 
   originalIsTTY = process.stdin.isTTY;
   setStdinTty(true);
-  originalStateDir = process.env.DMMS_AI_STATE_DIR;
-  originalUpdateInProgress = process.env.DMMS_AI_UPDATE_IN_PROGRESS;
-  process.env.DMMS_AI_UPDATE_IN_PROGRESS = "1";
-  tempStateDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-doctor-state-"));
-  process.env.DMMS_AI_STATE_DIR = tempStateDir;
+  originalStateDir = process.env.DRYADS_AI_STATE_DIR;
+  originalUpdateInProgress = process.env.DRYADS_AI_UPDATE_IN_PROGRESS;
+  process.env.DRYADS_AI_UPDATE_IN_PROGRESS = "1";
+  tempStateDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-doctor-state-"));
+  process.env.DRYADS_AI_STATE_DIR = tempStateDir;
   fs.mkdirSync(path.join(tempStateDir, "agents", "main", "sessions"), {
     recursive: true,
   });
@@ -410,14 +410,14 @@ beforeEach(() => {
 afterEach(() => {
   setStdinTty(originalIsTTY);
   if (originalStateDir === undefined) {
-    delete process.env.DMMS_AI_STATE_DIR;
+    delete process.env.DRYADS_AI_STATE_DIR;
   } else {
-    process.env.DMMS_AI_STATE_DIR = originalStateDir;
+    process.env.DRYADS_AI_STATE_DIR = originalStateDir;
   }
   if (originalUpdateInProgress === undefined) {
-    delete process.env.DMMS_AI_UPDATE_IN_PROGRESS;
+    delete process.env.DRYADS_AI_UPDATE_IN_PROGRESS;
   } else {
-    process.env.DMMS_AI_UPDATE_IN_PROGRESS = originalUpdateInProgress;
+    process.env.DRYADS_AI_UPDATE_IN_PROGRESS = originalUpdateInProgress;
   }
   if (tempStateDir) {
     fs.rmSync(tempStateDir, { recursive: true, force: true });

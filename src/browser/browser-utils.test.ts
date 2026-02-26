@@ -183,14 +183,14 @@ describe("fetchBrowserJson loopback auth (bridge auth registry)", () => {
 describe("browser server-context listKnownProfileNames", () => {
   it("includes configured and runtime-only profile names", () => {
     const resolved = resolveBrowserConfig({
-      defaultProfile: "dmms-ai",
+      defaultProfile: "dryads-ai",
       profiles: {
-        "dmms-ai": { cdpPort: 18800, color: "#FF4500" },
+        "dryads-ai": { cdpPort: 18800, color: "#FF4500" },
       },
     });
-    const dmmsAi = resolveProfile(resolved, "dmms-ai");
-    if (!dmmsAi) {
-      throw new Error("expected dmms-ai profile");
+    const dryadsAi = resolveProfile(resolved, "dryads-ai");
+    if (!dryadsAi) {
+      throw new Error("expected dryads-ai profile");
     }
 
     const state: BrowserServerState = {
@@ -201,13 +201,17 @@ describe("browser server-context listKnownProfileNames", () => {
         [
           "stale-removed",
           {
-            profile: { ...dmmsAi, name: "stale-removed" },
+            profile: { ...dryadsAi, name: "stale-removed" },
             running: null,
           },
         ],
       ]),
     };
 
-    expect(listKnownProfileNames(state).toSorted()).toEqual(["chrome", "dmms-ai", "stale-removed"]);
+    expect(listKnownProfileNames(state).toSorted()).toEqual([
+      "chrome",
+      "dryads-ai",
+      "stale-removed",
+    ]);
   });
 });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { loadModelCatalog } from "./model-catalog.js";
 import {
   installModelCatalogTestHooks,
@@ -12,7 +12,7 @@ describe("loadModelCatalog e2e smoke", () => {
   it("recovers after an import failure on the next load", async () => {
     mockCatalogImportFailThenRecover();
 
-    const cfg = {} as DmmsAiConfig;
+    const cfg = {} as DryadsAiConfig;
     expect(await loadModelCatalog({ config: cfg })).toEqual([]);
     expect(await loadModelCatalog({ config: cfg })).toEqual([
       { id: "gpt-4.1", name: "GPT-4.1", provider: "openai" },

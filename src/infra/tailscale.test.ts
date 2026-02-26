@@ -12,17 +12,17 @@ const {
 const tailscaleBin = expect.stringMatching(/tailscale$/i);
 
 describe("tailscale helpers", () => {
-  const originalForcedBinary = process.env.DMMS_AI_TEST_TAILSCALE_BINARY;
+  const originalForcedBinary = process.env.DRYADS_AI_TEST_TAILSCALE_BINARY;
 
   beforeEach(() => {
-    process.env.DMMS_AI_TEST_TAILSCALE_BINARY = "tailscale";
+    process.env.DRYADS_AI_TEST_TAILSCALE_BINARY = "tailscale";
   });
 
   afterEach(() => {
     if (originalForcedBinary === undefined) {
-      delete process.env.DMMS_AI_TEST_TAILSCALE_BINARY;
+      delete process.env.DRYADS_AI_TEST_TAILSCALE_BINARY;
     } else {
-      process.env.DMMS_AI_TEST_TAILSCALE_BINARY = originalForcedBinary;
+      process.env.DRYADS_AI_TEST_TAILSCALE_BINARY = originalForcedBinary;
     }
     vi.restoreAllMocks();
   });

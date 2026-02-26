@@ -25,7 +25,7 @@ final class ScreenRecordService {
         }
     }
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "screenRecord")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "screenRecord")
 
     func record(
         screenIndex: Int?,
@@ -43,7 +43,7 @@ final class ScreenRecordService {
                 return URL(fileURLWithPath: outPath)
             }
             return FileManager().temporaryDirectory
-                .appendingPathComponent("dmms-ai-screen-record-\(UUID().uuidString).mp4")
+                .appendingPathComponent("dryads-ai-screen-record-\(UUID().uuidString).mp4")
         }()
         try? FileManager().removeItem(at: outURL)
 
@@ -110,7 +110,7 @@ final class ScreenRecordService {
 }
 
 private final class StreamRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @unchecked Sendable {
-    let queue = DispatchQueue(label: "ai.dmmsai.screenRecord.writer")
+    let queue = DispatchQueue(label: "ai.dryadsai.screenRecord.writer")
 
     private let logger: Logger
     private let writer: AVAssetWriter

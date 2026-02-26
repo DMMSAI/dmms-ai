@@ -1,6 +1,6 @@
-import type { DmPolicy, GroupPolicy } from "dmms-ai/plugin-sdk";
+import type { DmPolicy, GroupPolicy } from "dryads-ai/plugin-sdk";
 
-export type { DmPolicy, GroupPolicy } from "dmms-ai/plugin-sdk";
+export type { DmPolicy, GroupPolicy } from "dryads-ai/plugin-sdk";
 
 export type BlueBubblesGroupConfig = {
   /** If true, only respond in this group when mentioned. */

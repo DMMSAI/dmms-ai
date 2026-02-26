@@ -27,19 +27,19 @@ describe("session path safety", () => {
   });
 
   it("resolves transcript path inside an explicit sessions dir", () => {
-    const sessionsDir = "/tmp/dmms-ai/agents/main/sessions";
+    const sessionsDir = "/tmp/dryads-ai/agents/main/sessions";
     const resolved = resolveSessionTranscriptPathInDir("sess-1", sessionsDir, "topic/a+b");
 
     expect(resolved).toBe(path.resolve(sessionsDir, "sess-1-topic-topic%2Fa%2Bb.jsonl"));
   });
 
   it("rejects absolute sessionFile paths outside known agent sessions dirs", () => {
-    const sessionsDir = "/tmp/dmms-ai/agents/main/sessions";
+    const sessionsDir = "/tmp/dryads-ai/agents/main/sessions";
 
     expect(() =>
       resolveSessionFilePath(
         "sess-1",
-        { sessionFile: "/tmp/dmms-ai/agents/work/not-sessions/abc-123.jsonl" },
+        { sessionFile: "/tmp/dryads-ai/agents/work/not-sessions/abc-123.jsonl" },
         { sessionsDir },
       ),
     ).toThrow(/within sessions directory/);
@@ -84,7 +84,7 @@ describe("session store lock (Promise chain mutex)", () => {
   }
 
   beforeAll(async () => {
-    lockFixtureRoot = await fsPromises.mkdtemp(path.join(os.tmpdir(), "dmms-ai-lock-test-"));
+    lockFixtureRoot = await fsPromises.mkdtemp(path.join(os.tmpdir(), "dryads-ai-lock-test-"));
   });
 
   afterAll(async () => {

@@ -30,17 +30,17 @@ Prefer localhost, Tailscale Serve, or an SSH tunnel.
 ## Fast path (recommended)
 
 - After onboarding, the CLI auto-opens the dashboard and prints a clean (non-tokenized) link.
-- Re-open anytime: `dmms-ai dashboard` (copies link, opens browser if possible, shows SSH hint if headless).
-- If the UI prompts for auth, paste the token from `gateway.auth.token` (or `DMMS_AI_GATEWAY_TOKEN`) into Control UI settings.
+- Re-open anytime: `dryads-ai dashboard` (copies link, opens browser if possible, shows SSH hint if headless).
+- If the UI prompts for auth, paste the token from `gateway.auth.token` (or `DRYADS_AI_GATEWAY_TOKEN`) into Control UI settings.
 
 ## Token basics (local vs remote)
 
 - **Localhost**: open `http://127.0.0.1:18789/`.
-- **Token source**: `gateway.auth.token` (or `DMMS_AI_GATEWAY_TOKEN`); the UI stores a copy in localStorage after you connect.
+- **Token source**: `gateway.auth.token` (or `DRYADS_AI_GATEWAY_TOKEN`); the UI stores a copy in localStorage after you connect.
 - **Not localhost**: use Tailscale Serve (tokenless if `gateway.auth.allowTailscale: true`), tailnet bind with a token, or an SSH tunnel. See [Web surfaces](/web).
 
 ## If you see “unauthorized” / 1008
 
-- Ensure the gateway is reachable (local: `dmms-ai status`; remote: SSH tunnel `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/`).
-- Retrieve the token from the gateway host: `dmms-ai config get gateway.auth.token` (or generate one: `dmms-ai doctor --generate-gateway-token`).
+- Ensure the gateway is reachable (local: `dryads-ai status`; remote: SSH tunnel `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/`).
+- Retrieve the token from the gateway host: `dryads-ai config get gateway.auth.token` (or generate one: `dryads-ai doctor --generate-gateway-token`).
 - In the dashboard settings, paste the token into the auth field, then connect.

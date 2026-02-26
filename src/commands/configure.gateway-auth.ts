@@ -1,5 +1,5 @@
 import { ensureAuthProfileStore } from "../agents/auth-profiles.js";
-import type { DmmsAiConfig, GatewayAuthConfig } from "../config/config.js";
+import type { DryadsAiConfig, GatewayAuthConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { promptAuthChoiceGrouped } from "./auth-choice-prompt.js";
@@ -72,10 +72,10 @@ export function buildGatewayAuthConfig(params: {
 }
 
 export async function promptAuthConfig(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   runtime: RuntimeEnv,
   prompter: WizardPrompter,
-): Promise<DmmsAiConfig> {
+): Promise<DryadsAiConfig> {
   const authChoice = await promptAuthChoiceGrouped({
     prompter,
     store: ensureAuthProfileStore(undefined, {

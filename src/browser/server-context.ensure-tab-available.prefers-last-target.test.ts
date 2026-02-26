@@ -31,7 +31,7 @@ function makeBrowserState(): BrowserServerState {
           cdpPort: 18792,
           color: "#00AA00",
         },
-        "dmms-ai": { cdpPort: 18800, color: "#FF4500" },
+        "dryads-ai": { cdpPort: 18800, color: "#FF4500" },
       },
     },
     profiles: new Map(),

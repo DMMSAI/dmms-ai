@@ -65,25 +65,25 @@ export function extractGatewayMiskeys(parsed: unknown): {
 }
 
 export function renderGatewayServiceStopHints(env: NodeJS.ProcessEnv = process.env): string[] {
-  const profile = env.DMMS_AI_PROFILE;
+  const profile = env.DRYADS_AI_PROFILE;
   switch (process.platform) {
     case "darwin":
       return [
-        `Tip: ${formatCliCommand("dmms-ai gateway stop")}`,
+        `Tip: ${formatCliCommand("dryads-ai gateway stop")}`,
         `Or: launchctl bootout gui/$UID/${resolveGatewayLaunchAgentLabel(profile)}`,
       ];
     case "linux":
       return [
-        `Tip: ${formatCliCommand("dmms-ai gateway stop")}`,
+        `Tip: ${formatCliCommand("dryads-ai gateway stop")}`,
         `Or: systemctl --user stop ${resolveGatewaySystemdServiceName(profile)}.service`,
       ];
     case "win32":
       return [
-        `Tip: ${formatCliCommand("dmms-ai gateway stop")}`,
+        `Tip: ${formatCliCommand("dryads-ai gateway stop")}`,
         `Or: schtasks /End /TN "${resolveGatewayWindowsTaskName(profile)}"`,
       ];
     default:
-      return [`Tip: ${formatCliCommand("dmms-ai gateway stop")}`];
+      return [`Tip: ${formatCliCommand("dryads-ai gateway stop")}`];
   }
 }
 

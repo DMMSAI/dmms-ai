@@ -4,11 +4,11 @@ title: "Pi Integration Architecture"
 
 # Pi Integration Architecture
 
-This document describes how DMMS AI integrates with [pi-coding-agent](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) and its sibling packages (`pi-ai`, `pi-agent-core`, `pi-tui`) to power its AI agent capabilities.
+This document describes how Dryads AI integrates with [pi-coding-agent](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) and its sibling packages (`pi-ai`, `pi-agent-core`, `pi-tui`) to power its AI agent capabilities.
 
 ## Overview
 
-DMMS AI uses the pi SDK to embed an AI coding agent into its messaging gateway architecture. Instead of spawning pi as a subprocess or using RPC mode, DMMS AI directly imports and instantiates pi's `AgentSession` via `createAgentSession()`. This embedded approach provides:
+Dryads AI uses the pi SDK to embed an AI coding agent into its messaging gateway architecture. Instead of spawning pi as a subprocess or using RPC mode, Dryads AI directly imports and instantiates pi's `AgentSession` via `createAgentSession()`. This embedded approach provides:
 
 - Full control over session lifecycle and event handling
 - Custom tool injection (messaging, sandbox, channel-specific actions)
@@ -33,7 +33,7 @@ DMMS AI uses the pi SDK to embed an AI coding agent into its messaging gateway a
 | `pi-ai`           | Core LLM abstractions: `Model`, `streamSimple`, message types, provider APIs                           |
 | `pi-agent-core`   | Agent loop, tool execution, `AgentMessage` types                                                       |
 | `pi-coding-agent` | High-level SDK: `createAgentSession`, `SessionManager`, `AuthStorage`, `ModelRegistry`, built-in tools |
-| `pi-tui`          | Terminal UI components (used in DMMS AI's local TUI mode)                                              |
+| `pi-tui`          | Terminal UI components (used in Dryads AI's local TUI mode)                                            |
 
 ## File Structure
 
@@ -76,7 +76,7 @@ src/agents/
 ├── pi-embedded-helpers.ts         # Error classification, turn validation
 ├── pi-embedded-helpers/           # Helper modules
 ├── pi-embedded-utils.ts           # Formatting utilities
-├── pi-tools.ts                    # createDmmsAiCodingTools()
+├── pi-tools.ts                    # createDryadsAiCodingTools()
 ├── pi-tools.abort.ts              # AbortSignal wrapping for tools
 ├── pi-tools.policy.ts             # Tool allowlist/denylist policy
 ├── pi-tools.read.ts               # Read tool customizations
@@ -108,7 +108,7 @@ src/agents/
 ├── sandbox.ts                     # Sandbox context resolution
 ├── sandbox/                       # Sandbox subsystem
 ├── channel-tools.ts               # Channel-specific tool injection
-├── dmms-ai-tools.ts              # DMMS AI-specific tools
+├── dryads-ai-tools.ts              # Dryads AI-specific tools
 ├── bash-tools.ts                  # exec/process tools
 ├── apply-patch.ts                 # apply_patch tool (OpenAI)
 ├── tools/                         # Individual tool implementations
@@ -142,7 +142,7 @@ const result = await runEmbeddedPiAgent({
   sessionKey: "main:whatsapp:+1234567890",
   sessionFile: "/path/to/session.jsonl",
   workspaceDir: "/path/to/workspace",
-  config: dmmsAiConfig,
+  config: dryadsAiConfig,
   prompt: "Hello, how are you?",
   provider: "anthropic",
   model: "claude-sonnet-4-20250514",
@@ -233,8 +233,8 @@ The SDK handles the full agent loop: sending to LLM, executing tool calls, strea
 ### Tool Pipeline
 
 1. **Base Tools**: pi's `codingTools` (read, bash, edit, write)
-2. **Custom Replacements**: DMMS AI replaces bash with `exec`/`process`, customizes read/edit/write for sandbox
-3. **DMMS AI Tools**: messaging, browser, canvas, sessions, cron, gateway, etc.
+2. **Custom Replacements**: Dryads AI replaces bash with `exec`/`process`, customizes read/edit/write for sandbox
+3. **Dryads AI Tools**: messaging, browser, canvas, sessions, cron, gateway, etc.
 4. **Channel Tools**: Discord/Telegram/Slack/WhatsApp-specific action tools
 5. **Policy Filtering**: Tools filtered by profile, provider, agent, group, sandbox policies
 6. **Schema Normalization**: Schemas cleaned for Gemini/OpenAI quirks
@@ -272,11 +272,11 @@ export function splitSdkTools(options: { tools: AnyAgentTool[]; sandboxEnabled: 
 }
 ```
 
-This ensures DMMS AI's policy filtering, sandbox integration, and extended toolset remain consistent across providers.
+This ensures Dryads AI's policy filtering, sandbox integration, and extended toolset remain consistent across providers.
 
 ## System Prompt Construction
 
-The system prompt is built in `buildAgentSystemPrompt()` (`system-prompt.ts`). It assembles a full prompt with sections including Tooling, Tool Call Style, Safety guardrails, DMMS AI CLI reference, Skills, Docs, Workspace, Sandbox, Messaging, Reply Tags, Voice, Silent Replies, Heartbeats, Runtime metadata, plus Memory and Reactions when enabled, and optional context files and extra system prompt content. Sections are trimmed for minimal prompt mode used by subagents.
+The system prompt is built in `buildAgentSystemPrompt()` (`system-prompt.ts`). It assembles a full prompt with sections including Tooling, Tool Call Style, Safety guardrails, Dryads AI CLI reference, Skills, Docs, Workspace, Sandbox, Messaging, Reply Tags, Voice, Silent Replies, Heartbeats, Runtime metadata, plus Memory and Reactions when enabled, and optional context files and extra system prompt content. Sections are trimmed for minimal prompt mode used by subagents.
 
 The prompt is applied after session creation via `applySystemPromptOverrideToSession()`:
 
@@ -295,7 +295,7 @@ Sessions are JSONL files with tree structure (id/parentId linking). Pi's `Sessio
 const sessionManager = SessionManager.open(params.sessionFile);
 ```
 
-DMMS AI wraps this with `guardSessionManager()` for tool result safety.
+Dryads AI wraps this with `guardSessionManager()` for tool result safety.
 
 ### Session Caching
 
@@ -325,7 +325,7 @@ const compactResult = await compactEmbeddedPiSessionDirect({
 
 ### Auth Profiles
 
-DMMS AI maintains an auth profile store with multiple API keys per provider:
+Dryads AI maintains an auth profile store with multiple API keys per provider:
 
 ```typescript
 const authStore = ensureAuthProfileStore(agentDir, { allowKeychainPrompt: false });
@@ -373,7 +373,7 @@ if (fallbackConfigured && isFailoverErrorMessage(errorText)) {
 
 ## Pi Extensions
 
-DMMS AI loads custom pi extensions for specialized behavior:
+Dryads AI loads custom pi extensions for specialized behavior:
 
 ### Compaction Safeguard
 
@@ -500,7 +500,7 @@ if (sandboxRoot) {
 
 ## TUI Integration
 
-DMMS AI also has a local TUI mode that uses pi-tui components directly:
+Dryads AI also has a local TUI mode that uses pi-tui components directly:
 
 ```typescript
 // src/tui/tui.ts
@@ -511,15 +511,15 @@ This provides the interactive terminal experience similar to pi's native mode.
 
 ## Key Differences from Pi CLI
 
-| Aspect          | Pi CLI                  | DMMS AI Embedded                                                                             |
-| --------------- | ----------------------- | -------------------------------------------------------------------------------------------- |
-| Invocation      | `pi` command / RPC      | SDK via `createAgentSession()`                                                               |
-| Tools           | Default coding tools    | Custom DMMS AI tool suite                                                                    |
-| System prompt   | AGENTS.md + prompts     | Dynamic per-channel/context                                                                  |
-| Session storage | `~/.pi/agent/sessions/` | `~/.dmms-ai/agents/<agentId>/sessions/` (or `$DMMS_AI_STATE_DIR/agents/<agentId>/sessions/`) |
-| Auth            | Single credential       | Multi-profile with rotation                                                                  |
-| Extensions      | Loaded from disk        | Programmatic + disk paths                                                                    |
-| Event handling  | TUI rendering           | Callback-based (onBlockReply, etc.)                                                          |
+| Aspect          | Pi CLI                  | Dryads AI Embedded                                                                               |
+| --------------- | ----------------------- | ------------------------------------------------------------------------------------------------ |
+| Invocation      | `pi` command / RPC      | SDK via `createAgentSession()`                                                                   |
+| Tools           | Default coding tools    | Custom Dryads AI tool suite                                                                      |
+| System prompt   | AGENTS.md + prompts     | Dynamic per-channel/context                                                                      |
+| Session storage | `~/.pi/agent/sessions/` | `~/.dryads-ai/agents/<agentId>/sessions/` (or `$DRYADS_AI_STATE_DIR/agents/<agentId>/sessions/`) |
+| Auth            | Single credential       | Multi-profile with rotation                                                                      |
+| Extensions      | Loaded from disk        | Programmatic + disk paths                                                                        |
+| Event handling  | TUI rendering           | Callback-based (onBlockReply, etc.)                                                              |
 
 ## Future Considerations
 
@@ -603,10 +603,10 @@ All existing tests that cover the pi integration and its extensions:
 - `src/agents/pi-settings.test.ts`
 - `src/agents/pi-tool-definition-adapter.test.ts`
 - `src/agents/pi-tools-agent-config.test.ts`
-- `src/agents/pi-tools.create-dmms-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping-b.test.ts`
-- `src/agents/pi-tools.create-dmms-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping-d.test.ts`
-- `src/agents/pi-tools.create-dmms-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping-f.test.ts`
-- `src/agents/pi-tools.create-dmms-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping.test.ts`
+- `src/agents/pi-tools.create-dryads-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping-b.test.ts`
+- `src/agents/pi-tools.create-dryads-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping-d.test.ts`
+- `src/agents/pi-tools.create-dryads-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping-f.test.ts`
+- `src/agents/pi-tools.create-dryads-ai-coding-tools.adds-claude-style-aliases-schemas-without-dropping.test.ts`
 - `src/agents/pi-tools.policy.test.ts`
 - `src/agents/pi-tools.safe-bins.test.ts`
 - `src/agents/pi-tools.workspace-paths.test.ts`

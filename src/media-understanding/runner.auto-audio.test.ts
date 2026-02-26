@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { MsgContext } from "../auto-reply/templating.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   buildProviderRegistry,
   createMediaAttachmentCache,
@@ -20,7 +20,7 @@ async function withAudioFixture(
 ) {
   const originalPath = process.env.PATH;
   process.env.PATH = "/usr/bin:/bin";
-  const tmpPath = path.join(os.tmpdir(), `dmms-ai-auto-audio-${Date.now()}.wav`);
+  const tmpPath = path.join(os.tmpdir(), `dryads-ai-auto-audio-${Date.now()}.wav`);
   await fs.writeFile(tmpPath, Buffer.from("RIFF"));
   const ctx: MsgContext = { MediaPath: tmpPath, MediaType: "audio/wav" };
   const media = normalizeMediaAttachments(ctx);
@@ -47,7 +47,7 @@ function createOpenAiAudioProvider(
   });
 }
 
-function createOpenAiAudioCfg(extra?: Partial<DmmsAiConfig>): DmmsAiConfig {
+function createOpenAiAudioCfg(extra?: Partial<DryadsAiConfig>): DryadsAiConfig {
   return {
     models: {
       providers: {
@@ -58,7 +58,7 @@ function createOpenAiAudioCfg(extra?: Partial<DmmsAiConfig>): DmmsAiConfig {
       },
     },
     ...extra,
-  } as unknown as DmmsAiConfig;
+  } as unknown as DryadsAiConfig;
 }
 
 describe("runCapability auto audio entries", () => {

@@ -1,5 +1,5 @@
 ---
-summary: "DMMS AI Gateway CLI (`dmms-ai gateway`) — run, query, and discover gateways"
+summary: "Dryads AI Gateway CLI (`dryads-ai gateway`) — run, query, and discover gateways"
 read_when:
   - Running the Gateway from the CLI (dev or servers)
   - Debugging Gateway auth, bind modes, and connectivity
@@ -9,9 +9,9 @@ title: "gateway"
 
 # Gateway CLI
 
-The Gateway is DMMS AI’s WebSocket server (channels, nodes, sessions, hooks).
+The Gateway is Dryads AI’s WebSocket server (channels, nodes, sessions, hooks).
 
-Subcommands in this page live under `dmms-ai gateway …`.
+Subcommands in this page live under `dryads-ai gateway …`.
 
 Related docs:
 
@@ -24,18 +24,18 @@ Related docs:
 Run a local Gateway process:
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
 Foreground alias:
 
 ```bash
-dmms-ai gateway run
+dryads-ai gateway run
 ```
 
 Notes:
 
-- By default, the Gateway refuses to start unless `gateway.mode=local` is set in `~/.dmms-ai/dmms-ai.json`. Use `--allow-unconfigured` for ad-hoc/dev runs.
+- By default, the Gateway refuses to start unless `gateway.mode=local` is set in `~/.dryads-ai/dryads-ai.json`. Use `--allow-unconfigured` for ad-hoc/dev runs.
 - Binding beyond loopback without auth is blocked (safety guardrail).
 - `SIGUSR1` triggers an in-process restart when authorized (enable `commands.restart` or use the gateway tool/config apply/update).
 - `SIGINT`/`SIGTERM` handlers stop the gateway process, but they don’t restore any custom terminal state. If you wrap the CLI with a TUI or raw-mode input, restore the terminal before exit.
@@ -45,8 +45,8 @@ Notes:
 - `--port <port>`: WebSocket port (default comes from config/env; usually `18789`).
 - `--bind <loopback|lan|tailnet|auto|custom>`: listener bind mode.
 - `--auth <token|password>`: auth mode override.
-- `--token <token>`: token override (also sets `DMMS_AI_GATEWAY_TOKEN` for the process).
-- `--password <password>`: password override (also sets `DMMS_AI_GATEWAY_PASSWORD` for the process).
+- `--token <token>`: token override (also sets `DRYADS_AI_GATEWAY_TOKEN` for the process).
+- `--password <password>`: password override (also sets `DRYADS_AI_GATEWAY_PASSWORD` for the process).
 - `--tailscale <off|serve|funnel>`: expose the Gateway via Tailscale.
 - `--tailscale-reset-on-exit`: reset Tailscale serve/funnel config on shutdown.
 - `--allow-unconfigured`: allow gateway start without `gateway.mode=local` in config.
@@ -84,7 +84,7 @@ Pass `--token` or `--password` explicitly. Missing explicit credentials is an er
 ### `gateway health`
 
 ```bash
-dmms-ai gateway health --url ws://127.0.0.1:18789
+dryads-ai gateway health --url ws://127.0.0.1:18789
 ```
 
 ### `gateway status`
@@ -92,8 +92,8 @@ dmms-ai gateway health --url ws://127.0.0.1:18789
 `gateway status` shows the Gateway service (launchd/systemd/schtasks) plus an optional RPC probe.
 
 ```bash
-dmms-ai gateway status
-dmms-ai gateway status --json
+dryads-ai gateway status
+dryads-ai gateway status --json
 ```
 
 Options:
@@ -115,8 +115,8 @@ Options:
 If multiple gateways are reachable, it prints all of them. Multiple gateways are supported when you use isolated profiles/ports (e.g., a rescue bot), but most installs still run a single gateway.
 
 ```bash
-dmms-ai gateway probe
-dmms-ai gateway probe --json
+dryads-ai gateway probe
+dryads-ai gateway probe --json
 ```
 
 #### Remote over SSH (Mac app parity)
@@ -126,7 +126,7 @@ The macOS app “Remote over SSH” mode uses a local port-forward so the remote
 CLI equivalent:
 
 ```bash
-dmms-ai gateway probe --ssh user@gateway-host
+dryads-ai gateway probe --ssh user@gateway-host
 ```
 
 Options:
@@ -145,18 +145,18 @@ Config (optional, used as defaults):
 Low-level RPC helper.
 
 ```bash
-dmms-ai gateway call status
-dmms-ai gateway call logs.tail --params '{"sinceMs": 60000}'
+dryads-ai gateway call status
+dryads-ai gateway call logs.tail --params '{"sinceMs": 60000}'
 ```
 
 ## Manage the Gateway service
 
 ```bash
-dmms-ai gateway install
-dmms-ai gateway start
-dmms-ai gateway stop
-dmms-ai gateway restart
-dmms-ai gateway uninstall
+dryads-ai gateway install
+dryads-ai gateway start
+dryads-ai gateway stop
+dryads-ai gateway restart
+dryads-ai gateway uninstall
 ```
 
 Notes:
@@ -166,10 +166,10 @@ Notes:
 
 ## Discover gateways (Bonjour)
 
-`gateway discover` scans for Gateway beacons (`_dmms-ai-gw._tcp`).
+`gateway discover` scans for Gateway beacons (`_dryads-ai-gw._tcp`).
 
 - Multicast DNS-SD: `local.`
-- Unicast DNS-SD (Wide-Area Bonjour): choose a domain (example: `dmms-ai.internal.`) and set up split DNS + a DNS server; see [/gateway/bonjour](/gateway/bonjour)
+- Unicast DNS-SD (Wide-Area Bonjour): choose a domain (example: `dryads-ai.internal.`) and set up split DNS + a DNS server; see [/gateway/bonjour](/gateway/bonjour)
 
 Only gateways with Bonjour discovery enabled (default) advertise the beacon.
 
@@ -186,7 +186,7 @@ Wide-Area discovery records include (TXT):
 ### `gateway discover`
 
 ```bash
-dmms-ai gateway discover
+dryads-ai gateway discover
 ```
 
 Options:
@@ -197,6 +197,6 @@ Options:
 Examples:
 
 ```bash
-dmms-ai gateway discover --timeout 4000
-dmms-ai gateway discover --json | jq '.beacons[].wsUrl'
+dryads-ai gateway discover --timeout 4000
+dryads-ai gateway discover --json | jq '.beacons[].wsUrl'
 ```

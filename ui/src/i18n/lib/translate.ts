@@ -19,7 +19,7 @@ class I18nManager {
   }
 
   private loadLocale() {
-    const saved = localStorage.getItem("dmms-ai.i18n.locale");
+    const saved = localStorage.getItem("dryads-ai.i18n.locale");
     if (isSupportedLocale(saved)) {
       this.locale = saved;
     } else {
@@ -64,7 +64,7 @@ class I18nManager {
     }
 
     this.locale = locale;
-    localStorage.setItem("dmms-ai.i18n.locale", locale);
+    localStorage.setItem("dryads-ai.i18n.locale", locale);
     this.notify();
   }
 

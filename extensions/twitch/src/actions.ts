@@ -116,7 +116,7 @@ export const twitchMessageActions: ChannelMessageActionAdapter = {
    * const result = await twitchMessageActions.handleAction!({
    *   action: "send",
    *   params: { message: "Hello Twitch!", to: "#mychannel" },
-   *   cfg: dmmsAiConfig,
+   *   cfg: dryadsAiConfig,
    *   accountId: "default",
    * });
    */

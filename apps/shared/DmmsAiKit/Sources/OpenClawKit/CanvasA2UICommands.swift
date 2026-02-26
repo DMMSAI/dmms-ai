@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiCanvasA2UICommand: String, Codable, Sendable {
+public enum DryadsAiCanvasA2UICommand: String, Codable, Sendable {
     /// Render A2UI content on the device canvas.
     case push = "canvas.a2ui.push"
     /// Legacy alias for `push` when sending JSONL.
@@ -9,7 +9,7 @@ public enum DmmsAiCanvasA2UICommand: String, Codable, Sendable {
     case reset = "canvas.a2ui.reset"
 }
 
-public struct DmmsAiCanvasA2UIPushParams: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasA2UIPushParams: Codable, Sendable, Equatable {
     public var messages: [AnyCodable]
 
     public init(messages: [AnyCodable]) {
@@ -17,7 +17,7 @@ public struct DmmsAiCanvasA2UIPushParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiCanvasA2UIPushJSONLParams: Codable, Sendable, Equatable {
+public struct DryadsAiCanvasA2UIPushJSONLParams: Codable, Sendable, Equatable {
     public var jsonl: String
 
     public init(jsonl: String) {

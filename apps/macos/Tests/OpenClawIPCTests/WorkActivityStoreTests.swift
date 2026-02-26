@@ -1,7 +1,7 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite
 @MainActor
@@ -68,7 +68,7 @@ struct WorkActivityStoreTests {
             meta: nil,
             args: [
                 "command": AnyCodable("echo hi\necho bye"),
-                "path": AnyCodable("\(home)/Projects/dmms-ai"),
+                "path": AnyCodable("\(home)/Projects/dryads-ai"),
             ])
 
         #expect(store.current?.label == "bash: echo hi")

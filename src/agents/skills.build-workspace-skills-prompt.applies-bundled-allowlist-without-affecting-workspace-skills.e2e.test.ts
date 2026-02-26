@@ -7,7 +7,7 @@ import { buildWorkspaceSkillsPrompt } from "./skills.js";
 
 describe("buildWorkspaceSkillsPrompt", () => {
   it("applies bundled allowlist without affecting workspace skills", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-"));
     const bundledDir = path.join(workspaceDir, ".bundled");
     const bundledSkillDir = path.join(bundledDir, "peekaboo");
     const workspaceSkillDir = path.join(workspaceDir, "skills", "demo-skill");

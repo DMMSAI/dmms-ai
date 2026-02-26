@@ -1,11 +1,11 @@
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { buildWorkspaceSkillStatus } from "../agents/skills-status.js";
-import type { DmmsAiConfig } from "../config/config.js";
-import { loadDmmsAiPlugins } from "../plugins/loader.js";
+import type { DryadsAiConfig } from "../config/config.js";
+import { loadDryadsAiPlugins } from "../plugins/loader.js";
 import { note } from "../terminal/note.js";
 import { detectLegacyWorkspaceDirs, formatLegacyWorkspaceWarning } from "./doctor-workspace.js";
 
-export function noteWorkspaceStatus(cfg: DmmsAiConfig) {
+export function noteWorkspaceStatus(cfg: DryadsAiConfig) {
   const workspaceDir = resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
   const legacyWorkspace = detectLegacyWorkspaceDirs({ workspaceDir });
   if (legacyWorkspace.legacyDirs.length > 0) {
@@ -25,7 +25,7 @@ export function noteWorkspaceStatus(cfg: DmmsAiConfig) {
     "Skills status",
   );
 
-  const pluginRegistry = loadDmmsAiPlugins({
+  const pluginRegistry = loadDryadsAiPlugins({
     config: cfg,
     workspaceDir,
     logger: {

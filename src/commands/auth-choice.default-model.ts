@@ -1,17 +1,17 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { ensureModelAllowlistEntry } from "./model-allowlist.js";
 
 export async function applyDefaultModelChoice(params: {
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
   setDefaultModel: boolean;
   defaultModel: string;
-  applyDefaultConfig: (config: DmmsAiConfig) => DmmsAiConfig;
-  applyProviderConfig: (config: DmmsAiConfig) => DmmsAiConfig;
+  applyDefaultConfig: (config: DryadsAiConfig) => DryadsAiConfig;
+  applyProviderConfig: (config: DryadsAiConfig) => DryadsAiConfig;
   noteDefault?: string;
   noteAgentModel: (model: string) => Promise<void>;
   prompter: WizardPrompter;
-}): Promise<{ config: DmmsAiConfig; agentModelOverride?: string }> {
+}): Promise<{ config: DryadsAiConfig; agentModelOverride?: string }> {
   if (params.setDefaultModel) {
     const next = params.applyDefaultConfig(params.config);
     if (params.noteDefault) {

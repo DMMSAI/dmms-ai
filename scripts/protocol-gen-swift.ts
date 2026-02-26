@@ -15,14 +15,14 @@ type JsonSchema = {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const outPaths = [
-  path.join(repoRoot, "apps", "macos", "Sources", "DmmsAiProtocol", "GatewayModels.swift"),
+  path.join(repoRoot, "apps", "macos", "Sources", "DryadsAiProtocol", "GatewayModels.swift"),
   path.join(
     repoRoot,
     "apps",
     "shared",
-    "DmmsAiKit",
+    "DryadsAiKit",
     "Sources",
-    "DmmsAiProtocol",
+    "DryadsAiProtocol",
     "GatewayModels.swift",
   ),
 ];

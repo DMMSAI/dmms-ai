@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { resolveDmmsAiAgentDir } from "./agent-paths.js";
+import { resolveDryadsAiAgentDir } from "./agent-paths.js";
 import {
   CUSTOM_PROXY_MODELS_CONFIG,
   installModelsConfigTestHooks,
@@ -10,7 +10,7 @@ import {
   withTempEnv,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureDmmsAiModelsJson } from "./models-config.js";
+import { ensureDryadsAiModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks();
 
@@ -31,9 +31,9 @@ async function runEnvProviderCase(params: {
   const previousValue = process.env[params.envVar];
   process.env[params.envVar] = params.envValue;
   try {
-    await ensureDmmsAiModelsJson({});
+    await ensureDryadsAiModelsJson({});
 
-    const modelPath = path.join(resolveDmmsAiAgentDir(), "models.json");
+    const modelPath = path.join(resolveDryadsAiAgentDir(), "models.json");
     const raw = await fs.readFile(modelPath, "utf8");
     const parsed = JSON.parse(raw) as { providers: Record<string, ProviderConfig> };
     const provider = parsed.providers[params.providerKey];
@@ -60,10 +60,10 @@ describe("models-config", () => {
 
         const agentDir = path.join(home, "agent-empty");
         // ensureAuthProfileStore merges the main auth store into non-main dirs; point main at our temp dir.
-        process.env.DMMS_AI_AGENT_DIR = agentDir;
+        process.env.DRYADS_AI_AGENT_DIR = agentDir;
         process.env.PI_CODING_AGENT_DIR = agentDir;
 
-        const result = await ensureDmmsAiModelsJson(
+        const result = await ensureDryadsAiModelsJson(
           {
             models: { providers: {} },
           },
@@ -78,9 +78,9 @@ describe("models-config", () => {
 
   it("writes models.json for configured providers", async () => {
     await withTempHome(async () => {
-      await ensureDmmsAiModelsJson(CUSTOM_PROXY_MODELS_CONFIG);
+      await ensureDryadsAiModelsJson(CUSTOM_PROXY_MODELS_CONFIG);
 
-      const modelPath = path.join(resolveDmmsAiAgentDir(), "models.json");
+      const modelPath = path.join(resolveDryadsAiAgentDir(), "models.json");
       const raw = await fs.readFile(modelPath, "utf8");
       const parsed = JSON.parse(raw) as {
         providers: Record<string, { baseUrl?: string }>;

@@ -142,9 +142,9 @@ describe("sessions.usage", () => {
 
   it("resolves store entries by sessionId when queried via discovered agent-prefixed key", async () => {
     const storeKey = "agent:opus:slack:dm:u123";
-    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-usage-test-"));
-    const envSnapshot = captureEnv(["DMMS_AI_STATE_DIR"]);
-    process.env.DMMS_AI_STATE_DIR = stateDir;
+    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-usage-test-"));
+    const envSnapshot = captureEnv(["DRYADS_AI_STATE_DIR"]);
+    process.env.DRYADS_AI_STATE_DIR = stateDir;
 
     try {
       const agentSessionsDir = path.join(stateDir, "agents", "opus", "sessions");

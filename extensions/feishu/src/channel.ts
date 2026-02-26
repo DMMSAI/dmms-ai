@@ -1,10 +1,10 @@
-import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "dmms-ai/plugin-sdk";
+import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "dryads-ai/plugin-sdk";
 import {
   buildBaseChannelStatusSummary,
   createDefaultChannelRuntimeState,
   DEFAULT_ACCOUNT_ID,
   PAIRING_APPROVED_MESSAGE,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   resolveFeishuAccount,
   resolveFeishuCredentials,

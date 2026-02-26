@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `dmms-ai agents` (list/add/delete/set identity)"
+summary: "CLI reference for `dryads-ai agents` (list/add/delete/set identity)"
 read_when:
   - You want multiple isolated agents (workspaces + routing + auth)
 title: "agents"
 ---
 
-# `dmms-ai agents`
+# `dryads-ai agents`
 
 Manage isolated agents (workspaces + auth + routing).
 
@@ -17,18 +17,18 @@ Related:
 ## Examples
 
 ```bash
-dmms-ai agents list
-dmms-ai agents add work --workspace ~/.dmms-ai/workspace-work
-dmms-ai agents set-identity --workspace ~/.dmms-ai/workspace --from-identity
-dmms-ai agents set-identity --agent main --avatar avatars/dmms-ai.png
-dmms-ai agents delete work
+dryads-ai agents list
+dryads-ai agents add work --workspace ~/.dryads-ai/workspace-work
+dryads-ai agents set-identity --workspace ~/.dryads-ai/workspace --from-identity
+dryads-ai agents set-identity --agent main --avatar avatars/dryads-ai.png
+dryads-ai agents delete work
 ```
 
 ## Identity files
 
 Each agent workspace can include an `IDENTITY.md` at the workspace root:
 
-- Example path: `~/.dmms-ai/workspace/IDENTITY.md`
+- Example path: `~/.dryads-ai/workspace/IDENTITY.md`
 - `set-identity --from-identity` reads from the workspace root (or an explicit `--identity-file`)
 
 Avatar paths resolve relative to the workspace root.
@@ -45,13 +45,13 @@ Avatar paths resolve relative to the workspace root.
 Load from `IDENTITY.md`:
 
 ```bash
-dmms-ai agents set-identity --workspace ~/.dmms-ai/workspace --from-identity
+dryads-ai agents set-identity --workspace ~/.dryads-ai/workspace --from-identity
 ```
 
 Override fields explicitly:
 
 ```bash
-dmms-ai agents set-identity --agent main --name "DMMS AI" --emoji "🦞" --avatar avatars/dmms-ai.png
+dryads-ai agents set-identity --agent main --name "Dryads AI" --emoji "🦞" --avatar avatars/dryads-ai.png
 ```
 
 Config sample:
@@ -63,10 +63,10 @@ Config sample:
       {
         id: "main",
         identity: {
-          name: "DMMS AI",
+          name: "Dryads AI",
           theme: "space lobster",
           emoji: "🦞",
-          avatar: "avatars/dmms-ai.png",
+          avatar: "avatars/dryads-ai.png",
         },
       },
     ],

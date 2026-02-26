@@ -1,6 +1,6 @@
-package ai.dmmsai.android.protocol
+package ai.dryadsai.android.protocol
 
-enum class DmmsAiCapability(val rawValue: String) {
+enum class DryadsAiCapability(val rawValue: String) {
   Canvas("canvas"),
   Camera("camera"),
   Screen("screen"),
@@ -9,7 +9,7 @@ enum class DmmsAiCapability(val rawValue: String) {
   Location("location"),
 }
 
-enum class DmmsAiCanvasCommand(val rawValue: String) {
+enum class DryadsAiCanvasCommand(val rawValue: String) {
   Present("canvas.present"),
   Hide("canvas.hide"),
   Navigate("canvas.navigate"),
@@ -22,7 +22,7 @@ enum class DmmsAiCanvasCommand(val rawValue: String) {
   }
 }
 
-enum class DmmsAiCanvasA2UICommand(val rawValue: String) {
+enum class DryadsAiCanvasA2UICommand(val rawValue: String) {
   Push("canvas.a2ui.push"),
   PushJSONL("canvas.a2ui.pushJSONL"),
   Reset("canvas.a2ui.reset"),
@@ -33,7 +33,7 @@ enum class DmmsAiCanvasA2UICommand(val rawValue: String) {
   }
 }
 
-enum class DmmsAiCameraCommand(val rawValue: String) {
+enum class DryadsAiCameraCommand(val rawValue: String) {
   Snap("camera.snap"),
   Clip("camera.clip"),
   ;
@@ -43,7 +43,7 @@ enum class DmmsAiCameraCommand(val rawValue: String) {
   }
 }
 
-enum class DmmsAiScreenCommand(val rawValue: String) {
+enum class DryadsAiScreenCommand(val rawValue: String) {
   Record("screen.record"),
   ;
 
@@ -52,7 +52,7 @@ enum class DmmsAiScreenCommand(val rawValue: String) {
   }
 }
 
-enum class DmmsAiSmsCommand(val rawValue: String) {
+enum class DryadsAiSmsCommand(val rawValue: String) {
   Send("sms.send"),
   ;
 
@@ -61,7 +61,7 @@ enum class DmmsAiSmsCommand(val rawValue: String) {
   }
 }
 
-enum class DmmsAiLocationCommand(val rawValue: String) {
+enum class DryadsAiLocationCommand(val rawValue: String) {
   Get("location.get"),
   ;
 

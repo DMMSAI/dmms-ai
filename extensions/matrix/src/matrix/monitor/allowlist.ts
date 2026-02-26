@@ -1,4 +1,4 @@
-import type { AllowlistMatch } from "dmms-ai/plugin-sdk";
+import type { AllowlistMatch } from "dryads-ai/plugin-sdk";
 
 function normalizeAllowList(list?: Array<string | number>) {
   return (list ?? []).map((entry) => String(entry).trim()).filter(Boolean);

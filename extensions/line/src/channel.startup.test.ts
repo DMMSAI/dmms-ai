@@ -1,11 +1,11 @@
 import type {
   ChannelGatewayContext,
   ChannelAccountSnapshot,
-  DmmsAiConfig,
+  DryadsAiConfig,
   PluginRuntime,
   ResolvedLineAccount,
   RuntimeEnv,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import { describe, expect, it, vi } from "vitest";
 import { linePlugin } from "./channel.js";
 import { setLineRuntime } from "./runtime.js";
@@ -64,7 +64,7 @@ function createStartAccountCtx(params: {
       tokenSource: "config" as const,
       config: {} as ResolvedLineAccount["config"],
     },
-    cfg: {} as DmmsAiConfig,
+    cfg: {} as DryadsAiConfig,
     runtime: params.runtime,
     abortSignal: new AbortController().signal,
     log: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() },

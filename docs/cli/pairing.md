@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `dmms-ai pairing` (approve/list pairing requests)"
+summary: "CLI reference for `dryads-ai pairing` (approve/list pairing requests)"
 read_when:
   - You’re using pairing-mode DMs and need to approve senders
 title: "pairing"
 ---
 
-# `dmms-ai pairing`
+# `dryads-ai pairing`
 
 Approve or inspect DM pairing requests (for channels that support pairing).
 
@@ -16,6 +16,6 @@ Related:
 ## Commands
 
 ```bash
-dmms-ai pairing list whatsapp
-dmms-ai pairing approve whatsapp <code> --notify
+dryads-ai pairing list whatsapp
+dryads-ai pairing approve whatsapp <code> --notify
 ```

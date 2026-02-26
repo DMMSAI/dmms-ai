@@ -1,4 +1,4 @@
-package ai.dmmsai.android.voice
+package ai.dryadsai.android.voice
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

@@ -47,11 +47,11 @@ describe("runServiceRestart token drift", () => {
     service.restart.mockClear();
     service.isLoaded.mockResolvedValue(true);
     service.readCommand.mockResolvedValue({
-      environment: { DMMS_AI_GATEWAY_TOKEN: "service-token" },
+      environment: { DRYADS_AI_GATEWAY_TOKEN: "service-token" },
     });
     service.restart.mockResolvedValue(undefined);
     vi.unstubAllEnvs();
-    vi.stubEnv("DMMS_AI_GATEWAY_TOKEN", "");
+    vi.stubEnv("DRYADS_AI_GATEWAY_TOKEN", "");
     vi.stubEnv("CLAWDBOT_GATEWAY_TOKEN", "");
   });
 

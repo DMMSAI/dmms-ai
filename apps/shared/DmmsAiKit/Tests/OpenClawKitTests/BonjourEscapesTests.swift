@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import Testing
 
 @Suite struct BonjourEscapesTests {
@@ -8,7 +8,7 @@ import Testing
     }
 
     @Test func decodeSpaces() {
-        #expect(BonjourEscapes.decode("DMMS AI\\032Gateway") == "DMMS AI Gateway")
+        #expect(BonjourEscapes.decode("Dryads AI\\032Gateway") == "Dryads AI Gateway")
     }
 
     @Test func decodeMultipleEscapes() {

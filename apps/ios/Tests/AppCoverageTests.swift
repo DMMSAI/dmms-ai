@@ -1,6 +1,6 @@
 import SwiftUI
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct AppCoverageTests {
     @Test @MainActor func nodeAppModelUpdatesBackgroundedState() {

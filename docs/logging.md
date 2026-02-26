@@ -9,7 +9,7 @@ title: "Logging"
 
 # Logging
 
-DMMS AI logs in two places:
+Dryads AI logs in two places:
 
 - **File logs** (JSON lines) written by the Gateway.
 - **Console output** shown in terminals and the Control UI.
@@ -21,16 +21,16 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/dmms-ai/dmms-ai-YYYY-MM-DD.log`
+`/tmp/dryads-ai/dryads-ai-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.dmms-ai/dmms-ai.json`:
+You can override this in `~/.dryads-ai/dryads-ai.json`:
 
 ```json
 {
   "logging": {
-    "file": "/path/to/dmms-ai.log"
+    "file": "/path/to/dryads-ai.log"
   }
 }
 ```
@@ -42,7 +42,7 @@ You can override this in `~/.dmms-ai/dmms-ai.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-dmms-ai logs --follow
+dryads-ai logs --follow
 ```
 
 Output modes:
@@ -63,7 +63,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-dmms-ai doctor
+dryads-ai doctor
 ```
 
 ### Control UI (web)
@@ -76,7 +76,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-dmms-ai channels logs --channel whatsapp
+dryads-ai channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -98,13 +98,13 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.dmms-ai/dmms-ai.json`.
+All logging configuration lives under `logging` in `~/.dryads-ai/dryads-ai.json`.
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/dmms-ai/dmms-ai-YYYY-MM-DD.log",
+    "file": "/tmp/dryads-ai/dryads-ai-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -150,7 +150,7 @@ diagnostics + the exporter plugin are enabled.
 
 - **OpenTelemetry (OTel)**: the data model + SDKs for traces, metrics, and logs.
 - **OTLP**: the wire protocol used to export OTel data to a collector/backend.
-- DMMS AI exports via **OTLP/HTTP (protobuf)** today.
+- Dryads AI exports via **OTLP/HTTP (protobuf)** today.
 
 ### Signals exported
 
@@ -210,7 +210,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-DMMS_AI_DIAGNOSTICS=telegram.http,telegram.payload
+DRYADS_AI_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -240,7 +240,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "dmms-ai-gateway",
+      "serviceName": "dryads-ai-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -253,7 +253,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 
 Notes:
 
-- You can also enable the plugin with `dmms-ai plugins enable diagnostics-otel`.
+- You can also enable the plugin with `dryads-ai plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -267,60 +267,60 @@ Notes:
 
 Model usage:
 
-- `dmms-ai.tokens` (counter, attrs: `dmms-ai.token`, `dmms-ai.channel`,
-  `dmms-ai.provider`, `dmms-ai.model`)
-- `dmms-ai.cost.usd` (counter, attrs: `dmms-ai.channel`, `dmms-ai.provider`,
-  `dmms-ai.model`)
-- `dmms-ai.run.duration_ms` (histogram, attrs: `dmms-ai.channel`,
-  `dmms-ai.provider`, `dmms-ai.model`)
-- `dmms-ai.context.tokens` (histogram, attrs: `dmms-ai.context`,
-  `dmms-ai.channel`, `dmms-ai.provider`, `dmms-ai.model`)
+- `dryads-ai.tokens` (counter, attrs: `dryads-ai.token`, `dryads-ai.channel`,
+  `dryads-ai.provider`, `dryads-ai.model`)
+- `dryads-ai.cost.usd` (counter, attrs: `dryads-ai.channel`, `dryads-ai.provider`,
+  `dryads-ai.model`)
+- `dryads-ai.run.duration_ms` (histogram, attrs: `dryads-ai.channel`,
+  `dryads-ai.provider`, `dryads-ai.model`)
+- `dryads-ai.context.tokens` (histogram, attrs: `dryads-ai.context`,
+  `dryads-ai.channel`, `dryads-ai.provider`, `dryads-ai.model`)
 
 Message flow:
 
-- `dmms-ai.webhook.received` (counter, attrs: `dmms-ai.channel`,
-  `dmms-ai.webhook`)
-- `dmms-ai.webhook.error` (counter, attrs: `dmms-ai.channel`,
-  `dmms-ai.webhook`)
-- `dmms-ai.webhook.duration_ms` (histogram, attrs: `dmms-ai.channel`,
-  `dmms-ai.webhook`)
-- `dmms-ai.message.queued` (counter, attrs: `dmms-ai.channel`,
-  `dmms-ai.source`)
-- `dmms-ai.message.processed` (counter, attrs: `dmms-ai.channel`,
-  `dmms-ai.outcome`)
-- `dmms-ai.message.duration_ms` (histogram, attrs: `dmms-ai.channel`,
-  `dmms-ai.outcome`)
+- `dryads-ai.webhook.received` (counter, attrs: `dryads-ai.channel`,
+  `dryads-ai.webhook`)
+- `dryads-ai.webhook.error` (counter, attrs: `dryads-ai.channel`,
+  `dryads-ai.webhook`)
+- `dryads-ai.webhook.duration_ms` (histogram, attrs: `dryads-ai.channel`,
+  `dryads-ai.webhook`)
+- `dryads-ai.message.queued` (counter, attrs: `dryads-ai.channel`,
+  `dryads-ai.source`)
+- `dryads-ai.message.processed` (counter, attrs: `dryads-ai.channel`,
+  `dryads-ai.outcome`)
+- `dryads-ai.message.duration_ms` (histogram, attrs: `dryads-ai.channel`,
+  `dryads-ai.outcome`)
 
 Queues + sessions:
 
-- `dmms-ai.queue.lane.enqueue` (counter, attrs: `dmms-ai.lane`)
-- `dmms-ai.queue.lane.dequeue` (counter, attrs: `dmms-ai.lane`)
-- `dmms-ai.queue.depth` (histogram, attrs: `dmms-ai.lane` or
-  `dmms-ai.channel=heartbeat`)
-- `dmms-ai.queue.wait_ms` (histogram, attrs: `dmms-ai.lane`)
-- `dmms-ai.session.state` (counter, attrs: `dmms-ai.state`, `dmms-ai.reason`)
-- `dmms-ai.session.stuck` (counter, attrs: `dmms-ai.state`)
-- `dmms-ai.session.stuck_age_ms` (histogram, attrs: `dmms-ai.state`)
-- `dmms-ai.run.attempt` (counter, attrs: `dmms-ai.attempt`)
+- `dryads-ai.queue.lane.enqueue` (counter, attrs: `dryads-ai.lane`)
+- `dryads-ai.queue.lane.dequeue` (counter, attrs: `dryads-ai.lane`)
+- `dryads-ai.queue.depth` (histogram, attrs: `dryads-ai.lane` or
+  `dryads-ai.channel=heartbeat`)
+- `dryads-ai.queue.wait_ms` (histogram, attrs: `dryads-ai.lane`)
+- `dryads-ai.session.state` (counter, attrs: `dryads-ai.state`, `dryads-ai.reason`)
+- `dryads-ai.session.stuck` (counter, attrs: `dryads-ai.state`)
+- `dryads-ai.session.stuck_age_ms` (histogram, attrs: `dryads-ai.state`)
+- `dryads-ai.run.attempt` (counter, attrs: `dryads-ai.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `dmms-ai.model.usage`
-  - `dmms-ai.channel`, `dmms-ai.provider`, `dmms-ai.model`
-  - `dmms-ai.sessionKey`, `dmms-ai.sessionId`
-  - `dmms-ai.tokens.*` (input/output/cache_read/cache_write/total)
-- `dmms-ai.webhook.processed`
-  - `dmms-ai.channel`, `dmms-ai.webhook`, `dmms-ai.chatId`
-- `dmms-ai.webhook.error`
-  - `dmms-ai.channel`, `dmms-ai.webhook`, `dmms-ai.chatId`,
-    `dmms-ai.error`
-- `dmms-ai.message.processed`
-  - `dmms-ai.channel`, `dmms-ai.outcome`, `dmms-ai.chatId`,
-    `dmms-ai.messageId`, `dmms-ai.sessionKey`, `dmms-ai.sessionId`,
-    `dmms-ai.reason`
-- `dmms-ai.session.stuck`
-  - `dmms-ai.state`, `dmms-ai.ageMs`, `dmms-ai.queueDepth`,
-    `dmms-ai.sessionKey`, `dmms-ai.sessionId`
+- `dryads-ai.model.usage`
+  - `dryads-ai.channel`, `dryads-ai.provider`, `dryads-ai.model`
+  - `dryads-ai.sessionKey`, `dryads-ai.sessionId`
+  - `dryads-ai.tokens.*` (input/output/cache_read/cache_write/total)
+- `dryads-ai.webhook.processed`
+  - `dryads-ai.channel`, `dryads-ai.webhook`, `dryads-ai.chatId`
+- `dryads-ai.webhook.error`
+  - `dryads-ai.channel`, `dryads-ai.webhook`, `dryads-ai.chatId`,
+    `dryads-ai.error`
+- `dryads-ai.message.processed`
+  - `dryads-ai.channel`, `dryads-ai.outcome`, `dryads-ai.chatId`,
+    `dryads-ai.messageId`, `dryads-ai.sessionKey`, `dryads-ai.sessionId`,
+    `dryads-ai.reason`
+- `dryads-ai.session.stuck`
+  - `dryads-ai.state`, `dryads-ai.ageMs`, `dryads-ai.queueDepth`,
+    `dryads-ai.sessionKey`, `dryads-ai.sessionId`
 
 ### Sampling + flushing
 
@@ -344,7 +344,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `dmms-ai doctor` first.
+- **Gateway not reachable?** Run `dryads-ai doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.

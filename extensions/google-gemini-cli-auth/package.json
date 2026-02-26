@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/google-gemini-cli-auth",
+  "name": "@dryads-ai/google-gemini-cli-auth",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Gemini CLI OAuth provider plugin",
+  "description": "Dryads AI Gemini CLI OAuth provider plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

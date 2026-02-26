@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { PassThrough } from "node:stream";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiPluginApi, DmmsAiPluginToolContext } from "../../../src/plugins/types.js";
+import type { DryadsAiPluginApi, DryadsAiPluginToolContext } from "../../../src/plugins/types.js";
 
 const spawnState = vi.hoisted(() => ({
   queue: [] as Array<{ stdout: string; stderr?: string; exitCode?: number }>,
@@ -17,7 +17,7 @@ vi.mock("node:child_process", () => ({
 
 let createLobsterTool: typeof import("./lobster-tool.js").createLobsterTool;
 
-function fakeApi(overrides: Partial<DmmsAiPluginApi> = {}): DmmsAiPluginApi {
+function fakeApi(overrides: Partial<DryadsAiPluginApi> = {}): DryadsAiPluginApi {
   return {
     id: "lobster",
     name: "lobster",
@@ -43,7 +43,7 @@ function fakeApi(overrides: Partial<DmmsAiPluginApi> = {}): DmmsAiPluginApi {
   };
 }
 
-function fakeCtx(overrides: Partial<DmmsAiPluginToolContext> = {}): DmmsAiPluginToolContext {
+function fakeCtx(overrides: Partial<DryadsAiPluginToolContext> = {}): DryadsAiPluginToolContext {
   return {
     config: {},
     workspaceDir: "/tmp",
@@ -64,7 +64,7 @@ describe("lobster plugin tool", () => {
   beforeAll(async () => {
     ({ createLobsterTool } = await import("./lobster-tool.js"));
 
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-lobster-plugin-"));
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-lobster-plugin-"));
     lobsterBinPath = path.join(tempDir, process.platform === "win32" ? "lobster.cmd" : "lobster");
     await fs.writeFile(lobsterBinPath, "", { encoding: "utf8", mode: 0o755 });
   });
@@ -228,7 +228,7 @@ describe("lobster plugin tool", () => {
 
   it("can be gated off in sandboxed contexts", async () => {
     const api = fakeApi();
-    const factoryTool = (ctx: DmmsAiPluginToolContext) => {
+    const factoryTool = (ctx: DryadsAiPluginToolContext) => {
       if (ctx.sandboxed) {
         return null;
       }

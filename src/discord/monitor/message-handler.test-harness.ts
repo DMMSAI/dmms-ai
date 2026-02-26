@@ -6,7 +6,7 @@ import type { DiscordMessagePreflightContext } from "./message-handler.preflight
 export async function createBaseDiscordMessageContext(
   overrides: Record<string, unknown> = {},
 ): Promise<DiscordMessagePreflightContext> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-discord-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-discord-"));
   const storePath = path.join(dir, "sessions.json");
   return {
     cfg: { messages: { ackReaction: "👀" }, session: { store: storePath } },

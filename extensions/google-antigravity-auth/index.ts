@@ -4,13 +4,13 @@ import {
   buildOauthProviderAuthResult,
   emptyPluginConfigSchema,
   isWSL2Sync,
-  type DmmsAiPluginApi,
+  type DryadsAiPluginApi,
   type ProviderAuthContext,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 
 // OAuth constants - must be provided via environment variables
-const CLIENT_ID = process.env.DMMS_AI_GOOGLE_OAUTH_CLIENT_ID ?? "";
-const CLIENT_SECRET = process.env.DMMS_AI_GOOGLE_OAUTH_CLIENT_SECRET ?? "";
+const CLIENT_ID = process.env.DRYADS_AI_GOOGLE_OAUTH_CLIENT_ID ?? "";
+const CLIENT_SECRET = process.env.DRYADS_AI_GOOGLE_OAUTH_CLIENT_SECRET ?? "";
 const REDIRECT_URI = "http://localhost:51121/oauth-callback";
 const AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -34,7 +34,7 @@ const RESPONSE_PAGE = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>DMMS AI Antigravity OAuth</title>
+    <title>Dryads AI Antigravity OAuth</title>
   </head>
   <body>
     <main>
@@ -370,7 +370,7 @@ const antigravityPlugin = {
   name: "Google Antigravity Auth",
   description: "OAuth flow for Google Antigravity (Cloud Code Assist)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: DmmsAiPluginApi) {
+  register(api: DryadsAiPluginApi) {
     api.registerProvider({
       id: "google-antigravity",
       label: "Google Antigravity",

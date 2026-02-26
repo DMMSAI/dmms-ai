@@ -1,5 +1,5 @@
 ---
-summary: "Overview of DMMS AI onboarding options and flows"
+summary: "Overview of Dryads AI onboarding options and flows"
 read_when:
   - Choosing an onboarding path
   - Setting up a new environment
@@ -9,7 +9,7 @@ sidebarTitle: "Onboarding Overview"
 
 # Onboarding Overview
 
-DMMS AI supports multiple onboarding paths depending on where the Gateway runs
+Dryads AI supports multiple onboarding paths depending on where the Gateway runs
 and how you prefer to configure providers.
 
 ## Choose your onboarding path
@@ -22,18 +22,18 @@ and how you prefer to configure providers.
 Run the wizard in a terminal:
 
 ```bash
-dmms-ai onboard
+dryads-ai onboard
 ```
 
 Use the CLI wizard when you want full control of the Gateway, workspace,
 channels, and skills. Docs:
 
 - [Onboarding Wizard (CLI)](/start/wizard)
-- [`dmms-ai onboard` command](/cli/onboard)
+- [`dryads-ai onboard` command](/cli/onboard)
 
 ## macOS app onboarding
 
-Use the DMMS AI app when you want a fully guided setup on macOS. Docs:
+Use the Dryads AI app when you want a fully guided setup on macOS. Docs:
 
 - [Onboarding (macOS App)](/start/onboarding)
 

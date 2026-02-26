@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiCanvasCommand: String, Codable, Sendable {
+public enum DryadsAiCanvasCommand: String, Codable, Sendable {
     case present = "canvas.present"
     case hide = "canvas.hide"
     case navigate = "canvas.navigate"

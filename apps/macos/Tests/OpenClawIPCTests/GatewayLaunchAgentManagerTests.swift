@@ -1,16 +1,16 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct GatewayLaunchAgentManagerTests {
     @Test func launchAgentPlistSnapshotParsesArgsAndEnv() throws {
         let url = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-launchd-\(UUID().uuidString).plist")
+            .appendingPathComponent("dryads-ai-launchd-\(UUID().uuidString).plist")
         let plist: [String: Any] = [
-            "ProgramArguments": ["dmms-ai", "gateway-daemon", "--port", "18789", "--bind", "loopback"],
+            "ProgramArguments": ["dryads-ai", "gateway-daemon", "--port", "18789", "--bind", "loopback"],
             "EnvironmentVariables": [
-                "DMMS_AI_GATEWAY_TOKEN": " secret ",
-                "DMMS_AI_GATEWAY_PASSWORD": "pw",
+                "DRYADS_AI_GATEWAY_TOKEN": " secret ",
+                "DRYADS_AI_GATEWAY_PASSWORD": "pw",
             ],
         ]
         let data = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -26,9 +26,9 @@ import Testing
 
     @Test func launchAgentPlistSnapshotAllowsMissingBind() throws {
         let url = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-launchd-\(UUID().uuidString).plist")
+            .appendingPathComponent("dryads-ai-launchd-\(UUID().uuidString).plist")
         let plist: [String: Any] = [
-            "ProgramArguments": ["dmms-ai", "gateway-daemon", "--port", "18789"],
+            "ProgramArguments": ["dryads-ai", "gateway-daemon", "--port", "18789"],
         ]
         let data = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
         try data.write(to: url, options: [.atomic])

@@ -1,16 +1,16 @@
 {
-  "name": "@dmms-ai/memory-core",
+  "name": "@dryads-ai/memory-core",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI core memory search plugin",
+  "description": "Dryads AI core memory search plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
   "peerDependencies": {
-    "dmms-ai": ">=2026.1.26"
+    "dryads-ai": ">=2026.1.26"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

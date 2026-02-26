@@ -42,7 +42,7 @@ imsg rpc --help
 
       </Step>
 
-      <Step title="Configure DMMS AI">
+      <Step title="Configure Dryads AI">
 
 ```json5
 {
@@ -61,7 +61,7 @@ imsg rpc --help
       <Step title="Start gateway">
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
       </Step>
@@ -69,8 +69,8 @@ dmms-ai gateway
       <Step title="Approve first DM pairing (default dmPolicy)">
 
 ```bash
-dmms-ai pairing list imessage
-dmms-ai pairing approve imessage <CODE>
+dryads-ai pairing list imessage
+dryads-ai pairing approve imessage <CODE>
 ```
 
         Pairing requests expire after 1 hour.
@@ -80,7 +80,7 @@ dmms-ai pairing approve imessage <CODE>
   </Tab>
 
   <Tab title="Remote Mac over SSH">
-    DMMS AI only requires a stdio-compatible `cliPath`, so you can point `cliPath` at a wrapper script that SSHes to a remote Mac and runs `imsg`.
+    Dryads AI only requires a stdio-compatible `cliPath`, so you can point `cliPath` at a wrapper script that SSHes to a remote Mac and runs `imsg`.
 
 ```bash
 #!/usr/bin/env bash
@@ -94,7 +94,7 @@ exec ssh -T gateway-host imsg "$@"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.dmms-ai/scripts/imsg-ssh",
+      cliPath: "~/.dryads-ai/scripts/imsg-ssh",
       remoteHost: "user@gateway-host", // used for SCP attachment fetches
       includeAttachments: true,
     },
@@ -102,7 +102,7 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-    If `remoteHost` is not set, DMMS AI attempts to auto-detect it by parsing the SSH wrapper script.
+    If `remoteHost` is not set, Dryads AI attempts to auto-detect it by parsing the SSH wrapper script.
 
   </Tab>
 </Tabs>
@@ -110,7 +110,7 @@ exec ssh -T gateway-host imsg "$@"
 ## Requirements and permissions (macOS)
 
 - Messages must be signed in on the Mac running `imsg`.
-- Full Disk Access is required for the process context running DMMS AI/`imsg` (Messages DB access).
+- Full Disk Access is required for the process context running Dryads AI/`imsg` (Messages DB access).
 - Automation permission is required to send messages through Messages.app.
 
 <Tip>
@@ -171,7 +171,7 @@ imsg send <handle> "test"
     Group-ish thread behavior:
 
     Some multi-participant iMessage threads can arrive with `is_group=false`.
-    If that `chat_id` is explicitly configured under `channels.imessage.groups`, DMMS AI treats it as group traffic (group gating + group session isolation).
+    If that `chat_id` is explicitly configured under `channels.imessage.groups`, Dryads AI treats it as group traffic (group gating + group session isolation).
 
   </Tab>
 </Tabs>
@@ -187,7 +187,7 @@ imsg send <handle> "test"
     1. Create/sign in a dedicated macOS user.
     2. Sign into Messages with the bot Apple ID in that user.
     3. Install `imsg` in that user.
-    4. Create SSH wrapper so DMMS AI can run `imsg` in that user context.
+    4. Create SSH wrapper so Dryads AI can run `imsg` in that user context.
     5. Point `channels.imessage.accounts.<id>.cliPath` and `.dbPath` to that user profile.
 
     First run may require GUI approvals (Automation + Full Disk Access) in that bot user session.
@@ -209,7 +209,7 @@ imsg send <handle> "test"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.dmms-ai/scripts/imsg-ssh",
+      cliPath: "~/.dryads-ai/scripts/imsg-ssh",
       remoteHost: "bot@mac-mini.tailnet-1234.ts.net",
       includeAttachments: true,
       dbPath: "/Users/bot/Library/Messages/chat.db",
@@ -295,7 +295,7 @@ Disable:
 
 ```bash
 imsg rpc --help
-dmms-ai channels status --probe
+dryads-ai channels status --probe
 ```
 
     If probe reports RPC unsupported, update `imsg`.
@@ -307,7 +307,7 @@ dmms-ai channels status --probe
 
     - `channels.imessage.dmPolicy`
     - `channels.imessage.allowFrom`
-    - pairing approvals (`dmms-ai pairing list imessage`)
+    - pairing approvals (`dryads-ai pairing list imessage`)
 
   </Accordion>
 
@@ -338,7 +338,7 @@ imsg chats --limit 1
 imsg send <handle> "test"
 ```
 
-    Confirm Full Disk Access + Automation are granted for the process context that runs DMMS AI/`imsg`.
+    Confirm Full Disk Access + Automation are granted for the process context that runs Dryads AI/`imsg`.
 
   </Accordion>
 </AccordionGroup>

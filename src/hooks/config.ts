@@ -1,4 +1,4 @@
-import type { DmmsAiConfig, HookConfig } from "../config/config.js";
+import type { DryadsAiConfig, HookConfig } from "../config/config.js";
 import {
   evaluateRuntimeRequires,
   hasBinary,
@@ -17,12 +17,12 @@ const DEFAULT_CONFIG_VALUES: Record<string, boolean> = {
 
 export { hasBinary, resolveConfigPath, resolveRuntimePlatform };
 
-export function isConfigPathTruthy(config: DmmsAiConfig | undefined, pathStr: string): boolean {
+export function isConfigPathTruthy(config: DryadsAiConfig | undefined, pathStr: string): boolean {
   return isConfigPathTruthyWithDefaults(config, pathStr, DEFAULT_CONFIG_VALUES);
 }
 
 export function resolveHookConfig(
-  config: DmmsAiConfig | undefined,
+  config: DryadsAiConfig | undefined,
   hookKey: string,
 ): HookConfig | undefined {
   const hooks = config?.hooks?.internal?.entries;
@@ -38,13 +38,13 @@ export function resolveHookConfig(
 
 export function shouldIncludeHook(params: {
   entry: HookEntry;
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   eligibility?: HookEligibilityContext;
 }): boolean {
   const { entry, config, eligibility } = params;
   const hookKey = resolveHookKey(entry.hook.name, entry);
   const hookConfig = resolveHookConfig(config, hookKey);
-  const pluginManaged = entry.hook.source === "dmms-ai-plugin";
+  const pluginManaged = entry.hook.source === "dryads-ai-plugin";
   const osList = entry.metadata?.os ?? [];
   const remotePlatforms = eligibility?.remote?.platforms ?? [];
 

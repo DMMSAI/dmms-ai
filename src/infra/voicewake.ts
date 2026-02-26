@@ -7,7 +7,7 @@ export type VoiceWakeConfig = {
   updatedAtMs: number;
 };
 
-const DEFAULT_TRIGGERS = ["dmms-ai", "claude", "computer"];
+const DEFAULT_TRIGGERS = ["dryads-ai", "claude", "computer"];
 
 function resolvePath(baseDir?: string) {
   const root = baseDir ?? resolveStateDir();

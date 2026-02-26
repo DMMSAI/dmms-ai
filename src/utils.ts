@@ -312,11 +312,11 @@ export function resolveConfigDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
 ): string {
-  const override = env.DMMS_AI_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
+  const override = env.DRYADS_AI_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
   if (override) {
     return resolveUserPath(override);
   }
-  const newDir = path.join(resolveRequiredHomeDir(env, homedir), ".dmms-ai");
+  const newDir = path.join(resolveRequiredHomeDir(env, homedir), ".dryads-ai");
   try {
     const hasNew = fs.existsSync(newDir);
     if (hasNew) {
@@ -337,9 +337,9 @@ function resolveHomeDisplayPrefix(): { home: string; prefix: string } | undefine
   if (!home) {
     return undefined;
   }
-  const explicitHome = process.env.DMMS_AI_HOME?.trim();
+  const explicitHome = process.env.DRYADS_AI_HOME?.trim();
   if (explicitHome) {
-    return { home, prefix: "$DMMS_AI_HOME" };
+    return { home, prefix: "$DRYADS_AI_HOME" };
   }
   return { home, prefix: "~" };
 }
@@ -397,5 +397,5 @@ export function formatTerminalLink(
   return `\u001b]8;;${safeUrl}\u0007${safeLabel}\u001b]8;;\u0007`;
 }
 
-// Configuration root; can be overridden via DMMS_AI_STATE_DIR.
+// Configuration root; can be overridden via DRYADS_AI_STATE_DIR.
 export const CONFIG_DIR = resolveConfigDir();

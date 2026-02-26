@@ -1,15 +1,15 @@
 ---
 name: session-memory
 description: "Save session context to memory when /new command is issued"
-homepage: https://docs.dmms-ai.com/automation/hooks#session-memory
+homepage: https://docs.dryads-ai.com/automation/hooks#session-memory
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "💾",
         "events": ["command:new"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with DMMS AI" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Dryads AI" }],
       },
   }
 ---
@@ -82,7 +82,7 @@ Example configuration:
 
 The hook automatically:
 
-- Uses your workspace directory (`~/.dmms-ai/workspace` by default)
+- Uses your workspace directory (`~/.dryads-ai/workspace` by default)
 - Uses your configured LLM for slug generation
 - Falls back to timestamp slugs if LLM is unavailable
 
@@ -91,7 +91,7 @@ The hook automatically:
 To disable this hook:
 
 ```bash
-dmms-ai hooks disable session-memory
+dryads-ai hooks disable session-memory
 ```
 
 Or remove it from your config:

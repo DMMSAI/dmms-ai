@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/open-prose",
+  "name": "@dryads-ai/open-prose",
   "version": "2026.2.18",
   "private": true,
   "description": "OpenProse VM skill pack plugin (slash command + telemetry).",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

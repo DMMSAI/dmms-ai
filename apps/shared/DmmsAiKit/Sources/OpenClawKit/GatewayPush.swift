@@ -1,4 +1,4 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 
 /// Server-push messages from the gateway websocket.
 ///

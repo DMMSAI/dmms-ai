@@ -1,13 +1,13 @@
 {
-  "name": "@dmms-ai/mattermost",
+  "name": "@dryads-ai/mattermost",
   "version": "2026.2.18",
   "private": true,
-  "description": "DMMS AI Mattermost channel plugin",
+  "description": "Dryads AI Mattermost channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -21,7 +21,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@dmms-ai/mattermost",
+      "npmSpec": "@dryads-ai/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

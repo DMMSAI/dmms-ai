@@ -1,5 +1,5 @@
 ---
-summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for DMMS AI browser control on Linux"
+summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for Dryads AI browser control on Linux"
 read_when: "Browser control fails on Linux, especially with snap Chromium"
 title: "Browser Troubleshooting"
 ---
@@ -8,15 +8,15 @@ title: "Browser Troubleshooting"
 
 ## Problem: "Failed to start Chrome CDP on port 18800"
 
-DMMS AI's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
+Dryads AI's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"dmms-ai\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"dryads-ai\"."}
 ```
 
 ### Root Cause
 
-On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how DMMS AI spawns and monitors the browser process.
+On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how Dryads AI spawns and monitors the browser process.
 
 The `apt install chromium` command installs a stub package that redirects to snap:
 
@@ -37,7 +37,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your DMMS AI config (`~/.dmms-ai/dmms-ai.json`):
+Then update your Dryads AI config (`~/.dryads-ai/dryads-ai.json`):
 
 ```json
 {
@@ -52,7 +52,7 @@ Then update your DMMS AI config (`~/.dmms-ai/dmms-ai.json`):
 
 ### Solution 2: Use Snap Chromium with Attach-Only Mode
 
-If you must use snap Chromium, configure DMMS AI to attach to a manually-started browser:
+If you must use snap Chromium, configure Dryads AI to attach to a manually-started browser:
 
 1. Update config:
 
@@ -72,20 +72,20 @@ If you must use snap Chromium, configure DMMS AI to attach to a manually-started
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.dmms-ai/browser/dmms-ai/user-data \
+  --user-data-dir=$HOME/.dryads-ai/browser/dryads-ai/user-data \
   about:blank &
 ```
 
 3. Optionally create a systemd user service to auto-start Chrome:
 
 ```ini
-# ~/.config/systemd/user/dmms-ai-browser.service
+# ~/.config/systemd/user/dryads-ai-browser.service
 [Unit]
-Description=DMMS AI Browser (Chrome CDP)
+Description=Dryads AI Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.dmms-ai/browser/dmms-ai/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.dryads-ai/browser/dryads-ai/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -93,7 +93,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Enable with: `systemctl --user enable --now dmms-ai-browser.service`
+Enable with: `systemctl --user enable --now dryads-ai-browser.service`
 
 ### Verifying the Browser Works
 
@@ -123,17 +123,17 @@ curl -s http://127.0.0.1:18791/tabs
 
 ### Problem: "Chrome extension relay is running, but no tab is connected"
 
-You’re using the `chrome` profile (extension relay). It expects the DMMS AI
+You’re using the `chrome` profile (extension relay). It expects the Dryads AI
 browser extension to be attached to a live tab.
 
 Fix options:
 
-1. **Use the managed browser:** `dmms-ai browser start --browser-profile dmms-ai`
-   (or set `browser.defaultProfile: "dmms-ai"`).
+1. **Use the managed browser:** `dryads-ai browser start --browser-profile dryads-ai`
+   (or set `browser.defaultProfile: "dryads-ai"`).
 2. **Use the extension relay:** install the extension, open a tab, and click the
-   DMMS AI extension icon to attach it.
+   Dryads AI extension icon to attach it.
 
 Notes:
 
 - The `chrome` profile uses your **system default Chromium browser** when possible.
-- Local `dmms-ai` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.
+- Local `dryads-ai` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.

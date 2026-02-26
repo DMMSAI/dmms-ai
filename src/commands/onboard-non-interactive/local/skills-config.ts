@@ -1,9 +1,9 @@
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 
 export function applyNonInteractiveSkillsConfig(params: {
-  nextConfig: DmmsAiConfig;
+  nextConfig: DryadsAiConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
 }) {

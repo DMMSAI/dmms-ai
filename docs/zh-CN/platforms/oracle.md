@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 在 Oracle Cloud 上设置 DMMS AI
-  - 寻找 DMMS AI 的低成本 VPS 托管
-  - 想要在小型服务器上 24/7 运行 DMMS AI
-summary: 在 Oracle Cloud 上运行 DMMS AI（Always Free ARM）
+  - 在 Oracle Cloud 上设置 Dryads AI
+  - 寻找 Dryads AI 的低成本 VPS 托管
+  - 想要在小型服务器上 24/7 运行 Dryads AI
+summary: 在 Oracle Cloud 上运行 Dryads AI（Always Free ARM）
 title: Oracle Cloud
 x-i18n:
   generated_at: "2026-02-03T07:53:25Z"
@@ -14,13 +14,13 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 Oracle Cloud（OCI）上运行 DMMS AI
+# 在 Oracle Cloud（OCI）上运行 Dryads AI
 
 ## 目标
 
-在 Oracle Cloud 的 **Always Free** ARM 层上运行持久化的 DMMS AI Gateway 网关。
+在 Oracle Cloud 的 **Always Free** ARM 层上运行持久化的 Dryads AI Gateway 网关。
 
-Oracle 的免费层非常适合 DMMS AI（特别是如果你已经有 OCI 账户），但有一些权衡：
+Oracle 的免费层非常适合 Dryads AI（特别是如果你已经有 OCI 账户），但有一些权衡：
 
 - ARM 架构（大多数东西都能工作，但某些二进制文件可能仅支持 x86）
 - 容量和注册可能比较麻烦
@@ -48,7 +48,7 @@ Oracle 的免费层非常适合 DMMS AI（特别是如果你已经有 OCI 账户
 1. 登录 [Oracle Cloud Console](https://cloud.oracle.com/)
 2. 导航到 **Compute → Instances → Create Instance**
 3. 配置：
-   - **Name:** `dmms-ai`
+   - **Name:** `dryads-ai`
    - **Image:** Ubuntu 24.04 (aarch64)
    - **Shape:** `VM.Standard.A1.Flex`（Ampere ARM）
    - **OCPUs:** 2（或最多 4）
@@ -77,7 +77,7 @@ sudo apt install -y build-essential
 
 ```bash
 # 设置主机名
-sudo hostnamectl set-hostname dmms-ai
+sudo hostnamectl set-hostname dryads-ai
 
 # 为 ubuntu 用户设置密码
 sudo passwd ubuntu
@@ -90,10 +90,10 @@ sudo loginctl enable-linger ubuntu
 
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up --ssh --hostname=dmms-ai
+sudo tailscale up --ssh --hostname=dryads-ai
 ```
 
-这会启用 Tailscale SSH，所以你可以从 tailnet 上的任何设备通过 `ssh dmms-ai` 连接——不需要公网 IP。
+这会启用 Tailscale SSH，所以你可以从 tailnet 上的任何设备通过 `ssh dryads-ai` 连接——不需要公网 IP。
 
 验证：
 
@@ -101,12 +101,12 @@ sudo tailscale up --ssh --hostname=dmms-ai
 tailscale status
 ```
 
-**从现在开始，通过 Tailscale 连接：** `ssh ubuntu@dmms-ai`（或使用 Tailscale IP）。
+**从现在开始，通过 Tailscale 连接：** `ssh ubuntu@dryads-ai`（或使用 Tailscale IP）。
 
-## 5) 安装 DMMS AI
+## 5) 安装 Dryads AI
 
 ```bash
-curl -fsSL https://dmms-ai.com/install.sh | bash
+curl -fsSL https://dryads-ai.com/install.sh | bash
 source ~/.bashrc
 ```
 
@@ -120,27 +120,27 @@ source ~/.bashrc
 
 ```bash
 # 在 VM 上保持 Gateway 网关私有
-dmms-ai config set gateway.bind loopback
+dryads-ai config set gateway.bind loopback
 
 # 要求 Gateway 网关 + 控制 UI 的认证
-dmms-ai config set gateway.auth.mode token
-dmms-ai doctor --generate-gateway-token
+dryads-ai config set gateway.auth.mode token
+dryads-ai doctor --generate-gateway-token
 
 # 通过 Tailscale Serve 暴露（HTTPS + tailnet 访问）
-dmms-ai config set gateway.tailscale.mode serve
-dmms-ai config set gateway.trustedProxies '["127.0.0.1"]'
+dryads-ai config set gateway.tailscale.mode serve
+dryads-ai config set gateway.trustedProxies '["127.0.0.1"]'
 
-systemctl --user restart dmms-ai-gateway
+systemctl --user restart dryads-ai-gateway
 ```
 
 ## 7) 验证
 
 ```bash
 # 检查版本
-dmms-ai --version
+dryads-ai --version
 
 # 检查守护进程状态
-systemctl --user status dmms-ai-gateway
+systemctl --user status dryads-ai-gateway
 
 # 检查 Tailscale Serve
 tailscale serve status
@@ -168,7 +168,7 @@ curl http://localhost:18789
 从你 Tailscale 网络上的任何设备：
 
 ```
-https://dmms-ai.<tailnet-name>.ts.net/
+https://dryads-ai.<tailnet-name>.ts.net/
 ```
 
 将 `<tailnet-name>` 替换为你的 tailnet 名称（在 `tailscale status` 中可见）。
@@ -185,7 +185,7 @@ https://dmms-ai.<tailnet-name>.ts.net/
 
 通过锁定 VCN（仅开放 UDP 41641）并将 Gateway 网关绑定到 loopback，你获得了强大的纵深防御：公共流量在网络边缘被阻止，管理访问通过你的 tailnet 进行。
 
-此设置通常消除了纯粹为了阻止互联网范围的 SSH 暴力破解而需要额外的基于主机的防火墙规则的*需求*——但你仍应保持操作系统更新，运行 `dmms-ai security audit`，并验证你没有意外地在公共接口上监听。
+此设置通常消除了纯粹为了阻止互联网范围的 SSH 暴力破解而需要额外的基于主机的防火墙规则的*需求*——但你仍应保持操作系统更新，运行 `dryads-ai security audit`，并验证你没有意外地在公共接口上监听。
 
 ### 已经受保护的内容
 
@@ -200,8 +200,8 @@ https://dmms-ai.<tailnet-name>.ts.net/
 
 ### 仍然推荐
 
-- **凭证权限：** `chmod 700 ~/.dmms-ai`
-- **安全审计：** `dmms-ai security audit`
+- **凭证权限：** `chmod 700 ~/.dryads-ai`
+- **安全审计：** `dryads-ai security audit`
 - **系统更新：** 定期 `sudo apt update && sudo apt upgrade`
 - **监控 Tailscale：** 在 [Tailscale 管理控制台](https://login.tailscale.com/admin) 中查看设备
 
@@ -226,7 +226,7 @@ sudo systemctl disable --now ssh
 
 ```bash
 # 从你的本地机器（通过 Tailscale）
-ssh -L 18789:127.0.0.1:18789 ubuntu@dmms-ai
+ssh -L 18789:127.0.0.1:18789 ubuntu@dryads-ai
 ```
 
 然后打开 `http://localhost:18789`。
@@ -250,15 +250,15 @@ ssh -L 18789:127.0.0.1:18789 ubuntu@dmms-ai
 sudo tailscale status
 
 # 重新认证
-sudo tailscale up --ssh --hostname=dmms-ai --reset
+sudo tailscale up --ssh --hostname=dryads-ai --reset
 ```
 
 ### Gateway 网关无法启动
 
 ```bash
-dmms-ai gateway status
-dmms-ai doctor --non-interactive
-journalctl --user -u dmms-ai-gateway -n 50
+dryads-ai gateway status
+dryads-ai doctor --non-interactive
+journalctl --user -u dryads-ai-gateway -n 50
 ```
 
 ### 无法访问控制 UI
@@ -271,7 +271,7 @@ tailscale serve status
 curl http://localhost:18789
 
 # 如需要则重启
-systemctl --user restart dmms-ai-gateway
+systemctl --user restart dryads-ai-gateway
 ```
 
 ### ARM 二进制文件问题
@@ -290,13 +290,13 @@ uname -m  # 应该显示 aarch64
 
 所有状态存储在：
 
-- `~/.dmms-ai/` — 配置、凭证、会话数据
-- `~/.dmms-ai/workspace/` — 工作区（SOUL.md、记忆、产物）
+- `~/.dryads-ai/` — 配置、凭证、会话数据
+- `~/.dryads-ai/workspace/` — 工作区（SOUL.md、记忆、产物）
 
 定期备份：
 
 ```bash
-tar -czvf dmms-ai-backup.tar.gz ~/.dmms-ai ~/.dmms-ai/workspace
+tar -czvf dryads-ai-backup.tar.gz ~/.dryads-ai ~/.dryads-ai/workspace
 ```
 
 ---

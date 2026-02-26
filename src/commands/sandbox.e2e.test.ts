@@ -30,9 +30,9 @@ const NOW = Date.now();
 
 function createContainer(overrides: Partial<SandboxContainerInfo> = {}): SandboxContainerInfo {
   return {
-    containerName: "dmms-ai-sandbox-test",
+    containerName: "dryads-ai-sandbox-test",
     sessionKey: "test-session",
-    image: "dmms-ai/sandbox:latest",
+    image: "dryads-ai/sandbox:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,
@@ -43,9 +43,9 @@ function createContainer(overrides: Partial<SandboxContainerInfo> = {}): Sandbox
 
 function createBrowser(overrides: Partial<SandboxBrowserInfo> = {}): SandboxBrowserInfo {
   return {
-    containerName: "dmms-ai-browser-test",
+    containerName: "dryads-ai-browser-test",
     sessionKey: "test-session",
-    image: "dmms-ai/browser:latest",
+    image: "dryads-ai/browser:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,

@@ -14,7 +14,7 @@ const noopLogger = {
 };
 
 async function makeStorePath() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-cron-migrate-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-cron-migrate-"));
   return {
     dir,
     storePath: path.join(dir, "cron", "jobs.json"),

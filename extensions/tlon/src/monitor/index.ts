@@ -1,6 +1,6 @@
 import { format } from "node:util";
-import type { RuntimeEnv, ReplyPayload, DmmsAiConfig } from "dmms-ai/plugin-sdk";
-import { createReplyPrefixOptions } from "dmms-ai/plugin-sdk";
+import type { RuntimeEnv, ReplyPayload, DryadsAiConfig } from "dryads-ai/plugin-sdk";
+import { createReplyPrefixOptions } from "dryads-ai/plugin-sdk";
 import { getTlonRuntime } from "../runtime.js";
 import { normalizeShip, parseChannelNest } from "../targets.js";
 import { resolveTlonAccount } from "../types.js";
@@ -64,7 +64,7 @@ type UrbitUpdate = {
 };
 
 function resolveChannelAuthorization(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   channelNest: string,
 ): { mode: "restricted" | "open"; allowedShips: string[] } {
   const tlonConfig = cfg.channels?.tlon as

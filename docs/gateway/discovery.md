@@ -9,12 +9,12 @@ title: "Discovery and Transports"
 
 # Discovery & transports
 
-DMMS AI has two distinct problems that look similar on the surface:
+Dryads AI has two distinct problems that look similar on the surface:
 
 1. **Operator remote control**: the macOS menu bar app controlling a gateway running elsewhere.
 2. **Node pairing**: iOS/Android (and future nodes) finding a gateway and pairing securely.
 
-The design goal is to keep all network discovery/advertising in the **Node Gateway** (`dmms-ai gateway`) and keep clients (mac app, iOS) as consumers.
+The design goal is to keep all network discovery/advertising in the **Node Gateway** (`dryads-ai gateway`) and keep clients (mac app, iOS) as consumers.
 
 ## Terms
 
@@ -56,7 +56,7 @@ Troubleshooting and beacon details: [Bonjour](/gateway/bonjour).
 #### Service beacon details
 
 - Service types:
-  - `_dmms-ai-gw._tcp` (gateway transport beacon)
+  - `_dryads-ai-gw._tcp` (gateway transport beacon)
 - TXT keys (non-secret):
   - `role=gateway`
   - `lanHost=<hostname>.local`
@@ -65,7 +65,7 @@ Troubleshooting and beacon details: [Bonjour](/gateway/bonjour).
   - `gatewayTls=1` (only when TLS is enabled)
   - `gatewayTlsSha256=<sha256>` (only when TLS is enabled and fingerprint is available)
   - `canvasPort=<port>` (canvas host port; currently the same as `gatewayPort` when the canvas host is enabled)
-  - `cliPath=<path>` (optional; absolute path to a runnable `dmms-ai` entrypoint or binary)
+  - `cliPath=<path>` (optional; absolute path to a runnable `dryads-ai` entrypoint or binary)
   - `tailnetDns=<magicdns>` (optional hint; auto-detected when Tailscale is available)
 
 Security notes:
@@ -77,11 +77,11 @@ Security notes:
 
 Disable/override:
 
-- `DMMS_AI_DISABLE_BONJOUR=1` disables advertising.
-- `gateway.bind` in `~/.dmms-ai/dmms-ai.json` controls the Gateway bind mode.
-- `DMMS_AI_SSH_PORT` overrides the SSH port advertised in TXT (defaults to 22).
-- `DMMS_AI_TAILNET_DNS` publishes a `tailnetDns` hint (MagicDNS).
-- `DMMS_AI_CLI_PATH` overrides the advertised CLI path.
+- `DRYADS_AI_DISABLE_BONJOUR=1` disables advertising.
+- `gateway.bind` in `~/.dryads-ai/dryads-ai.json` controls the Gateway bind mode.
+- `DRYADS_AI_SSH_PORT` overrides the SSH port advertised in TXT (defaults to 22).
+- `DRYADS_AI_TAILNET_DNS` publishes a `tailnetDns` hint (MagicDNS).
+- `DRYADS_AI_CLI_PATH` overrides the advertised CLI path.
 
 ### 2) Tailnet (cross-network)
 

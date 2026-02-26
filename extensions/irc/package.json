@@ -1,12 +1,12 @@
 {
-  "name": "@dmms-ai/irc",
+  "name": "@dryads-ai/irc",
   "version": "2026.2.18",
-  "description": "DMMS AI IRC channel plugin",
+  "description": "Dryads AI IRC channel plugin",
   "type": "module",
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ]

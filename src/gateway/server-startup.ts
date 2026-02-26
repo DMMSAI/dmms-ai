@@ -18,7 +18,7 @@ import {
 } from "../hooks/internal-hooks.js";
 import { loadInternalHooks } from "../hooks/loader.js";
 import { isTruthyEnvValue } from "../infra/env.js";
-import type { loadDmmsAiPlugins } from "../plugins/loader.js";
+import type { loadDryadsAiPlugins } from "../plugins/loader.js";
 import { type PluginServicesHandle, startPluginServices } from "../plugins/services.js";
 import { startBrowserControlServerIfEnabled } from "./server-browser.js";
 import {
@@ -31,7 +31,7 @@ const SESSION_LOCK_STALE_MS = 30 * 60 * 1000;
 
 export async function startGatewaySidecars(params: {
   cfg: ReturnType<typeof loadConfig>;
-  pluginRegistry: ReturnType<typeof loadDmmsAiPlugins>;
+  pluginRegistry: ReturnType<typeof loadDryadsAiPlugins>;
   defaultWorkspaceDir: string;
   deps: CliDeps;
   startChannels: () => Promise<void>;
@@ -59,7 +59,7 @@ export async function startGatewaySidecars(params: {
     params.log.warn(`session lock cleanup failed on startup: ${String(err)}`);
   }
 
-  // Start DMMS AI browser control server (unless disabled via config).
+  // Start Dryads AI browser control server (unless disabled via config).
   let browserControl: Awaited<ReturnType<typeof startBrowserControlServerIfEnabled>> = null;
   try {
     browserControl = await startBrowserControlServerIfEnabled();
@@ -121,10 +121,10 @@ export async function startGatewaySidecars(params: {
   }
 
   // Launch configured channels so gateway replies via the surface the message came from.
-  // Tests can opt out via DMMS_AI_SKIP_CHANNELS (or legacy DMMS_AI_SKIP_PROVIDERS).
+  // Tests can opt out via DRYADS_AI_SKIP_CHANNELS (or legacy DRYADS_AI_SKIP_PROVIDERS).
   const skipChannels =
-    isTruthyEnvValue(process.env.DMMS_AI_SKIP_CHANNELS) ||
-    isTruthyEnvValue(process.env.DMMS_AI_SKIP_PROVIDERS);
+    isTruthyEnvValue(process.env.DRYADS_AI_SKIP_CHANNELS) ||
+    isTruthyEnvValue(process.env.DRYADS_AI_SKIP_PROVIDERS);
   if (!skipChannels) {
     try {
       await params.startChannels();
@@ -133,7 +133,7 @@ export async function startGatewaySidecars(params: {
     }
   } else {
     params.logChannels.info(
-      "skipping channel start (DMMS_AI_SKIP_CHANNELS=1 or DMMS_AI_SKIP_PROVIDERS=1)",
+      "skipping channel start (DRYADS_AI_SKIP_CHANNELS=1 or DRYADS_AI_SKIP_PROVIDERS=1)",
     );
   }
 

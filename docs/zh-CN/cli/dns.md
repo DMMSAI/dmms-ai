@@ -1,8 +1,8 @@
 ---
 read_when:
   - 你想通过 Tailscale + CoreDNS 实现广域设备发现（DNS-SD）
-  - You’re setting up split DNS for a custom discovery domain (example: dmms-ai.internal)
-summary: "`dmms-ai dns` 的 CLI 参考（广域设备发现辅助工具）"
+  - You’re setting up split DNS for a custom discovery domain (example: dryads-ai.internal)
+summary: "`dryads-ai dns` 的 CLI 参考（广域设备发现辅助工具）"
 title: dns
 x-i18n:
   generated_at: "2026-02-03T07:44:52Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai dns`
+# `dryads-ai dns`
 
 用于广域设备发现（Tailscale + CoreDNS）的 DNS 辅助工具。目前专注于 macOS + Homebrew CoreDNS。
 
@@ -25,6 +25,6 @@ x-i18n:
 ## 设置
 
 ```bash
-dmms-ai dns setup
-dmms-ai dns setup --apply
+dryads-ai dns setup
+dryads-ai dns setup --apply
 ```

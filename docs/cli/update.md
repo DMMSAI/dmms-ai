@@ -1,29 +1,29 @@
 ---
-summary: "CLI reference for `dmms-ai update` (safe-ish source update + gateway auto-restart)"
+summary: "CLI reference for `dryads-ai update` (safe-ish source update + gateway auto-restart)"
 read_when:
   - You want to update a source checkout safely
   - You need to understand `--update` shorthand behavior
 title: "update"
 ---
 
-# `dmms-ai update`
+# `dryads-ai update`
 
-Safely update DMMS AI and switch between stable/beta/dev channels.
+Safely update Dryads AI and switch between stable/beta/dev channels.
 
 If you installed via **npm/pnpm** (global install, no git metadata), updates happen via the package manager flow in [Updating](/install/updating).
 
 ## Usage
 
 ```bash
-dmms-ai update
-dmms-ai update status
-dmms-ai update wizard
-dmms-ai update --channel beta
-dmms-ai update --channel dev
-dmms-ai update --tag beta
-dmms-ai update --no-restart
-dmms-ai update --json
-dmms-ai --update
+dryads-ai update
+dryads-ai update status
+dryads-ai update wizard
+dryads-ai update --channel beta
+dryads-ai update --channel dev
+dryads-ai update --tag beta
+dryads-ai update --no-restart
+dryads-ai update --json
+dryads-ai --update
 ```
 
 ## Options
@@ -41,9 +41,9 @@ Note: downgrades require confirmation because older versions can break configura
 Show the active update channel + git tag/branch/SHA (for source checkouts), plus update availability.
 
 ```bash
-dmms-ai update status
-dmms-ai update status --json
-dmms-ai update status --timeout 10
+dryads-ai update status
+dryads-ai update status --json
+dryads-ai update status --timeout 10
 ```
 
 Options:
@@ -59,10 +59,10 @@ offers to create one.
 
 ## What it does
 
-When you switch channels explicitly (`--channel ...`), DMMS AI also keeps the
+When you switch channels explicitly (`--channel ...`), Dryads AI also keeps the
 install method aligned:
 
-- `dev` → ensures a git checkout (default: `~/dmms-ai`, override with `DMMS_AI_GIT_DIR`),
+- `dev` → ensures a git checkout (default: `~/dryads-ai`, override with `DRYADS_AI_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` → installs from npm using the matching dist-tag.
 
@@ -83,16 +83,16 @@ High-level:
 5. Rebases onto the selected commit (dev only).
 6. Installs deps (pnpm preferred; npm fallback).
 7. Builds + builds the Control UI.
-8. Runs `dmms-ai doctor` as the final “safe update” check.
+8. Runs `dryads-ai doctor` as the final “safe update” check.
 9. Syncs plugins to the active channel (dev uses bundled extensions; stable/beta uses npm) and updates npm-installed plugins.
 
 ## `--update` shorthand
 
-`dmms-ai --update` rewrites to `dmms-ai update` (useful for shells and launcher scripts).
+`dryads-ai --update` rewrites to `dryads-ai update` (useful for shells and launcher scripts).
 
 ## See also
 
-- `dmms-ai doctor` (offers to run update first on git checkouts)
+- `dryads-ai doctor` (offers to run update first on git checkouts)
 - [Development channels](/install/development-channels)
 - [Updating](/install/updating)
 - [CLI reference](/cli)

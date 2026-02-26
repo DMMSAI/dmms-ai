@@ -1,7 +1,7 @@
 ---
-summary: "Use Venice AI privacy-focused models in DMMS AI"
+summary: "Use Venice AI privacy-focused models in Dryads AI"
 read_when:
-  - You want privacy-focused inference in DMMS AI
+  - You want privacy-focused inference in Dryads AI
   - You want Venice AI setup guidance
 title: "Venice AI"
 ---
@@ -12,7 +12,7 @@ title: "Venice AI"
 
 Venice AI provides privacy-focused AI inference with support for uncensored models and access to major proprietary models through their anonymized proxy. All inference is private by default—no training on your data, no logging.
 
-## Why Venice in DMMS AI
+## Why Venice in Dryads AI
 
 - **Private inference** for open-source models (no logging).
 - **Uncensored models** when you need them.
@@ -47,7 +47,7 @@ Venice offers two privacy levels — understanding this is key to choosing your 
 2. Go to **Settings → API Keys → Create new key**
 3. Copy your API key (format: `vapi_xxxxxxxxxxxx`)
 
-### 2. Configure DMMS AI
+### 2. Configure Dryads AI
 
 **Option A: Environment Variable**
 
@@ -58,7 +58,7 @@ export VENICE_API_KEY="vapi_xxxxxxxxxxxx"
 **Option B: Interactive Setup (Recommended)**
 
 ```bash
-dmms-ai onboard --auth-choice venice-api-key
+dryads-ai onboard --auth-choice venice-api-key
 ```
 
 This will:
@@ -71,7 +71,7 @@ This will:
 **Option C: Non-interactive**
 
 ```bash
-dmms-ai onboard --non-interactive \
+dryads-ai onboard --non-interactive \
   --auth-choice venice-api-key \
   --venice-api-key "vapi_xxxxxxxxxxxx"
 ```
@@ -79,12 +79,12 @@ dmms-ai onboard --non-interactive \
 ### 3. Verify Setup
 
 ```bash
-dmms-ai chat --model venice/llama-3.3-70b "Hello, are you working?"
+dryads-ai chat --model venice/llama-3.3-70b "Hello, are you working?"
 ```
 
 ## Model Selection
 
-After setup, DMMS AI shows all available Venice models. Pick based on your needs:
+After setup, Dryads AI shows all available Venice models. Pick based on your needs:
 
 - **Default (our pick)**: `venice/llama-3.3-70b` for private, balanced performance.
 - **Best overall quality**: `venice/claude-opus-45` for hard jobs (Opus remains the strongest).
@@ -94,19 +94,19 @@ After setup, DMMS AI shows all available Venice models. Pick based on your needs
 Change your default model anytime:
 
 ```bash
-dmms-ai models set venice/claude-opus-45
-dmms-ai models set venice/llama-3.3-70b
+dryads-ai models set venice/claude-opus-45
+dryads-ai models set venice/llama-3.3-70b
 ```
 
 List all available models:
 
 ```bash
-dmms-ai models list | grep venice
+dryads-ai models list | grep venice
 ```
 
-## Configure via `dmms-ai configure`
+## Configure via `dryads-ai configure`
 
-1. Run `dmms-ai configure`
+1. Run `dryads-ai configure`
 2. Select **Model/auth**
 3. Choose **Venice AI**
 
@@ -162,7 +162,7 @@ dmms-ai models list | grep venice
 
 ## Model Discovery
 
-DMMS AI automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
+Dryads AI automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
 
 The `/models` endpoint is public (no auth needed for listing), but inference requires a valid API key.
 
@@ -195,19 +195,19 @@ Venice uses a credit-based system. Check [venice.ai/pricing](https://venice.ai/p
 
 ```bash
 # Use default private model
-dmms-ai chat --model venice/llama-3.3-70b
+dryads-ai chat --model venice/llama-3.3-70b
 
 # Use Claude via Venice (anonymized)
-dmms-ai chat --model venice/claude-opus-45
+dryads-ai chat --model venice/claude-opus-45
 
 # Use uncensored model
-dmms-ai chat --model venice/venice-uncensored
+dryads-ai chat --model venice/venice-uncensored
 
 # Use vision model with image
-dmms-ai chat --model venice/qwen3-vl-235b-a22b
+dryads-ai chat --model venice/qwen3-vl-235b-a22b
 
 # Use coding model
-dmms-ai chat --model venice/qwen3-coder-480b-a35b-instruct
+dryads-ai chat --model venice/qwen3-coder-480b-a35b-instruct
 ```
 
 ## Troubleshooting
@@ -216,14 +216,14 @@ dmms-ai chat --model venice/qwen3-coder-480b-a35b-instruct
 
 ```bash
 echo $VENICE_API_KEY
-dmms-ai models list | grep venice
+dryads-ai models list | grep venice
 ```
 
 Ensure the key starts with `vapi_`.
 
 ### Model not available
 
-The Venice model catalog updates dynamically. Run `dmms-ai models list` to see currently available models. Some models may be temporarily offline.
+The Venice model catalog updates dynamically. Run `dryads-ai models list` to see currently available models. Some models may be temporarily offline.
 
 ### Connection issues
 

@@ -10,9 +10,9 @@ import {
 installPwToolsCoreTestHooks();
 const sessionMocks = getPwToolsCoreSessionMocks();
 const tmpDirMocks = vi.hoisted(() => ({
-  resolvePreferredDmmsAiTmpDir: vi.fn(() => "/tmp/dmms-ai"),
+  resolvePreferredDryadsAiTmpDir: vi.fn(() => "/tmp/dryads-ai"),
 }));
-vi.mock("../infra/tmp-dmms-ai-dir.js", () => tmpDirMocks);
+vi.mock("../infra/tmp-dryads-ai-dir.js", () => tmpDirMocks);
 const mod = await import("./pw-tools-core.js");
 
 describe("pw-tools-core", () => {
@@ -20,7 +20,7 @@ describe("pw-tools-core", () => {
     for (const fn of Object.values(tmpDirMocks)) {
       fn.mockClear();
     }
-    tmpDirMocks.resolvePreferredDmmsAiTmpDir.mockReturnValue("/tmp/dmms-ai");
+    tmpDirMocks.resolvePreferredDryadsAiTmpDir.mockReturnValue("/tmp/dryads-ai");
   });
 
   async function waitForImplicitDownloadOutput(params: {
@@ -130,33 +130,38 @@ describe("pw-tools-core", () => {
     expect(res.path).toBe(targetPath);
   });
   it("uses preferred tmp dir when waiting for download without explicit path", async () => {
-    tmpDirMocks.resolvePreferredDmmsAiTmpDir.mockReturnValue("/tmp/dmms-ai-preferred");
+    tmpDirMocks.resolvePreferredDryadsAiTmpDir.mockReturnValue("/tmp/dryads-ai-preferred");
     const { res, outPath } = await waitForImplicitDownloadOutput({
       downloadUrl: "https://example.com/file.bin",
       suggestedFilename: "file.bin",
     });
     expect(typeof outPath).toBe("string");
-    const expectedRootedDownloadsDir = path.join(path.sep, "tmp", "dmms-ai-preferred", "downloads");
-    const expectedDownloadsTail = `${path.join("tmp", "dmms-ai-preferred", "downloads")}${path.sep}`;
+    const expectedRootedDownloadsDir = path.join(
+      path.sep,
+      "tmp",
+      "dryads-ai-preferred",
+      "downloads",
+    );
+    const expectedDownloadsTail = `${path.join("tmp", "dryads-ai-preferred", "downloads")}${path.sep}`;
     expect(path.dirname(String(outPath))).toBe(expectedRootedDownloadsDir);
     expect(path.basename(String(outPath))).toMatch(/-file\.bin$/);
     expect(path.normalize(res.path)).toContain(path.normalize(expectedDownloadsTail));
-    expect(tmpDirMocks.resolvePreferredDmmsAiTmpDir).toHaveBeenCalled();
+    expect(tmpDirMocks.resolvePreferredDryadsAiTmpDir).toHaveBeenCalled();
   });
 
   it("sanitizes suggested download filenames to prevent traversal escapes", async () => {
-    tmpDirMocks.resolvePreferredDmmsAiTmpDir.mockReturnValue("/tmp/dmms-ai-preferred");
+    tmpDirMocks.resolvePreferredDryadsAiTmpDir.mockReturnValue("/tmp/dryads-ai-preferred");
     const { res, outPath } = await waitForImplicitDownloadOutput({
       downloadUrl: "https://example.com/evil",
       suggestedFilename: "../../../../etc/passwd",
     });
     expect(typeof outPath).toBe("string");
     expect(path.dirname(String(outPath))).toBe(
-      path.join(path.sep, "tmp", "dmms-ai-preferred", "downloads"),
+      path.join(path.sep, "tmp", "dryads-ai-preferred", "downloads"),
     );
     expect(path.basename(String(outPath))).toMatch(/-passwd$/);
     expect(path.normalize(res.path)).toContain(
-      path.normalize(`${path.join("tmp", "dmms-ai-preferred", "downloads")}${path.sep}`),
+      path.normalize(`${path.join("tmp", "dryads-ai-preferred", "downloads")}${path.sep}`),
     );
   });
   it("waits for a matching response and returns its body", async () => {

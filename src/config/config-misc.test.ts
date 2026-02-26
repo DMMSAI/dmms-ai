@@ -9,26 +9,26 @@ import {
 } from "./config-paths.js";
 import { readConfigFileSnapshot, validateConfigObject } from "./config.js";
 import { withTempHome } from "./test-helpers.js";
-import { DmmsAiSchema } from "./zod-schema.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 describe("$schema key in config (#14998)", () => {
   it("accepts config with $schema string", () => {
-    const result = DmmsAiSchema.safeParse({
-      $schema: "https://dmms-ai.com/config.json",
+    const result = DryadsAiSchema.safeParse({
+      $schema: "https://dryads-ai.com/config.json",
     });
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.$schema).toBe("https://dmms-ai.com/config.json");
+      expect(result.data.$schema).toBe("https://dryads-ai.com/config.json");
     }
   });
 
   it("accepts config without $schema", () => {
-    const result = DmmsAiSchema.safeParse({});
+    const result = DryadsAiSchema.safeParse({});
     expect(result.success).toBe(true);
   });
 
   it("rejects non-string $schema", () => {
-    const result = DmmsAiSchema.safeParse({ $schema: 123 });
+    const result = DryadsAiSchema.safeParse({ $schema: 123 });
     expect(result.success).toBe(false);
   });
 });
@@ -178,7 +178,7 @@ describe("gateway.channelHealthCheckMinutes", () => {
 
 describe("cron webhook schema", () => {
   it("accepts cron.webhookToken and legacy cron.webhook", () => {
-    const res = DmmsAiSchema.safeParse({
+    const res = DryadsAiSchema.safeParse({
       cron: {
         enabled: true,
         webhook: "https://example.invalid/legacy-cron-webhook",
@@ -190,7 +190,7 @@ describe("cron webhook schema", () => {
   });
 
   it("rejects non-http cron.webhook URLs", () => {
-    const res = DmmsAiSchema.safeParse({
+    const res = DryadsAiSchema.safeParse({
       cron: {
         webhook: "ftp://example.invalid/legacy-cron-webhook",
       },
@@ -296,10 +296,10 @@ describe("config strict validation", () => {
 
   it("flags legacy config entries without auto-migrating", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".dmms-ai");
+      const configDir = path.join(home, ".dryads-ai");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "dmms-ai.json"),
+        path.join(configDir, "dryads-ai.json"),
         JSON.stringify({
           agents: { list: [{ id: "pi" }] },
           routing: { allowFrom: ["+15555550123"] },

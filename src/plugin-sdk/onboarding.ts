@@ -1,13 +1,13 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
 export type PromptAccountIdParams = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: DmmsAiConfig) => string[];
+  listAccountIds: (cfg: DryadsAiConfig) => string[];
   defaultAccountId: string;
 };
 

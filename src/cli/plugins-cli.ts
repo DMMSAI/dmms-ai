@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Command } from "commander";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { loadConfig, writeConfigFile } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import { resolveArchiveKind } from "../infra/archive.js";
@@ -111,9 +111,9 @@ function formatPluginLine(plugin: PluginRecord, verbose = false): string {
 }
 
 function applySlotSelectionForPlugin(
-  config: DmmsAiConfig,
+  config: DryadsAiConfig,
   pluginId: string,
-): { config: DmmsAiConfig; warnings: string[] } {
+): { config: DryadsAiConfig; warnings: string[] } {
   const report = buildPluginStatusReport({ config });
   const plugin = report.plugins.find((entry) => entry.id === pluginId);
   if (!plugin) {
@@ -135,7 +135,7 @@ function createPluginInstallLogger(): { info: (msg: string) => void; warn: (msg:
   };
 }
 
-function enablePluginInConfig(config: DmmsAiConfig, pluginId: string): DmmsAiConfig {
+function enablePluginInConfig(config: DryadsAiConfig, pluginId: string): DryadsAiConfig {
   return {
     ...config,
     plugins: {
@@ -163,11 +163,11 @@ function logSlotWarnings(warnings: string[]) {
 export function registerPluginsCli(program: Command) {
   const plugins = program
     .command("plugins")
-    .description("Manage DMMS AI plugins and extensions")
+    .description("Manage Dryads AI plugins and extensions")
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/plugins", "docs.dmms-ai.com/cli/plugins")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/plugins", "docs.dryads-ai.com/cli/plugins")}\n`,
     );
 
   plugins
@@ -352,7 +352,7 @@ export function registerPluginsCli(program: Command) {
     .argument("<id>", "Plugin id")
     .action(async (id: string) => {
       const cfg = loadConfig();
-      let next: DmmsAiConfig = {
+      let next: DryadsAiConfig = {
         ...cfg,
         plugins: {
           ...cfg.plugins,
@@ -555,7 +555,7 @@ export function registerPluginsCli(program: Command) {
             process.exit(1);
           }
 
-          let next: DmmsAiConfig = enablePluginInConfig(
+          let next: DryadsAiConfig = enablePluginInConfig(
             {
               ...cfg,
               plugins: {
@@ -741,7 +741,7 @@ export function registerPluginsCli(program: Command) {
           lines.push(`- ${target}${diag.message}`);
         }
       }
-      const docs = formatDocsLink("/plugin", "docs.dmms-ai.com/plugin");
+      const docs = formatDocsLink("/plugin", "docs.dryads-ai.com/plugin");
       lines.push("");
       lines.push(`${theme.muted("Docs:")} ${docs}`);
       defaultRuntime.log(lines.join("\n"));

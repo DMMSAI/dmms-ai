@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
-import DmmsAiDiscovery
-import DmmsAiIPC
+import DryadsAiDiscovery
+import DryadsAiIPC
 import SwiftUI
 
 extension OnboardingView {
@@ -35,7 +35,7 @@ extension OnboardingView {
                 user: user,
                 host: host,
                 port: gateway.sshPort)
-            DmmsAiConfigFile.setRemoteGatewayUrl(
+            DryadsAiConfigFile.setRemoteGatewayUrl(
                 host: gateway.serviceHost ?? host,
                 port: gateway.servicePort ?? gateway.gatewayPort)
         }
@@ -49,7 +49,7 @@ extension OnboardingView {
         SettingsTabRouter.request(tab)
         self.openSettings()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .dmmsAiSelectSettingsTab, object: tab)
+            NotificationCenter.default.post(name: .dryadsAiSelectSettingsTab, object: tab)
         }
     }
 
@@ -69,7 +69,7 @@ extension OnboardingView {
     }
 
     func finish() {
-        UserDefaults.standard.set(true, forKey: "dmms-ai.onboardingSeen")
+        UserDefaults.standard.set(true, forKey: "dryads-ai.onboardingSeen")
         UserDefaults.standard.set(currentOnboardingVersion, forKey: onboardingVersionKey)
         OnboardingController.shared.close()
     }
@@ -115,9 +115,9 @@ extension OnboardingView {
                 code: parsed.code,
                 state: parsed.state,
                 verifier: pkce.verifier)
-            try DmmsAiOAuthStore.saveAnthropicOAuth(creds)
+            try DryadsAiOAuthStore.saveAnthropicOAuth(creds)
             self.refreshAnthropicOAuthStatus()
-            self.anthropicAuthStatus = "Connected. DMMS AI can now use Claude."
+            self.anthropicAuthStatus = "Connected. Dryads AI can now use Claude."
         } catch {
             self.anthropicAuthStatus = "OAuth failed: \(error.localizedDescription)"
         }

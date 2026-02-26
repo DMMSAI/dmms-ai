@@ -1,6 +1,6 @@
-# @dmms-ai/voice-call
+# @dryads-ai/voice-call
 
-Official Voice Call plugin for **DMMS AI**.
+Official Voice Call plugin for **Dryads AI**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.dmms-ai.com/plugins/voice-call`
-Plugin system: `https://docs.dmms-ai.com/plugin`
+Docs: `https://docs.dryads-ai.com/plugins/voice-call`
+Plugin system: `https://docs.dryads-ai.com/plugin`
 
 ## Install (local dev)
 
-### Option A: install via DMMS AI (recommended)
+### Option A: install via Dryads AI (recommended)
 
 ```bash
-dmms-ai plugins install @dmms-ai/voice-call
+dryads-ai plugins install @dryads-ai/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.dmms-ai/extensions
-cp -R extensions/voice-call ~/.dmms-ai/extensions/voice-call
-cd ~/.dmms-ai/extensions/voice-call && pnpm install
+mkdir -p ~/.dryads-ai/extensions
+cp -R extensions/voice-call ~/.dryads-ai/extensions/voice-call
+cd ~/.dryads-ai/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -132,13 +132,13 @@ Notes:
 ## CLI
 
 ```bash
-dmms-ai voicecall call --to "+15555550123" --message "Hello from DMMS AI"
-dmms-ai voicecall continue --call-id <id> --message "Any questions?"
-dmms-ai voicecall speak --call-id <id> --message "One moment"
-dmms-ai voicecall end --call-id <id>
-dmms-ai voicecall status --call-id <id>
-dmms-ai voicecall tail
-dmms-ai voicecall expose --mode funnel
+dryads-ai voicecall call --to "+15555550123" --message "Hello from Dryads AI"
+dryads-ai voicecall continue --call-id <id> --message "Any questions?"
+dryads-ai voicecall speak --call-id <id> --message "One moment"
+dryads-ai voicecall end --call-id <id>
+dryads-ai voicecall status --call-id <id>
+dryads-ai voicecall tail
+dryads-ai voicecall expose --mode funnel
 ```
 
 ## Tool

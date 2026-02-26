@@ -18,7 +18,7 @@ enum AnthropicAuthMode: Equatable {
 
     var shortLabel: String {
         switch self {
-        case .oauthFile: "OAuth (DMMS AI token file)"
+        case .oauthFile: "OAuth (Dryads AI token file)"
         case .oauthEnv: "OAuth (env var)"
         case .apiKeyEnv: "API key (env var)"
         case .missing: "Missing credentials"
@@ -36,7 +36,7 @@ enum AnthropicAuthMode: Equatable {
 enum AnthropicAuthResolver {
     static func resolve(
         environment: [String: String] = ProcessInfo.processInfo.environment,
-        oauthStatus: DmmsAiOAuthStore.AnthropicOAuthStatus = DmmsAiOAuthStore
+        oauthStatus: DryadsAiOAuthStore.AnthropicOAuthStatus = DryadsAiOAuthStore
             .anthropicOAuthStatus()) -> AnthropicAuthMode
     {
         if oauthStatus.isConnected { return .oauthFile }
@@ -58,7 +58,7 @@ enum AnthropicAuthResolver {
 }
 
 enum AnthropicOAuth {
-    private static let logger = Logger(subsystem: "ai.dmmsai", category: "anthropic-oauth")
+    private static let logger = Logger(subsystem: "ai.dryadsai", category: "anthropic-oauth")
 
     private static let clientId = "9d1c250a-e61b-44d9-88ed-5944d1962f5e"
     private static let authorizeURL = URL(string: "https://claude.ai/oauth/authorize")!
@@ -194,10 +194,10 @@ enum AnthropicOAuth {
     }
 }
 
-enum DmmsAiOAuthStore {
+enum DryadsAiOAuthStore {
     static let oauthFilename = "oauth.json"
     private static let providerKey = "anthropic"
-    private static let dmmsAiOAuthDirEnv = "DMMS_AI_OAUTH_DIR"
+    private static let dryadsAiOAuthDirEnv = "DRYADS_AI_OAUTH_DIR"
     private static let legacyPiDirEnv = "PI_CODING_AGENT_DIR"
 
     enum AnthropicOAuthStatus: Equatable {
@@ -215,18 +215,18 @@ enum DmmsAiOAuthStore {
 
         var shortDescription: String {
             switch self {
-            case .missingFile: "DMMS AI OAuth token file not found"
-            case .unreadableFile: "DMMS AI OAuth token file not readable"
-            case .invalidJSON: "DMMS AI OAuth token file invalid"
-            case .missingProviderEntry: "No Anthropic entry in DMMS AI OAuth token file"
+            case .missingFile: "Dryads AI OAuth token file not found"
+            case .unreadableFile: "Dryads AI OAuth token file not readable"
+            case .invalidJSON: "Dryads AI OAuth token file invalid"
+            case .missingProviderEntry: "No Anthropic entry in Dryads AI OAuth token file"
             case .missingTokens: "Anthropic entry missing tokens"
-            case .connected: "DMMS AI OAuth credentials found"
+            case .connected: "Dryads AI OAuth credentials found"
             }
         }
     }
 
     static func oauthDir() -> URL {
-        if let override = ProcessInfo.processInfo.environment[self.dmmsAiOAuthDirEnv]?
+        if let override = ProcessInfo.processInfo.environment[self.dryadsAiOAuthDirEnv]?
             .trimmingCharacters(in: .whitespacesAndNewlines),
             !override.isEmpty
         {
@@ -234,7 +234,7 @@ enum DmmsAiOAuthStore {
             return URL(fileURLWithPath: expanded, isDirectory: true)
         }
         let home = FileManager().homeDirectoryForCurrentUser
-        return home.appendingPathComponent(".dmms-ai", isDirectory: true)
+        return home.appendingPathComponent(".dryads-ai", isDirectory: true)
             .appendingPathComponent("credentials", isDirectory: true)
     }
 

@@ -1,5 +1,5 @@
-import type { LookupFn, SsrFPolicy } from "dmms-ai/plugin-sdk";
-import { fetchWithSsrFGuard } from "dmms-ai/plugin-sdk";
+import type { LookupFn, SsrFPolicy } from "dryads-ai/plugin-sdk";
+import { fetchWithSsrFGuard } from "dryads-ai/plugin-sdk";
 import { validateUrbitBaseUrl } from "./base-url.js";
 import { UrbitUrlError } from "./errors.js";
 

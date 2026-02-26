@@ -258,7 +258,7 @@ export function resolveRequestedLoginProviderOrThrow(
     .toSorted((a, b) => a.localeCompare(b));
   const availableText = available.length > 0 ? available.join(", ") : "(none)";
   throw new Error(
-    `Unknown provider "${requested}". Loaded providers: ${availableText}. Verify plugins via \`${formatCliCommand("dmms-ai plugins list --json")}\`.`,
+    `Unknown provider "${requested}". Loaded providers: ${availableText}. Verify plugins via \`${formatCliCommand("dryads-ai plugins list --json")}\`.`,
   );
 }
 
@@ -286,7 +286,7 @@ export async function modelsAuthLoginCommand(opts: LoginOptions, runtime: Runtim
   const providers = resolvePluginProviders({ config, workspaceDir });
   if (providers.length === 0) {
     throw new Error(
-      `No provider plugins found. Install one via \`${formatCliCommand("dmms-ai plugins install")}\`.`,
+      `No provider plugins found. Install one via \`${formatCliCommand("dryads-ai plugins install")}\`.`,
     );
   }
 

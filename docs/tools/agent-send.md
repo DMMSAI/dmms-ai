@@ -1,13 +1,13 @@
 ---
-summary: "Direct `dmms-ai agent` CLI runs (with optional delivery)"
+summary: "Direct `dryads-ai agent` CLI runs (with optional delivery)"
 read_when:
   - Adding or modifying the agent CLI entrypoint
 title: "Agent Send"
 ---
 
-# `dmms-ai agent` (direct agent runs)
+# `dryads-ai agent` (direct agent runs)
 
-`dmms-ai agent` runs a single agent turn without needing an inbound chat message.
+`dryads-ai agent` runs a single agent turn without needing an inbound chat message.
 By default it goes **through the Gateway**; add `--local` to force the embedded
 runtime on the current machine.
 
@@ -23,7 +23,7 @@ runtime on the current machine.
 - Output:
   - default: prints reply text (plus `MEDIA:<url>` lines)
   - `--json`: prints structured payload + metadata
-- Optional delivery back to a channel with `--deliver` + `--channel` (target formats match `dmms-ai message --target`).
+- Optional delivery back to a channel with `--deliver` + `--channel` (target formats match `dryads-ai message --target`).
 - Use `--reply-channel`/`--reply-to`/`--reply-account` to override delivery without changing the session.
 
 If the Gateway is unreachable, the CLI **falls back** to the embedded local run.
@@ -31,12 +31,12 @@ If the Gateway is unreachable, the CLI **falls back** to the embedded local run.
 ## Examples
 
 ```bash
-dmms-ai agent --to +15555550123 --message "status update"
-dmms-ai agent --agent ops --message "Summarize logs"
-dmms-ai agent --session-id 1234 --message "Summarize inbox" --thinking medium
-dmms-ai agent --to +15555550123 --message "Trace logs" --verbose on --json
-dmms-ai agent --to +15555550123 --message "Summon reply" --deliver
-dmms-ai agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
+dryads-ai agent --to +15555550123 --message "status update"
+dryads-ai agent --agent ops --message "Summarize logs"
+dryads-ai agent --session-id 1234 --message "Summarize inbox" --thinking medium
+dryads-ai agent --to +15555550123 --message "Trace logs" --verbose on --json
+dryads-ai agent --to +15555550123 --message "Summon reply" --deliver
+dryads-ai agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```
 
 ## Flags

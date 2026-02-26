@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiCanvasA2UIJSONL: Sendable {
+public enum DryadsAiCanvasA2UIJSONL: Sendable {
     public struct ParsedItem: Sendable {
         public var lineNumber: Int
         public var message: AnyCodable

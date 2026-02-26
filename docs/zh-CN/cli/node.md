@@ -2,7 +2,7 @@
 read_when:
   - 运行无头节点主机
   - 为 system.run 配对非 macOS 节点
-summary: "`dmms-ai node` 的 CLI 参考（无头节点主机）"
+summary: "`dryads-ai node` 的 CLI 参考（无头节点主机）"
 title: node
 x-i18n:
   generated_at: "2026-02-03T07:45:07Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai node`
+# `dryads-ai node`
 
 运行一个**无头节点主机**，连接到 Gateway 网关 WebSocket 并在此机器上暴露
 `system.run` / `system.which`。
@@ -49,7 +49,7 @@ x-i18n:
 ## 运行（前台）
 
 ```bash
-dmms-ai node run --host <gateway-host> --port 18789
+dryads-ai node run --host <gateway-host> --port 18789
 ```
 
 选项：
@@ -66,7 +66,7 @@ dmms-ai node run --host <gateway-host> --port 18789
 将无头节点主机安装为用户服务。
 
 ```bash
-dmms-ai node install --host <gateway-host> --port 18789
+dryads-ai node install --host <gateway-host> --port 18789
 ```
 
 选项：
@@ -83,13 +83,13 @@ dmms-ai node install --host <gateway-host> --port 18789
 管理服务：
 
 ```bash
-dmms-ai node status
-dmms-ai node stop
-dmms-ai node restart
-dmms-ai node uninstall
+dryads-ai node status
+dryads-ai node stop
+dryads-ai node restart
+dryads-ai node uninstall
 ```
 
-使用 `dmms-ai node run` 运行前台节点主机（无服务）。
+使用 `dryads-ai node run` 运行前台节点主机（无服务）。
 
 服务命令接受 `--json` 以获取机器可读输出。
 
@@ -99,17 +99,17 @@ dmms-ai node uninstall
 通过以下方式批准：
 
 ```bash
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
 ```
 
 节点主机将其节点 id、token、显示名称和 Gateway 网关连接信息存储在
-`~/.dmms-ai/node.json` 中。
+`~/.dryads-ai/node.json` 中。
 
 ## 执行批准
 
 `system.run` 受本地执行批准限制：
 
-- `~/.dmms-ai/exec-approvals.json`
+- `~/.dryads-ai/exec-approvals.json`
 - [执行批准](/tools/exec-approvals)
-- `dmms-ai approvals --node <id|name|ip>`（从 Gateway 网关编辑）
+- `dryads-ai approvals --node <id|name|ip>`（从 Gateway 网关编辑）

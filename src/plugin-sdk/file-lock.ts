@@ -25,7 +25,7 @@ type HeldLock = {
   lockPath: string;
 };
 
-const HELD_LOCKS_KEY = Symbol.for("dmms-ai.fileLockHeldLocks");
+const HELD_LOCKS_KEY = Symbol.for("dryads-ai.fileLockHeldLocks");
 const HELD_LOCKS = resolveProcessScopedMap<HeldLock>(HELD_LOCKS_KEY);
 
 function computeDelayMs(retries: FileLockOptions["retries"], attempt: number): number {

@@ -95,11 +95,11 @@ export function registerGatewayCli(program: Command) {
         "after",
         () =>
           `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-            ["dmms-ai gateway run", "Run the gateway in the foreground."],
-            ["dmms-ai gateway status", "Show service status and probe reachability."],
-            ["dmms-ai gateway discover", "Find local and wide-area gateway beacons."],
-            ["dmms-ai gateway call health", "Call a gateway RPC method directly."],
-          ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/gateway", "docs.dmms-ai.com/cli/gateway")}\n`,
+            ["dryads-ai gateway run", "Run the gateway in the foreground."],
+            ["dryads-ai gateway status", "Show service status and probe reachability."],
+            ["dryads-ai gateway discover", "Find local and wide-area gateway beacons."],
+            ["dryads-ai gateway call health", "Call a gateway RPC method directly."],
+          ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/gateway", "docs.dryads-ai.com/cli/gateway")}\n`,
       ),
   );
 

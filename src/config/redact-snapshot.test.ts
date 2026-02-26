@@ -6,8 +6,8 @@ import {
 } from "./redact-snapshot.js";
 import { __test__ } from "./schema.hints.js";
 import type { ConfigUiHints } from "./schema.js";
-import type { ConfigFileSnapshot } from "./types.dmms-ai.js";
-import { DmmsAiSchema } from "./zod-schema.js";
+import type { ConfigFileSnapshot } from "./types.dryads-ai.js";
+import { DryadsAiSchema } from "./zod-schema.js";
 
 const { mapSensitivePaths } = __test__;
 
@@ -22,7 +22,7 @@ function makeSnapshot<TConfig extends Record<string, unknown>>(
   raw?: string,
 ): TestSnapshot<TConfig> {
   return {
-    path: "/home/user/.dmms-ai/config.json5",
+    path: "/home/user/.dryads-ai/config.json5",
     exists: true,
     raw: raw ?? JSON.stringify(config),
     parsed: config,
@@ -192,9 +192,9 @@ describe("redactConfigSnapshot", () => {
     const snapshot = makeSnapshot({
       channels: {
         irc: {
-          passwordFile: "/etc/dmms-ai/irc-password.txt",
+          passwordFile: "/etc/dryads-ai/irc-password.txt",
           nickserv: {
-            passwordFile: "/etc/dmms-ai/nickserv-password.txt",
+            passwordFile: "/etc/dryads-ai/nickserv-password.txt",
             password: "super-secret-nickserv-password",
           },
         },
@@ -206,8 +206,8 @@ describe("redactConfigSnapshot", () => {
     const irc = channels.irc;
     const nickserv = irc.nickserv as Record<string, unknown>;
 
-    expect(irc.passwordFile).toBe("/etc/dmms-ai/irc-password.txt");
-    expect(nickserv.passwordFile).toBe("/etc/dmms-ai/nickserv-password.txt");
+    expect(irc.passwordFile).toBe("/etc/dryads-ai/irc-password.txt");
+    expect(nickserv.passwordFile).toBe("/etc/dryads-ai/nickserv-password.txt");
     expect(nickserv.password).toBe(REDACTED_SENTINEL);
   });
 
@@ -899,12 +899,12 @@ describe("restoreRedactedValues", () => {
 
 describe("realredactConfigSnapshot_real", () => {
   it("main schema redact works (samples)", () => {
-    const schema = DmmsAiSchema.toJSONSchema({
+    const schema = DryadsAiSchema.toJSONSchema({
       target: "draft-07",
       unrepresentable: "any",
     });
-    schema.title = "DmmsAiConfig";
-    const hints = mapSensitivePaths(DmmsAiSchema, "", {});
+    schema.title = "DryadsAiConfig";
+    const hints = mapSensitivePaths(DryadsAiSchema, "", {});
 
     const snapshot = makeSnapshot({
       agents: {

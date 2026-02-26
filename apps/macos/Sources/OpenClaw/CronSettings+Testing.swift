@@ -57,7 +57,7 @@ extension CronSettings {
     static func exerciseForTesting() {
         let store = CronJobsStore(isPreview: true)
         store.schedulerEnabled = false
-        store.schedulerStorePath = "/tmp/dmms-ai-cron-store.json"
+        store.schedulerStorePath = "/tmp/dryads-ai-cron-store.json"
 
         let job = CronJob(
             id: "job-1",

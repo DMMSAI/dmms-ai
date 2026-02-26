@@ -68,7 +68,7 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
       if (!json) {
         defaultRuntime.log(`Gateway service already ${service.loadedText}.`);
         defaultRuntime.log(
-          `Reinstall with: ${formatCliCommand("dmms-ai gateway install --force")}`,
+          `Reinstall with: ${formatCliCommand("dryads-ai gateway install --force")}`,
         );
       }
       return;
@@ -87,7 +87,7 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
   let token: string | undefined =
     opts.token ||
     cfg.gateway?.auth?.token ||
-    process.env.DMMS_AI_GATEWAY_TOKEN ||
+    process.env.DRYADS_AI_GATEWAY_TOKEN ||
     process.env.CLAWDBOT_GATEWAY_TOKEN;
 
   if (!token && needsToken) {

@@ -6,7 +6,7 @@ describe("resolveSkillsPromptForRun", () => {
   it("prefers snapshot prompt when available", () => {
     const prompt = resolveSkillsPromptForRun({
       skillsSnapshot: { prompt: "SNAPSHOT", skills: [] },
-      workspaceDir: "/tmp/dmms-ai",
+      workspaceDir: "/tmp/dryads-ai",
     });
     expect(prompt).toBe("SNAPSHOT");
   });
@@ -17,14 +17,14 @@ describe("resolveSkillsPromptForRun", () => {
         description: "Demo",
         filePath: "/app/skills/demo-skill/SKILL.md",
         baseDir: "/app/skills/demo-skill",
-        source: "dmms-ai-bundled",
+        source: "dryads-ai-bundled",
         disableModelInvocation: false,
       },
       frontmatter: {},
     };
     const prompt = resolveSkillsPromptForRun({
       entries: [entry],
-      workspaceDir: "/tmp/dmms-ai",
+      workspaceDir: "/tmp/dryads-ai",
     });
     expect(prompt).toContain("<available_skills>");
     expect(prompt).toContain("/app/skills/demo-skill/SKILL.md");

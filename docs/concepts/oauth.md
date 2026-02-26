@@ -1,7 +1,7 @@
 ---
-summary: "OAuth in DMMS AI: token exchange, storage, and multi-account patterns"
+summary: "OAuth in Dryads AI: token exchange, storage, and multi-account patterns"
 read_when:
-  - You want to understand DMMS AI OAuth end-to-end
+  - You want to understand Dryads AI OAuth end-to-end
   - You hit token invalidation / logout issues
   - You want setup-token or OAuth auth flows
   - You want multiple accounts or profile routing
@@ -10,17 +10,17 @@ title: "OAuth"
 
 # OAuth
 
-DMMS AI supports “subscription auth” via OAuth for providers that offer it (notably **OpenAI Codex (ChatGPT OAuth)**). For Anthropic subscriptions, use the **setup-token** flow. This page explains:
+Dryads AI supports “subscription auth” via OAuth for providers that offer it (notably **OpenAI Codex (ChatGPT OAuth)**). For Anthropic subscriptions, use the **setup-token** flow. This page explains:
 
 - how the OAuth **token exchange** works (PKCE)
 - where tokens are **stored** (and why)
 - how to handle **multiple accounts** (profiles + per-session overrides)
 
-DMMS AI also supports **provider plugins** that ship their own OAuth or API‑key
+Dryads AI also supports **provider plugins** that ship their own OAuth or API‑key
 flows. Run them via:
 
 ```bash
-dmms-ai models auth login --provider <id>
+dryads-ai models auth login --provider <id>
 ```
 
 ## The token sink (why it exists)
@@ -29,9 +29,9 @@ OAuth providers commonly mint a **new refresh token** during login/refresh flows
 
 Practical symptom:
 
-- you log in via DMMS AI _and_ via Claude Code / Codex CLI → one of them randomly gets “logged out” later
+- you log in via Dryads AI _and_ via Claude Code / Codex CLI → one of them randomly gets “logged out” later
 
-To reduce that, DMMS AI treats `auth-profiles.json` as a **token sink**:
+To reduce that, Dryads AI treats `auth-profiles.json` as a **token sink**:
 
 - the runtime reads credentials from **one place**
 - we can keep multiple profiles and route them deterministically
@@ -40,48 +40,48 @@ To reduce that, DMMS AI treats `auth-profiles.json` as a **token sink**:
 
 Secrets are stored **per-agent**:
 
-- Auth profiles (OAuth + API keys): `~/.dmms-ai/agents/<agentId>/agent/auth-profiles.json`
-- Runtime cache (managed automatically; don’t edit): `~/.dmms-ai/agents/<agentId>/agent/auth.json`
+- Auth profiles (OAuth + API keys): `~/.dryads-ai/agents/<agentId>/agent/auth-profiles.json`
+- Runtime cache (managed automatically; don’t edit): `~/.dryads-ai/agents/<agentId>/agent/auth.json`
 
 Legacy import-only file (still supported, but not the main store):
 
-- `~/.dmms-ai/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
+- `~/.dryads-ai/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
 
-All of the above also respect `$DMMS_AI_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
+All of the above also respect `$DRYADS_AI_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
 
 ## Anthropic setup-token (subscription auth)
 
-Run `claude setup-token` on any machine, then paste it into DMMS AI:
+Run `claude setup-token` on any machine, then paste it into Dryads AI:
 
 ```bash
-dmms-ai models auth setup-token --provider anthropic
+dryads-ai models auth setup-token --provider anthropic
 ```
 
 If you generated the token elsewhere, paste it manually:
 
 ```bash
-dmms-ai models auth paste-token --provider anthropic
+dryads-ai models auth paste-token --provider anthropic
 ```
 
 Verify:
 
 ```bash
-dmms-ai models status
+dryads-ai models status
 ```
 
 ## OAuth exchange (how login works)
 
-DMMS AI’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
+Dryads AI’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
 
 ### Anthropic (Claude Pro/Max) setup-token
 
 Flow shape:
 
 1. run `claude setup-token`
-2. paste the token into DMMS AI
+2. paste the token into Dryads AI
 3. store as a token auth profile (no refresh)
 
-The wizard path is `dmms-ai onboard` → auth choice `setup-token` (Anthropic).
+The wizard path is `dryads-ai onboard` → auth choice `setup-token` (Anthropic).
 
 ### OpenAI Codex (ChatGPT OAuth)
 
@@ -94,7 +94,7 @@ Flow shape (PKCE):
 5. exchange at `https://auth.openai.com/oauth/token`
 6. extract `accountId` from the access token and store `{ access, refresh, expires, accountId }`
 
-Wizard path is `dmms-ai onboard` → auth choice `openai-codex`.
+Wizard path is `dryads-ai onboard` → auth choice `openai-codex`.
 
 ## Refresh + expiry
 
@@ -116,8 +116,8 @@ Two patterns:
 If you want “personal” and “work” to never interact, use isolated agents (separate sessions + credentials + workspace):
 
 ```bash
-dmms-ai agents add work
-dmms-ai agents add personal
+dryads-ai agents add work
+dryads-ai agents add personal
 ```
 
 Then configure auth per-agent (wizard) and route chats to the right agent.
@@ -137,7 +137,7 @@ Example (session override):
 
 How to see what profile IDs exist:
 
-- `dmms-ai channels list --json` (shows `auth[]`)
+- `dryads-ai channels list --json` (shows `auth[]`)
 
 Related docs:
 

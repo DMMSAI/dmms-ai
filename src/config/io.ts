@@ -38,12 +38,12 @@ import { applyMergePatch } from "./merge-patch.js";
 import { normalizeConfigPaths } from "./normalize-paths.js";
 import { resolveConfigPath, resolveDefaultConfigCandidates, resolveStateDir } from "./paths.js";
 import { applyConfigOverrides } from "./runtime-overrides.js";
-import type { DmmsAiConfig, ConfigFileSnapshot, LegacyConfigIssue } from "./types.js";
+import type { DryadsAiConfig, ConfigFileSnapshot, LegacyConfigIssue } from "./types.js";
 import {
   validateConfigObjectRawWithPlugins,
   validateConfigObjectWithPlugins,
 } from "./validation.js";
-import { compareDmmsAiVersions } from "./version.js";
+import { compareDryadsAiVersions } from "./version.js";
 
 // Re-export for backwards compatibility
 export { CircularIncludeError, ConfigIncludeError } from "./includes.js";
@@ -64,8 +64,8 @@ const SHELL_ENV_EXPECTED_KEYS = [
   "DISCORD_BOT_TOKEN",
   "SLACK_BOT_TOKEN",
   "SLACK_APP_TOKEN",
-  "DMMS_AI_GATEWAY_TOKEN",
-  "DMMS_AI_GATEWAY_PASSWORD",
+  "DRYADS_AI_GATEWAY_TOKEN",
+  "DRYADS_AI_GATEWAY_PASSWORD",
 ];
 
 const CONFIG_AUDIT_LOG_FILENAME = "config-audit.jsonl";
@@ -144,11 +144,11 @@ export function resolveConfigSnapshotHash(snapshot: {
   return hashConfigRaw(snapshot.raw);
 }
 
-function coerceConfig(value: unknown): DmmsAiConfig {
+function coerceConfig(value: unknown): DryadsAiConfig {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return {};
   }
-  return value as DmmsAiConfig;
+  return value as DryadsAiConfig;
 }
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
@@ -413,7 +413,7 @@ function warnOnConfigMiskeys(raw: unknown, logger: Pick<typeof console, "warn">)
   }
 }
 
-function stampConfigVersion(cfg: DmmsAiConfig): DmmsAiConfig {
+function stampConfigVersion(cfg: DryadsAiConfig): DryadsAiConfig {
   const now = new Date().toISOString();
   return {
     ...cfg,
@@ -425,18 +425,18 @@ function stampConfigVersion(cfg: DmmsAiConfig): DmmsAiConfig {
   };
 }
 
-function warnIfConfigFromFuture(cfg: DmmsAiConfig, logger: Pick<typeof console, "warn">): void {
+function warnIfConfigFromFuture(cfg: DryadsAiConfig, logger: Pick<typeof console, "warn">): void {
   const touched = cfg.meta?.lastTouchedVersion;
   if (!touched) {
     return;
   }
-  const cmp = compareDmmsAiVersions(VERSION, touched);
+  const cmp = compareDryadsAiVersions(VERSION, touched);
   if (cmp === null) {
     return;
   }
   if (cmp < 0) {
     logger.warn(
-      `Config was last written by a newer DMMS AI (${touched}); current version is ${VERSION}.`,
+      `Config was last written by a newer Dryads AI (${touched}); current version is ${VERSION}.`,
     );
   }
 }
@@ -502,7 +502,7 @@ function resolveConfigForRead(
 ): ConfigReadResolution {
   // Apply config.env to process.env BEFORE substitution so ${VAR} can reference config-defined vars.
   if (resolvedIncludes && typeof resolvedIncludes === "object" && "env" in resolvedIncludes) {
-    applyConfigEnvVars(resolvedIncludes as DmmsAiConfig, env);
+    applyConfigEnvVars(resolvedIncludes as DryadsAiConfig, env);
   }
 
   return {
@@ -526,7 +526,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
   const configPath =
     candidatePaths.find((candidate) => deps.fs.existsSync(candidate)) ?? requestedConfigPath;
 
-  function loadConfig(): DmmsAiConfig {
+  function loadConfig(): DryadsAiConfig {
     try {
       maybeLoadDotEnvForConfig(deps.env);
       if (!deps.fs.existsSync(configPath)) {
@@ -551,7 +551,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
       if (typeof resolvedConfig !== "object" || resolvedConfig === null) {
         return {};
       }
-      const preValidationDuplicates = findDuplicateAgentDirs(resolvedConfig as DmmsAiConfig, {
+      const preValidationDuplicates = findDuplicateAgentDirs(resolvedConfig as DryadsAiConfig, {
         env: deps.env,
         homedir: deps.homedir,
       });
@@ -817,7 +817,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
     };
   }
 
-  async function writeConfigFile(cfg: DmmsAiConfig, options: ConfigWriteOptions = {}) {
+  async function writeConfigFile(cfg: DryadsAiConfig, options: ConfigWriteOptions = {}) {
     clearConfigCache();
     let persistCandidate: unknown = cfg;
     const { snapshot } = await readConfigFileSnapshotInternal();
@@ -879,7 +879,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
             cfgToWrite,
             parsedRes.parsed,
             envForRestore,
-          ) as DmmsAiConfig;
+          ) as DryadsAiConfig;
         }
       }
     } catch {
@@ -890,7 +890,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
     await deps.fs.promises.mkdir(dir, { recursive: true, mode: 0o700 });
     const outputConfig =
       envRefMap && changedPaths
-        ? (restoreEnvRefsFromMap(cfgToWrite, "", envRefMap, changedPaths) as DmmsAiConfig)
+        ? (restoreEnvRefsFromMap(cfgToWrite, "", envRefMap, changedPaths) as DryadsAiConfig)
         : cfgToWrite;
     // Do NOT apply runtime defaults when writing — user config should only contain
     // explicitly set values. Runtime defaults are applied when loading (issue #6070).
@@ -919,7 +919,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
         return;
       }
       const isVitest = deps.env.VITEST === "true";
-      const shouldLogInVitest = deps.env.DMMS_AI_TEST_CONFIG_OVERWRITE_LOG === "1";
+      const shouldLogInVitest = deps.env.DRYADS_AI_TEST_CONFIG_OVERWRITE_LOG === "1";
       if (isVitest && !shouldLogInVitest) {
         return;
       }
@@ -935,7 +935,7 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
       }
       // Tests often write minimal configs (missing meta, etc); keep output quiet unless requested.
       const isVitest = deps.env.VITEST === "true";
-      const shouldLogInVitest = deps.env.DMMS_AI_TEST_CONFIG_WRITE_ANOMALY_LOG === "1";
+      const shouldLogInVitest = deps.env.DRYADS_AI_TEST_CONFIG_WRITE_ANOMALY_LOG === "1";
       if (isVitest && !shouldLogInVitest) {
         return;
       }
@@ -951,16 +951,16 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
       cwd: process.cwd(),
       argv: process.argv.slice(0, 8),
       execArgv: process.execArgv.slice(0, 8),
-      watchMode: deps.env.DMMS_AI_WATCH_MODE === "1",
+      watchMode: deps.env.DRYADS_AI_WATCH_MODE === "1",
       watchSession:
-        typeof deps.env.DMMS_AI_WATCH_SESSION === "string" &&
-        deps.env.DMMS_AI_WATCH_SESSION.trim().length > 0
-          ? deps.env.DMMS_AI_WATCH_SESSION.trim()
+        typeof deps.env.DRYADS_AI_WATCH_SESSION === "string" &&
+        deps.env.DRYADS_AI_WATCH_SESSION.trim().length > 0
+          ? deps.env.DRYADS_AI_WATCH_SESSION.trim()
           : null,
       watchCommand:
-        typeof deps.env.DMMS_AI_WATCH_COMMAND === "string" &&
-        deps.env.DMMS_AI_WATCH_COMMAND.trim().length > 0
-          ? deps.env.DMMS_AI_WATCH_COMMAND.trim()
+        typeof deps.env.DRYADS_AI_WATCH_COMMAND === "string" &&
+        deps.env.DRYADS_AI_WATCH_COMMAND.trim().length > 0
+          ? deps.env.DRYADS_AI_WATCH_COMMAND.trim()
           : null,
       existsBefore: snapshot.exists,
       previousHash: previousHash ?? null,
@@ -1053,17 +1053,17 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
 }
 
 // NOTE: These wrappers intentionally do *not* cache the resolved config path at
-// module scope. `DMMS_AI_CONFIG_PATH` (and friends) are expected to work even
+// module scope. `DRYADS_AI_CONFIG_PATH` (and friends) are expected to work even
 // when set after the module has been imported (tests, one-off scripts, etc.).
 const DEFAULT_CONFIG_CACHE_MS = 200;
 let configCache: {
   configPath: string;
   expiresAt: number;
-  config: DmmsAiConfig;
+  config: DryadsAiConfig;
 } | null = null;
 
 function resolveConfigCacheMs(env: NodeJS.ProcessEnv): number {
-  const raw = env.DMMS_AI_CONFIG_CACHE_MS?.trim();
+  const raw = env.DRYADS_AI_CONFIG_CACHE_MS?.trim();
   if (raw === "" || raw === "0") {
     return 0;
   }
@@ -1078,7 +1078,7 @@ function resolveConfigCacheMs(env: NodeJS.ProcessEnv): number {
 }
 
 function shouldUseConfigCache(env: NodeJS.ProcessEnv): boolean {
-  if (env.DMMS_AI_DISABLE_CONFIG_CACHE?.trim()) {
+  if (env.DRYADS_AI_DISABLE_CONFIG_CACHE?.trim()) {
     return false;
   }
   return resolveConfigCacheMs(env) > 0;
@@ -1088,7 +1088,7 @@ export function clearConfigCache(): void {
   configCache = null;
 }
 
-export function loadConfig(): DmmsAiConfig {
+export function loadConfig(): DryadsAiConfig {
   const io = createConfigIO();
   const configPath = io.configPath;
   const now = Date.now();
@@ -1121,7 +1121,7 @@ export async function readConfigFileSnapshotForWrite(): Promise<ReadConfigFileSn
 }
 
 export async function writeConfigFile(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   options: ConfigWriteOptions = {},
 ): Promise<void> {
   const io = createConfigIO();

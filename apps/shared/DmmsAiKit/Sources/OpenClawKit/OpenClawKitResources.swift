@@ -1,7 +1,7 @@
 import Foundation
 
-public enum DmmsAiKitResources {
-    /// Resource bundle for DmmsAiKit.
+public enum DryadsAiKitResources {
+    /// Resource bundle for DryadsAiKit.
     ///
     /// Locates the SwiftPM-generated resource bundle, checking multiple locations:
     /// 1. Inside Bundle.main (packaged apps)
@@ -13,7 +13,7 @@ public enum DmmsAiKitResources {
     /// SwiftPM's expectations.
     public static let bundle: Bundle = locateBundle()
 
-    private static let bundleName = "DmmsAiKit_DmmsAiKit"
+    private static let bundleName = "DryadsAiKit_DryadsAiKit"
 
     private static func locateBundle() -> Bundle {
         // 1. Check inside Bundle.main (packaged apps copy resources here)

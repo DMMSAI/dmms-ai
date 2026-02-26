@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 const requireConfig = createRequire(import.meta.url);
 
@@ -108,10 +108,10 @@ function redactText(text: string, patterns: RegExp[]): string {
 }
 
 function resolveConfigRedaction(): RedactOptions {
-  let cfg: DmmsAiConfig["logging"] | undefined;
+  let cfg: DryadsAiConfig["logging"] | undefined;
   try {
     const loaded = requireConfig("../config/config.js") as {
-      loadConfig?: () => DmmsAiConfig;
+      loadConfig?: () => DryadsAiConfig;
     };
     cfg = loaded.loadConfig?.().logging;
   } catch {

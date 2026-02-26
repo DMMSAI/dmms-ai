@@ -1,6 +1,6 @@
 ---
 title: CI Pipeline
-description: How the DMMS AI CI pipeline works
+description: How the Dryads AI CI pipeline works
 ---
 
 # CI Pipeline

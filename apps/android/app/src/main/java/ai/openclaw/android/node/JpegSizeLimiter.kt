@@ -1,4 +1,4 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import kotlin.math.max
 import kotlin.math.min

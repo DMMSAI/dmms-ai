@@ -1,22 +1,22 @@
 ---
-summary: "DMMS AI is a multi-channel gateway for AI agents that runs on any OS."
+summary: "Dryads AI is a multi-channel gateway for AI agents that runs on any OS."
 read_when:
-  - Introducing DMMS AI to newcomers
-title: "DMMS AI"
+  - Introducing Dryads AI to newcomers
+title: "Dryads AI"
 ---
 
-# DMMS AI 🦞
+# Dryads AI 🦞
 
 <p align="center">
     <img
-        src="/assets/dmms-ai-logo-text-dark.png"
-        alt="DMMS AI"
+        src="/assets/dryads-ai-logo-text-dark.png"
+        alt="Dryads AI"
         width="500"
         class="dark:hidden"
     />
     <img
-        src="/assets/dmms-ai-logo-text.png"
-        alt="DMMS AI"
+        src="/assets/dryads-ai-logo-text.png"
+        alt="Dryads AI"
         width="500"
         class="hidden dark:block"
     />
@@ -31,19 +31,19 @@ title: "DMMS AI"
 
 <Columns>
   <Card title="Get Started" href="/start/getting-started" icon="rocket">
-    Install DMMS AI and bring up the Gateway in minutes.
+    Install Dryads AI and bring up the Gateway in minutes.
   </Card>
   <Card title="Run the Wizard" href="/start/wizard" icon="sparkles">
-    Guided setup with `dmms-ai onboard` and pairing flows.
+    Guided setup with `dryads-ai onboard` and pairing flows.
   </Card>
   <Card title="Open the Control UI" href="/web/control-ui" icon="layout-dashboard">
     Launch the browser dashboard for chat, config, and sessions.
   </Card>
 </Columns>
 
-## What is DMMS AI?
+## What is Dryads AI?
 
-DMMS AI is a **self-hosted gateway** that connects your favorite chat apps — WhatsApp, Telegram, Discord, iMessage, and more — to AI coding agents like Pi. You run a single Gateway process on your own machine (or a server), and it becomes the bridge between your messaging apps and an always-available AI assistant.
+Dryads AI is a **self-hosted gateway** that connects your favorite chat apps — WhatsApp, Telegram, Discord, iMessage, and more — to AI coding agents like Pi. You run a single Gateway process on your own machine (or a server), and it becomes the bridge between your messaging apps and an always-available AI assistant.
 
 **Who is it for?** Developers and power users who want a personal AI assistant they can message from anywhere — without giving up control of their data or relying on a hosted service.
 
@@ -96,20 +96,20 @@ The Gateway is the single source of truth for sessions, routing, and channel con
 ## Quick start
 
 <Steps>
-  <Step title="Install DMMS AI">
+  <Step title="Install Dryads AI">
     ```bash
-    npm install -g dmms-ai@latest
+    npm install -g dryads-ai@latest
     ```
   </Step>
   <Step title="Onboard and install the service">
     ```bash
-    dmms-ai onboard --install-daemon
+    dryads-ai onboard --install-daemon
     ```
   </Step>
   <Step title="Pair WhatsApp and start the Gateway">
     ```bash
-    dmms-ai channels login
-    dmms-ai gateway --port 18789
+    dryads-ai channels login
+    dryads-ai gateway --port 18789
     ```
   </Step>
 </Steps>
@@ -124,14 +124,14 @@ Open the browser Control UI after the Gateway starts.
 - Remote access: [Web surfaces](/web) and [Tailscale](/gateway/tailscale)
 
 <p align="center">
-  <img src="whatsapp-dmms-ai.jpg" alt="DMMS AI" width="420" />
+  <img src="whatsapp-dryads-ai.jpg" alt="Dryads AI" width="420" />
 </p>
 
 ## Configuration (optional)
 
-Config lives at `~/.dmms-ai/dmms-ai.json`.
+Config lives at `~/.dryads-ai/dryads-ai.json`.
 
-- If you **do nothing**, DMMS AI uses the bundled Pi binary in RPC mode with per-sender sessions.
+- If you **do nothing**, Dryads AI uses the bundled Pi binary in RPC mode with per-sender sessions.
 - If you want to lock it down, start with `channels.whatsapp.allowFrom` and (for groups) mention rules.
 
 Example:
@@ -144,7 +144,7 @@ Example:
       groups: { "*": { requireMention: true } },
     },
   },
-  messages: { groupChat: { mentionPatterns: ["@dmms-ai"] } },
+  messages: { groupChat: { mentionPatterns: ["@dryads-ai"] } },
 }
 ```
 

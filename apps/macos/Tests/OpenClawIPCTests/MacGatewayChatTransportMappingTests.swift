@@ -1,13 +1,13 @@
-import DmmsAiChatUI
-import DmmsAiProtocol
+import DryadsAiChatUI
+import DryadsAiProtocol
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct MacGatewayChatTransportMappingTests {
     @Test func snapshotMapsToHealth() {
         let snapshot = Snapshot(
             presence: [],
-            health: DmmsAiProtocol.AnyCodable(["ok": DmmsAiProtocol.AnyCodable(false)]),
+            health: DryadsAiProtocol.AnyCodable(["ok": DryadsAiProtocol.AnyCodable(false)]),
             stateversion: StateVersion(presence: 1, health: 1),
             uptimems: 123,
             configpath: nil,
@@ -38,7 +38,7 @@ import Testing
         let frame = EventFrame(
             type: "event",
             event: "health",
-            payload: DmmsAiProtocol.AnyCodable(["ok": DmmsAiProtocol.AnyCodable(true)]),
+            payload: DryadsAiProtocol.AnyCodable(["ok": DryadsAiProtocol.AnyCodable(true)]),
             seq: 1,
             stateversion: nil)
 
@@ -61,10 +61,10 @@ import Testing
     }
 
     @Test func chatEventMapsToChat() {
-        let payload = DmmsAiProtocol.AnyCodable([
-            "runId": DmmsAiProtocol.AnyCodable("run-1"),
-            "sessionKey": DmmsAiProtocol.AnyCodable("main"),
-            "state": DmmsAiProtocol.AnyCodable("final"),
+        let payload = DryadsAiProtocol.AnyCodable([
+            "runId": DryadsAiProtocol.AnyCodable("run-1"),
+            "sessionKey": DryadsAiProtocol.AnyCodable("main"),
+            "state": DryadsAiProtocol.AnyCodable("final"),
         ])
         let frame = EventFrame(type: "event", event: "chat", payload: payload, seq: 1, stateversion: nil)
         let mapped = MacGatewayChatTransport.mapPushToTransportEvent(.event(frame))
@@ -83,7 +83,7 @@ import Testing
         let frame = EventFrame(
             type: "event",
             event: "unknown",
-            payload: DmmsAiProtocol.AnyCodable(["a": DmmsAiProtocol.AnyCodable(1)]),
+            payload: DryadsAiProtocol.AnyCodable(["a": DryadsAiProtocol.AnyCodable(1)]),
             seq: 1,
             stateversion: nil)
         let mapped = MacGatewayChatTransport.mapPushToTransportEvent(.event(frame))

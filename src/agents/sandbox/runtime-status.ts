@@ -1,5 +1,5 @@
 import { formatCliCommand } from "../../cli/command-format.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { canonicalizeMainSessionAlias, resolveAgentMainSessionKey } from "../../config/sessions.js";
 import { resolveSessionAgentId } from "../agent-scope.js";
 import { expandToolGroups } from "../tool-policy.js";
@@ -17,7 +17,10 @@ function shouldSandboxSession(cfg: SandboxConfig, sessionKey: string, mainSessio
   return sessionKey.trim() !== mainSessionKey.trim();
 }
 
-function resolveMainSessionKeyForSandbox(params: { cfg?: DmmsAiConfig; agentId: string }): string {
+function resolveMainSessionKeyForSandbox(params: {
+  cfg?: DryadsAiConfig;
+  agentId: string;
+}): string {
   if (params.cfg?.session?.scope === "global") {
     return "global";
   }
@@ -28,7 +31,7 @@ function resolveMainSessionKeyForSandbox(params: { cfg?: DmmsAiConfig; agentId: 
 }
 
 function resolveComparableSessionKeyForSandbox(params: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   agentId: string;
   sessionKey: string;
 }): string {
@@ -39,7 +42,10 @@ function resolveComparableSessionKeyForSandbox(params: {
   });
 }
 
-export function resolveSandboxRuntimeStatus(params: { cfg?: DmmsAiConfig; sessionKey?: string }): {
+export function resolveSandboxRuntimeStatus(params: {
+  cfg?: DryadsAiConfig;
+  sessionKey?: string;
+}): {
   agentId: string;
   sessionKey: string;
   mainSessionKey: string;
@@ -73,7 +79,7 @@ export function resolveSandboxRuntimeStatus(params: { cfg?: DmmsAiConfig; sessio
 }
 
 export function formatSandboxToolPolicyBlockedMessage(params: {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   sessionKey?: string;
   toolName: string;
 }): string | undefined {
@@ -125,7 +131,7 @@ export function formatSandboxToolPolicyBlockedMessage(params: {
     lines.push(`- Use main session key (direct): ${runtime.mainSessionKey}`);
   }
   lines.push(
-    `- See: ${formatCliCommand(`dmms-ai sandbox explain --session ${runtime.sessionKey}`)}`,
+    `- See: ${formatCliCommand(`dryads-ai sandbox explain --session ${runtime.sessionKey}`)}`,
   );
 
   return lines.join("\n");

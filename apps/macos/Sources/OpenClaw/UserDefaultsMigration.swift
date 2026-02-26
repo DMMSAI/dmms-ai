@@ -1,7 +1,7 @@
 import Foundation
 
-private let legacyDefaultsPrefix = "dmms-ai."
-private let defaultsPrefix = "dmms-ai."
+private let legacyDefaultsPrefix = "dryads-ai."
+private let defaultsPrefix = "dryads-ai."
 
 func migrateLegacyDefaults() {
     let defaults = UserDefaults.standard

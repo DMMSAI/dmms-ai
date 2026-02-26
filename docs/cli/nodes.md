@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai nodes` (list/status/approve/invoke, camera/canvas/screen)"
+summary: "CLI reference for `dryads-ai nodes` (list/status/approve/invoke, camera/canvas/screen)"
 read_when:
   - You’re managing paired nodes (cameras, screen, canvas)
   - You need to approve requests or invoke node commands
 title: "nodes"
 ---
 
-# `dmms-ai nodes`
+# `dryads-ai nodes`
 
 Manage paired nodes (devices) and invoke node capabilities.
 
@@ -23,14 +23,14 @@ Common options:
 ## Common commands
 
 ```bash
-dmms-ai nodes list
-dmms-ai nodes list --connected
-dmms-ai nodes list --last-connected 24h
-dmms-ai nodes pending
-dmms-ai nodes approve <requestId>
-dmms-ai nodes status
-dmms-ai nodes status --connected
-dmms-ai nodes status --last-connected 24h
+dryads-ai nodes list
+dryads-ai nodes list --connected
+dryads-ai nodes list --last-connected 24h
+dryads-ai nodes pending
+dryads-ai nodes approve <requestId>
+dryads-ai nodes status
+dryads-ai nodes status --connected
+dryads-ai nodes status --last-connected 24h
 ```
 
 `nodes list` prints pending/paired tables. Paired rows include the most recent connect age (Last Connect).
@@ -40,10 +40,10 @@ filter to nodes that connected within a duration (e.g. `24h`, `7d`).
 ## Invoke / run
 
 ```bash
-dmms-ai nodes invoke --node <id|name|ip> --command <command> --params <json>
-dmms-ai nodes run --node <id|name|ip> <command...>
-dmms-ai nodes run --raw "git status"
-dmms-ai nodes run --agent main --node <id|name|ip> --raw "git status"
+dryads-ai nodes invoke --node <id|name|ip> --command <command> --params <json>
+dryads-ai nodes run --node <id|name|ip> <command...>
+dryads-ai nodes run --raw "git status"
+dryads-ai nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 Invoke flags:

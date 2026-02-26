@@ -1,4 +1,4 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

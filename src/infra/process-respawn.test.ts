@@ -29,22 +29,22 @@ function clearSupervisorHints() {
 }
 
 describe("restartGatewayProcessWithFreshPid", () => {
-  it("returns disabled when DMMS_AI_NO_RESPAWN is set", () => {
-    process.env.DMMS_AI_NO_RESPAWN = "1";
+  it("returns disabled when DRYADS_AI_NO_RESPAWN is set", () => {
+    process.env.DRYADS_AI_NO_RESPAWN = "1";
     const result = restartGatewayProcessWithFreshPid();
     expect(result.mode).toBe("disabled");
     expect(spawnMock).not.toHaveBeenCalled();
   });
 
   it("returns supervised when launchd/systemd hints are present", () => {
-    process.env.LAUNCH_JOB_LABEL = "ai.dmmsai.gateway";
+    process.env.LAUNCH_JOB_LABEL = "ai.dryadsai.gateway";
     const result = restartGatewayProcessWithFreshPid();
     expect(result.mode).toBe("supervised");
     expect(spawnMock).not.toHaveBeenCalled();
   });
 
   it("spawns detached child with current exec argv", () => {
-    delete process.env.DMMS_AI_NO_RESPAWN;
+    delete process.env.DRYADS_AI_NO_RESPAWN;
     clearSupervisorHints();
     process.execArgv = ["--import", "tsx"];
     process.argv = ["/usr/local/bin/node", "/repo/dist/index.js", "gateway", "run"];
@@ -64,7 +64,7 @@ describe("restartGatewayProcessWithFreshPid", () => {
   });
 
   it("returns failed when spawn throws", () => {
-    delete process.env.DMMS_AI_NO_RESPAWN;
+    delete process.env.DRYADS_AI_NO_RESPAWN;
     clearSupervisorHints();
 
     spawnMock.mockImplementation(() => {

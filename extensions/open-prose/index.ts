@@ -1,5 +1,5 @@
-import type { DmmsAiPluginApi } from "../../src/plugins/types.js";
+import type { DryadsAiPluginApi } from "../../src/plugins/types.js";
 
-export default function register(_api: DmmsAiPluginApi) {
+export default function register(_api: DryadsAiPluginApi) {
   // OpenProse is delivered via plugin-shipped skills.
 }

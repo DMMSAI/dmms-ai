@@ -8,8 +8,8 @@ let port = 0;
 let previousToken: string | undefined;
 
 beforeAll(async () => {
-  previousToken = process.env.DMMS_AI_GATEWAY_TOKEN;
-  process.env.DMMS_AI_GATEWAY_TOKEN = "test-gateway-token-1234567890";
+  previousToken = process.env.DRYADS_AI_GATEWAY_TOKEN;
+  process.env.DRYADS_AI_GATEWAY_TOKEN = "test-gateway-token-1234567890";
   port = await getFreePort();
   server = await startGatewayServer(port);
 });
@@ -17,9 +17,9 @@ beforeAll(async () => {
 afterAll(async () => {
   await server?.close();
   if (previousToken === undefined) {
-    delete process.env.DMMS_AI_GATEWAY_TOKEN;
+    delete process.env.DRYADS_AI_GATEWAY_TOKEN;
   } else {
-    process.env.DMMS_AI_GATEWAY_TOKEN = previousToken;
+    process.env.DRYADS_AI_GATEWAY_TOKEN = previousToken;
   }
 });
 
@@ -62,8 +62,8 @@ function connectReq(
 }
 
 test.each([
-  { clientId: "dmms-ai-ios", platform: "ios" },
-  { clientId: "dmms-ai-android", platform: "android" },
+  { clientId: "dryads-ai-ios", platform: "ios" },
+  { clientId: "dryads-ai-android", platform: "android" },
 ])("accepts $clientId as a valid gateway client id", async ({ clientId, platform }) => {
   const ws = new WebSocket(`ws://127.0.0.1:${port}`);
   await new Promise<void>((resolve) => ws.once("open", resolve));

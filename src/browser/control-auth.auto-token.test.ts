@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 const mocks = vi.hoisted(() => ({
-  loadConfig: vi.fn<() => DmmsAiConfig>(),
-  writeConfigFile: vi.fn(async (_cfg: DmmsAiConfig) => {}),
+  loadConfig: vi.fn<() => DryadsAiConfig>(),
+  writeConfigFile: vi.fn(async (_cfg: DryadsAiConfig) => {}),
 }));
 
 vi.mock("../config/config.js", async (importOriginal) => {
@@ -25,7 +25,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("returns existing auth and skips writes", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       gateway: {
         auth: {
           token: "already-set",
@@ -41,7 +41,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("auto-generates and persists a token when auth is missing", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       browser: {
         enabled: true,
       },
@@ -63,7 +63,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("skips auto-generation in test env", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       browser: {
         enabled: true,
       },
@@ -80,7 +80,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("respects explicit password mode", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       gateway: {
         auth: {
           mode: "password",
@@ -99,7 +99,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("reuses auth from latest config snapshot", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       browser: {
         enabled: true,
       },

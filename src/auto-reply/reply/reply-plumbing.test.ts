@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { SubagentRunRecord } from "../../agents/subagent-registry.js";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { formatDurationCompact } from "../../infra/format-time/format-duration.js";
 import type { TemplateContext } from "../templating.js";
 import { buildThreadingToolContext } from "./agent-runner-utils.js";
@@ -13,7 +13,7 @@ import {
 } from "./subagents-utils.js";
 
 describe("buildThreadingToolContext", () => {
-  const cfg = {} as DmmsAiConfig;
+  const cfg = {} as DryadsAiConfig;
 
   it("uses conversation id for WhatsApp", () => {
     const sessionCtx = {
@@ -138,7 +138,7 @@ describe("buildThreadingToolContext", () => {
 
     const result = buildThreadingToolContext({
       sessionCtx,
-      config: { channels: { slack: { replyToMode: "all" } } } as DmmsAiConfig,
+      config: { channels: { slack: { replyToMode: "all" } } } as DryadsAiConfig,
       hasRepliedRef: undefined,
     });
 

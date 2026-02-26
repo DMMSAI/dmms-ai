@@ -33,7 +33,7 @@ async function readAuthJson(filePath: string): Promise<AuthJsonShape> {
 }
 
 /**
- * Convert an DMMS AI auth-profiles credential to pi-coding-agent auth.json format.
+ * Convert an Dryads AI auth-profiles credential to pi-coding-agent auth.json format.
  * Returns null if the credential cannot be converted.
  */
 function convertCredential(cred: AuthProfileCredential): AuthJsonCredential | null {
@@ -104,7 +104,7 @@ function credentialsEqual(a: AuthJsonCredential | undefined, b: AuthJsonCredenti
 /**
  * pi-coding-agent's ModelRegistry/AuthStorage expects credentials in auth.json.
  *
- * DMMS AI stores credentials in auth-profiles.json instead. This helper
+ * Dryads AI stores credentials in auth-profiles.json instead. This helper
  * bridges all credentials into agentDir/auth.json so pi-coding-agent can
  * (a) consider providers authenticated and (b) include built-in models in its
  * registry/catalog output.

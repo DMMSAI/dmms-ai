@@ -1,5 +1,5 @@
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiKit
+import DryadsAiProtocol
 
-typealias ProtoAnyCodable = DmmsAiProtocol.AnyCodable
-typealias KitAnyCodable = DmmsAiKit.AnyCodable
+typealias ProtoAnyCodable = DryadsAiProtocol.AnyCodable
+typealias KitAnyCodable = DryadsAiKit.AnyCodable

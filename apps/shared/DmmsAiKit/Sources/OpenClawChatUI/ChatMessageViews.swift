@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import SwiftUI
 
@@ -135,8 +135,8 @@ private struct ChatBubbleShape: InsettableShape {
 
 @MainActor
 struct ChatMessageBubble: View {
-    let message: DmmsAiChatMessage
-    let style: DmmsAiChatView.Style
+    let message: DryadsAiChatMessage
+    let style: DryadsAiChatView.Style
     let markdownVariant: ChatMarkdownVariant
     let userAccent: Color?
 
@@ -157,15 +157,15 @@ struct ChatMessageBubble: View {
 
 @MainActor
 private struct ChatMessageBody: View {
-    let message: DmmsAiChatMessage
+    let message: DryadsAiChatMessage
     let isUser: Bool
-    let style: DmmsAiChatView.Style
+    let style: DryadsAiChatView.Style
     let markdownVariant: ChatMarkdownVariant
     let userAccent: Color?
 
     var body: some View {
         let text = self.primaryText
-        let textColor = self.isUser ? DmmsAiChatTheme.userText : DmmsAiChatTheme.assistantText
+        let textColor = self.isUser ? DryadsAiChatTheme.userText : DryadsAiChatTheme.assistantText
 
         VStack(alignment: .leading, spacing: 10) {
             if self.isToolResultMessage {
@@ -232,7 +232,7 @@ private struct ChatMessageBody: View {
         return parts.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private var inlineAttachments: [DmmsAiChatMessageContent] {
+    private var inlineAttachments: [DryadsAiChatMessageContent] {
         self.message.content.filter { content in
             switch content.type ?? "text" {
             case "file", "attachment":
@@ -243,7 +243,7 @@ private struct ChatMessageBody: View {
         }
     }
 
-    private var toolCalls: [DmmsAiChatMessageContent] {
+    private var toolCalls: [DryadsAiChatMessageContent] {
         self.message.content.filter { content in
             let kind = (content.type ?? "").lowercased()
             if ["toolcall", "tool_call", "tooluse", "tool_use"].contains(kind) {
@@ -253,7 +253,7 @@ private struct ChatMessageBody: View {
         }
     }
 
-    private var inlineToolResults: [DmmsAiChatMessageContent] {
+    private var inlineToolResults: [DryadsAiChatMessageContent] {
         self.message.content.filter { content in
             let kind = (content.type ?? "").lowercased()
             return kind == "toolresult" || kind == "tool_result"
@@ -276,12 +276,12 @@ private struct ChatMessageBody: View {
 
     private var bubbleFillColor: Color {
         if self.isUser {
-            return self.userAccent ?? DmmsAiChatTheme.userBubble
+            return self.userAccent ?? DryadsAiChatTheme.userBubble
         }
         if self.style == .onboarding {
-            return DmmsAiChatTheme.onboardingAssistantBubble
+            return DryadsAiChatTheme.onboardingAssistantBubble
         }
-        return DmmsAiChatTheme.assistantBubble
+        return DryadsAiChatTheme.assistantBubble
     }
 
     private var bubbleBackground: AnyShapeStyle {
@@ -293,7 +293,7 @@ private struct ChatMessageBody: View {
             return Color.white.opacity(0.12)
         }
         if self.style == .onboarding {
-            return DmmsAiChatTheme.onboardingAssistantBorder
+            return DryadsAiChatTheme.onboardingAssistantBorder
         }
         return Color.white.opacity(0.08)
     }
@@ -339,7 +339,7 @@ private struct ChatMessageBody: View {
 }
 
 private struct AttachmentRow: View {
-    let att: DmmsAiChatMessageContent
+    let att: DryadsAiChatMessageContent
     let isUser: Bool
 
     var body: some View {
@@ -348,7 +348,7 @@ private struct AttachmentRow: View {
             Text(self.att.fileName ?? "Attachment")
                 .font(.footnote)
                 .lineLimit(1)
-                .foregroundStyle(self.isUser ? DmmsAiChatTheme.userText : DmmsAiChatTheme.assistantText)
+                .foregroundStyle(self.isUser ? DryadsAiChatTheme.userText : DryadsAiChatTheme.assistantText)
             Spacer()
         }
         .padding(10)
@@ -358,7 +358,7 @@ private struct AttachmentRow: View {
 }
 
 private struct ToolCallCard: View {
-    let content: DmmsAiChatMessageContent
+    let content: DryadsAiChatMessageContent
     let isUser: Bool
 
     var body: some View {
@@ -379,7 +379,7 @@ private struct ToolCallCard: View {
         .padding(10)
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(DmmsAiChatTheme.subtleCard)
+                .fill(DryadsAiChatTheme.subtleCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)))
@@ -414,7 +414,7 @@ private struct ToolResultCard: View {
 
             Text(self.displayText)
                 .font(.footnote.monospaced())
-                .foregroundStyle(self.isUser ? DmmsAiChatTheme.userText : DmmsAiChatTheme.assistantText)
+                .foregroundStyle(self.isUser ? DryadsAiChatTheme.userText : DryadsAiChatTheme.assistantText)
                 .lineLimit(self.expanded ? nil : Self.previewLineLimit)
 
             if self.shouldShowToggle {
@@ -429,7 +429,7 @@ private struct ToolResultCard: View {
         .padding(10)
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(DmmsAiChatTheme.subtleCard)
+                .fill(DryadsAiChatTheme.subtleCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)))
@@ -453,13 +453,13 @@ private struct ToolResultCard: View {
 
 @MainActor
 struct ChatTypingIndicatorBubble: View {
-    let style: DmmsAiChatView.Style
+    let style: DryadsAiChatView.Style
 
     var body: some View {
         HStack(spacing: 10) {
             TypingDots()
             if self.style == .standard {
-                Text("DMMS AI is thinking…")
+                Text("Dryads AI is thinking…")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -469,7 +469,7 @@ struct ChatTypingIndicatorBubble: View {
         .padding(.horizontal, self.style == .standard ? 12 : 14)
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(DmmsAiChatTheme.assistantBubble))
+                .fill(DryadsAiChatTheme.assistantBubble))
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .strokeBorder(Color.white.opacity(0.08), lineWidth: 1))
@@ -496,7 +496,7 @@ struct ChatStreamingAssistantBubble: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(DmmsAiChatTheme.assistantBubble))
+                .fill(DryadsAiChatTheme.assistantBubble))
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .strokeBorder(Color.white.opacity(0.08), lineWidth: 1))
@@ -507,7 +507,7 @@ struct ChatStreamingAssistantBubble: View {
 
 @MainActor
 struct ChatPendingToolsBubble: View {
-    let toolCalls: [DmmsAiChatPendingToolCall]
+    let toolCalls: [DryadsAiChatPendingToolCall]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -540,7 +540,7 @@ struct ChatPendingToolsBubble: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(DmmsAiChatTheme.assistantBubble))
+                .fill(DryadsAiChatTheme.assistantBubble))
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .strokeBorder(Color.white.opacity(0.08), lineWidth: 1))
@@ -609,7 +609,7 @@ private struct ChatAssistantTextBody: View {
                     context: .assistant,
                     variant: self.markdownVariant,
                     font: font,
-                    textColor: DmmsAiChatTheme.assistantText)
+                    textColor: DryadsAiChatTheme.assistantText)
             }
         }
     }

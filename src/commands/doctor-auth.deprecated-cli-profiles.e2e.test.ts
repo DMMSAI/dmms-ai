@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { maybeRemoveDeprecatedCliAuthProfiles } from "./doctor-auth.js";
 import type { DoctorPrompter } from "./doctor-prompter.js";
 
@@ -23,18 +23,18 @@ function makePrompter(confirmValue: boolean): DoctorPrompter {
 }
 
 beforeEach(() => {
-  originalAgentDir = process.env.DMMS_AI_AGENT_DIR;
+  originalAgentDir = process.env.DRYADS_AI_AGENT_DIR;
   originalPiAgentDir = process.env.PI_CODING_AGENT_DIR;
-  tempAgentDir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-auth-"));
-  process.env.DMMS_AI_AGENT_DIR = tempAgentDir;
+  tempAgentDir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-auth-"));
+  process.env.DRYADS_AI_AGENT_DIR = tempAgentDir;
   process.env.PI_CODING_AGENT_DIR = tempAgentDir;
 });
 
 afterEach(() => {
   if (originalAgentDir === undefined) {
-    delete process.env.DMMS_AI_AGENT_DIR;
+    delete process.env.DRYADS_AI_AGENT_DIR;
   } else {
-    process.env.DMMS_AI_AGENT_DIR = originalAgentDir;
+    process.env.DRYADS_AI_AGENT_DIR = originalAgentDir;
   }
   if (originalPiAgentDir === undefined) {
     delete process.env.PI_CODING_AGENT_DIR;
@@ -95,7 +95,7 @@ describe("maybeRemoveDeprecatedCliAuthProfiles", () => {
     } as const;
 
     const next = await maybeRemoveDeprecatedCliAuthProfiles(
-      cfg as unknown as DmmsAiConfig,
+      cfg as unknown as DryadsAiConfig,
       makePrompter(true),
     );
 

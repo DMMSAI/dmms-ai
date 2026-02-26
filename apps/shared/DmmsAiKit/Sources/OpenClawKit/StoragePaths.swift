@@ -1,14 +1,14 @@
 import Foundation
 
-public enum DmmsAiNodeStorage {
+public enum DryadsAiNodeStorage {
     public static func appSupportDir() throws -> URL {
         let base = FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         guard let base else {
-            throw NSError(domain: "DmmsAiNodeStorage", code: 1, userInfo: [
+            throw NSError(domain: "DryadsAiNodeStorage", code: 1, userInfo: [
                 NSLocalizedDescriptionKey: "Application Support directory unavailable",
             ])
         }
-        return base.appendingPathComponent("DMMS AI", isDirectory: true)
+        return base.appendingPathComponent("Dryads AI", isDirectory: true)
     }
 
     public static func canvasRoot(sessionKey: String) throws -> URL {
@@ -21,11 +21,11 @@ public enum DmmsAiNodeStorage {
     public static func cachesDir() throws -> URL {
         let base = FileManager().urls(for: .cachesDirectory, in: .userDomainMask).first
         guard let base else {
-            throw NSError(domain: "DmmsAiNodeStorage", code: 2, userInfo: [
+            throw NSError(domain: "DryadsAiNodeStorage", code: 2, userInfo: [
                 NSLocalizedDescriptionKey: "Caches directory unavailable",
             ])
         }
-        return base.appendingPathComponent("DMMS AI", isDirectory: true)
+        return base.appendingPathComponent("Dryads AI", isDirectory: true)
     }
 
     public static func canvasSnapshotsRoot(sessionKey: String) throws -> URL {

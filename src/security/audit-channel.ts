@@ -7,7 +7,7 @@ import {
 } from "../channels/telegram/allow-from.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { resolveNativeCommandsEnabled, resolveNativeSkillsEnabled } from "../config/commands.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { readChannelAllowFromStore } from "../pairing/pairing-store.js";
 import type { SecurityAuditFinding, SecurityAuditSeverity } from "./audit.js";
 
@@ -37,7 +37,7 @@ function classifyChannelWarningSeverity(message: string): SecurityAuditSeverity 
 }
 
 export async function collectChannelSecurityFindings(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   plugins: ReturnType<typeof listChannelPlugins>;
 }): Promise<SecurityAuditFinding[]> {
   const findings: SecurityAuditFinding[] = [];
@@ -120,7 +120,7 @@ export async function collectChannelSecurityFindings(params: {
           "Multiple DM senders currently share the main session, which can leak context across users.",
         remediation:
           "Run: " +
-          formatCliCommand('dmms-ai config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('dryads-ai config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate DM sessions per sender.',
       });
     }

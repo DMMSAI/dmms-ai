@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "dmms-ai/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "dryads-ai/plugin-sdk";
 
 type ZalouserAccountStatus = {
   accountId?: unknown;
@@ -68,7 +68,7 @@ export function collectZalouserStatusIssues(
           accountId,
           kind: "auth",
           message: "Not authenticated (no zca session).",
-          fix: "Run: dmms-ai channels login --channel zalouser",
+          fix: "Run: dryads-ai channels login --channel zalouser",
         });
       }
       continue;

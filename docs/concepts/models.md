@@ -15,7 +15,7 @@ Quick provider overview + examples: [/concepts/model-providers](/concepts/model-
 
 ## How model selection works
 
-DMMS AI selects models in this order:
+Dryads AI selects models in this order:
 
 1. **Primary** model (`agents.defaults.model.primary` or `agents.defaults.model`).
 2. **Fallbacks** in `agents.defaults.model.fallbacks` (in order).
@@ -24,7 +24,7 @@ DMMS AI selects models in this order:
 
 Related:
 
-- `agents.defaults.models` is the allowlist/catalog of models DMMS AI can use (plus aliases).
+- `agents.defaults.models` is the allowlist/catalog of models Dryads AI can use (plus aliases).
 - `agents.defaults.imageModel` is used **only when** the primary model can’t accept images.
 - Per-agent defaults can override `agents.defaults.model` via `agents.list[].model` plus bindings (see [/concepts/multi-agent](/concepts/multi-agent)).
 
@@ -38,7 +38,7 @@ Related:
 If you don’t want to hand-edit config, run the onboarding wizard:
 
 ```bash
-dmms-ai onboard
+dryads-ai onboard
 ```
 
 It can set up model + auth for common providers, including **OpenAI Code (Codex)
@@ -62,7 +62,7 @@ Provider configuration examples (including OpenCode Zen) live in
 
 If `agents.defaults.models` is set, it becomes the **allowlist** for `/model` and for
 session overrides. When a user selects a model that isn’t in that allowlist,
-DMMS AI returns:
+Dryads AI returns:
 
 ```
 Model "provider/model" is not allowed. Use /model to list available models.
@@ -108,34 +108,34 @@ Notes:
 - `/model status` is the detailed view (auth candidates and, when configured, provider endpoint `baseUrl` + `api` mode).
 - Model refs are parsed by splitting on the **first** `/`. Use `provider/model` when typing `/model <ref>`.
 - If the model ID itself contains `/` (OpenRouter-style), you must include the provider prefix (example: `/model openrouter/moonshotai/kimi-k2`).
-- If you omit the provider, DMMS AI treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
+- If you omit the provider, Dryads AI treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
 
 Full command behavior/config: [Slash commands](/tools/slash-commands).
 
 ## CLI commands
 
 ```bash
-dmms-ai models list
-dmms-ai models status
-dmms-ai models set <provider/model>
-dmms-ai models set-image <provider/model>
+dryads-ai models list
+dryads-ai models status
+dryads-ai models set <provider/model>
+dryads-ai models set-image <provider/model>
 
-dmms-ai models aliases list
-dmms-ai models aliases add <alias> <provider/model>
-dmms-ai models aliases remove <alias>
+dryads-ai models aliases list
+dryads-ai models aliases add <alias> <provider/model>
+dryads-ai models aliases remove <alias>
 
-dmms-ai models fallbacks list
-dmms-ai models fallbacks add <provider/model>
-dmms-ai models fallbacks remove <provider/model>
-dmms-ai models fallbacks clear
+dryads-ai models fallbacks list
+dryads-ai models fallbacks add <provider/model>
+dryads-ai models fallbacks remove <provider/model>
+dryads-ai models fallbacks clear
 
-dmms-ai models image-fallbacks list
-dmms-ai models image-fallbacks add <provider/model>
-dmms-ai models image-fallbacks remove <provider/model>
-dmms-ai models image-fallbacks clear
+dryads-ai models image-fallbacks list
+dryads-ai models image-fallbacks add <provider/model>
+dryads-ai models image-fallbacks remove <provider/model>
+dryads-ai models image-fallbacks clear
 ```
 
-`dmms-ai models` (no subcommand) is a shortcut for `models status`.
+`dryads-ai models` (no subcommand) is a shortcut for `models status`.
 
 ### `models list`
 
@@ -163,12 +163,12 @@ Preferred Anthropic auth is the Claude Code CLI setup-token (run anywhere; paste
 
 ```bash
 claude setup-token
-dmms-ai models status
+dryads-ai models status
 ```
 
 ## Scanning (OpenRouter free models)
 
-`dmms-ai models scan` inspects OpenRouter’s **free model catalog** and can
+`dryads-ai models scan` inspects OpenRouter’s **free model catalog** and can
 optionally probe models for tool and image support.
 
 Key flags:
@@ -204,5 +204,5 @@ mode, pass `--yes` to accept defaults.
 ## Models registry (`models.json`)
 
 Custom providers in `models.providers` are written into `models.json` under the
-agent directory (default `~/.dmms-ai/agents/<agentId>/models.json`). This file
+agent directory (default `~/.dryads-ai/agents/<agentId>/models.json`). This file
 is merged by default unless `models.mode` is set to `replace`.

@@ -1,24 +1,24 @@
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { createAccountListHelpers } from "./account-helpers.js";
 
 const { listConfiguredAccountIds, listAccountIds, resolveDefaultAccountId } =
   createAccountListHelpers("testchannel");
 
-function cfg(accounts?: Record<string, unknown> | null): DmmsAiConfig {
+function cfg(accounts?: Record<string, unknown> | null): DryadsAiConfig {
   if (accounts === null) {
-    return { channels: { testchannel: {} } } as unknown as DmmsAiConfig;
+    return { channels: { testchannel: {} } } as unknown as DryadsAiConfig;
   }
   if (accounts === undefined) {
-    return {} as unknown as DmmsAiConfig;
+    return {} as unknown as DryadsAiConfig;
   }
-  return { channels: { testchannel: { accounts } } } as unknown as DmmsAiConfig;
+  return { channels: { testchannel: { accounts } } } as unknown as DryadsAiConfig;
 }
 
 describe("createAccountListHelpers", () => {
   describe("listConfiguredAccountIds", () => {
     it("returns empty for missing config", () => {
-      expect(listConfiguredAccountIds({} as DmmsAiConfig)).toEqual([]);
+      expect(listConfiguredAccountIds({} as DryadsAiConfig)).toEqual([]);
     });
 
     it("returns empty when no accounts key", () => {
@@ -43,7 +43,7 @@ describe("createAccountListHelpers", () => {
 
   describe("listAccountIds", () => {
     it('returns ["default"] for empty config', () => {
-      expect(listAccountIds({} as DmmsAiConfig)).toEqual(["default"]);
+      expect(listAccountIds({} as DryadsAiConfig)).toEqual(["default"]);
     });
 
     it('returns ["default"] for empty accounts', () => {
@@ -65,7 +65,7 @@ describe("createAccountListHelpers", () => {
     });
 
     it('returns "default" for empty config', () => {
-      expect(resolveDefaultAccountId({} as DmmsAiConfig)).toBe("default");
+      expect(resolveDefaultAccountId({} as DryadsAiConfig)).toBe("default");
     });
   });
 });

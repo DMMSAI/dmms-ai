@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import type { DmPolicy } from "../../config/types.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
@@ -23,11 +23,11 @@ export type SetupChannelsOptions = {
 };
 
 export type PromptAccountIdParams = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: DmmsAiConfig) => string[];
+  listAccountIds: (cfg: DryadsAiConfig) => string[];
   defaultAccountId: string;
 };
 
@@ -42,13 +42,13 @@ export type ChannelOnboardingStatus = {
 };
 
 export type ChannelOnboardingStatusContext = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   options?: SetupChannelsOptions;
   accountOverrides: Partial<Record<ChannelId, string>>;
 };
 
 export type ChannelOnboardingConfigureContext = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   runtime: RuntimeEnv;
   prompter: WizardPrompter;
   options?: SetupChannelsOptions;
@@ -58,7 +58,7 @@ export type ChannelOnboardingConfigureContext = {
 };
 
 export type ChannelOnboardingResult = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   accountId?: string;
 };
 
@@ -67,13 +67,13 @@ export type ChannelOnboardingDmPolicy = {
   channel: ChannelId;
   policyKey: string;
   allowFromKey: string;
-  getCurrent: (cfg: DmmsAiConfig) => DmPolicy;
-  setPolicy: (cfg: DmmsAiConfig, policy: DmPolicy) => DmmsAiConfig;
+  getCurrent: (cfg: DryadsAiConfig) => DmPolicy;
+  setPolicy: (cfg: DryadsAiConfig, policy: DmPolicy) => DryadsAiConfig;
   promptAllowFrom?: (params: {
-    cfg: DmmsAiConfig;
+    cfg: DryadsAiConfig;
     prompter: WizardPrompter;
     accountId?: string;
-  }) => Promise<DmmsAiConfig>;
+  }) => Promise<DryadsAiConfig>;
 };
 
 export type ChannelOnboardingAdapter = {
@@ -82,5 +82,5 @@ export type ChannelOnboardingAdapter = {
   configure: (ctx: ChannelOnboardingConfigureContext) => Promise<ChannelOnboardingResult>;
   dmPolicy?: ChannelOnboardingDmPolicy;
   onAccountRecorded?: (accountId: string, options?: SetupChannelsOptions) => void;
-  disable?: (cfg: DmmsAiConfig) => DmmsAiConfig;
+  disable?: (cfg: DryadsAiConfig) => DryadsAiConfig;
 };

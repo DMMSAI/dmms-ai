@@ -2,15 +2,15 @@ import { parseFrontmatterBlock } from "../markdown/frontmatter.js";
 import {
   getFrontmatterString,
   normalizeStringList,
-  parseDmmsAiManifestInstallBase,
+  parseDryadsAiManifestInstallBase,
   parseFrontmatterBool,
-  resolveDmmsAiManifestBlock,
-  resolveDmmsAiManifestInstall,
-  resolveDmmsAiManifestOs,
-  resolveDmmsAiManifestRequires,
+  resolveDryadsAiManifestBlock,
+  resolveDryadsAiManifestInstall,
+  resolveDryadsAiManifestOs,
+  resolveDryadsAiManifestRequires,
 } from "../shared/frontmatter.js";
 import type {
-  DmmsAiHookMetadata,
+  DryadsAiHookMetadata,
   HookEntry,
   HookInstallSpec,
   HookInvocationPolicy,
@@ -22,7 +22,7 @@ export function parseFrontmatter(content: string): ParsedHookFrontmatter {
 }
 
 function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
-  const parsed = parseDmmsAiManifestInstallBase(input, ["bundled", "npm", "git"]);
+  const parsed = parseDryadsAiManifestInstallBase(input, ["bundled", "npm", "git"]);
   if (!parsed) {
     return undefined;
   }
@@ -50,16 +50,16 @@ function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
   return spec;
 }
 
-export function resolveDmmsAiMetadata(
+export function resolveDryadsAiMetadata(
   frontmatter: ParsedHookFrontmatter,
-): DmmsAiHookMetadata | undefined {
-  const metadataObj = resolveDmmsAiManifestBlock({ frontmatter });
+): DryadsAiHookMetadata | undefined {
+  const metadataObj = resolveDryadsAiManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }
-  const requires = resolveDmmsAiManifestRequires(metadataObj);
-  const install = resolveDmmsAiManifestInstall(metadataObj, parseInstallSpec);
-  const osRaw = resolveDmmsAiManifestOs(metadataObj);
+  const requires = resolveDryadsAiManifestRequires(metadataObj);
+  const install = resolveDryadsAiManifestInstall(metadataObj, parseInstallSpec);
+  const osRaw = resolveDryadsAiManifestOs(metadataObj);
   const eventsRaw = normalizeStringList(metadataObj.events);
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,

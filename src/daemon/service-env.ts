@@ -205,26 +205,26 @@ export function buildServiceEnvironment(params: {
   launchdLabel?: string;
 }): Record<string, string | undefined> {
   const { env, port, token, launchdLabel } = params;
-  const profile = env.DMMS_AI_PROFILE;
+  const profile = env.DRYADS_AI_PROFILE;
   const resolvedLaunchdLabel =
     launchdLabel ||
     (process.platform === "darwin" ? resolveGatewayLaunchAgentLabel(profile) : undefined);
   const systemdUnit = `${resolveGatewaySystemdServiceName(profile)}.service`;
-  const stateDir = env.DMMS_AI_STATE_DIR;
-  const configPath = env.DMMS_AI_CONFIG_PATH;
+  const stateDir = env.DRYADS_AI_STATE_DIR;
+  const configPath = env.DRYADS_AI_CONFIG_PATH;
   return {
     HOME: env.HOME,
     PATH: buildMinimalServicePath({ env }),
-    DMMS_AI_PROFILE: profile,
-    DMMS_AI_STATE_DIR: stateDir,
-    DMMS_AI_CONFIG_PATH: configPath,
-    DMMS_AI_GATEWAY_PORT: String(port),
-    DMMS_AI_GATEWAY_TOKEN: token,
-    DMMS_AI_LAUNCHD_LABEL: resolvedLaunchdLabel,
-    DMMS_AI_SYSTEMD_UNIT: systemdUnit,
-    DMMS_AI_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
-    DMMS_AI_SERVICE_KIND: GATEWAY_SERVICE_KIND,
-    DMMS_AI_SERVICE_VERSION: VERSION,
+    DRYADS_AI_PROFILE: profile,
+    DRYADS_AI_STATE_DIR: stateDir,
+    DRYADS_AI_CONFIG_PATH: configPath,
+    DRYADS_AI_GATEWAY_PORT: String(port),
+    DRYADS_AI_GATEWAY_TOKEN: token,
+    DRYADS_AI_LAUNCHD_LABEL: resolvedLaunchdLabel,
+    DRYADS_AI_SYSTEMD_UNIT: systemdUnit,
+    DRYADS_AI_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
+    DRYADS_AI_SERVICE_KIND: GATEWAY_SERVICE_KIND,
+    DRYADS_AI_SERVICE_VERSION: VERSION,
   };
 }
 
@@ -232,20 +232,20 @@ export function buildNodeServiceEnvironment(params: {
   env: Record<string, string | undefined>;
 }): Record<string, string | undefined> {
   const { env } = params;
-  const stateDir = env.DMMS_AI_STATE_DIR;
-  const configPath = env.DMMS_AI_CONFIG_PATH;
+  const stateDir = env.DRYADS_AI_STATE_DIR;
+  const configPath = env.DRYADS_AI_CONFIG_PATH;
   return {
     HOME: env.HOME,
     PATH: buildMinimalServicePath({ env }),
-    DMMS_AI_STATE_DIR: stateDir,
-    DMMS_AI_CONFIG_PATH: configPath,
-    DMMS_AI_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    DMMS_AI_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    DMMS_AI_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    DMMS_AI_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    DMMS_AI_LOG_PREFIX: "node",
-    DMMS_AI_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    DMMS_AI_SERVICE_KIND: NODE_SERVICE_KIND,
-    DMMS_AI_SERVICE_VERSION: VERSION,
+    DRYADS_AI_STATE_DIR: stateDir,
+    DRYADS_AI_CONFIG_PATH: configPath,
+    DRYADS_AI_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    DRYADS_AI_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    DRYADS_AI_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    DRYADS_AI_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    DRYADS_AI_LOG_PREFIX: "node",
+    DRYADS_AI_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    DRYADS_AI_SERVICE_KIND: NODE_SERVICE_KIND,
+    DRYADS_AI_SERVICE_VERSION: VERSION,
   };
 }

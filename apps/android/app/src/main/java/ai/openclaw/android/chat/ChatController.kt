@@ -1,6 +1,6 @@
-package ai.dmmsai.android.chat
+package ai.dryadsai.android.chat
 
-import ai.dmmsai.android.gateway.GatewaySession
+import ai.dryadsai.android.gateway.GatewaySession
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.CoroutineScope

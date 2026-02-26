@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 import UIKit
 
 final class DeviceStatusService: DeviceStatusServicing {
@@ -9,14 +9,14 @@ final class DeviceStatusService: DeviceStatusServicing {
         self.networkStatus = networkStatus
     }
 
-    func status() async throws -> DmmsAiDeviceStatusPayload {
+    func status() async throws -> DryadsAiDeviceStatusPayload {
         let battery = self.batteryStatus()
         let thermal = self.thermalStatus()
         let storage = self.storageStatus()
         let network = await self.networkStatus.currentStatus()
         let uptime = ProcessInfo.processInfo.systemUptime
 
-        return DmmsAiDeviceStatusPayload(
+        return DryadsAiDeviceStatusPayload(
             battery: battery,
             thermal: thermal,
             storage: storage,
@@ -24,12 +24,12 @@ final class DeviceStatusService: DeviceStatusServicing {
             uptimeSeconds: uptime)
     }
 
-    func info() -> DmmsAiDeviceInfoPayload {
+    func info() -> DryadsAiDeviceInfoPayload {
         let device = UIDevice.current
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev"
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
         let locale = Locale.preferredLanguages.first ?? Locale.current.identifier
-        return DmmsAiDeviceInfoPayload(
+        return DryadsAiDeviceInfoPayload(
             deviceName: device.name,
             modelIdentifier: Self.modelIdentifier(),
             systemName: device.systemName,
@@ -39,40 +39,40 @@ final class DeviceStatusService: DeviceStatusServicing {
             locale: locale)
     }
 
-    private func batteryStatus() -> DmmsAiBatteryStatusPayload {
+    private func batteryStatus() -> DryadsAiBatteryStatusPayload {
         let device = UIDevice.current
         device.isBatteryMonitoringEnabled = true
         let level = device.batteryLevel >= 0 ? Double(device.batteryLevel) : nil
-        let state: DmmsAiBatteryState = switch device.batteryState {
+        let state: DryadsAiBatteryState = switch device.batteryState {
         case .charging: .charging
         case .full: .full
         case .unplugged: .unplugged
         case .unknown: .unknown
         @unknown default: .unknown
         }
-        return DmmsAiBatteryStatusPayload(
+        return DryadsAiBatteryStatusPayload(
             level: level,
             state: state,
             lowPowerModeEnabled: ProcessInfo.processInfo.isLowPowerModeEnabled)
     }
 
-    private func thermalStatus() -> DmmsAiThermalStatusPayload {
-        let state: DmmsAiThermalState = switch ProcessInfo.processInfo.thermalState {
+    private func thermalStatus() -> DryadsAiThermalStatusPayload {
+        let state: DryadsAiThermalState = switch ProcessInfo.processInfo.thermalState {
         case .nominal: .nominal
         case .fair: .fair
         case .serious: .serious
         case .critical: .critical
         @unknown default: .nominal
         }
-        return DmmsAiThermalStatusPayload(state: state)
+        return DryadsAiThermalStatusPayload(state: state)
     }
 
-    private func storageStatus() -> DmmsAiStorageStatusPayload {
+    private func storageStatus() -> DryadsAiStorageStatusPayload {
         let attrs = (try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())) ?? [:]
         let total = (attrs[.systemSize] as? NSNumber)?.int64Value ?? 0
         let free = (attrs[.systemFreeSize] as? NSNumber)?.int64Value ?? 0
         let used = max(0, total - free)
-        return DmmsAiStorageStatusPayload(totalBytes: total, freeBytes: free, usedBytes: used)
+        return DryadsAiStorageStatusPayload(totalBytes: total, freeBytes: free, usedBytes: used)
     }
 
     private static func modelIdentifier() -> String {

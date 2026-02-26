@@ -33,13 +33,13 @@ vi.mock("node:fs", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-let ensureDmmsAiCliOnPath: typeof import("./path-env.js").ensureDmmsAiCliOnPath;
+let ensureDryadsAiCliOnPath: typeof import("./path-env.js").ensureDryadsAiCliOnPath;
 
-describe("ensureDmmsAiCliOnPath", () => {
+describe("ensureDryadsAiCliOnPath", () => {
   const envKeys = [
     "PATH",
-    "DMMS_AI_PATH_BOOTSTRAPPED",
-    "DMMS_AI_ALLOW_PROJECT_LOCAL_BIN",
+    "DRYADS_AI_PATH_BOOTSTRAPPED",
+    "DRYADS_AI_ALLOW_PROJECT_LOCAL_BIN",
     "MISE_DATA_DIR",
     "HOMEBREW_PREFIX",
     "HOMEBREW_BREW_FILE",
@@ -48,7 +48,7 @@ describe("ensureDmmsAiCliOnPath", () => {
   let envSnapshot: Record<(typeof envKeys)[number], string | undefined>;
 
   beforeAll(async () => {
-    ({ ensureDmmsAiCliOnPath } = await import("./path-env.js"));
+    ({ ensureDryadsAiCliOnPath } = await import("./path-env.js"));
   });
 
   beforeEach(() => {
@@ -72,18 +72,18 @@ describe("ensureDmmsAiCliOnPath", () => {
     }
   });
 
-  it("prepends the bundled app bin dir when a sibling dmms-ai exists", () => {
-    const tmp = abs("/tmp/dmms-ai-path/case-bundled");
+  it("prepends the bundled app bin dir when a sibling dryads-ai exists", () => {
+    const tmp = abs("/tmp/dryads-ai-path/case-bundled");
     const appBinDir = path.join(tmp, "AppBin");
-    const cliPath = path.join(appBinDir, "dmms-ai");
+    const cliPath = path.join(appBinDir, "dryads-ai");
     setDir(tmp);
     setDir(appBinDir);
     setExe(cliPath);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.DMMS_AI_PATH_BOOTSTRAPPED;
+    delete process.env.DRYADS_AI_PATH_BOOTSTRAPPED;
 
-    ensureDmmsAiCliOnPath({
+    ensureDryadsAiCliOnPath({
       execPath: cliPath,
       cwd: tmp,
       homeDir: tmp,
@@ -96,8 +96,8 @@ describe("ensureDmmsAiCliOnPath", () => {
 
   it("is idempotent", () => {
     process.env.PATH = "/bin";
-    process.env.DMMS_AI_PATH_BOOTSTRAPPED = "1";
-    ensureDmmsAiCliOnPath({
+    process.env.DRYADS_AI_PATH_BOOTSTRAPPED = "1";
+    ensureDryadsAiCliOnPath({
       execPath: "/tmp/does-not-matter",
       cwd: "/tmp",
       homeDir: "/tmp",
@@ -107,9 +107,9 @@ describe("ensureDmmsAiCliOnPath", () => {
   });
 
   it("prepends mise shims when available", () => {
-    const tmp = abs("/tmp/dmms-ai-path/case-mise");
+    const tmp = abs("/tmp/dryads-ai-path/case-mise");
     const appBinDir = path.join(tmp, "AppBin");
-    const appCli = path.join(appBinDir, "dmms-ai");
+    const appCli = path.join(appBinDir, "dryads-ai");
     setDir(tmp);
     setDir(appBinDir);
     setExe(appCli);
@@ -121,9 +121,9 @@ describe("ensureDmmsAiCliOnPath", () => {
 
     process.env.MISE_DATA_DIR = miseDataDir;
     process.env.PATH = "/usr/bin";
-    delete process.env.DMMS_AI_PATH_BOOTSTRAPPED;
+    delete process.env.DRYADS_AI_PATH_BOOTSTRAPPED;
 
-    ensureDmmsAiCliOnPath({
+    ensureDryadsAiCliOnPath({
       execPath: appCli,
       cwd: tmp,
       homeDir: tmp,
@@ -139,23 +139,23 @@ describe("ensureDmmsAiCliOnPath", () => {
   });
 
   it("only appends project-local node_modules/.bin when explicitly enabled", () => {
-    const tmp = abs("/tmp/dmms-ai-path/case-project-local");
+    const tmp = abs("/tmp/dryads-ai-path/case-project-local");
     const appBinDir = path.join(tmp, "AppBin");
-    const appCli = path.join(appBinDir, "dmms-ai");
+    const appCli = path.join(appBinDir, "dryads-ai");
     setDir(tmp);
     setDir(appBinDir);
     setExe(appCli);
 
     const localBinDir = path.join(tmp, "node_modules", ".bin");
-    const localCli = path.join(localBinDir, "dmms-ai");
+    const localCli = path.join(localBinDir, "dryads-ai");
     setDir(path.join(tmp, "node_modules"));
     setDir(localBinDir);
     setExe(localCli);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.DMMS_AI_PATH_BOOTSTRAPPED;
+    delete process.env.DRYADS_AI_PATH_BOOTSTRAPPED;
 
-    ensureDmmsAiCliOnPath({
+    ensureDryadsAiCliOnPath({
       execPath: appCli,
       cwd: tmp,
       homeDir: tmp,
@@ -165,9 +165,9 @@ describe("ensureDmmsAiCliOnPath", () => {
     expect(withoutOptIn.includes(localBinDir)).toBe(false);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.DMMS_AI_PATH_BOOTSTRAPPED;
+    delete process.env.DRYADS_AI_PATH_BOOTSTRAPPED;
 
-    ensureDmmsAiCliOnPath({
+    ensureDryadsAiCliOnPath({
       execPath: appCli,
       cwd: tmp,
       homeDir: tmp,
@@ -182,7 +182,7 @@ describe("ensureDmmsAiCliOnPath", () => {
   });
 
   it("prepends Linuxbrew dirs when present", () => {
-    const tmp = abs("/tmp/dmms-ai-path/case-linuxbrew");
+    const tmp = abs("/tmp/dryads-ai-path/case-linuxbrew");
     const execDir = path.join(tmp, "exec");
     setDir(tmp);
     setDir(execDir);
@@ -195,12 +195,12 @@ describe("ensureDmmsAiCliOnPath", () => {
     setDir(linuxbrewSbin);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.DMMS_AI_PATH_BOOTSTRAPPED;
+    delete process.env.DRYADS_AI_PATH_BOOTSTRAPPED;
     delete process.env.HOMEBREW_PREFIX;
     delete process.env.HOMEBREW_BREW_FILE;
     delete process.env.XDG_BIN_HOME;
 
-    ensureDmmsAiCliOnPath({
+    ensureDryadsAiCliOnPath({
       execPath: path.join(execDir, "node"),
       cwd: tmp,
       homeDir: tmp,

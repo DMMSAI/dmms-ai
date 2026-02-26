@@ -1,4 +1,4 @@
-import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "dmms-ai/plugin-sdk";
+import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "dryads-ai/plugin-sdk";
 import type { MatrixRoomConfig } from "../../types.js";
 
 export type MatrixRoomConfigResolved = {

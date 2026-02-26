@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai directory` (self, peers, groups)"
+summary: "CLI reference for `dryads-ai directory` (self, peers, groups)"
 read_when:
   - You want to look up contacts/groups/self ids for a channel
   - You are developing a channel directory adapter
 title: "directory"
 ---
 
-# `dmms-ai directory`
+# `dryads-ai directory`
 
 Directory lookups for channels that support it (contacts/peers, groups, and “me”).
 
@@ -18,15 +18,15 @@ Directory lookups for channels that support it (contacts/peers, groups, and “m
 
 ## Notes
 
-- `directory` is meant to help you find IDs you can paste into other commands (especially `dmms-ai message send --target ...`).
+- `directory` is meant to help you find IDs you can paste into other commands (especially `dryads-ai message send --target ...`).
 - For many channels, results are config-backed (allowlists / configured groups) rather than a live provider directory.
 - Default output is `id` (and sometimes `name`) separated by a tab; use `--json` for scripting.
 
 ## Using results with `message send`
 
 ```bash
-dmms-ai directory peers list --channel slack --query "U0"
-dmms-ai message send --channel slack --target user:U012ABCDEF --message "hello"
+dryads-ai directory peers list --channel slack --query "U0"
+dryads-ai message send --channel slack --target user:U012ABCDEF --message "hello"
 ```
 
 ## ID formats (by channel)
@@ -43,21 +43,21 @@ dmms-ai message send --channel slack --target user:U012ABCDEF --message "hello"
 ## Self (“me”)
 
 ```bash
-dmms-ai directory self --channel zalouser
+dryads-ai directory self --channel zalouser
 ```
 
 ## Peers (contacts/users)
 
 ```bash
-dmms-ai directory peers list --channel zalouser
-dmms-ai directory peers list --channel zalouser --query "name"
-dmms-ai directory peers list --channel zalouser --limit 50
+dryads-ai directory peers list --channel zalouser
+dryads-ai directory peers list --channel zalouser --query "name"
+dryads-ai directory peers list --channel zalouser --limit 50
 ```
 
 ## Groups
 
 ```bash
-dmms-ai directory groups list --channel zalouser
-dmms-ai directory groups list --channel zalouser --query "work"
-dmms-ai directory groups members --channel zalouser --group-id <id>
+dryads-ai directory groups list --channel zalouser
+dryads-ai directory groups list --channel zalouser --query "work"
+dryads-ai directory groups members --channel zalouser --group-id <id>
 ```

@@ -242,6 +242,6 @@ export async function appendStatusAllDiagnosis(params: {
 
   lines.push("");
   lines.push(muted("Pasteable debug report. Auth tokens redacted."));
-  lines.push("Troubleshooting: https://docs.dmms-ai.com/troubleshooting");
+  lines.push("Troubleshooting: https://docs.dryads-ai.com/troubleshooting");
   lines.push("");
 }

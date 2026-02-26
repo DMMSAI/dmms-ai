@@ -1,9 +1,9 @@
 import EventKit
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 
 final class CalendarService: CalendarServicing {
-    func events(params: DmmsAiCalendarEventsParams) async throws -> DmmsAiCalendarEventsPayload {
+    func events(params: DryadsAiCalendarEventsParams) async throws -> DryadsAiCalendarEventsPayload {
         let store = EKEventStore()
         let status = EKEventStore.authorizationStatus(for: .event)
         let authorized = EventKitAuthorization.allowsRead(status: status)
@@ -23,7 +23,7 @@ final class CalendarService: CalendarServicing {
 
         let formatter = ISO8601DateFormatter()
         let payload = selected.map { event in
-            DmmsAiCalendarEventPayload(
+            DryadsAiCalendarEventPayload(
                 identifier: event.eventIdentifier ?? UUID().uuidString,
                 title: event.title ?? "(untitled)",
                 startISO: formatter.string(from: event.startDate),
@@ -33,10 +33,10 @@ final class CalendarService: CalendarServicing {
                 calendarTitle: event.calendar.title)
         }
 
-        return DmmsAiCalendarEventsPayload(events: payload)
+        return DryadsAiCalendarEventsPayload(events: payload)
     }
 
-    func add(params: DmmsAiCalendarAddParams) async throws -> DmmsAiCalendarAddPayload {
+    func add(params: DryadsAiCalendarAddParams) async throws -> DryadsAiCalendarAddPayload {
         let store = EKEventStore()
         let status = EKEventStore.authorizationStatus(for: .event)
         let authorized = EventKitAuthorization.allowsWrite(status: status)
@@ -83,7 +83,7 @@ final class CalendarService: CalendarServicing {
 
         try store.save(event, span: .thisEvent)
 
-        let payload = DmmsAiCalendarEventPayload(
+        let payload = DryadsAiCalendarEventPayload(
             identifier: event.eventIdentifier ?? UUID().uuidString,
             title: event.title ?? title,
             startISO: formatter.string(from: event.startDate),
@@ -92,7 +92,7 @@ final class CalendarService: CalendarServicing {
             location: event.location,
             calendarTitle: event.calendar.title)
 
-        return DmmsAiCalendarAddPayload(event: payload)
+        return DryadsAiCalendarAddPayload(event: payload)
     }
 
     private static func resolveCalendar(

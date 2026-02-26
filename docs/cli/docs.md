@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `dmms-ai docs` (search the live docs index)"
+summary: "CLI reference for `dryads-ai docs` (search the live docs index)"
 read_when:
-  - You want to search the live DMMS AI docs from the terminal
+  - You want to search the live Dryads AI docs from the terminal
 title: "docs"
 ---
 
-# `dmms-ai docs`
+# `dryads-ai docs`
 
 Search the live docs index.
 
 ```bash
-dmms-ai docs browser extension
-dmms-ai docs sandbox allowHostControl
+dryads-ai docs browser extension
+dryads-ai docs sandbox allowHostControl
 ```

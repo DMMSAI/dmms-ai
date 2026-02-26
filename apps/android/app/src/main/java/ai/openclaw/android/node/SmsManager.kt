@@ -1,4 +1,4 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
 import android.Manifest
 import android.content.Context
@@ -11,7 +11,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.encodeToString
-import ai.dmmsai.android.PermissionRequester
+import ai.dryadsai.android.PermissionRequester
 
 /**
  * Sends SMS messages via the Android SMS API.

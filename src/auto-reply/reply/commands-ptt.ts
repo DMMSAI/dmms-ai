@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import { callGateway, randomIdempotencyKey } from "../../gateway/call.js";
 import { logVerbose } from "../../globals.js";
 import type { CommandHandler } from "./commands-types.js";
@@ -38,7 +38,7 @@ function isIOSNode(node: NodeSummary): boolean {
   );
 }
 
-async function loadNodes(cfg: DmmsAiConfig): Promise<NodeSummary[]> {
+async function loadNodes(cfg: DryadsAiConfig): Promise<NodeSummary[]> {
   try {
     const res = await callGateway<{ nodes?: NodeSummary[] }>({
       method: "node.list",

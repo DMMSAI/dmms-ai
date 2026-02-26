@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { RuntimeEnv } from "dryads-ai/plugin-sdk";
 import { getMatrixRuntime } from "../runtime.js";
 
 const MATRIX_SDK_PACKAGE = "@vector-im/matrix-bot-sdk";

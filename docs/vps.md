@@ -1,5 +1,5 @@
 ---
-summary: "VPS hosting hub for DMMS AI (Oracle/Fly/Hetzner/GCP/exe.dev)"
+summary: "VPS hosting hub for Dryads AI (Oracle/Fly/Hetzner/GCP/exe.dev)"
 read_when:
   - You want to run the Gateway in the cloud
   - You need a quick map of VPS/hosting guides

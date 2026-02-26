@@ -1,14 +1,14 @@
 ---
 name: command-logger
 description: "Log all command events to a centralized audit file"
-homepage: https://docs.dmms-ai.com/automation/hooks#command-logger
+homepage: https://docs.dryads-ai.com/automation/hooks#command-logger
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "📝",
         "events": ["command"],
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with DMMS AI" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Dryads AI" }],
       },
   }
 ---
@@ -22,7 +22,7 @@ Logs all command events (`/new`, `/reset`, `/stop`, etc.) to a centralized audit
 Every time you issue a command to the agent:
 
 1. **Captures event details** - Command action, timestamp, session key, sender ID, source
-2. **Appends to log file** - Writes a JSON line to `~/.dmms-ai/logs/commands.log`
+2. **Appends to log file** - Writes a JSON line to `~/.dryads-ai/logs/commands.log`
 3. **Silent operation** - Runs in the background without user notifications
 
 ## Output Format
@@ -43,7 +43,7 @@ Log entries are written in JSONL (JSON Lines) format:
 
 ## Log File Location
 
-`~/.dmms-ai/logs/commands.log`
+`~/.dryads-ai/logs/commands.log`
 
 ## Requirements
 
@@ -62,7 +62,7 @@ No configuration needed. The hook automatically:
 To disable this hook:
 
 ```bash
-dmms-ai hooks disable command-logger
+dryads-ai hooks disable command-logger
 ```
 
 Or via config:
@@ -86,13 +86,13 @@ The hook does not automatically rotate logs. To manage log size, you can:
 1. **Manual rotation**:
 
    ```bash
-   mv ~/.dmms-ai/logs/commands.log ~/.dmms-ai/logs/commands.log.old
+   mv ~/.dryads-ai/logs/commands.log ~/.dryads-ai/logs/commands.log.old
    ```
 
 2. **Use logrotate** (Linux):
-   Create `/etc/logrotate.d/dmms-ai`:
+   Create `/etc/logrotate.d/dryads-ai`:
    ```
-   /home/username/.dmms-ai/logs/commands.log {
+   /home/username/.dryads-ai/logs/commands.log {
        weekly
        rotate 4
        compress
@@ -106,17 +106,17 @@ The hook does not automatically rotate logs. To manage log size, you can:
 View recent commands:
 
 ```bash
-tail -n 20 ~/.dmms-ai/logs/commands.log
+tail -n 20 ~/.dryads-ai/logs/commands.log
 ```
 
 Pretty-print with jq:
 
 ```bash
-cat ~/.dmms-ai/logs/commands.log | jq .
+cat ~/.dryads-ai/logs/commands.log | jq .
 ```
 
 Filter by action:
 
 ```bash
-grep '"action":"new"' ~/.dmms-ai/logs/commands.log | jq .
+grep '"action":"new"' ~/.dryads-ai/logs/commands.log | jq .
 ```

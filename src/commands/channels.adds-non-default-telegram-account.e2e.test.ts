@@ -351,7 +351,7 @@ describe("channels command", () => {
     });
     expect(lines.join("\n")).toMatch(/Warnings:/);
     expect(lines.join("\n")).toMatch(/Message Content Intent is disabled/i);
-    expect(lines.join("\n")).toMatch(/Run: (?:dmms-ai|dmms-ai)( --profile isolated)? doctor/);
+    expect(lines.join("\n")).toMatch(/Run: (?:dryads-ai|dryads-ai)( --profile isolated)? doctor/);
   });
 
   it("surfaces Discord permission audit issues in channels status output", () => {
@@ -406,12 +406,12 @@ describe("channels command", () => {
             accountId: "default",
             enabled: true,
             configured: true,
-            probe: { ok: true, bot: { username: "dmms_ai_bot" } },
+            probe: { ok: true, bot: { username: "dryads_ai_bot" } },
           },
         ],
       },
     });
-    expect(lines.join("\n")).toMatch(/bot:@dmms_ai_bot/);
+    expect(lines.join("\n")).toMatch(/bot:@dryads_ai_bot/);
   });
 
   it("surfaces Telegram group membership audit issues in channels status output", () => {

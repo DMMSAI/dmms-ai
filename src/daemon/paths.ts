@@ -31,12 +31,12 @@ export function resolveUserPathWithHome(input: string, home?: string): string {
 }
 
 export function resolveGatewayStateDir(env: Record<string, string | undefined>): string {
-  const override = env.DMMS_AI_STATE_DIR?.trim();
+  const override = env.DRYADS_AI_STATE_DIR?.trim();
   if (override) {
     const home = override.startsWith("~") ? resolveHomeDir(env) : undefined;
     return resolveUserPathWithHome(override, home);
   }
   const home = resolveHomeDir(env);
-  const suffix = resolveGatewayProfileSuffix(env.DMMS_AI_PROFILE);
-  return path.join(home, `.dmms-ai${suffix}`);
+  const suffix = resolveGatewayProfileSuffix(env.DRYADS_AI_PROFILE);
+  return path.join(home, `.dryads-ai${suffix}`);
 }

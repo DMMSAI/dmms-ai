@@ -1,59 +1,59 @@
 ---
-summary: "CLI reference for `dmms-ai devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `dryads-ai devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `dmms-ai devices`
+# `dryads-ai devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `dmms-ai devices list`
+### `dryads-ai devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-dmms-ai devices list
-dmms-ai devices list --json
+dryads-ai devices list
+dryads-ai devices list --json
 ```
 
-### `dmms-ai devices approve [requestId] [--latest]`
+### `dryads-ai devices approve [requestId] [--latest]`
 
-Approve a pending device pairing request. If `requestId` is omitted, DMMS AI
+Approve a pending device pairing request. If `requestId` is omitted, Dryads AI
 automatically approves the most recent pending request.
 
 ```
-dmms-ai devices approve
-dmms-ai devices approve <requestId>
-dmms-ai devices approve --latest
+dryads-ai devices approve
+dryads-ai devices approve <requestId>
+dryads-ai devices approve --latest
 ```
 
-### `dmms-ai devices reject <requestId>`
+### `dryads-ai devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-dmms-ai devices reject <requestId>
+dryads-ai devices reject <requestId>
 ```
 
-### `dmms-ai devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `dryads-ai devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-dmms-ai devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+dryads-ai devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `dmms-ai devices revoke --device <id> --role <role>`
+### `dryads-ai devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-dmms-ai devices revoke --device <deviceId> --role node
+dryads-ai devices revoke --device <deviceId> --role node
 ```
 
 ## Common options

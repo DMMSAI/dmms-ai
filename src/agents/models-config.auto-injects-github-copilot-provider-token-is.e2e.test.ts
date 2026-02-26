@@ -6,7 +6,7 @@ import {
   installModelsConfigTestHooks,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureDmmsAiModelsJson } from "./models-config.js";
+import { ensureDryadsAiModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks({ restoreFetch: true });
 
@@ -27,7 +27,7 @@ describe("models-config", () => {
 
       try {
         const agentDir = path.join(home, "agent-default-base-url");
-        await ensureDmmsAiModelsJson({ models: { providers: {} } }, agentDir);
+        await ensureDryadsAiModelsJson({ models: { providers: {} } }, agentDir);
 
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {
@@ -60,7 +60,7 @@ describe("models-config", () => {
       globalThis.fetch = fetchMock as unknown as typeof fetch;
 
       try {
-        await ensureDmmsAiModelsJson({ models: { providers: {} } });
+        await ensureDryadsAiModelsJson({ models: { providers: {} } });
 
         const [, opts] = fetchMock.mock.calls[0] as [string, { headers?: Record<string, string> }];
         expect(opts?.headers?.Authorization).toBe("Bearer copilot-token");

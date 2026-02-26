@@ -1,19 +1,19 @@
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ConfigFileSnapshot, DmmsAiConfig } from "../config/types.js";
+import type { ConfigFileSnapshot, DryadsAiConfig } from "../config/types.js";
 
 /**
  * Test for issue #6070:
- * `dmms-ai config set/unset` must update snapshot.resolved (user config after $include/${ENV},
+ * `dryads-ai config set/unset` must update snapshot.resolved (user config after $include/${ENV},
  * but before runtime defaults), so runtime defaults don't leak into the written config.
  */
 
 const mockReadConfigFileSnapshot = vi.fn<() => Promise<ConfigFileSnapshot>>();
-const mockWriteConfigFile = vi.fn<(cfg: DmmsAiConfig) => Promise<void>>(async () => {});
+const mockWriteConfigFile = vi.fn<(cfg: DryadsAiConfig) => Promise<void>>(async () => {});
 
 vi.mock("../config/config.js", () => ({
   readConfigFileSnapshot: () => mockReadConfigFileSnapshot(),
-  writeConfigFile: (cfg: DmmsAiConfig) => mockWriteConfigFile(cfg),
+  writeConfigFile: (cfg: DryadsAiConfig) => mockWriteConfigFile(cfg),
 }));
 
 const mockLog = vi.fn();
@@ -32,11 +32,11 @@ vi.mock("../runtime.js", () => ({
 }));
 
 function buildSnapshot(params: {
-  resolved: DmmsAiConfig;
-  config: DmmsAiConfig;
+  resolved: DryadsAiConfig;
+  config: DryadsAiConfig;
 }): ConfigFileSnapshot {
   return {
-    path: "/tmp/dmms-ai.json",
+    path: "/tmp/dryads-ai.json",
     exists: true,
     raw: JSON.stringify(params.resolved),
     parsed: params.resolved,
@@ -49,7 +49,7 @@ function buildSnapshot(params: {
   };
 }
 
-function setSnapshot(resolved: DmmsAiConfig, config: DmmsAiConfig) {
+function setSnapshot(resolved: DryadsAiConfig, config: DryadsAiConfig) {
   mockReadConfigFileSnapshot.mockResolvedValueOnce(buildSnapshot({ resolved, config }));
 }
 
@@ -72,7 +72,7 @@ describe("config cli", () => {
 
   describe("config set - issue #6070", () => {
     it("preserves existing config keys when setting a new value", async () => {
-      const resolved: DmmsAiConfig = {
+      const resolved: DryadsAiConfig = {
         agents: {
           list: [{ id: "main" }, { id: "oracle", workspace: "~/oracle-workspace" }],
         },
@@ -80,7 +80,7 @@ describe("config cli", () => {
         tools: { allow: ["group:fs"] },
         logging: { level: "debug" },
       };
-      const runtimeMerged: DmmsAiConfig = {
+      const runtimeMerged: DryadsAiConfig = {
         ...resolved,
         agents: {
           ...resolved.agents,
@@ -104,7 +104,7 @@ describe("config cli", () => {
     });
 
     it("does not inject runtime defaults into the written config", async () => {
-      const resolved: DmmsAiConfig = {
+      const resolved: DryadsAiConfig = {
         gateway: { port: 18789 },
       };
       const runtimeMerged = {
@@ -118,7 +118,7 @@ describe("config cli", () => {
         } as never,
         messages: { ackReaction: "✅" } as never,
         sessions: { persistence: { enabled: true } } as never,
-      } as unknown as DmmsAiConfig;
+      } as unknown as DryadsAiConfig;
       setSnapshot(resolved, runtimeMerged);
 
       await runConfigCommand(["config", "set", "gateway.auth.mode", "token"]);
@@ -137,7 +137,7 @@ describe("config cli", () => {
 
   describe("config unset - issue #6070", () => {
     it("preserves existing config keys when unsetting a value", async () => {
-      const resolved: DmmsAiConfig = {
+      const resolved: DryadsAiConfig = {
         agents: { list: [{ id: "main" }] },
         gateway: { port: 18789 },
         tools: {
@@ -146,7 +146,7 @@ describe("config cli", () => {
         },
         logging: { level: "debug" },
       };
-      const runtimeMerged: DmmsAiConfig = {
+      const runtimeMerged: DryadsAiConfig = {
         ...resolved,
         agents: {
           ...resolved.agents,

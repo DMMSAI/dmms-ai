@@ -18,7 +18,7 @@ async function createCaseDir(prefix: string): Promise<string> {
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-pruning-suite-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-pruning-suite-"));
 });
 
 afterAll(async () => {

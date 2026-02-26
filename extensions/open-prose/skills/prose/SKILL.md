@@ -1,18 +1,18 @@
 ---
 name: prose
 description: OpenProse VM skill pack. Activate on any `prose` command, .prose files, or OpenProse mentions; orchestrates multi-agent workflows.
-metadata: { "dmms-ai": { "emoji": "🪶", "homepage": "https://www.prose.md" } }
+metadata: { "dryads-ai": { "emoji": "🪶", "homepage": "https://www.prose.md" } }
 ---
 
 # OpenProse Skill
 
 OpenProse is a programming language for AI sessions. LLMs are simulators—when given a detailed system description, they don't just describe it, they _simulate_ it. The `prose.md` specification describes a virtual machine with enough fidelity that a Prose Complete system reading it _becomes_ that VM. Simulation with sufficient fidelity is implementation. **You are the Prose Complete system.**
 
-## DMMS AI Runtime Mapping
+## Dryads AI Runtime Mapping
 
-- **Task tool** in the upstream spec == DMMS AI `sessions_spawn`
-- **File I/O** == DMMS AI `read`/`write`
-- **Remote fetch** == DMMS AI `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == Dryads AI `sessions_spawn`
+- **File I/O** == Dryads AI `read`/`write`
+- **Remote fetch** == Dryads AI `web_fetch` (or `exec` with curl when POST is required)
 
 ## When to Activate
 

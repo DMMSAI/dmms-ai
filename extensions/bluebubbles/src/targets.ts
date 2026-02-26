@@ -4,7 +4,7 @@ import {
   parseChatTargetPrefixesOrThrow,
   resolveServicePrefixedAllowTarget,
   resolveServicePrefixedTarget,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 
 export type BlueBubblesService = "imessage" | "sms" | "auto";
 

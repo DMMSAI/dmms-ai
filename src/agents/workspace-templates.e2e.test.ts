@@ -9,14 +9,14 @@ import {
 } from "./workspace-templates.js";
 
 async function makeTempRoot(): Promise<string> {
-  return await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-templates-"));
+  return await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-templates-"));
 }
 
 describe("resolveWorkspaceTemplateDir", () => {
   it("resolves templates from package root when module url is dist-rooted", async () => {
     resetWorkspaceTemplateDirCache();
     const root = await makeTempRoot();
-    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "dmms-ai" }));
+    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "dryads-ai" }));
 
     const templatesDir = path.join(root, "docs", "reference", "templates");
     await fs.mkdir(templatesDir, { recursive: true });

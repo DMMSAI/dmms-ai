@@ -1,5 +1,5 @@
 ---
-summary: "First-run onboarding flow for DMMS AI (macOS app)"
+summary: "First-run onboarding flow for Dryads AI (macOS app)"
 read_when:
   - Designing the macOS onboarding assistant
   - Implementing auth or identity setup
@@ -51,7 +51,7 @@ Where does the **Gateway** run?
 </Tip>
 </Step>
 <Step title="Permissions">
-<Frame caption="Choose what permissions do you want to give DMMS AI">
+<Frame caption="Choose what permissions do you want to give Dryads AI">
 <img src="/assets/macos-onboarding/05-permissions.png" alt="" />
 </Frame>
 
@@ -69,7 +69,7 @@ Onboarding requests TCC permissions needed for:
 </Step>
 <Step title="CLI">
   <Info>This step is optional</Info>
-  The app can install the global `dmms-ai` CLI via npm/pnpm so terminal
+  The app can install the global `dryads-ai` CLI via npm/pnpm so terminal
   workflows and launchd tasks work out of the box.
 </Step>
 <Step title="Onboarding Chat (dedicated session)">

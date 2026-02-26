@@ -1,4 +1,4 @@
-package ai.dmmsai.android.ui
+package ai.dryadsai.android.ui
 
 import android.Manifest
 import android.content.Context
@@ -60,12 +60,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import ai.dmmsai.android.BuildConfig
-import ai.dmmsai.android.LocationMode
-import ai.dmmsai.android.MainViewModel
-import ai.dmmsai.android.NodeForegroundService
-import ai.dmmsai.android.VoiceWakeMode
-import ai.dmmsai.android.WakeWords
+import ai.dryadsai.android.BuildConfig
+import ai.dryadsai.android.LocationMode
+import ai.dryadsai.android.MainViewModel
+import ai.dryadsai.android.NodeForegroundService
+import ai.dryadsai.android.VoiceWakeMode
+import ai.dryadsai.android.WakeWords
 
 @Composable
 fun SettingsSheet(viewModel: MainViewModel) {
@@ -494,7 +494,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
         Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
           ListItem(
             headlineContent = { Text("Foreground Only") },
-            supportingContent = { Text("Listens only while DMMS AI is open.") },
+            supportingContent = { Text("Listens only while Dryads AI is open.") },
             trailingContent = {
               RadioButton(
                 selected = voiceWakeMode == VoiceWakeMode.Foreground,
@@ -640,7 +640,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
         )
         ListItem(
           headlineContent = { Text("While Using") },
-          supportingContent = { Text("Only while DMMS AI is open.") },
+          supportingContent = { Text("Only while Dryads AI is open.") },
           trailingContent = {
             RadioButton(
               selected = locationMode == LocationMode.WhileUsing,
@@ -687,7 +687,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
     item {
       ListItem(
         headlineContent = { Text("Prevent Sleep") },
-        supportingContent = { Text("Keeps the screen awake while DMMS AI is open.") },
+        supportingContent = { Text("Keeps the screen awake while Dryads AI is open.") },
         trailingContent = { Switch(checked = preventSleep, onCheckedChange = viewModel::setPreventSleep) },
       )
     }

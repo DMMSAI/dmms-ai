@@ -1,7 +1,7 @@
 import Foundation
 import Observation
-import DmmsAiKit
-import DmmsAiProtocol
+import DryadsAiKit
+import DryadsAiProtocol
 import SwiftUI
 
 struct ControlHeartbeatEvent: Codable {
@@ -23,7 +23,7 @@ struct ControlAgentEvent: Codable, Sendable, Identifiable {
     let seq: Int
     let stream: String
     let ts: Double
-    let data: [String: DmmsAiProtocol.AnyCodable]
+    let data: [String: DryadsAiProtocol.AnyCodable]
     let summary: String?
 }
 
@@ -79,7 +79,7 @@ final class ControlChannel {
     private(set) var lastPingMs: Double?
     private(set) var authSourceLabel: String?
 
-    private let logger = Logger(subsystem: "ai.dmmsai", category: "control")
+    private let logger = Logger(subsystem: "ai.dryadsai", category: "control")
 
     private var eventTask: Task<Void, Never>?
     private var recoveryTask: Task<Void, Never>?
@@ -166,8 +166,8 @@ final class ControlChannel {
         timeoutMs: Double? = nil) async throws -> Data
     {
         do {
-            let rawParams = params?.reduce(into: [String: DmmsAiKit.AnyCodable]()) {
-                $0[$1.key] = DmmsAiKit.AnyCodable($1.value.base)
+            let rawParams = params?.reduce(into: [String: DryadsAiKit.AnyCodable]()) {
+                $0[$1.key] = DryadsAiKit.AnyCodable($1.value.base)
             }
             let data = try await GatewayConnection.shared.request(
                 method: method,
@@ -401,20 +401,20 @@ final class ControlChannel {
     }
 
     private static func bridgeToProtocolArgs(
-        _ value: DmmsAiProtocol.AnyCodable?) -> [String: DmmsAiProtocol.AnyCodable]?
+        _ value: DryadsAiProtocol.AnyCodable?) -> [String: DryadsAiProtocol.AnyCodable]?
     {
         guard let value else { return nil }
-        if let dict = value.value as? [String: DmmsAiProtocol.AnyCodable] {
+        if let dict = value.value as? [String: DryadsAiProtocol.AnyCodable] {
             return dict
         }
-        if let dict = value.value as? [String: DmmsAiKit.AnyCodable],
+        if let dict = value.value as? [String: DryadsAiKit.AnyCodable],
            let data = try? JSONEncoder().encode(dict),
-           let decoded = try? JSONDecoder().decode([String: DmmsAiProtocol.AnyCodable].self, from: data)
+           let decoded = try? JSONDecoder().decode([String: DryadsAiProtocol.AnyCodable].self, from: data)
         {
             return decoded
         }
         if let data = try? JSONEncoder().encode(value),
-           let decoded = try? JSONDecoder().decode([String: DmmsAiProtocol.AnyCodable].self, from: data)
+           let decoded = try? JSONDecoder().decode([String: DryadsAiProtocol.AnyCodable].self, from: data)
         {
             return decoded
         }
@@ -423,6 +423,6 @@ final class ControlChannel {
 }
 
 extension Notification.Name {
-    static let controlHeartbeat = Notification.Name("dmms-ai.control.heartbeat")
-    static let controlAgentEvent = Notification.Name("dmms-ai.control.agent")
+    static let controlHeartbeat = Notification.Name("dryads-ai.control.heartbeat")
+    static let controlAgentEvent = Notification.Name("dryads-ai.control.agent")
 }

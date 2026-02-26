@@ -1,6 +1,6 @@
 import "./test-helpers.js";
 import { describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { monitorWebChannel } from "./auto-reply.js";
 import {
   createMockWebListener,
@@ -36,7 +36,7 @@ describe("typing controller idle", () => {
       return { text: "final reply" };
     });
 
-    const mockConfig: DmmsAiConfig = {
+    const mockConfig: DryadsAiConfig = {
       channels: { whatsapp: { allowFrom: ["*"] } },
     };
 

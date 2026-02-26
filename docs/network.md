@@ -9,7 +9,7 @@ title: "Network"
 
 # Network hub
 
-This hub links the core docs for how DMMS AI connects, pairs, and secures
+This hub links the core docs for how Dryads AI connects, pairs, and secures
 devices across localhost, LAN, and tailnet.
 
 ## Core model

@@ -236,7 +236,7 @@ struct TailscaleIntegrationSection: View {
             .textFieldStyle(.roundedBorder)
             .frame(maxWidth: 240)
             .onSubmit { Task { await self.applySettings() } }
-        Text("Stored in ~/.dmms-ai/dmms-ai.json. Prefer DMMS_AI_GATEWAY_PASSWORD for production.")
+        Text("Stored in ~/.dryads-ai/dryads-ai.json. Prefer DRYADS_AI_GATEWAY_PASSWORD for production.")
             .font(.caption)
             .foregroundStyle(.secondary)
         Button("Update password") { Task { await self.applySettings() } }
@@ -295,9 +295,9 @@ struct TailscaleIntegrationSection: View {
         }
 
         if self.connectionMode == .local, !self.isPaused {
-            self.statusMessage = "Saved to ~/.dmms-ai/dmms-ai.json. Restarting gateway…"
+            self.statusMessage = "Saved to ~/.dryads-ai/dryads-ai.json. Restarting gateway…"
         } else {
-            self.statusMessage = "Saved to ~/.dmms-ai/dmms-ai.json. Restart the gateway to apply."
+            self.statusMessage = "Saved to ~/.dryads-ai/dryads-ai.json. Restart the gateway to apply."
         }
         self.restartGatewayIfNeeded()
     }

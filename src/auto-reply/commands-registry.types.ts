@@ -1,4 +1,4 @@
-import type { DmmsAiConfig } from "../config/types.js";
+import type { DryadsAiConfig } from "../config/types.js";
 
 export type CommandScope = "text" | "native" | "both";
 
@@ -14,7 +14,7 @@ export type CommandCategory =
 export type CommandArgType = "string" | "number" | "boolean";
 
 export type CommandArgChoiceContext = {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   provider?: string;
   model?: string;
   command: ChatCommandDefinition;
@@ -80,7 +80,7 @@ export type CommandDetection = {
 };
 
 export type ShouldHandleTextCommandsParams = {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   surface: string;
   commandSource?: "text" | "native";
 };

@@ -395,7 +395,7 @@ export async function monitorWebChannel(
 
     if (loggedOut) {
       runtime.error(
-        `WhatsApp session logged out. Run \`${formatCliCommand("dmms-ai channels login --channel web")}\` to relink.`,
+        `WhatsApp session logged out. Run \`${formatCliCommand("dryads-ai channels login --channel web")}\` to relink.`,
       );
       await closeListener();
       break;

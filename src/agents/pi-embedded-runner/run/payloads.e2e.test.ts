@@ -195,7 +195,7 @@ describe("buildEmbeddedRunPayloads", () => {
             type: "toolCall",
             id: "toolu_01",
             name: "browser",
-            arguments: { action: "search", query: "dmms-ai docs" },
+            arguments: { action: "search", query: "dryads-ai docs" },
           },
         ],
       }),

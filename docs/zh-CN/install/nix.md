@@ -3,7 +3,7 @@ read_when:
   - 你想要可复现、可回滚的安装
   - 你已经在使用 Nix/NixOS/Home Manager
   - 你想要所有内容都固定并以声明式管理
-summary: 使用 Nix 声明式安装 DMMS AI
+summary: 使用 Nix 声明式安装 Dryads AI
 title: Nix
 x-i18n:
   generated_at: "2026-02-03T07:49:51Z"
@@ -16,30 +16,30 @@ x-i18n:
 
 # Nix 安装
 
-使用 Nix 运行 DMMS AI 的推荐方式是通过 **[nix-dmms-ai](https://github.com/dmms-ai/nix-dmms-ai)** — 一个开箱即用的 Home Manager 模块。
+使用 Nix 运行 Dryads AI 的推荐方式是通过 **[nix-dryads-ai](https://github.com/dryads-ai/nix-dryads-ai)** — 一个开箱即用的 Home Manager 模块。
 
 ## 快速开始
 
 将此粘贴给你的 AI 智能体（Claude、Cursor 等）：
 
 ```text
-I want to set up nix-dmms-ai on my Mac.
-Repository: github:dmms-ai/nix-dmms-ai
+I want to set up nix-dryads-ai on my Mac.
+Repository: github:dryads-ai/nix-dryads-ai
 
 What I need you to do:
 1. Check if Determinate Nix is installed (if not, install it)
-2. Create a local flake at ~/code/dmms-ai-local using templates/agent-first/flake.nix
+2. Create a local flake at ~/code/dryads-ai-local using templates/agent-first/flake.nix
 3. Help me create a Telegram bot (@BotFather) and get my chat ID (@userinfobot)
 4. Set up secrets (bot token, Anthropic key) - plain files at ~/.secrets/ is fine
 5. Fill in the template placeholders and run home-manager switch
 6. Verify: launchd running, bot responds to messages
 
-Reference the nix-dmms-ai README for module options.
+Reference the nix-dryads-ai README for module options.
 ```
 
-> **📦 完整指南：[github.com/dmms-ai/nix-dmms-ai](https://github.com/dmms-ai/nix-dmms-ai)**
+> **📦 完整指南：[github.com/dryads-ai/nix-dryads-ai](https://github.com/dryads-ai/nix-dryads-ai)**
 >
-> nix-dmms-ai 仓库是 Nix 安装的权威来源。本页只是一个快速概述。
+> nix-dryads-ai 仓库是 Nix 安装的权威来源。本页只是一个快速概述。
 
 ## 你将获得
 
@@ -52,27 +52,27 @@ Reference the nix-dmms-ai README for module options.
 
 ## Nix 模式运行时行为
 
-当设置 `DMMS_AI_NIX_MODE=1` 时（nix-dmms-ai 会自动设置）：
+当设置 `DRYADS_AI_NIX_MODE=1` 时（nix-dryads-ai 会自动设置）：
 
-DMMS AI 支持 **Nix 模式**，使配置确定性并禁用自动安装流程。
+Dryads AI 支持 **Nix 模式**，使配置确定性并禁用自动安装流程。
 通过导出以下环境变量启用：
 
 ```bash
-DMMS_AI_NIX_MODE=1
+DRYADS_AI_NIX_MODE=1
 ```
 
 在 macOS 上，GUI 应用不会自动继承 shell 环境变量。你也可以通过 defaults 启用 Nix 模式：
 
 ```bash
-defaults write bot.molt.mac dmms-ai.nixMode -bool true
+defaults write bot.molt.mac dryads-ai.nixMode -bool true
 ```
 
 ### 配置 + 状态路径
 
-DMMS AI 从 `DMMS_AI_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储在 `DMMS_AI_STATE_DIR` 中。
+Dryads AI 从 `DRYADS_AI_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储在 `DRYADS_AI_STATE_DIR` 中。
 
-- `DMMS_AI_STATE_DIR`（默认：`~/.dmms-ai`）
-- `DMMS_AI_CONFIG_PATH`（默认：`$DMMS_AI_STATE_DIR/dmms-ai.json`）
+- `DRYADS_AI_STATE_DIR`（默认：`~/.dryads-ai`）
+- `DRYADS_AI_CONFIG_PATH`（默认：`$DRYADS_AI_STATE_DIR/dryads-ai.json`）
 
 在 Nix 下运行时，将这些显式设置为 Nix 管理的位置，以便运行时状态和配置不会进入不可变存储。
 
@@ -87,13 +87,13 @@ DMMS AI 从 `DMMS_AI_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储
 macOS 打包流程期望在以下位置有一个稳定的 Info.plist 模板：
 
 ```
-apps/macos/Sources/DMMS AI/Resources/Info.plist
+apps/macos/Sources/Dryads AI/Resources/Info.plist
 ```
 
-[`scripts/package-mac-app.sh`](https://github.com/dmms-ai/dmms-ai/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段（bundle ID、版本/构建号、Git SHA、Sparkle 密钥）。这使 plist 对于 SwiftPM 打包和 Nix 构建保持确定性（它们不依赖完整的 Xcode 工具链）。
+[`scripts/package-mac-app.sh`](https://github.com/dryads-ai/dryads-ai/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段（bundle ID、版本/构建号、Git SHA、Sparkle 密钥）。这使 plist 对于 SwiftPM 打包和 Nix 构建保持确定性（它们不依赖完整的 Xcode 工具链）。
 
 ## 相关内容
 
-- [nix-dmms-ai](https://github.com/dmms-ai/nix-dmms-ai) — 完整设置指南
+- [nix-dryads-ai](https://github.com/dryads-ai/nix-dryads-ai) — 完整设置指南
 - [向导](/start/wizard) — 非 Nix CLI 设置
 - [Docker](/install/docker) — 容器化设置

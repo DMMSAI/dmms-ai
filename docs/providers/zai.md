@@ -1,7 +1,7 @@
 ---
-summary: "Use Z.AI (GLM models) with DMMS AI"
+summary: "Use Z.AI (GLM models) with Dryads AI"
 read_when:
-  - You want Z.AI / GLM models in DMMS AI
+  - You want Z.AI / GLM models in Dryads AI
   - You need a simple ZAI_API_KEY setup
 title: "Z.AI"
 ---
@@ -9,15 +9,15 @@ title: "Z.AI"
 # Z.AI
 
 Z.AI is the API platform for **GLM** models. It provides REST APIs for GLM and uses API keys
-for authentication. Create your API key in the Z.AI console. DMMS AI uses the `zai` provider
+for authentication. Create your API key in the Z.AI console. Dryads AI uses the `zai` provider
 with a Z.AI API key.
 
 ## CLI setup
 
 ```bash
-dmms-ai onboard --auth-choice zai-api-key
+dryads-ai onboard --auth-choice zai-api-key
 # or non-interactive
-dmms-ai onboard --zai-api-key "$ZAI_API_KEY"
+dryads-ai onboard --zai-api-key "$ZAI_API_KEY"
 ```
 
 ## Config snippet

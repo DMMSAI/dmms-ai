@@ -4,7 +4,7 @@ import path from "node:path";
 import { SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import type { CliDeps } from "../cli/deps.js";
 import { agentCommand } from "../commands/agent.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   resolveAgentIdFromSessionKey,
   resolveMainSessionKey,
@@ -73,7 +73,7 @@ async function loadBootFile(
 }
 
 function snapshotMainSessionMapping(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   sessionKey: string;
 }): SessionMappingSnapshot {
   const agentId = resolveAgentIdFromSessionKey(params.sessionKey);
@@ -135,7 +135,7 @@ async function restoreMainSessionMapping(
 }
 
 export async function runBootOnce(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   deps: CliDeps;
   workspaceDir: string;
 }): Promise<BootRunResult> {

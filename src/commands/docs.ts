@@ -5,7 +5,7 @@ import type { RuntimeEnv } from "../runtime.js";
 import { formatDocsLink } from "../terminal/links.js";
 import { isRich, theme } from "../terminal/theme.js";
 
-const SEARCH_TOOL = "https://docs.dmms-ai.com/mcp.SearchDMMS AI";
+const SEARCH_TOOL = "https://docs.dryads-ai.com/mcp.SearchDryads AI";
 const SEARCH_TIMEOUT_MS = 30_000;
 const DEFAULT_SNIPPET_MAX = 220;
 
@@ -160,13 +160,13 @@ async function renderMarkdown(markdown: string, runtime: RuntimeEnv) {
 export async function docsSearchCommand(queryParts: string[], runtime: RuntimeEnv) {
   const query = queryParts.join(" ").trim();
   if (!query) {
-    const docs = formatDocsLink("/", "docs.dmms-ai.com");
+    const docs = formatDocsLink("/", "docs.dryads-ai.com");
     if (isRich()) {
       runtime.log(`${theme.muted("Docs:")} ${docs}`);
-      runtime.log(`${theme.muted("Search:")} ${formatCliCommand('dmms-ai docs "your query"')}`);
+      runtime.log(`${theme.muted("Search:")} ${formatCliCommand('dryads-ai docs "your query"')}`);
     } else {
-      runtime.log("Docs: https://docs.dmms-ai.com/");
-      runtime.log(`Search: ${formatCliCommand('dmms-ai docs "your query"')}`);
+      runtime.log("Docs: https://docs.dryads-ai.com/");
+      runtime.log(`Search: ${formatCliCommand('dryads-ai docs "your query"')}`);
     }
     return;
   }

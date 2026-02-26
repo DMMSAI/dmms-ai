@@ -1,6 +1,6 @@
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   resolveAgentConfig,
   resolveAgentDir,
@@ -16,15 +16,15 @@ afterEach(() => {
 
 describe("resolveAgentConfig", () => {
   it("should return undefined when no agents config exists", () => {
-    const cfg: DmmsAiConfig = {};
+    const cfg: DryadsAiConfig = {};
     const result = resolveAgentConfig(cfg, "main");
     expect(result).toBeUndefined();
   });
 
   it("should return undefined when agent id does not exist", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
-        list: [{ id: "main", workspace: "~/dmms-ai" }],
+        list: [{ id: "main", workspace: "~/dryads-ai" }],
       },
     };
     const result = resolveAgentConfig(cfg, "nonexistent");
@@ -32,14 +32,14 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return basic agent config", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         list: [
           {
             id: "main",
             name: "Main Agent",
-            workspace: "~/dmms-ai",
-            agentDir: "~/.dmms-ai/agents/main",
+            workspace: "~/dryads-ai",
+            agentDir: "~/.dryads-ai/agents/main",
             model: "anthropic/claude-opus-4",
           },
         ],
@@ -48,8 +48,8 @@ describe("resolveAgentConfig", () => {
     const result = resolveAgentConfig(cfg, "main");
     expect(result).toEqual({
       name: "Main Agent",
-      workspace: "~/dmms-ai",
-      agentDir: "~/.dmms-ai/agents/main",
+      workspace: "~/dryads-ai",
+      agentDir: "~/.dryads-ai/agents/main",
       model: "anthropic/claude-opus-4",
       identity: undefined,
       groupChat: undefined,
@@ -60,7 +60,7 @@ describe("resolveAgentConfig", () => {
   });
 
   it("supports per-agent model primary+fallbacks", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         defaults: {
           model: {
@@ -84,7 +84,7 @@ describe("resolveAgentConfig", () => {
     expect(resolveAgentModelFallbacksOverride(cfg, "linus")).toEqual(["openai/gpt-5.2"]);
 
     // If fallbacks isn't present, we don't override the global fallbacks.
-    const cfgNoOverride: DmmsAiConfig = {
+    const cfgNoOverride: DryadsAiConfig = {
       agents: {
         list: [
           {
@@ -99,7 +99,7 @@ describe("resolveAgentConfig", () => {
     expect(resolveAgentModelFallbacksOverride(cfgNoOverride, "linus")).toBe(undefined);
 
     // Explicit empty list disables global fallbacks for that agent.
-    const cfgDisable: DmmsAiConfig = {
+    const cfgDisable: DryadsAiConfig = {
       agents: {
         list: [
           {
@@ -136,7 +136,7 @@ describe("resolveAgentConfig", () => {
       }),
     ).toEqual([]);
 
-    const cfgInheritDefaults: DmmsAiConfig = {
+    const cfgInheritDefaults: DryadsAiConfig = {
       agents: {
         defaults: {
           model: {
@@ -170,12 +170,12 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return agent-specific sandbox config", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         list: [
           {
             id: "work",
-            workspace: "~/dmms-ai-work",
+            workspace: "~/dryads-ai-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -198,12 +198,12 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return agent-specific tools config", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         list: [
           {
             id: "restricted",
-            workspace: "~/dmms-ai-restricted",
+            workspace: "~/dryads-ai-restricted",
             tools: {
               allow: ["read"],
               deny: ["exec", "write", "edit"],
@@ -228,12 +228,12 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return both sandbox and tools config", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         list: [
           {
             id: "family",
-            workspace: "~/dmms-ai-family",
+            workspace: "~/dryads-ai-family",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -252,32 +252,32 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should normalize agent id", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
-        list: [{ id: "main", workspace: "~/dmms-ai" }],
+        list: [{ id: "main", workspace: "~/dryads-ai" }],
       },
     };
     // Should normalize to "main" (default)
     const result = resolveAgentConfig(cfg, "");
     expect(result).toBeDefined();
-    expect(result?.workspace).toBe("~/dmms-ai");
+    expect(result?.workspace).toBe("~/dryads-ai");
   });
 
-  it("uses DMMS_AI_HOME for default agent workspace", () => {
-    const home = path.join(path.sep, "srv", "dmms-ai-home");
-    vi.stubEnv("DMMS_AI_HOME", home);
+  it("uses DRYADS_AI_HOME for default agent workspace", () => {
+    const home = path.join(path.sep, "srv", "dryads-ai-home");
+    vi.stubEnv("DRYADS_AI_HOME", home);
 
-    const workspace = resolveAgentWorkspaceDir({} as DmmsAiConfig, "main");
-    expect(workspace).toBe(path.join(path.resolve(home), ".dmms-ai", "workspace"));
+    const workspace = resolveAgentWorkspaceDir({} as DryadsAiConfig, "main");
+    expect(workspace).toBe(path.join(path.resolve(home), ".dryads-ai", "workspace"));
   });
 
-  it("uses DMMS_AI_HOME for default agentDir", () => {
-    const home = path.join(path.sep, "srv", "dmms-ai-home");
-    vi.stubEnv("DMMS_AI_HOME", home);
-    // Clear state dir so it falls back to DMMS_AI_HOME
-    vi.stubEnv("DMMS_AI_STATE_DIR", "");
+  it("uses DRYADS_AI_HOME for default agentDir", () => {
+    const home = path.join(path.sep, "srv", "dryads-ai-home");
+    vi.stubEnv("DRYADS_AI_HOME", home);
+    // Clear state dir so it falls back to DRYADS_AI_HOME
+    vi.stubEnv("DRYADS_AI_STATE_DIR", "");
 
-    const agentDir = resolveAgentDir({} as DmmsAiConfig, "main");
-    expect(agentDir).toBe(path.join(path.resolve(home), ".dmms-ai", "agents", "main", "agent"));
+    const agentDir = resolveAgentDir({} as DryadsAiConfig, "main");
+    expect(agentDir).toBe(path.join(path.resolve(home), ".dryads-ai", "agents", "main", "agent"));
   });
 });

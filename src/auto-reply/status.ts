@@ -6,7 +6,7 @@ import { resolveConfiguredModelRef } from "../agents/model-selection.js";
 import { resolveSandboxRuntimeStatus } from "../agents/sandbox.js";
 import type { SkillCommandSpec } from "../agents/skills.js";
 import { derivePromptTokens, normalizeUsage, type UsageLike } from "../agents/usage.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   resolveMainSessionKey,
   resolveSessionFilePath,
@@ -42,7 +42,7 @@ import {
 import type { CommandCategory } from "./commands-registry.types.js";
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "./thinking.js";
 
-type AgentDefaults = NonNullable<NonNullable<DmmsAiConfig["agents"]>["defaults"]>;
+type AgentDefaults = NonNullable<NonNullable<DryadsAiConfig["agents"]>["defaults"]>;
 type AgentConfig = Partial<AgentDefaults> & {
   model?: AgentDefaults["model"] | string;
 };
@@ -59,7 +59,7 @@ type QueueStatus = {
 };
 
 type StatusArgs = {
-  config?: DmmsAiConfig;
+  config?: DryadsAiConfig;
   agent: AgentConfig;
   agentId?: string;
   sessionEntry?: SessionEntry;
@@ -184,7 +184,7 @@ const readUsageFromSessionLog = (
       model?: string;
     }
   | undefined => {
-  // Transcripts are stored at the session file path (fallback: ~/.dmms-ai/sessions/<SessionId>.jsonl)
+  // Transcripts are stored at the session file path (fallback: ~/.dryads-ai/sessions/<SessionId>.jsonl)
   if (!sessionId) {
     return undefined;
   }
@@ -304,7 +304,10 @@ const formatMediaUnderstandingLine = (decisions?: ReadonlyArray<MediaUnderstandi
   return `📎 Media: ${parts.join(" · ")}`;
 };
 
-const formatVoiceModeLine = (config?: DmmsAiConfig, sessionEntry?: SessionEntry): string | null => {
+const formatVoiceModeLine = (
+  config?: DryadsAiConfig,
+  sessionEntry?: SessionEntry,
+): string | null => {
   if (!config) {
     return null;
   }
@@ -332,7 +335,7 @@ export function buildStatusMessage(args: StatusArgs): string {
       agents: {
         defaults: args.agent ?? {},
       },
-    } as DmmsAiConfig,
+    } as DryadsAiConfig,
     defaultProvider: DEFAULT_PROVIDER,
     defaultModel: DEFAULT_MODEL,
   });
@@ -465,7 +468,7 @@ export function buildStatusMessage(args: StatusArgs): string {
   const authLabel = authLabelValue ? ` · 🔑 ${authLabelValue}` : "";
   const modelLine = `🧠 Model: ${modelLabel}${authLabel}`;
   const commit = resolveCommitHash();
-  const versionLine = `🦞 DMMS AI ${VERSION}${commit ? ` (${commit})` : ""}`;
+  const versionLine = `🦞 Dryads AI ${VERSION}${commit ? ` (${commit})` : ""}`;
   const usagePair = formatUsagePair(inputTokens, outputTokens);
   const costLine = costLabel ? `💵 Cost: ${costLabel}` : null;
   const usageCostLine =
@@ -527,7 +530,7 @@ function groupCommandsByCategory(
   return grouped;
 }
 
-export function buildHelpMessage(cfg?: DmmsAiConfig): string {
+export function buildHelpMessage(cfg?: DryadsAiConfig): string {
   const lines = ["ℹ️ Help", ""];
 
   lines.push("Session");
@@ -648,7 +651,7 @@ function formatCommandList(items: CommandsListItem[]): string {
 }
 
 export function buildCommandsMessage(
-  cfg?: DmmsAiConfig,
+  cfg?: DryadsAiConfig,
   skillCommands?: SkillCommandSpec[],
   options?: CommandsMessageOptions,
 ): string {
@@ -657,7 +660,7 @@ export function buildCommandsMessage(
 }
 
 export function buildCommandsMessagePaginated(
-  cfg?: DmmsAiConfig,
+  cfg?: DryadsAiConfig,
   skillCommands?: SkillCommandSpec[],
   options?: CommandsMessageOptions,
 ): CommandsMessageResult {

@@ -1,4 +1,4 @@
-import { isBlockedHostname, isPrivateIpAddress } from "dmms-ai/plugin-sdk";
+import { isBlockedHostname, isPrivateIpAddress } from "dryads-ai/plugin-sdk";
 
 export type UrbitBaseUrlValidation =
   | { ok: true; baseUrl: string; hostname: string }

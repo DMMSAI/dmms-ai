@@ -27,13 +27,13 @@ describe("parseRelaySmokeTest", () => {
   });
 
   it("parses env var smoke mode only when no args", () => {
-    expect(parseRelaySmokeTest([], { DMMS_AI_SMOKE_QR: "1" })).toBe("qr");
-    expect(parseRelaySmokeTest(["send"], { DMMS_AI_SMOKE_QR: "1" })).toBe(null);
+    expect(parseRelaySmokeTest([], { DRYADS_AI_SMOKE_QR: "1" })).toBe("qr");
+    expect(parseRelaySmokeTest(["send"], { DRYADS_AI_SMOKE_QR: "1" })).toBe(null);
   });
 
-  it("supports DMMS_AI_SMOKE=qr only when no args", () => {
-    expect(parseRelaySmokeTest([], { DMMS_AI_SMOKE: "qr" })).toBe("qr");
-    expect(parseRelaySmokeTest(["send"], { DMMS_AI_SMOKE: "qr" })).toBe(null);
+  it("supports DRYADS_AI_SMOKE=qr only when no args", () => {
+    expect(parseRelaySmokeTest([], { DRYADS_AI_SMOKE: "qr" })).toBe("qr");
+    expect(parseRelaySmokeTest(["send"], { DRYADS_AI_SMOKE: "qr" })).toBe(null);
   });
 
   it("rejects unknown smoke values", () => {
@@ -41,7 +41,7 @@ describe("parseRelaySmokeTest", () => {
   });
 
   it("prefers explicit --smoke over env vars", () => {
-    expect(parseRelaySmokeTest(["--smoke", "qr"], { DMMS_AI_SMOKE: "nope" })).toBe("qr");
+    expect(parseRelaySmokeTest(["--smoke", "qr"], { DRYADS_AI_SMOKE: "nope" })).toBe("qr");
   });
 });
 

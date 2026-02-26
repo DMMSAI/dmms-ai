@@ -1,4 +1,4 @@
-# DMMS AI docs i18n assets
+# Dryads AI docs i18n assets
 
 This folder stores **generated** and **config** files for documentation translations.
 

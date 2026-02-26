@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Network
 import Observation
@@ -52,11 +52,11 @@ final class GatewayDiscoveryModel {
         if !self.browsers.isEmpty { return }
         self.appendDebugLog("start()")
 
-        for domain in DmmsAiBonjour.gatewayServiceDomains {
+        for domain in DryadsAiBonjour.gatewayServiceDomains {
             let params = NWParameters.tcp
             params.includePeerToPeer = true
             let browser = NWBrowser(
-                for: .bonjour(type: DmmsAiBonjour.gatewayServiceType, domain: domain),
+                for: .bonjour(type: DryadsAiBonjour.gatewayServiceType, domain: domain),
                 using: params)
 
             browser.stateUpdateHandler = { [weak self] state in
@@ -168,7 +168,7 @@ final class GatewayDiscoveryModel {
 
     private static func prettifyInstanceName(_ decodedName: String) -> String {
         let normalized = decodedName.split(whereSeparator: \.isWhitespace).joined(separator: " ")
-        let stripped = normalized.replacingOccurrences(of: " (DMMS AI)", with: "")
+        let stripped = normalized.replacingOccurrences(of: " (Dryads AI)", with: "")
             .replacingOccurrences(of: #"\s+\(\d+\)$"#, with: "", options: .regularExpression)
         return stripped.trimmingCharacters(in: .whitespacesAndNewlines)
     }

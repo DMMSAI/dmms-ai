@@ -12,8 +12,8 @@ async function withTempConfig(
   configContent: string,
   run: (configPath: string) => Promise<void>,
 ): Promise<void> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-env-io-"));
-  const configPath = path.join(dir, "dmms-ai.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-env-io-"));
+  const configPath = path.join(dir, "dryads-ai.json");
   await fs.writeFile(configPath, configContent);
   try {
     await run(configPath);
@@ -54,8 +54,8 @@ async function withEnvOverrides(
 async function withWrapperEnvContext(configPath: string, run: () => Promise<void>): Promise<void> {
   await withEnvOverrides(
     {
-      DMMS_AI_CONFIG_PATH: configPath,
-      DMMS_AI_DISABLE_CONFIG_CACHE: "1",
+      DRYADS_AI_CONFIG_PATH: configPath,
+      DRYADS_AI_DISABLE_CONFIG_CACHE: "1",
       MY_API_KEY: "original-key-123",
     },
     run,

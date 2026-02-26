@@ -1,6 +1,6 @@
-name: DMMS AI
+name: Dryads AI
 options:
-  bundleIdPrefix: ai.dmmsai
+  bundleIdPrefix: ai.dryadsai
   deploymentTarget:
     iOS: "18.0"
   xcodeVersion: "16.0"
@@ -10,23 +10,23 @@ settings:
     SWIFT_VERSION: "6.0"
 
 packages:
-  DmmsAiKit:
-    path: ../shared/DmmsAiKit
+  DryadsAiKit:
+    path: ../shared/DryadsAiKit
   Swabble:
     path: ../../Swabble
 
 schemes:
-  DMMS AI:
+  Dryads AI:
     shared: true
     build:
       targets:
-        DMMS AI: all
+        Dryads AI: all
     test:
       targets:
-        - DmmsAiTests
+        - DryadsAiTests
 
 targets:
-  DMMS AI:
+  Dryads AI:
     type: application
     platform: iOS
     configFiles:
@@ -35,14 +35,14 @@ targets:
     sources:
       - path: Sources
     dependencies:
-      - target: DmmsAiShareExtension
+      - target: DryadsAiShareExtension
         embed: true
-      - target: DmmsAiWatchApp
-      - package: DmmsAiKit
-      - package: DmmsAiKit
-        product: DmmsAiChatUI
-      - package: DmmsAiKit
-        product: DmmsAiProtocol
+      - target: DryadsAiWatchApp
+      - package: DryadsAiKit
+      - package: DryadsAiKit
+        product: DryadsAiChatUI
+      - package: DryadsAiKit
+        product: DryadsAiProtocol
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
@@ -75,23 +75,23 @@ targets:
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_ENTITLEMENTS: Sources/DMMS AI.entitlements
-        CODE_SIGN_STYLE: "$(DMMS_AI_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(DMMS_AI_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_APP_BUNDLE_ID)"
-        PROVISIONING_PROFILE_SPECIFIER: "$(DMMS_AI_APP_PROFILE)"
+        CODE_SIGN_ENTITLEMENTS: Sources/Dryads AI.entitlements
+        CODE_SIGN_STYLE: "$(DRYADS_AI_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(DRYADS_AI_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DRYADS_AI_APP_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(DRYADS_AI_APP_PROFILE)"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
         ENABLE_APPINTENTS_METADATA: NO
     info:
       path: Sources/Info.plist
       properties:
-        CFBundleDisplayName: DMMS AI
+        CFBundleDisplayName: Dryads AI
         CFBundleIconName: AppIcon
         CFBundleURLTypes:
-          - CFBundleURLName: ai.dmmsai.ios
+          - CFBundleURLName: ai.dryadsai.ios
             CFBundleURLSchemes:
-              - dmms-ai
+              - dryads-ai
         CFBundleShortVersionString: "2026.2.18"
         CFBundleVersion: "20260218"
         UILaunchScreen: {}
@@ -100,16 +100,16 @@ targets:
         UIBackgroundModes:
           - audio
           - remote-notification
-        NSLocalNetworkUsageDescription: DMMS AI discovers and connects to your DMMS AI gateway on the local network.
+        NSLocalNetworkUsageDescription: Dryads AI discovers and connects to your Dryads AI gateway on the local network.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoadsInWebContent: true
         NSBonjourServices:
-          - _dmms-ai-gw._tcp
-        NSCameraUsageDescription: DMMS AI can capture photos or short video clips when requested via the gateway.
-        NSLocationWhenInUseUsageDescription: DMMS AI uses your location when you allow location sharing.
-        NSLocationAlwaysAndWhenInUseUsageDescription: DMMS AI can share your location in the background when you enable Always.
-        NSMicrophoneUsageDescription: DMMS AI needs microphone access for voice wake.
-        NSSpeechRecognitionUsageDescription: DMMS AI uses on-device speech recognition for voice wake.
+          - _dryads-ai-gw._tcp
+        NSCameraUsageDescription: Dryads AI can capture photos or short video clips when requested via the gateway.
+        NSLocationWhenInUseUsageDescription: Dryads AI uses your location when you allow location sharing.
+        NSLocationAlwaysAndWhenInUseUsageDescription: Dryads AI can share your location in the background when you enable Always.
+        NSMicrophoneUsageDescription: Dryads AI needs microphone access for voice wake.
+        NSSpeechRecognitionUsageDescription: Dryads AI uses on-device speech recognition for voice wake.
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationPortraitUpsideDown
@@ -121,7 +121,7 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
 
-  DmmsAiShareExtension:
+  DryadsAiShareExtension:
     type: app-extension
     platform: iOS
     configFiles:
@@ -130,20 +130,20 @@ targets:
     sources:
       - path: ShareExtension
     dependencies:
-      - package: DmmsAiKit
+      - package: DryadsAiKit
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: "$(DMMS_AI_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(DMMS_AI_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_SHARE_BUNDLE_ID)"
-        PROVISIONING_PROFILE_SPECIFIER: "$(DMMS_AI_SHARE_PROFILE)"
+        CODE_SIGN_STYLE: "$(DRYADS_AI_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(DRYADS_AI_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DRYADS_AI_SHARE_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(DRYADS_AI_SHARE_PROFILE)"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
     info:
       path: ShareExtension/Info.plist
       properties:
-        CFBundleDisplayName: DMMS AI Share
+        CFBundleDisplayName: Dryads AI Share
         CFBundleShortVersionString: "2026.2.18"
         CFBundleVersion: "20260218"
         NSExtension:
@@ -156,30 +156,30 @@ targets:
               NSExtensionActivationSupportsImageWithMaxCount: 10
               NSExtensionActivationSupportsMovieWithMaxCount: 1
 
-  DmmsAiWatchApp:
+  DryadsAiWatchApp:
     type: application.watchapp2
     platform: watchOS
     deploymentTarget: "11.0"
     sources:
       - path: WatchApp
     dependencies:
-      - target: DmmsAiWatchExtension
+      - target: DryadsAiWatchExtension
     configFiles:
       Debug: Config/Signing.xcconfig
       Release: Config/Signing.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_WATCH_APP_BUNDLE_ID)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DRYADS_AI_WATCH_APP_BUNDLE_ID)"
     info:
       path: WatchApp/Info.plist
       properties:
-        CFBundleDisplayName: DMMS AI
+        CFBundleDisplayName: Dryads AI
         CFBundleShortVersionString: "2026.2.18"
         CFBundleVersion: "20260218"
-        WKCompanionAppBundleIdentifier: "$(DMMS_AI_APP_BUNDLE_ID)"
+        WKCompanionAppBundleIdentifier: "$(DRYADS_AI_APP_BUNDLE_ID)"
         WKWatchKitApp: true
 
-  DmmsAiWatchExtension:
+  DryadsAiWatchExtension:
     type: watchkit2-extension
     platform: watchOS
     deploymentTarget: "11.0"
@@ -193,38 +193,38 @@ targets:
       Release: Config/Signing.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: "$(DMMS_AI_WATCH_EXTENSION_BUNDLE_ID)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(DRYADS_AI_WATCH_EXTENSION_BUNDLE_ID)"
     info:
       path: WatchExtension/Info.plist
       properties:
-        CFBundleDisplayName: DMMS AI
+        CFBundleDisplayName: Dryads AI
         CFBundleShortVersionString: "2026.2.18"
         CFBundleVersion: "20260218"
         NSExtension:
           NSExtensionAttributes:
-            WKAppBundleIdentifier: "$(DMMS_AI_WATCH_APP_BUNDLE_ID)"
+            WKAppBundleIdentifier: "$(DRYADS_AI_WATCH_APP_BUNDLE_ID)"
           NSExtensionPointIdentifier: com.apple.watchkit
 
-  DmmsAiTests:
+  DryadsAiTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - path: Tests
     dependencies:
-      - target: DMMS AI
+      - target: Dryads AI
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ai.dmmsai.ios.tests
+        PRODUCT_BUNDLE_IDENTIFIER: ai.dryadsai.ios.tests
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DmmsAi.app/DMMS AI"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DryadsAi.app/Dryads AI"
         BUNDLE_LOADER: "$(TEST_HOST)"
     info:
       path: Tests/Info.plist
       properties:
-        CFBundleDisplayName: DmmsAiTests
+        CFBundleDisplayName: DryadsAiTests
         CFBundleShortVersionString: "2026.2.18"
         CFBundleVersion: "20260218"

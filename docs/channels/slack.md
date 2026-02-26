@@ -34,7 +34,7 @@ Status: production-ready for DMs + channels via Slack app integrations. Default 
         - install app and copy **Bot Token** (`xoxb-...`)
       </Step>
 
-      <Step title="Configure DMMS AI">
+      <Step title="Configure Dryads AI">
 
 ```json5
 {
@@ -74,7 +74,7 @@ SLACK_BOT_TOKEN=xoxb-...
       <Step title="Start gateway">
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
       </Step>
@@ -92,7 +92,7 @@ dmms-ai gateway
 
       </Step>
 
-      <Step title="Configure DMMS AI HTTP mode">
+      <Step title="Configure Dryads AI HTTP mode">
 
 ```json5
 {
@@ -152,7 +152,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
     - `dm.groupEnabled` (group DMs default false)
     - `dm.groupChannels` (optional MPIM allowlist)
 
-    Pairing in DMs uses `dmms-ai pairing approve slack <code>`.
+    Pairing in DMs uses `dryads-ai pairing approve slack <code>`.
 
   </Tab>
 
@@ -211,7 +211,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
 Default slash command settings:
 
 - `enabled: false`
-- `name: "dmms-ai"`
+- `name: "dryads-ai"`
 - `sessionPrefix: "slack:slash"`
 - `ephemeral: true`
 
@@ -299,7 +299,7 @@ Available action groups in current Slack tooling:
 
 ## Ack reactions
 
-`ackReaction` sends an acknowledgement emoji while DMMS AI is processing an inbound message.
+`ackReaction` sends an acknowledgement emoji while Dryads AI is processing an inbound message.
 
 Resolution order:
 
@@ -321,12 +321,12 @@ Notes:
 ```json
 {
   "display_information": {
-    "name": "DMMS AI",
-    "description": "Slack connector for DMMS AI"
+    "name": "Dryads AI",
+    "description": "Slack connector for Dryads AI"
   },
   "features": {
     "bot_user": {
-      "display_name": "DMMS AI",
+      "display_name": "Dryads AI",
       "always_online": false
     },
     "app_home": {
@@ -335,8 +335,8 @@ Notes:
     },
     "slash_commands": [
       {
-        "command": "/dmms-ai",
-        "description": "Send a message to DMMS AI",
+        "command": "/dryads-ai",
+        "description": "Send a message to Dryads AI",
         "should_escape": false
       }
     ]
@@ -416,9 +416,9 @@ Notes:
     Useful commands:
 
 ```bash
-dmms-ai channels status --probe
-dmms-ai logs --follow
-dmms-ai doctor
+dryads-ai channels status --probe
+dryads-ai logs --follow
+dryads-ai doctor
 ```
 
   </Accordion>
@@ -431,7 +431,7 @@ dmms-ai doctor
     - pairing approvals / allowlist entries
 
 ```bash
-dmms-ai pairing list slack
+dryads-ai pairing list slack
 ```
 
   </Accordion>
@@ -463,7 +463,7 @@ dmms-ai pairing list slack
 
 ## Text streaming
 
-DMMS AI supports Slack native text streaming via the Agents and AI Apps API.
+Dryads AI supports Slack native text streaming via the Agents and AI Apps API.
 
 By default, streaming is enabled. Disable it per account:
 
@@ -485,7 +485,7 @@ channels:
 - Later text chunks append to the same stream (`chat.appendStream`).
 - End of reply finalizes stream (`chat.stopStream`).
 - Media and non-text payloads fall back to normal delivery.
-- If streaming fails mid-reply, DMMS AI falls back to normal delivery for remaining payloads.
+- If streaming fails mid-reply, Dryads AI falls back to normal delivery for remaining payloads.
 
 ## Configuration reference pointers
 

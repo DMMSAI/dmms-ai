@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { loadModelCatalog } from "../agents/model-catalog.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { withTempHome as withTempHomeHarness } from "../config/home-env.test-harness.js";
 import { getReplyFromConfig } from "./reply.js";
 
@@ -47,12 +47,12 @@ function createTelegramMessage(messageSid: string) {
   } as const;
 }
 
-function createReplyConfig(home: string, streamMode?: "block"): DmmsAiConfig {
+function createReplyConfig(home: string, streamMode?: "block"): DryadsAiConfig {
   return {
     agents: {
       defaults: {
         model: { primary: "anthropic/claude-opus-4-5" },
-        workspace: path.join(home, "dmms-ai"),
+        workspace: path.join(home, "dryads-ai"),
       },
     },
     channels: { telegram: { allowFrom: ["*"], streamMode } },
@@ -80,15 +80,17 @@ async function runTelegramReply(params: {
 }
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeHarness("dmms-ai-stream-", async (home) => {
-    await fs.mkdir(path.join(home, ".dmms-ai", "agents", "main", "sessions"), { recursive: true });
+  return withTempHomeHarness("dryads-ai-stream-", async (home) => {
+    await fs.mkdir(path.join(home, ".dryads-ai", "agents", "main", "sessions"), {
+      recursive: true,
+    });
     return fn(home);
   });
 }
 
 describe("block streaming", () => {
   beforeEach(() => {
-    vi.stubEnv("DMMS_AI_TEST_FAST", "1");
+    vi.stubEnv("DRYADS_AI_TEST_FAST", "1");
     piEmbeddedMock.abortEmbeddedPiRun.mockReset().mockReturnValue(false);
     piEmbeddedMock.queueEmbeddedPiMessage.mockReset().mockReturnValue(false);
     piEmbeddedMock.isEmbeddedPiRunActive.mockReset().mockReturnValue(false);

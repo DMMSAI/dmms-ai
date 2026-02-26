@@ -279,7 +279,7 @@ final class AppState {
             UserDefaults.standard.set(IconOverrideSelection.system.rawValue, forKey: iconOverrideKey)
         }
 
-        let configRoot = DmmsAiConfigFile.loadDict()
+        let configRoot = DryadsAiConfigFile.loadDict()
         let configRemoteUrl = GatewayRemoteConfig.resolveUrlString(root: configRoot)
         let configRemoteTransport = GatewayRemoteConfig.resolveTransport(root: configRoot)
         let resolvedConnectionMode = ConnectionModeResolver.resolve(root: configRoot).mode
@@ -357,7 +357,7 @@ final class AppState {
     }
 
     private func startConfigWatcher() {
-        let configUrl = DmmsAiConfigFile.url()
+        let configUrl = DryadsAiConfigFile.url()
         self.configWatcher = ConfigFileWatcher(url: configUrl) { [weak self] in
             Task { @MainActor in
                 self?.applyConfigFromDisk()
@@ -367,7 +367,7 @@ final class AppState {
     }
 
     private func applyConfigFromDisk() {
-        let root = DmmsAiConfigFile.loadDict()
+        let root = DryadsAiConfigFile.loadDict()
         self.applyConfigOverrides(root)
     }
 
@@ -454,7 +454,7 @@ final class AppState {
 
         Task { @MainActor in
             // Keep app-only connection settings local to avoid overwriting remote gateway config.
-            var root = DmmsAiConfigFile.loadDict()
+            var root = DryadsAiConfigFile.loadDict()
             var gateway = root["gateway"] as? [String: Any] ?? [:]
             var changed = false
 
@@ -544,7 +544,7 @@ final class AppState {
             } else {
                 root["gateway"] = gateway
             }
-            DmmsAiConfigFile.saveDict(root)
+            DryadsAiConfigFile.saveDict(root)
         }
     }
 
@@ -688,7 +688,7 @@ extension AppState {
         state.remoteTarget = "user@example.com"
         state.remoteUrl = "wss://gateway.example.ts.net"
         state.remoteIdentity = "~/.ssh/id_ed25519"
-        state.remoteProjectRoot = "~/Projects/dmms-ai"
+        state.remoteProjectRoot = "~/Projects/dryads-ai"
         state.remoteCliPath = ""
         return state
     }

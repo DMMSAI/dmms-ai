@@ -62,7 +62,7 @@ describe("canvas host", () => {
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-canvas-fixtures-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-canvas-fixtures-"));
   });
 
   afterAll(async () => {
@@ -73,8 +73,8 @@ describe("canvas host", () => {
     const out = injectCanvasLiveReload("<html><body>Hello</body></html>");
     expect(out).toContain(CANVAS_WS_PATH);
     expect(out).toContain("location.reload");
-    expect(out).toContain("dmmsAiCanvasA2UIAction");
-    expect(out).toContain("dmmsAiSendUserAction");
+    expect(out).toContain("dryadsAiCanvasA2UIAction");
+    expect(out).toContain("dryadsAiSendUserAction");
   });
 
   it("creates a default index.html when missing", async () => {
@@ -93,7 +93,7 @@ describe("canvas host", () => {
       const html = await res.text();
       expect(res.status).toBe(200);
       expect(html).toContain("Interactive test page");
-      expect(html).toContain("dmmsAiSendUserAction");
+      expect(html).toContain("dryadsAiSendUserAction");
       expect(html).toContain(CANVAS_WS_PATH);
     } finally {
       await server.close();
@@ -260,7 +260,7 @@ describe("canvas host", () => {
     try {
       await fs.stat(bundlePath);
     } catch {
-      await fs.writeFile(bundlePath, "window.dmmsAiA2UI = {};", "utf8");
+      await fs.writeFile(bundlePath, "window.dryadsAiA2UI = {};", "utf8");
       createdBundle = true;
     }
 
@@ -276,18 +276,18 @@ describe("canvas host", () => {
     });
 
     try {
-      const res = await fetch(`http://127.0.0.1:${server.port}/__dmmsai__/a2ui/`);
+      const res = await fetch(`http://127.0.0.1:${server.port}/__dryadsai__/a2ui/`);
       const html = await res.text();
       expect(res.status).toBe(200);
-      expect(html).toContain("dmms-ai-a2ui-host");
-      expect(html).toContain("dmmsAiCanvasA2UIAction");
+      expect(html).toContain("dryads-ai-a2ui-host");
+      expect(html).toContain("dryadsAiCanvasA2UIAction");
 
       const bundleRes = await fetch(
-        `http://127.0.0.1:${server.port}/__dmmsai__/a2ui/a2ui.bundle.js`,
+        `http://127.0.0.1:${server.port}/__dryadsai__/a2ui/a2ui.bundle.js`,
       );
       const js = await bundleRes.text();
       expect(bundleRes.status).toBe(200);
-      expect(js).toContain("dmmsAiA2UI");
+      expect(js).toContain("dryadsAiA2UI");
       const traversalRes = await fetch(
         `http://127.0.0.1:${server.port}${A2UI_PATH}/%2e%2e%2fpackage.json`,
       );

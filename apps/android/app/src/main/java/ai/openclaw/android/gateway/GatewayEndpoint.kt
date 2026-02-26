@@ -1,4 +1,4 @@
-package ai.dmmsai.android.gateway
+package ai.dryadsai.android.gateway
 
 data class GatewayEndpoint(
   val stableId: String,

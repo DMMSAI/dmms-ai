@@ -45,7 +45,7 @@ export async function installChromeExtension(opts?: {
 }): Promise<{ path: string }> {
   const src = opts?.sourceDir ?? resolveBundledExtensionRootDir();
   if (!hasManifest(src)) {
-    throw new Error("Bundled Chrome extension is missing. Reinstall DMMS AI and try again.");
+    throw new Error("Bundled Chrome extension is missing. Reinstall Dryads AI and try again.");
   }
 
   const stateDir = opts?.stateDir ?? resolveStateDir();
@@ -101,9 +101,9 @@ export function registerBrowserExtensionCommands(
             "Next:",
             `- Chrome → chrome://extensions → enable “Developer mode”`,
             `- “Load unpacked” → select: ${displayPath}`,
-            `- Pin “DMMS AI Browser Relay”, then click it on the tab (badge shows ON)`,
+            `- Pin “Dryads AI Browser Relay”, then click it on the tab (badge shows ON)`,
             "",
-            `${theme.muted("Docs:")} ${formatDocsLink("/tools/chrome-extension", "docs.dmms-ai.com/tools/chrome-extension")}`,
+            `${theme.muted("Docs:")} ${formatDocsLink("/tools/chrome-extension", "docs.dryads-ai.com/tools/chrome-extension")}`,
           ].join("\n"),
         ),
       );
@@ -119,8 +119,8 @@ export function registerBrowserExtensionCommands(
         defaultRuntime.error(
           danger(
             [
-              `Chrome extension is not installed. Run: "${formatCliCommand("dmms-ai browser extension install")}"`,
-              `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.dmms-ai.com/tools/chrome-extension")}`,
+              `Chrome extension is not installed. Run: "${formatCliCommand("dryads-ai browser extension install")}"`,
+              `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.dryads-ai.com/tools/chrome-extension")}`,
             ].join("\n"),
           ),
         );

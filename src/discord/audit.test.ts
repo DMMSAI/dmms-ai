@@ -27,7 +27,7 @@ describe("discord audit", () => {
           },
         },
       },
-    } as unknown as import("../config/config.js").DmmsAiConfig;
+    } as unknown as import("../config/config.js").DryadsAiConfig;
 
     const collected = collectDiscordAuditChannelIds({
       cfg,

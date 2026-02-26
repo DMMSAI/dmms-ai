@@ -316,7 +316,7 @@ export async function fetchMinimaxUsage(
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "MM-API-Source": "DMMS AI",
+        "MM-API-Source": "Dryads AI",
       },
     },
     timeoutMs,

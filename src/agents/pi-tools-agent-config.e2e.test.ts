@@ -3,8 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import "./test-helpers/fast-coding-tools.js";
-import type { DmmsAiConfig } from "../config/config.js";
-import { createDmmsAiCodingTools } from "./pi-tools.js";
+import type { DryadsAiConfig } from "../config/config.js";
+import { createDryadsAiCodingTools } from "./pi-tools.js";
 import type { SandboxDockerConfig } from "./sandbox.js";
 import type { SandboxFsBridge } from "./sandbox/fs-bridge.js";
 
@@ -35,7 +35,7 @@ describe("Agent-specific tool filtering", () => {
       patch: string;
     }) => Promise<void>,
   ) {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-pi-tools-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-pi-tools-"));
     const escapedPath = path.join(
       path.dirname(workspaceDir),
       `escaped-${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}.txt`,
@@ -43,7 +43,7 @@ describe("Agent-specific tool filtering", () => {
     const relativeEscape = path.relative(workspaceDir, escapedPath);
 
     try {
-      const cfg: DmmsAiConfig = {
+      const cfg: DryadsAiConfig = {
         tools: {
           allow: ["read", "exec"],
           exec: {
@@ -55,7 +55,7 @@ describe("Agent-specific tool filtering", () => {
         },
       };
 
-      const tools = createDmmsAiCodingTools({
+      const tools = createDryadsAiCodingTools({
         config: cfg,
         sessionKey: "agent:main:main",
         workspaceDir,
@@ -86,7 +86,7 @@ describe("Agent-specific tool filtering", () => {
   }
 
   it("should apply global tool policy when no agent-specific policy exists", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         allow: ["read", "write"],
         deny: ["bash"],
@@ -95,13 +95,13 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "main",
-            workspace: "~/dmms-ai",
+            workspace: "~/dryads-ai",
           },
         ],
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test",
@@ -116,7 +116,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should keep global tool policy when agent only sets tools.elevated", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         deny: ["write"],
       },
@@ -124,7 +124,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "main",
-            workspace: "~/dmms-ai",
+            workspace: "~/dryads-ai",
             tools: {
               elevated: {
                 enabled: true,
@@ -136,7 +136,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test",
@@ -151,7 +151,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should allow apply_patch when exec is allow-listed and applyPatch is enabled", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         allow: ["read", "exec"],
         exec: {
@@ -160,7 +160,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test",
@@ -196,7 +196,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply agent-specific tool policy", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         allow: ["read", "write", "exec"],
         deny: [],
@@ -205,7 +205,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "restricted",
-            workspace: "~/dmms-ai-restricted",
+            workspace: "~/dryads-ai-restricted",
             tools: {
               allow: ["read"], // Agent override: only read
               deny: ["exec", "write", "edit"],
@@ -215,7 +215,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:restricted:main",
       workspaceDir: "/tmp/test-restricted",
@@ -231,7 +231,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply provider-specific tool policy", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         allow: ["read", "write", "exec"],
         byProvider: {
@@ -242,7 +242,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test-provider",
@@ -259,7 +259,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply provider-specific tool profile overrides", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         profile: "coding",
         byProvider: {
@@ -270,7 +270,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test-provider-profile",
@@ -284,17 +284,17 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should allow different tool policies for different agents", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         list: [
           {
             id: "main",
-            workspace: "~/dmms-ai",
+            workspace: "~/dryads-ai",
             // No tools restriction - all tools available
           },
           {
             id: "family",
-            workspace: "~/dmms-ai-family",
+            workspace: "~/dryads-ai-family",
             tools: {
               allow: ["read"],
               deny: ["exec", "write", "edit", "process"],
@@ -305,7 +305,7 @@ describe("Agent-specific tool filtering", () => {
     };
 
     // main agent: all tools
-    const mainTools = createDmmsAiCodingTools({
+    const mainTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test-main",
@@ -318,7 +318,7 @@ describe("Agent-specific tool filtering", () => {
     expect(mainToolNames).not.toContain("apply_patch");
 
     // family agent: restricted
-    const familyTools = createDmmsAiCodingTools({
+    const familyTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:family:whatsapp:group:123",
       workspaceDir: "/tmp/test-family",
@@ -333,7 +333,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply group tool policy overrides (group-specific beats wildcard)", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       channels: {
         whatsapp: {
           groups: {
@@ -348,7 +348,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const trustedTools = createDmmsAiCodingTools({
+    const trustedTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:whatsapp:group:trusted",
       messageProvider: "whatsapp",
@@ -359,7 +359,7 @@ describe("Agent-specific tool filtering", () => {
     expect(trustedNames).toContain("read");
     expect(trustedNames).toContain("exec");
 
-    const defaultTools = createDmmsAiCodingTools({
+    const defaultTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:whatsapp:group:unknown",
       messageProvider: "whatsapp",
@@ -372,7 +372,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply per-sender tool policies for group tools", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       channels: {
         whatsapp: {
           groups: {
@@ -387,7 +387,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const aliceTools = createDmmsAiCodingTools({
+    const aliceTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:whatsapp:group:family",
       senderId: "alice",
@@ -398,7 +398,7 @@ describe("Agent-specific tool filtering", () => {
     expect(aliceNames).toContain("read");
     expect(aliceNames).toContain("exec");
 
-    const bobTools = createDmmsAiCodingTools({
+    const bobTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:whatsapp:group:family",
       senderId: "bob",
@@ -411,7 +411,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should not let default sender policy override group tools", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       channels: {
         whatsapp: {
           groups: {
@@ -428,7 +428,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const adminTools = createDmmsAiCodingTools({
+    const adminTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:whatsapp:group:locked",
       senderId: "admin",
@@ -441,7 +441,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should resolve telegram group tool policy for topic session keys", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       channels: {
         telegram: {
           groups: {
@@ -453,7 +453,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:telegram:group:123:topic:456",
       messageProvider: "telegram",
@@ -466,7 +466,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should inherit group tool policy for subagents from spawnedBy session keys", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       channels: {
         whatsapp: {
           groups: {
@@ -478,7 +478,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:subagent:test",
       spawnedBy: "agent:main:whatsapp:group:trusted",
@@ -491,7 +491,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply global tool policy before agent-specific policy", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         deny: ["browser"], // Global deny
       },
@@ -499,7 +499,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "work",
-            workspace: "~/dmms-ai-work",
+            workspace: "~/dryads-ai-work",
             tools: {
               deny: ["exec", "process"], // Agent deny (override)
             },
@@ -508,7 +508,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:work:slack:dm:user123",
       workspaceDir: "/tmp/test-work",
@@ -524,7 +524,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should work with sandbox tools filtering", () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -535,7 +535,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "restricted",
-            workspace: "~/dmms-ai-restricted",
+            workspace: "~/dryads-ai-restricted",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -557,7 +557,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:restricted:main",
       workspaceDir: "/tmp/test-restricted",
@@ -598,13 +598,13 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should run exec synchronously when process is denied", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         deny: ["process"],
       },
     };
 
-    const tools = createDmmsAiCodingTools({
+    const tools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test-main",
@@ -623,7 +623,7 @@ describe("Agent-specific tool filtering", () => {
   });
 
   it("should apply agent-specific exec host defaults over global defaults", async () => {
-    const cfg: DmmsAiConfig = {
+    const cfg: DryadsAiConfig = {
       tools: {
         exec: {
           host: "sandbox",
@@ -646,7 +646,7 @@ describe("Agent-specific tool filtering", () => {
       },
     };
 
-    const mainTools = createDmmsAiCodingTools({
+    const mainTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: "/tmp/test-main-exec-defaults",
@@ -661,7 +661,7 @@ describe("Agent-specific tool filtering", () => {
       }),
     ).rejects.toThrow("exec host not allowed");
 
-    const helperTools = createDmmsAiCodingTools({
+    const helperTools = createDryadsAiCodingTools({
       config: cfg,
       sessionKey: "agent:helper:main",
       workspaceDir: "/tmp/test-helper-exec-defaults",

@@ -32,7 +32,7 @@ async function loadDevTemplate(name: string, fallback: string): Promise<string> 
 
 const resolveDevWorkspaceDir = (env: NodeJS.ProcessEnv = process.env): string => {
   const baseDir = resolveDefaultAgentWorkspaceDir(env, os.homedir);
-  const profile = env.DMMS_AI_PROFILE?.trim().toLowerCase();
+  const profile = env.DRYADS_AI_PROFILE?.trim().toLowerCase();
   if (profile === "dev") {
     return baseDir;
   }
@@ -60,7 +60,7 @@ async function ensureDevWorkspace(dir: string) {
   const [agents, soul, tools, identity, user] = await Promise.all([
     loadDevTemplate(
       "AGENTS.dev.md",
-      `# AGENTS.md - DMMS AI Dev Workspace\n\nDefault dev workspace for dmms-ai gateway --dev.\n`,
+      `# AGENTS.md - Dryads AI Dev Workspace\n\nDefault dev workspace for dryads-ai gateway --dev.\n`,
     ),
     loadDevTemplate(
       "SOUL.dev.md",

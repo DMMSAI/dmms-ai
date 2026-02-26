@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import {
   resolveLineAccount,
   resolveDefaultLineAccountId,
@@ -22,7 +22,7 @@ describe("LINE accounts", () => {
 
   describe("resolveLineAccount", () => {
     it("resolves account from config", () => {
-      const cfg: DmmsAiConfig = {
+      const cfg: DryadsAiConfig = {
         channels: {
           line: {
             enabled: true,
@@ -47,7 +47,7 @@ describe("LINE accounts", () => {
       process.env.LINE_CHANNEL_ACCESS_TOKEN = "env-token";
       process.env.LINE_CHANNEL_SECRET = "env-secret";
 
-      const cfg: DmmsAiConfig = {
+      const cfg: DryadsAiConfig = {
         channels: {
           line: {
             enabled: true,
@@ -63,7 +63,7 @@ describe("LINE accounts", () => {
     });
 
     it("resolves named account", () => {
-      const cfg: DmmsAiConfig = {
+      const cfg: DryadsAiConfig = {
         channels: {
           line: {
             enabled: true,
@@ -89,7 +89,7 @@ describe("LINE accounts", () => {
     });
 
     it("returns empty token when not configured", () => {
-      const cfg: DmmsAiConfig = {};
+      const cfg: DryadsAiConfig = {};
 
       const account = resolveLineAccount({ cfg });
 
@@ -101,7 +101,7 @@ describe("LINE accounts", () => {
 
   describe("resolveDefaultLineAccountId", () => {
     it("returns first named account when default not configured", () => {
-      const cfg: DmmsAiConfig = {
+      const cfg: DryadsAiConfig = {
         channels: {
           line: {
             accounts: {

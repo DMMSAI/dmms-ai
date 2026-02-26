@@ -1,18 +1,18 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  DmmsAiConfig,
+  DryadsAiConfig,
   DmPolicy,
   WizardPrompter,
   MSTeamsTeamConfig,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
   mergeAllowFromEntries,
   promptChannelAccessConfig,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import {
   parseMSTeamsTeamEntry,
   resolveMSTeamsChannelAllowlist,
@@ -22,7 +22,7 @@ import { resolveMSTeamsCredentials } from "./token.js";
 
 const channel = "msteams" as const;
 
-function setMSTeamsDmPolicy(cfg: DmmsAiConfig, dmPolicy: DmPolicy) {
+function setMSTeamsDmPolicy(cfg: DryadsAiConfig, dmPolicy: DmPolicy) {
   const allowFrom =
     dmPolicy === "open"
       ? addWildcardAllowFrom(cfg.channels?.msteams?.allowFrom)?.map((entry) => String(entry))
@@ -40,7 +40,7 @@ function setMSTeamsDmPolicy(cfg: DmmsAiConfig, dmPolicy: DmPolicy) {
   };
 }
 
-function setMSTeamsAllowFrom(cfg: DmmsAiConfig, allowFrom: string[]): DmmsAiConfig {
+function setMSTeamsAllowFrom(cfg: DryadsAiConfig, allowFrom: string[]): DryadsAiConfig {
   return {
     ...cfg,
     channels: {
@@ -91,9 +91,9 @@ async function promptMSTeamsCredentials(prompter: WizardPrompter): Promise<{
 }
 
 async function promptMSTeamsAllowFrom(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
-}): Promise<DmmsAiConfig> {
+}): Promise<DryadsAiConfig> {
   const existing = params.cfg.channels?.msteams?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -167,9 +167,9 @@ async function noteMSTeamsCredentialHelp(prompter: WizardPrompter): Promise<void
 }
 
 function setMSTeamsGroupPolicy(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): DmmsAiConfig {
+): DryadsAiConfig {
   return {
     ...cfg,
     channels: {
@@ -184,9 +184,9 @@ function setMSTeamsGroupPolicy(
 }
 
 function setMSTeamsTeamsAllowlist(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   entries: Array<{ teamKey: string; channelKey?: string }>,
-): DmmsAiConfig {
+): DryadsAiConfig {
   const baseTeams = cfg.channels?.msteams?.teams ?? {};
   const teams: Record<string, { channels?: Record<string, unknown> }> = { ...baseTeams };
   for (const entry of entries) {

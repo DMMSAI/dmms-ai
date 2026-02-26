@@ -16,7 +16,7 @@ public struct DeviceIdentity: Codable, Sendable {
 }
 
 enum DeviceIdentityPaths {
-    private static let stateDirEnv = ["DMMS_AI_STATE_DIR"]
+    private static let stateDirEnv = ["DRYADS_AI_STATE_DIR"]
 
     static func stateDirURL() -> URL {
         for key in self.stateDirEnv {
@@ -29,10 +29,10 @@ enum DeviceIdentityPaths {
         }
 
         if let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-            return appSupport.appendingPathComponent("DMMS AI", isDirectory: true)
+            return appSupport.appendingPathComponent("Dryads AI", isDirectory: true)
         }
 
-        return FileManager.default.temporaryDirectory.appendingPathComponent("dmms-ai", isDirectory: true)
+        return FileManager.default.temporaryDirectory.appendingPathComponent("dryads-ai", isDirectory: true)
     }
 }
 

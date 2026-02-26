@@ -1,4 +1,4 @@
-import type { PluginRuntime, RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { PluginRuntime, RuntimeEnv } from "dryads-ai/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { matrixPlugin } from "./channel.js";
 import { setMatrixRuntime } from "./runtime.js";

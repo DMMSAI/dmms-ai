@@ -1,19 +1,19 @@
 ---
-summary: "Run DMMS AI through LiteLLM Proxy for unified model access and cost tracking"
+summary: "Run Dryads AI through LiteLLM Proxy for unified model access and cost tracking"
 read_when:
-  - You want to route DMMS AI through a LiteLLM proxy
+  - You want to route Dryads AI through a LiteLLM proxy
   - You need cost tracking, logging, or model routing through LiteLLM
 ---
 
 # LiteLLM
 
-[LiteLLM](https://litellm.ai) is an open-source LLM gateway that provides a unified API to 100+ model providers. Route DMMS AI through LiteLLM to get centralized cost tracking, logging, and the flexibility to switch backends without changing your DMMS AI config.
+[LiteLLM](https://litellm.ai) is an open-source LLM gateway that provides a unified API to 100+ model providers. Route Dryads AI through LiteLLM to get centralized cost tracking, logging, and the flexibility to switch backends without changing your Dryads AI config.
 
-## Why use LiteLLM with DMMS AI?
+## Why use LiteLLM with Dryads AI?
 
-- **Cost tracking** — See exactly what DMMS AI spends across all models
+- **Cost tracking** — See exactly what Dryads AI spends across all models
 - **Model routing** — Switch between Claude, GPT-4, Gemini, Bedrock without config changes
-- **Virtual keys** — Create keys with spend limits for DMMS AI
+- **Virtual keys** — Create keys with spend limits for Dryads AI
 - **Logging** — Full request/response logs for debugging
 - **Fallbacks** — Automatic failover if your primary provider is down
 
@@ -22,7 +22,7 @@ read_when:
 ### Via onboarding
 
 ```bash
-dmms-ai onboard --auth-choice litellm-api-key
+dryads-ai onboard --auth-choice litellm-api-key
 ```
 
 ### Manual setup
@@ -34,15 +34,15 @@ pip install 'litellm[proxy]'
 litellm --model claude-opus-4-6
 ```
 
-2. Point DMMS AI to LiteLLM:
+2. Point Dryads AI to LiteLLM:
 
 ```bash
 export LITELLM_API_KEY="your-litellm-key"
 
-dmms-ai
+dryads-ai
 ```
 
-That's it. DMMS AI now routes through LiteLLM.
+That's it. Dryads AI now routes through LiteLLM.
 
 ## Configuration
 
@@ -93,14 +93,14 @@ export LITELLM_API_KEY="sk-litellm-key"
 
 ## Virtual keys
 
-Create a dedicated key for DMMS AI with spend limits:
+Create a dedicated key for Dryads AI with spend limits:
 
 ```bash
 curl -X POST "http://localhost:4000/key/generate" \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "key_alias": "dmms-ai",
+    "key_alias": "dryads-ai",
     "max_budget": 50.00,
     "budget_duration": "monthly"
   }'
@@ -125,7 +125,7 @@ model_list:
       api_key: os.environ/OPENAI_API_KEY
 ```
 
-DMMS AI keeps requesting `claude-opus-4-6` — LiteLLM handles the routing.
+Dryads AI keeps requesting `claude-opus-4-6` — LiteLLM handles the routing.
 
 ## Viewing usage
 
@@ -144,8 +144,8 @@ curl "http://localhost:4000/spend/logs" \
 ## Notes
 
 - LiteLLM runs on `http://localhost:4000` by default
-- DMMS AI connects via the OpenAI-compatible `/v1/chat/completions` endpoint
-- All DMMS AI features work through LiteLLM — no limitations
+- Dryads AI connects via the OpenAI-compatible `/v1/chat/completions` endpoint
+- All Dryads AI features work through LiteLLM — no limitations
 
 ## See also
 

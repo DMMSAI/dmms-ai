@@ -4,7 +4,7 @@ import { resolveConfigDir, resolveUserPath } from "../utils.js";
 import { resolveBundledPluginsDir } from "./bundled-dir.js";
 import {
   getPackageManifestMetadata,
-  type DmmsAiPackageManifest,
+  type DryadsAiPackageManifest,
   type PackageManifest,
 } from "./manifest.js";
 import type { PluginDiagnostic, PluginOrigin } from "./types.js";
@@ -21,7 +21,7 @@ export type PluginCandidate = {
   packageVersion?: string;
   packageDescription?: string;
   packageDir?: string;
-  packageManifest?: DmmsAiPackageManifest;
+  packageManifest?: DryadsAiPackageManifest;
 };
 
 export type PluginDiscoveryResult = {
@@ -70,7 +70,7 @@ function deriveIdHint(params: {
   }
 
   // Prefer the unscoped name so config keys stay stable even when the npm
-  // package is scoped (example: @dmms-ai/voice-call -> voice-call).
+  // package is scoped (example: @dryads-ai/voice-call -> voice-call).
   const unscoped = rawPackageName.includes("/")
     ? (rawPackageName.split("/").pop() ?? rawPackageName)
     : rawPackageName;
@@ -298,7 +298,7 @@ function discoverFromPath(params: {
   }
 }
 
-export function discoverDmmsAiPlugins(params: {
+export function discoverDryadsAiPlugins(params: {
   workspaceDir?: string;
   extraPaths?: string[];
 }): PluginDiscoveryResult {
@@ -327,7 +327,7 @@ export function discoverDmmsAiPlugins(params: {
   }
   if (workspaceDir) {
     const workspaceRoot = resolveUserPath(workspaceDir);
-    const workspaceExtDirs = [path.join(workspaceRoot, ".dmms-ai", "extensions")];
+    const workspaceExtDirs = [path.join(workspaceRoot, ".dryads-ai", "extensions")];
     for (const dir of workspaceExtDirs) {
       discoverInDirectory({
         dir,

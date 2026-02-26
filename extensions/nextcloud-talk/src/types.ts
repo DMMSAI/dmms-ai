@@ -3,7 +3,7 @@ import type {
   DmConfig,
   DmPolicy,
   GroupPolicy,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 
 export type { DmPolicy, GroupPolicy };
 

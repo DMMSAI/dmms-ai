@@ -1,6 +1,6 @@
-import DmmsAiKit
+import DryadsAiKit
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct DeepLinkAgentPolicyTests {
     @Test func validateMessageForHandleRejectsTooLongWhenUnkeyed() {

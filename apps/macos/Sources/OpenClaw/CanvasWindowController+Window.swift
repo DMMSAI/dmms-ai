@@ -1,5 +1,5 @@
 import AppKit
-import DmmsAiIPC
+import DryadsAiIPC
 
 extension CanvasWindowController {
     // MARK: - Window
@@ -12,7 +12,7 @@ extension CanvasWindowController {
                 styleMask: [.titled, .closable, .resizable, .miniaturizable],
                 backing: .buffered,
                 defer: false)
-            window.title = "DMMS AI Canvas"
+            window.title = "Dryads AI Canvas"
             window.isReleasedWhenClosed = false
             window.contentView = contentView
             window.center()

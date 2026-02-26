@@ -8,7 +8,7 @@ title: Feishu
 
 # Feishu bot
 
-Feishu (Lark) is a team chat platform used by companies for messaging and collaboration. This plugin connects DMMS AI to a Feishu/Lark bot using the platform’s WebSocket event subscription so messages can be received without exposing a public webhook URL.
+Feishu (Lark) is a team chat platform used by companies for messaging and collaboration. This plugin connects Dryads AI to a Feishu/Lark bot using the platform’s WebSocket event subscription so messages can be received without exposing a public webhook URL.
 
 ---
 
@@ -17,13 +17,13 @@ Feishu (Lark) is a team chat platform used by companies for messaging and collab
 Install the Feishu plugin:
 
 ```bash
-dmms-ai plugins install @dmms-ai/feishu
+dryads-ai plugins install @dryads-ai/feishu
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-dmms-ai plugins install ./extensions/feishu
+dryads-ai plugins install ./extensions/feishu
 ```
 
 ---
@@ -34,38 +34,38 @@ There are two ways to add the Feishu channel:
 
 ### Method 1: onboarding wizard (recommended)
 
-If you just installed DMMS AI, run the wizard:
+If you just installed Dryads AI, run the wizard:
 
 ```bash
-dmms-ai onboard
+dryads-ai onboard
 ```
 
 The wizard guides you through:
 
 1. Creating a Feishu app and collecting credentials
-2. Configuring app credentials in DMMS AI
+2. Configuring app credentials in Dryads AI
 3. Starting the gateway
 
 ✅ **After configuration**, check gateway status:
 
-- `dmms-ai gateway status`
-- `dmms-ai logs --follow`
+- `dryads-ai gateway status`
+- `dryads-ai logs --follow`
 
 ### Method 2: CLI setup
 
 If you already completed initial install, add the channel via CLI:
 
 ```bash
-dmms-ai channels add
+dryads-ai channels add
 ```
 
 Choose **Feishu**, then enter the App ID and App Secret.
 
 ✅ **After configuration**, manage the gateway:
 
-- `dmms-ai gateway status`
-- `dmms-ai gateway restart`
-- `dmms-ai logs --follow`
+- `dryads-ai gateway status`
+- `dryads-ai gateway restart`
+- `dryads-ai logs --follow`
 
 ---
 
@@ -141,8 +141,8 @@ In **App Capability** > **Bot**:
 
 ⚠️ **Important:** before setting event subscription, make sure:
 
-1. You already ran `dmms-ai channels add` for Feishu
-2. The gateway is running (`dmms-ai gateway status`)
+1. You already ran `dryads-ai channels add` for Feishu
+2. The gateway is running (`dryads-ai gateway status`)
 
 In **Event Subscription**:
 
@@ -161,19 +161,19 @@ In **Event Subscription**:
 
 ---
 
-## Step 2: Configure DMMS AI
+## Step 2: Configure Dryads AI
 
 ### Configure with the wizard (recommended)
 
 ```bash
-dmms-ai channels add
+dryads-ai channels add
 ```
 
 Choose **Feishu** and paste your App ID + App Secret.
 
 ### Configure via config file
 
-Edit `~/.dmms-ai/dmms-ai.json`:
+Edit `~/.dryads-ai/dryads-ai.json`:
 
 ```json5
 {
@@ -227,7 +227,7 @@ If your tenant is on Lark (international), set the domain to `lark` (or a full d
 ### 1. Start the gateway
 
 ```bash
-dmms-ai gateway
+dryads-ai gateway
 ```
 
 ### 2. Send a test message
@@ -239,7 +239,7 @@ In Feishu, find your bot and send a message.
 By default, the bot replies with a pairing code. Approve it:
 
 ```bash
-dmms-ai pairing approve feishu <CODE>
+dryads-ai pairing approve feishu <CODE>
 ```
 
 After approval, you can chat normally.
@@ -263,8 +263,8 @@ After approval, you can chat normally.
 - **Approve pairing**:
 
   ```bash
-  dmms-ai pairing list feishu
-  dmms-ai pairing approve feishu <CODE>
+  dryads-ai pairing list feishu
+  dryads-ai pairing approve feishu <CODE>
   ```
 
 - **Allowlist mode**: set `channels.feishu.allowFrom` with allowed Open IDs
@@ -337,7 +337,7 @@ Group IDs look like `oc_xxx`.
 **Method 1 (recommended)**
 
 1. Start the gateway and @mention the bot in the group
-2. Run `dmms-ai logs --follow` and look for `chat_id`
+2. Run `dryads-ai logs --follow` and look for `chat_id`
 
 **Method 2**
 
@@ -350,14 +350,14 @@ User IDs look like `ou_xxx`.
 **Method 1 (recommended)**
 
 1. Start the gateway and DM the bot
-2. Run `dmms-ai logs --follow` and look for `open_id`
+2. Run `dryads-ai logs --follow` and look for `open_id`
 
 **Method 2**
 
 Check pairing requests for user Open IDs:
 
 ```bash
-dmms-ai pairing list feishu
+dryads-ai pairing list feishu
 ```
 
 ---
@@ -374,13 +374,13 @@ dmms-ai pairing list feishu
 
 ## Gateway management commands
 
-| Command                   | Description                   |
-| ------------------------- | ----------------------------- |
-| `dmms-ai gateway status`  | Show gateway status           |
-| `dmms-ai gateway install` | Install/start gateway service |
-| `dmms-ai gateway stop`    | Stop gateway service          |
-| `dmms-ai gateway restart` | Restart gateway service       |
-| `dmms-ai logs --follow`   | Tail gateway logs             |
+| Command                     | Description                   |
+| --------------------------- | ----------------------------- |
+| `dryads-ai gateway status`  | Show gateway status           |
+| `dryads-ai gateway install` | Install/start gateway service |
+| `dryads-ai gateway stop`    | Stop gateway service          |
+| `dryads-ai gateway restart` | Restart gateway service       |
+| `dryads-ai logs --follow`   | Tail gateway logs             |
 
 ---
 
@@ -391,7 +391,7 @@ dmms-ai pairing list feishu
 1. Ensure the bot is added to the group
 2. Ensure you @mention the bot (default behavior)
 3. Check `groupPolicy` is not set to `"disabled"`
-4. Check logs: `dmms-ai logs --follow`
+4. Check logs: `dryads-ai logs --follow`
 
 ### Bot does not receive messages
 
@@ -399,8 +399,8 @@ dmms-ai pairing list feishu
 2. Ensure event subscription includes `im.message.receive_v1`
 3. Ensure **long connection** is enabled
 4. Ensure app permissions are complete
-5. Ensure the gateway is running: `dmms-ai gateway status`
-6. Check logs: `dmms-ai logs --follow`
+5. Ensure the gateway is running: `dryads-ai gateway status`
+6. Check logs: `dryads-ai logs --follow`
 
 ### App Secret leak
 
@@ -476,12 +476,12 @@ Use `bindings` to route Feishu DMs or groups to different agents.
       {
         id: "clawd-fan",
         workspace: "/home/user/clawd-fan",
-        agentDir: "/home/user/.dmms-ai/agents/clawd-fan/agent",
+        agentDir: "/home/user/.dryads-ai/agents/clawd-fan/agent",
       },
       {
         id: "clawd-xi",
         workspace: "/home/user/clawd-xi",
-        agentDir: "/home/user/.dmms-ai/agents/clawd-xi/agent",
+        agentDir: "/home/user/.dryads-ai/agents/clawd-xi/agent",
       },
     ],
   },

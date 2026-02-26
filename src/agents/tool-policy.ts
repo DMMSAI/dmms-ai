@@ -37,8 +37,8 @@ export const TOOL_GROUPS: Record<string, string[]> = {
   "group:messaging": ["message"],
   // Nodes + device tools
   "group:nodes": ["nodes"],
-  // All DMMS AI native tools (excludes provider plugins).
-  "group:dmms-ai": [
+  // All Dryads AI native tools (excludes provider plugins).
+  "group:dryads-ai": [
     "browser",
     "canvas",
     "nodes",

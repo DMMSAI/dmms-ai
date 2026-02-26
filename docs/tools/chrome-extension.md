@@ -1,5 +1,5 @@
 ---
-summary: "Chrome extension: let DMMS AI drive your existing Chrome tab"
+summary: "Chrome extension: let Dryads AI drive your existing Chrome tab"
 read_when:
   - You want the agent to drive an existing Chrome tab (toolbar button)
   - You need remote Gateway + local browser automation via Tailscale
@@ -9,7 +9,7 @@ title: "Chrome Extension"
 
 # Chrome extension (browser relay)
 
-The DMMS AI Chrome extension lets the agent control your **existing Chrome tabs** (your normal Chrome window) instead of launching a separate dmms-ai-managed Chrome profile.
+The Dryads AI Chrome extension lets the agent control your **existing Chrome tabs** (your normal Chrome window) instead of launching a separate dryads-ai-managed Chrome profile.
 
 Attach/detach happens via a **single Chrome toolbar button**.
 
@@ -21,20 +21,20 @@ There are three parts:
 - **Local relay server** (loopback CDP): bridges between the control server and the extension (`http://127.0.0.1:18792` by default)
 - **Chrome MV3 extension**: attaches to the active tab using `chrome.debugger` and pipes CDP messages to the relay
 
-DMMS AI then controls the attached tab through the normal `browser` tool surface (selecting the right profile).
+Dryads AI then controls the attached tab through the normal `browser` tool surface (selecting the right profile).
 
 ## Install / load (unpacked)
 
 1. Install the extension to a stable local path:
 
 ```bash
-dmms-ai browser extension install
+dryads-ai browser extension install
 ```
 
 2. Print the installed extension directory path:
 
 ```bash
-dmms-ai browser extension path
+dryads-ai browser extension path
 ```
 
 3. Chrome → `chrome://extensions`
@@ -46,26 +46,26 @@ dmms-ai browser extension path
 
 ## Updates (no build step)
 
-The extension ships inside the DMMS AI release (npm package) as static files. There is no separate “build” step.
+The extension ships inside the Dryads AI release (npm package) as static files. There is no separate “build” step.
 
-After upgrading DMMS AI:
+After upgrading Dryads AI:
 
-- Re-run `dmms-ai browser extension install` to refresh the installed files under your DMMS AI state directory.
+- Re-run `dryads-ai browser extension install` to refresh the installed files under your Dryads AI state directory.
 - Chrome → `chrome://extensions` → click “Reload” on the extension.
 
 ## Use it (no extra config)
 
-DMMS AI ships with a built-in browser profile named `chrome` that targets the extension relay on the default port.
+Dryads AI ships with a built-in browser profile named `chrome` that targets the extension relay on the default port.
 
 Use it:
 
-- CLI: `dmms-ai browser --browser-profile chrome tabs`
+- CLI: `dryads-ai browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 If you want a different name or a different relay port, create your own profile:
 
 ```bash
-dmms-ai browser create-profile \
+dryads-ai browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -74,7 +74,7 @@ dmms-ai browser create-profile \
 
 ## Attach / detach (toolbar button)
 
-- Open the tab you want DMMS AI to control.
+- Open the tab you want Dryads AI to control.
 - Click the extension icon.
   - Badge shows `ON` when attached.
 - Click again to detach.
@@ -87,7 +87,7 @@ dmms-ai browser create-profile \
 
 ## Badge + common errors
 
-- `ON`: attached; DMMS AI can drive that tab.
+- `ON`: attached; Dryads AI can drive that tab.
 - `…`: connecting to the local relay.
 - `!`: relay not reachable (most common: browser relay server isn’t running on this machine).
 
@@ -138,7 +138,7 @@ Options:
 
 Then ensure the tool isn’t denied by tool policy, and (if needed) call `browser` with `target="host"`.
 
-Debugging: `dmms-ai sandbox explain`
+Debugging: `dryads-ai sandbox explain`
 
 ## Remote access tips
 
@@ -147,9 +147,9 @@ Debugging: `dmms-ai sandbox explain`
 
 ## How “extension path” works
 
-`dmms-ai browser extension path` prints the **installed** on-disk directory containing the extension files.
+`dryads-ai browser extension path` prints the **installed** on-disk directory containing the extension files.
 
-The CLI intentionally does **not** print a `node_modules` path. Always run `dmms-ai browser extension install` first to copy the extension to a stable location under your DMMS AI state directory.
+The CLI intentionally does **not** print a `node_modules` path. Always run `dryads-ai browser extension install` first to copy the extension to a stable location under your Dryads AI state directory.
 
 If you move or delete that install directory, Chrome will mark the extension as broken until you reload it from a valid path.
 
@@ -161,7 +161,7 @@ This is powerful and risky. Treat it like giving the model “hands on your brow
   - click/type/navigate in that tab
   - read page content
   - access whatever the tab’s logged-in session can access
-- **This is not isolated** like the dedicated dmms-ai-managed profile.
+- **This is not isolated** like the dedicated dryads-ai-managed profile.
   - If you attach to your daily-driver profile/tab, you’re granting access to that account state.
 
 Recommendations:

@@ -22,7 +22,7 @@ resolved by the **ask fallback** (default: deny).
 
 Exec approvals are enforced locally on the execution host:
 
-- **gateway host** → `dmms-ai` process on the gateway machine
+- **gateway host** → `dryads-ai` process on the gateway machine
 - **node host** → node runner (macOS companion app or headless node host)
 
 macOS split:
@@ -34,7 +34,7 @@ macOS split:
 
 Approvals live in a local JSON file on the execution host:
 
-`~/.dmms-ai/exec-approvals.json`
+`~/.dryads-ai/exec-approvals.json`
 
 Example schema:
 
@@ -42,7 +42,7 @@ Example schema:
 {
   "version": 1,
   "socket": {
-    "path": "~/.dmms-ai/exec-approvals.sock",
+    "path": "~/.dryads-ai/exec-approvals.sock",
     "token": "base64url-token"
   },
   "defaults": {
@@ -148,9 +148,9 @@ per pattern so you can keep the list tidy.
 The target selector chooses **Gateway** (local approvals) or a **Node**. Nodes
 must advertise `system.execApprovals.get/set` (macOS app or headless node host).
 If a node does not advertise exec approvals yet, edit its local
-`~/.dmms-ai/exec-approvals.json` directly.
+`~/.dryads-ai/exec-approvals.json` directly.
 
-CLI: `dmms-ai approvals` supports gateway or node editing (see [Approvals CLI](/cli/approvals)).
+CLI: `dryads-ai approvals` supports gateway or node editing (see [Approvals CLI](/cli/approvals)).
 
 ## Approval flow
 

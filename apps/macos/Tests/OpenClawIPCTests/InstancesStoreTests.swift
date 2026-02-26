@@ -1,6 +1,6 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct InstancesStoreTests {
     @Test
@@ -8,7 +8,7 @@ import Testing
     func presenceEventPayloadDecodesViaJSONEncoder() {
         // Build a payload that mirrors the gateway's presence event shape:
         // { "presence": [ PresenceEntry ] }
-        let entry: [String: DmmsAiProtocol.AnyCodable] = [
+        let entry: [String: DryadsAiProtocol.AnyCodable] = [
             "host": .init("gw"),
             "ip": .init("10.0.0.1"),
             "version": .init("2.0.0"),
@@ -18,10 +18,10 @@ import Testing
             "text": .init("Gateway node"),
             "ts": .init(1_730_000_000),
         ]
-        let payloadMap: [String: DmmsAiProtocol.AnyCodable] = [
-            "presence": .init([DmmsAiProtocol.AnyCodable(entry)]),
+        let payloadMap: [String: DryadsAiProtocol.AnyCodable] = [
+            "presence": .init([DryadsAiProtocol.AnyCodable(entry)]),
         ]
-        let payload = DmmsAiProtocol.AnyCodable(payloadMap)
+        let payload = DryadsAiProtocol.AnyCodable(payloadMap)
 
         let store = InstancesStore(isPreview: true)
         store.handlePresenceEventPayload(payload)

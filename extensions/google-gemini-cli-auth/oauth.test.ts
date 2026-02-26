@@ -1,7 +1,7 @@
 import { join, parse } from "node:path";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
-vi.mock("dmms-ai/plugin-sdk", () => ({
+vi.mock("dryads-ai/plugin-sdk", () => ({
   isWSL2Sync: () => false,
 }));
 

@@ -1,9 +1,9 @@
 ---
-summary: "Schema-accurate configuration examples for common DMMS AI setups"
+summary: "Schema-accurate configuration examples for common Dryads AI setups"
 read_when:
-  - Learning how to configure DMMS AI
+  - Learning how to configure Dryads AI
   - Looking for configuration examples
-  - Setting up DMMS AI for the first time
+  - Setting up Dryads AI for the first time
 title: "Configuration Examples"
 ---
 
@@ -17,12 +17,12 @@ Examples below are aligned with the current config schema. For the exhaustive re
 
 ```json5
 {
-  agent: { workspace: "~/.dmms-ai/workspace" },
+  agent: { workspace: "~/.dryads-ai/workspace" },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
 
-Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
+Save to `~/.dryads-ai/dryads-ai.json` and you can DM the bot from that number.
 
 ### Recommended starter
 
@@ -34,7 +34,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
     emoji: "🦞",
   },
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: { primary: "anthropic/claude-sonnet-4-5" },
   },
   channels: {
@@ -93,7 +93,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
   // Logging
   logging: {
     level: "info",
-    file: "/tmp/dmms-ai/dmms-ai.log",
+    file: "/tmp/dryads-ai/dryads-ai.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -101,7 +101,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
 
   // Message formatting
   messages: {
-    messagePrefix: "[dmms-ai]",
+    messagePrefix: "[dryads-ai]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -110,7 +110,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
   // Routing + queue
   routing: {
     groupChat: {
-      mentionPatterns: ["@dmms-ai", "dmms-ai"],
+      mentionPatterns: ["@dryads-ai", "dryads-ai"],
       historyLimit: 50,
     },
     queue: {
@@ -163,7 +163,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
       discord: { mode: "idle", idleMinutes: 10080 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.dmms-ai/agents/default/sessions/sessions.json",
+    store: "~/.dryads-ai/agents/default/sessions/sessions.json",
     maintenance: {
       mode: "warn",
       pruneAfter: "30d",
@@ -202,7 +202,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["steipete"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-dmms-ai",
+          slug: "friends-of-dryads-ai",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -222,7 +222,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "dmms-ai",
+        name: "dryads-ai",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -232,7 +232,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
   // Agent runtime
   agents: {
     defaults: {
-      workspace: "~/.dmms-ai/workspace",
+      workspace: "~/.dryads-ai/workspace",
       userTimezone: "America/Chicago",
       model: {
         primary: "anthropic/claude-sonnet-4-5",
@@ -285,9 +285,9 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.dmms-ai/sandboxes",
+        workspaceRoot: "~/.dryads-ai/sandboxes",
         docker: {
-          image: "dmms-ai-sandbox:bookworm-slim",
+          image: "dryads-ai-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -352,7 +352,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
   // Cron jobs
   cron: {
     enabled: true,
-    store: "~/.dmms-ai/cron/cron.json",
+    store: "~/.dryads-ai/cron/cron.json",
     maxConcurrentRuns: 2,
     sessionRetention: "24h",
   },
@@ -363,7 +363,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.dmms-ai/hooks/transforms",
+    transformsDir: "~/.dryads-ai/hooks/transforms",
     mappings: [
       {
         id: "gmail-hook",
@@ -386,7 +386,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
       },
     ],
     gmail: {
-      account: "dmms-ai@gmail.com",
+      account: "dryads-ai@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -405,7 +405,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/dmms-ai" },
+    controlUi: { enabled: true, basePath: "/dryads-ai" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -443,7 +443,7 @@ Save to `~/.dmms-ai/dmms-ai.json` and you can DM the bot from that number.
 
 ```json5
 {
-  agent: { workspace: "~/.dmms-ai/workspace" },
+  agent: { workspace: "~/.dryads-ai/workspace" },
   channels: {
     whatsapp: { allowFrom: ["+15555550123"] },
     telegram: {
@@ -507,7 +507,7 @@ If more than one person can DM your bot (multiple entries in `allowFrom`, pairin
     },
   },
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: {
       primary: "anthropic/claude-sonnet-4-5",
       fallbacks: ["anthropic/claude-opus-4-6"],
@@ -546,7 +546,7 @@ If more than one person can DM your bot (multiple entries in `allowFrom`, pairin
     },
   },
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: {
       primary: "anthropic/claude-opus-4-6",
       fallbacks: ["minimax/MiniMax-M2.1"],
@@ -564,7 +564,7 @@ If more than one person can DM your bot (multiple entries in `allowFrom`, pairin
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-dmms-ai",
+    workspace: "~/work-dryads-ai",
     elevated: { enabled: false },
   },
   channels: {
@@ -585,7 +585,7 @@ If more than one person can DM your bot (multiple entries in `allowFrom`, pairin
 ```json5
 {
   agent: {
-    workspace: "~/.dmms-ai/workspace",
+    workspace: "~/.dryads-ai/workspace",
     model: { primary: "lmstudio/minimax-m2.1-gs32" },
   },
   models: {

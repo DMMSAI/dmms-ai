@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 import Observation
 import OSLog
@@ -10,28 +10,28 @@ import AppKit
 import UIKit
 #endif
 
-private let chatUILogger = Logger(subsystem: "ai.dmmsai", category: "DmmsAiChatUI")
+private let chatUILogger = Logger(subsystem: "ai.dryadsai", category: "DryadsAiChatUI")
 
 @MainActor
 @Observable
-public final class DmmsAiChatViewModel {
-    public private(set) var messages: [DmmsAiChatMessage] = []
+public final class DryadsAiChatViewModel {
+    public private(set) var messages: [DryadsAiChatMessage] = []
     public var input: String = ""
     public var thinkingLevel: String = "off"
     public private(set) var isLoading = false
     public private(set) var isSending = false
     public private(set) var isAborting = false
     public var errorText: String?
-    public var attachments: [DmmsAiPendingAttachment] = []
+    public var attachments: [DryadsAiPendingAttachment] = []
     public private(set) var healthOK: Bool = false
     public private(set) var pendingRunCount: Int = 0
 
     public private(set) var sessionKey: String
     public private(set) var sessionId: String?
     public private(set) var streamingAssistantText: String?
-    public private(set) var pendingToolCalls: [DmmsAiChatPendingToolCall] = []
-    public private(set) var sessions: [DmmsAiChatSessionEntry] = []
-    private let transport: any DmmsAiChatTransport
+    public private(set) var pendingToolCalls: [DryadsAiChatPendingToolCall] = []
+    public private(set) var sessions: [DryadsAiChatSessionEntry] = []
+    private let transport: any DryadsAiChatTransport
 
     @ObservationIgnored
     private nonisolated(unsafe) var eventTask: Task<Void, Never>?
@@ -43,7 +43,7 @@ public final class DmmsAiChatViewModel {
     private nonisolated(unsafe) var pendingRunTimeoutTasks: [String: Task<Void, Never>] = [:]
     private let pendingRunTimeoutMs: UInt64 = 120_000
 
-    private var pendingToolCallsById: [String: DmmsAiChatPendingToolCall] = [:] {
+    private var pendingToolCallsById: [String: DryadsAiChatPendingToolCall] = [:] {
         didSet {
             self.pendingToolCalls = self.pendingToolCallsById.values
                 .sorted { ($0.startedAt ?? 0) < ($1.startedAt ?? 0) }
@@ -52,7 +52,7 @@ public final class DmmsAiChatViewModel {
 
     private var lastHealthPollAt: Date?
 
-    public init(sessionKey: String, transport: any DmmsAiChatTransport) {
+    public init(sessionKey: String, transport: any DryadsAiChatTransport) {
         self.sessionKey = sessionKey
         self.transport = transport
 
@@ -99,12 +99,12 @@ public final class DmmsAiChatViewModel {
         Task { await self.performSwitchSession(to: sessionKey) }
     }
 
-    public var sessionChoices: [DmmsAiChatSessionEntry] {
+    public var sessionChoices: [DryadsAiChatSessionEntry] {
         let now = Date().timeIntervalSince1970 * 1000
         let cutoff = now - (24 * 60 * 60 * 1000)
         let sorted = self.sessions.sorted { ($0.updatedAt ?? 0) > ($1.updatedAt ?? 0) }
 
-        var result: [DmmsAiChatSessionEntry] = []
+        var result: [DryadsAiChatSessionEntry] = []
         var included = Set<String>()
 
         // Always show the main session first, even if it hasn't been updated recently.
@@ -142,7 +142,7 @@ public final class DmmsAiChatViewModel {
         Task { await self.addImageAttachment(url: nil, data: data, fileName: fileName, mimeType: mimeType) }
     }
 
-    public func removeAttachment(_ id: DmmsAiPendingAttachment.ID) {
+    public func removeAttachment(_ id: DryadsAiPendingAttachment.ID) {
         self.attachments.removeAll { $0.id == id }
     }
 
@@ -186,14 +186,14 @@ public final class DmmsAiChatViewModel {
         }
     }
 
-    private static func decodeMessages(_ raw: [AnyCodable]) -> [DmmsAiChatMessage] {
+    private static func decodeMessages(_ raw: [AnyCodable]) -> [DryadsAiChatMessage] {
         let decoded = raw.compactMap { item in
-            (try? ChatPayloadDecoding.decode(item, as: DmmsAiChatMessage.self))
+            (try? ChatPayloadDecoding.decode(item, as: DryadsAiChatMessage.self))
         }
         return Self.dedupeMessages(decoded)
     }
 
-    private static func messageIdentityKey(for message: DmmsAiChatMessage) -> String? {
+    private static func messageIdentityKey(for message: DryadsAiChatMessage) -> String? {
         let role = message.role.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         guard !role.isEmpty else { return nil }
 
@@ -220,8 +220,8 @@ public final class DmmsAiChatViewModel {
     }
 
     private static func reconcileMessageIDs(
-        previous: [DmmsAiChatMessage],
-        incoming: [DmmsAiChatMessage]) -> [DmmsAiChatMessage]
+        previous: [DryadsAiChatMessage],
+        incoming: [DryadsAiChatMessage]) -> [DryadsAiChatMessage]
     {
         guard !previous.isEmpty, !incoming.isEmpty else { return incoming }
 
@@ -245,7 +245,7 @@ public final class DmmsAiChatViewModel {
                 idsByKey[key] = ids
             }
             guard reusedId != message.id else { return message }
-            return DmmsAiChatMessage(
+            return DryadsAiChatMessage(
                 id: reusedId,
                 role: message.role,
                 content: message.content,
@@ -257,8 +257,8 @@ public final class DmmsAiChatViewModel {
         }
     }
 
-    private static func dedupeMessages(_ messages: [DmmsAiChatMessage]) -> [DmmsAiChatMessage] {
-        var result: [DmmsAiChatMessage] = []
+    private static func dedupeMessages(_ messages: [DryadsAiChatMessage]) -> [DryadsAiChatMessage] {
+        var result: [DryadsAiChatMessage] = []
         result.reserveCapacity(messages.count)
         var seen = Set<String>()
 
@@ -275,7 +275,7 @@ public final class DmmsAiChatViewModel {
         return result
     }
 
-    private static func dedupeKey(for message: DmmsAiChatMessage) -> String? {
+    private static func dedupeKey(for message: DryadsAiChatMessage) -> String? {
         guard let timestamp = message.timestamp else { return nil }
         let text = message.content.compactMap(\.text).joined(separator: "\n")
             .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -303,8 +303,8 @@ public final class DmmsAiChatViewModel {
         self.streamingAssistantText = nil
 
         // Optimistically append user message to UI.
-        var userContent: [DmmsAiChatMessageContent] = [
-            DmmsAiChatMessageContent(
+        var userContent: [DryadsAiChatMessageContent] = [
+            DryadsAiChatMessageContent(
                 type: "text",
                 text: messageText,
                 thinking: nil,
@@ -316,8 +316,8 @@ public final class DmmsAiChatViewModel {
                 name: nil,
                 arguments: nil),
         ]
-        let encodedAttachments = self.attachments.map { att -> DmmsAiChatAttachmentPayload in
-            DmmsAiChatAttachmentPayload(
+        let encodedAttachments = self.attachments.map { att -> DryadsAiChatAttachmentPayload in
+            DryadsAiChatAttachmentPayload(
                 type: att.type,
                 mimeType: att.mimeType,
                 fileName: att.fileName,
@@ -325,7 +325,7 @@ public final class DmmsAiChatViewModel {
         }
         for att in encodedAttachments {
             userContent.append(
-                DmmsAiChatMessageContent(
+                DryadsAiChatMessageContent(
                     type: att.type,
                     text: nil,
                     thinking: nil,
@@ -338,7 +338,7 @@ public final class DmmsAiChatViewModel {
                     arguments: nil))
         }
         self.messages.append(
-            DmmsAiChatMessage(
+            DryadsAiChatMessage(
                 id: UUID(),
                 role: "user",
                 content: userContent,
@@ -402,8 +402,8 @@ public final class DmmsAiChatViewModel {
         await self.bootstrap()
     }
 
-    private func placeholderSession(key: String) -> DmmsAiChatSessionEntry {
-        DmmsAiChatSessionEntry(
+    private func placeholderSession(key: String) -> DryadsAiChatSessionEntry {
+        DryadsAiChatSessionEntry(
             key: key,
             kind: nil,
             displayName: nil,
@@ -424,7 +424,7 @@ public final class DmmsAiChatViewModel {
             contextTokens: nil)
     }
 
-    private func handleTransportEvent(_ evt: DmmsAiChatTransportEvent) {
+    private func handleTransportEvent(_ evt: DryadsAiChatTransportEvent) {
         switch evt {
         case let .health(ok):
             self.healthOK = ok
@@ -440,7 +440,7 @@ public final class DmmsAiChatViewModel {
         }
     }
 
-    private func handleChatEvent(_ chat: DmmsAiChatEventPayload) {
+    private func handleChatEvent(_ chat: DryadsAiChatEventPayload) {
         let isOurRun = chat.runId.flatMap { self.pendingRuns.contains($0) } ?? false
 
         // Gateway may publish canonical session keys (for example "agent:main:main")
@@ -499,7 +499,7 @@ public final class DmmsAiChatViewModel {
         return false
     }
 
-    private func handleAgentEvent(_ evt: DmmsAiAgentEventPayload) {
+    private func handleAgentEvent(_ evt: DryadsAiAgentEventPayload) {
         if let sessionId, evt.runId != sessionId {
             return
         }
@@ -515,7 +515,7 @@ public final class DmmsAiChatViewModel {
             guard let toolCallId = evt.data["toolCallId"]?.value as? String else { return }
             if phase == "start" {
                 let args = evt.data["args"]
-                self.pendingToolCallsById[toolCallId] = DmmsAiChatPendingToolCall(
+                self.pendingToolCallsById[toolCallId] = DryadsAiChatPendingToolCall(
                     toolCallId: toolCallId,
                     name: name,
                     args: args,
@@ -628,7 +628,7 @@ public final class DmmsAiChatViewModel {
 
         let preview = Self.previewImage(data: data)
         self.attachments.append(
-            DmmsAiPendingAttachment(
+            DryadsAiPendingAttachment(
                 url: url,
                 data: data,
                 fileName: fileName,
@@ -636,7 +636,7 @@ public final class DmmsAiChatViewModel {
                 preview: preview))
     }
 
-    private static func previewImage(data: Data) -> DmmsAiPlatformImage? {
+    private static func previewImage(data: Data) -> DryadsAiPlatformImage? {
         #if canImport(AppKit)
         NSImage(data: data)
         #elseif canImport(UIKit)

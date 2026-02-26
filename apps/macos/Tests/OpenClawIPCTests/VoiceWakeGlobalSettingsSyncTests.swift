@@ -1,7 +1,7 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite(.serialized) struct VoiceWakeGlobalSettingsSyncTests {
     @Test func appliesVoiceWakeChangedEventToAppState() async {
@@ -11,7 +11,7 @@ import Testing
             AppStateStore.shared.applyGlobalVoiceWakeTriggers(["before"])
         }
 
-        let payload = DmmsAiProtocol.AnyCodable(["triggers": ["dmms-ai", "computer"]])
+        let payload = DryadsAiProtocol.AnyCodable(["triggers": ["dryads-ai", "computer"]])
         let evt = EventFrame(
             type: "event",
             event: "voicewake.changed",
@@ -22,7 +22,7 @@ import Testing
         await VoiceWakeGlobalSettingsSync.shared.handle(push: .event(evt))
 
         let updated = await MainActor.run { AppStateStore.shared.swabbleTriggerWords }
-        #expect(updated == ["dmms-ai", "computer"])
+        #expect(updated == ["dryads-ai", "computer"])
 
         await MainActor.run {
             AppStateStore.shared.applyGlobalVoiceWakeTriggers(previous)
@@ -36,7 +36,7 @@ import Testing
             AppStateStore.shared.applyGlobalVoiceWakeTriggers(["before"])
         }
 
-        let payload = DmmsAiProtocol.AnyCodable(["unexpected": 123])
+        let payload = DryadsAiProtocol.AnyCodable(["unexpected": 123])
         let evt = EventFrame(
             type: "event",
             event: "voicewake.changed",

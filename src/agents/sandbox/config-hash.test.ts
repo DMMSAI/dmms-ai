@@ -4,8 +4,8 @@ import type { SandboxDockerConfig } from "./types.js";
 
 function createDockerConfig(overrides?: Partial<SandboxDockerConfig>): SandboxDockerConfig {
   return {
-    image: "dmms-ai-sandbox:test",
-    containerPrefix: "dmms-ai-sbx-",
+    image: "dryads-ai-sandbox:test",
+    containerPrefix: "dryads-ai-sbx-",
     workdir: "/workspace",
     readOnlyRoot: true,
     tmpfs: ["/tmp", "/var/tmp", "/run"],

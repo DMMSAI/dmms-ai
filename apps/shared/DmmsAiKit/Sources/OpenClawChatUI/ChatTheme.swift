@@ -14,7 +14,7 @@ extension NSAppearance {
 }
 #endif
 
-enum DmmsAiChatTheme {
+enum DryadsAiChatTheme {
     #if os(macOS)
     static func resolvedAssistantBubbleColor(for appearance: NSAppearance) -> NSColor {
         // NSColor semantic colors don't reliably resolve for arbitrary NSAppearance in SwiftPM.
@@ -31,11 +31,11 @@ enum DmmsAiChatTheme {
     }
 
     static let assistantBubbleDynamicNSColor = NSColor(
-        name: NSColor.Name("DmmsAiChatTheme.assistantBubble"),
+        name: NSColor.Name("DryadsAiChatTheme.assistantBubble"),
         dynamicProvider: resolvedAssistantBubbleColor(for:))
 
     static let onboardingAssistantBubbleDynamicNSColor = NSColor(
-        name: NSColor.Name("DmmsAiChatTheme.onboardingAssistantBubble"),
+        name: NSColor.Name("DryadsAiChatTheme.onboardingAssistantBubble"),
         dynamicProvider: resolvedOnboardingAssistantBubbleColor(for:))
     #endif
 
@@ -163,8 +163,8 @@ enum DmmsAiChatTheme {
     }
 }
 
-enum DmmsAiPlatformImageFactory {
-    static func image(_ image: DmmsAiPlatformImage) -> Image {
+enum DryadsAiPlatformImageFactory {
+    static func image(_ image: DryadsAiPlatformImage) -> Image {
         #if os(macOS)
         Image(nsImage: image)
         #else

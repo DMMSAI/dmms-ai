@@ -4,7 +4,7 @@ description: Create, search, and manage Bear notes via grizzly CLI.
 homepage: https://bear.app
 metadata:
   {
-    "dmms-ai":
+    "dryads-ai":
       {
         "emoji": "🐻",
         "os": ["darwin"],

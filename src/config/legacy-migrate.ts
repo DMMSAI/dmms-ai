@@ -1,9 +1,9 @@
 import { applyLegacyMigrations } from "./legacy.js";
-import type { DmmsAiConfig } from "./types.js";
+import type { DryadsAiConfig } from "./types.js";
 import { validateConfigObjectWithPlugins } from "./validation.js";
 
 export function migrateLegacyConfig(raw: unknown): {
-  config: DmmsAiConfig | null;
+  config: DryadsAiConfig | null;
   changes: string[];
 } {
   const { next, changes } = applyLegacyMigrations(raw);

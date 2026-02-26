@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { setDefaultChannelPluginRegistryForTests } from "./channel-test-helpers.js";
 import { setupChannels } from "./onboard-channels.js";
@@ -69,7 +69,7 @@ describe("setupChannels", () => {
 
     const runtime = createExitThrowingRuntime();
 
-    await setupChannels({} as DmmsAiConfig, runtime, prompter, {
+    await setupChannels({} as DryadsAiConfig, runtime, prompter, {
       skipConfirm: true,
       quickstartDefaults: true,
       forceAllowFromChannels: ["whatsapp"],
@@ -95,7 +95,7 @@ describe("setupChannels", () => {
 
     const runtime = createExitThrowingRuntime();
 
-    await setupChannels({} as DmmsAiConfig, runtime, prompter, {
+    await setupChannels({} as DryadsAiConfig, runtime, prompter, {
       skipConfirm: true,
     });
 
@@ -135,7 +135,7 @@ describe("setupChannels", () => {
             botToken: "token",
           },
         },
-      } as DmmsAiConfig,
+      } as DryadsAiConfig,
       runtime,
       prompter,
       {
@@ -188,7 +188,7 @@ describe("setupChannels", () => {
             enabled: false,
           },
         },
-      } as DmmsAiConfig,
+      } as DryadsAiConfig,
       runtime,
       prompter,
       {

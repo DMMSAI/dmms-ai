@@ -32,7 +32,7 @@ case "$AUTH_STATUS" in
         "$SCRIPT_DIR/claude-auth-status.sh" full
         exit 0
         ;;
-    CLAUDE_EXPIRING|DMMS_AI_EXPIRING|CLAWDBOT_EXPIRING)
+    CLAUDE_EXPIRING|DRYADS_AI_EXPIRING|CLAWDBOT_EXPIRING)
         echo -e "${YELLOW}Auth is expiring soon.${NC}"
         echo ""
         ;;
@@ -69,11 +69,11 @@ if claude setup-token; then
     echo ""
     "$SCRIPT_DIR/claude-auth-status.sh" full
 
-    # Restart dmms-ai service if running
-    if systemctl --user is-active dmms-ai >/dev/null 2>&1; then
+    # Restart dryads-ai service if running
+    if systemctl --user is-active dryads-ai >/dev/null 2>&1; then
         echo ""
-        echo "Restarting dmms-ai service..."
-        systemctl --user restart dmms-ai
+        echo "Restarting dryads-ai service..."
+        systemctl --user restart dryads-ai
         echo -e "${GREEN}Service restarted.${NC}"
     fi
 else

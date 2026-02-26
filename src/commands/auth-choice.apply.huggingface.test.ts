@@ -26,15 +26,15 @@ function createHuggingfacePrompter(params: {
 
 describe("applyAuthChoiceHuggingface", () => {
   const lifecycle = createAuthTestLifecycle([
-    "DMMS_AI_STATE_DIR",
-    "DMMS_AI_AGENT_DIR",
+    "DRYADS_AI_STATE_DIR",
+    "DRYADS_AI_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "HF_TOKEN",
     "HUGGINGFACE_HUB_TOKEN",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("dmms-ai-hf-");
+    const env = await setupAuthTestEnv("dryads-ai-hf-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }

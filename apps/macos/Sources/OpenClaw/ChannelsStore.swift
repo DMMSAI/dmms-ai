@@ -1,6 +1,6 @@
 import Foundation
 import Observation
-import DmmsAiProtocol
+import DryadsAiProtocol
 
 struct ChannelsStatusSnapshot: Codable {
     struct WhatsAppSelf: Codable {

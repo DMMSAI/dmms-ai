@@ -1,11 +1,11 @@
 import Foundation
 
-public enum DmmsAiContactsCommand: String, Codable, Sendable {
+public enum DryadsAiContactsCommand: String, Codable, Sendable {
     case search = "contacts.search"
     case add = "contacts.add"
 }
 
-public struct DmmsAiContactsSearchParams: Codable, Sendable, Equatable {
+public struct DryadsAiContactsSearchParams: Codable, Sendable, Equatable {
     public var query: String?
     public var limit: Int?
 
@@ -15,7 +15,7 @@ public struct DmmsAiContactsSearchParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiContactsAddParams: Codable, Sendable, Equatable {
+public struct DryadsAiContactsAddParams: Codable, Sendable, Equatable {
     public var givenName: String?
     public var familyName: String?
     public var organizationName: String?
@@ -40,7 +40,7 @@ public struct DmmsAiContactsAddParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiContactPayload: Codable, Sendable, Equatable {
+public struct DryadsAiContactPayload: Codable, Sendable, Equatable {
     public var identifier: String
     public var displayName: String
     public var givenName: String
@@ -68,18 +68,18 @@ public struct DmmsAiContactPayload: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiContactsSearchPayload: Codable, Sendable, Equatable {
-    public var contacts: [DmmsAiContactPayload]
+public struct DryadsAiContactsSearchPayload: Codable, Sendable, Equatable {
+    public var contacts: [DryadsAiContactPayload]
 
-    public init(contacts: [DmmsAiContactPayload]) {
+    public init(contacts: [DryadsAiContactPayload]) {
         self.contacts = contacts
     }
 }
 
-public struct DmmsAiContactsAddPayload: Codable, Sendable, Equatable {
-    public var contact: DmmsAiContactPayload
+public struct DryadsAiContactsAddPayload: Codable, Sendable, Equatable {
+    public var contact: DryadsAiContactPayload
 
-    public init(contact: DmmsAiContactPayload) {
+    public init(contact: DryadsAiContactPayload) {
         self.contact = contact
     }
 }

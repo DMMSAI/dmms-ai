@@ -1,12 +1,12 @@
 import { DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { resolveAllowlistModelKey } from "../agents/model-selection.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 export function ensureModelAllowlistEntry(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   modelRef: string;
   defaultProvider?: string;
-}): DmmsAiConfig {
+}): DryadsAiConfig {
   const rawModelRef = params.modelRef.trim();
   if (!rawModelRef) {
     return params.cfg;

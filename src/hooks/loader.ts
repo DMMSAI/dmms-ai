@@ -7,7 +7,7 @@
 
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { resolveHookConfig } from "./config.js";
 import { shouldIncludeHook } from "./config.js";
@@ -24,7 +24,7 @@ const log = createSubsystemLogger("hooks:loader");
  * 1. Directory-based discovery (bundled, managed, workspace)
  * 2. Legacy config handlers (backwards compatibility)
  *
- * @param cfg - DMMS AI configuration
+ * @param cfg - Dryads AI configuration
  * @param workspaceDir - Workspace directory for hook discovery
  * @returns Number of handlers successfully loaded
  *
@@ -37,7 +37,7 @@ const log = createSubsystemLogger("hooks:loader");
  * ```
  */
 export async function loadInternalHooks(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   workspaceDir: string,
   opts?: {
     managedHooksDir?: string;

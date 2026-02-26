@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `dmms-ai hooks` (agent hooks)"
+summary: "CLI reference for `dryads-ai hooks` (agent hooks)"
 read_when:
   - You want to manage agent hooks
   - You want to install or update hooks
 title: "hooks"
 ---
 
-# `dmms-ai hooks`
+# `dryads-ai hooks`
 
 Manage agent hooks (event-driven automations for commands like `/new`, `/reset`, and gateway startup).
 
@@ -18,7 +18,7 @@ Related:
 ## List All Hooks
 
 ```bash
-dmms-ai hooks list
+dryads-ai hooks list
 ```
 
 List all discovered hooks from workspace, managed, and bundled directories.
@@ -44,7 +44,7 @@ Ready:
 **Example (verbose):**
 
 ```bash
-dmms-ai hooks list --verbose
+dryads-ai hooks list --verbose
 ```
 
 Shows missing requirements for ineligible hooks.
@@ -52,7 +52,7 @@ Shows missing requirements for ineligible hooks.
 **Example (JSON):**
 
 ```bash
-dmms-ai hooks list --json
+dryads-ai hooks list --json
 ```
 
 Returns structured JSON for programmatic use.
@@ -60,7 +60,7 @@ Returns structured JSON for programmatic use.
 ## Get Hook Information
 
 ```bash
-dmms-ai hooks info <name>
+dryads-ai hooks info <name>
 ```
 
 Show detailed information about a specific hook.
@@ -76,7 +76,7 @@ Show detailed information about a specific hook.
 **Example:**
 
 ```bash
-dmms-ai hooks info session-memory
+dryads-ai hooks info session-memory
 ```
 
 **Output:**
@@ -87,10 +87,10 @@ dmms-ai hooks info session-memory
 Save session context to memory when /new command is issued
 
 Details:
-  Source: dmms-ai-bundled
-  Path: /path/to/dmms-ai/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/dmms-ai/hooks/bundled/session-memory/handler.ts
-  Homepage: https://docs.dmms-ai.com/automation/hooks#session-memory
+  Source: dryads-ai-bundled
+  Path: /path/to/dryads-ai/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/dryads-ai/hooks/bundled/session-memory/handler.ts
+  Homepage: https://docs.dryads-ai.com/automation/hooks#session-memory
   Events: command:new
 
 Requirements:
@@ -100,7 +100,7 @@ Requirements:
 ## Check Hooks Eligibility
 
 ```bash
-dmms-ai hooks check
+dryads-ai hooks check
 ```
 
 Show summary of hook eligibility status (how many are ready vs. not ready).
@@ -122,12 +122,12 @@ Not ready: 0
 ## Enable a Hook
 
 ```bash
-dmms-ai hooks enable <name>
+dryads-ai hooks enable <name>
 ```
 
-Enable a specific hook by adding it to your config (`~/.dmms-ai/config.json`).
+Enable a specific hook by adding it to your config (`~/.dryads-ai/config.json`).
 
-**Note:** Hooks managed by plugins show `plugin:<id>` in `dmms-ai hooks list` and
+**Note:** Hooks managed by plugins show `plugin:<id>` in `dryads-ai hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
 
 **Arguments:**
@@ -137,7 +137,7 @@ can’t be enabled/disabled here. Enable/disable the plugin instead.
 **Example:**
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
 **Output:**
@@ -159,7 +159,7 @@ dmms-ai hooks enable session-memory
 ## Disable a Hook
 
 ```bash
-dmms-ai hooks disable <name>
+dryads-ai hooks disable <name>
 ```
 
 Disable a specific hook by updating your config.
@@ -171,7 +171,7 @@ Disable a specific hook by updating your config.
 **Example:**
 
 ```bash
-dmms-ai hooks disable command-logger
+dryads-ai hooks disable command-logger
 ```
 
 **Output:**
@@ -187,7 +187,7 @@ dmms-ai hooks disable command-logger
 ## Install Hooks
 
 ```bash
-dmms-ai hooks install <path-or-spec>
+dryads-ai hooks install <path-or-spec>
 ```
 
 Install a hook pack from a local folder/archive or npm.
@@ -197,7 +197,7 @@ specs are rejected. Dependency installs run with `--ignore-scripts` for safety.
 
 **What it does:**
 
-- Copies the hook pack into `~/.dmms-ai/hooks/<id>`
+- Copies the hook pack into `~/.dryads-ai/hooks/<id>`
 - Enables the installed hooks in `hooks.internal.entries.*`
 - Records the install under `hooks.internal.installs`
 
@@ -211,23 +211,23 @@ specs are rejected. Dependency installs run with `--ignore-scripts` for safety.
 
 ```bash
 # Local directory
-dmms-ai hooks install ./my-hook-pack
+dryads-ai hooks install ./my-hook-pack
 
 # Local archive
-dmms-ai hooks install ./my-hook-pack.zip
+dryads-ai hooks install ./my-hook-pack.zip
 
 # NPM package
-dmms-ai hooks install @dmms-ai/my-hook-pack
+dryads-ai hooks install @dryads-ai/my-hook-pack
 
 # Link a local directory without copying
-dmms-ai hooks install -l ./my-hook-pack
+dryads-ai hooks install -l ./my-hook-pack
 ```
 
 ## Update Hooks
 
 ```bash
-dmms-ai hooks update <id>
-dmms-ai hooks update --all
+dryads-ai hooks update <id>
+dryads-ai hooks update --all
 ```
 
 Update installed hook packs (npm installs only).
@@ -246,10 +246,10 @@ Saves session context to memory when you issue `/new`.
 **Enable:**
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
-**Output:** `~/.dmms-ai/workspace/memory/YYYY-MM-DD-slug.md`
+**Output:** `~/.dryads-ai/workspace/memory/YYYY-MM-DD-slug.md`
 
 **See:** [session-memory documentation](/automation/hooks#session-memory)
 
@@ -260,7 +260,7 @@ Injects additional bootstrap files (for example monorepo-local `AGENTS.md` / `TO
 **Enable:**
 
 ```bash
-dmms-ai hooks enable bootstrap-extra-files
+dryads-ai hooks enable bootstrap-extra-files
 ```
 
 **See:** [bootstrap-extra-files documentation](/automation/hooks#bootstrap-extra-files)
@@ -272,22 +272,22 @@ Logs all command events to a centralized audit file.
 **Enable:**
 
 ```bash
-dmms-ai hooks enable command-logger
+dryads-ai hooks enable command-logger
 ```
 
-**Output:** `~/.dmms-ai/logs/commands.log`
+**Output:** `~/.dryads-ai/logs/commands.log`
 
 **View logs:**
 
 ```bash
 # Recent commands
-tail -n 20 ~/.dmms-ai/logs/commands.log
+tail -n 20 ~/.dryads-ai/logs/commands.log
 
 # Pretty-print
-cat ~/.dmms-ai/logs/commands.log | jq .
+cat ~/.dryads-ai/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.dmms-ai/logs/commands.log | jq .
+grep '"action":"new"' ~/.dryads-ai/logs/commands.log | jq .
 ```
 
 **See:** [command-logger documentation](/automation/hooks#command-logger)
@@ -301,7 +301,7 @@ Runs `BOOT.md` when the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-dmms-ai hooks enable boot-md
+dryads-ai hooks enable boot-md
 ```
 
 **See:** [boot-md documentation](/automation/hooks#boot-md)

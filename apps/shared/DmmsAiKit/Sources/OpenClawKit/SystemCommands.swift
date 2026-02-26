@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DmmsAiSystemCommand: String, Codable, Sendable {
+public enum DryadsAiSystemCommand: String, Codable, Sendable {
     case run = "system.run"
     case which = "system.which"
     case notify = "system.notify"
@@ -8,19 +8,19 @@ public enum DmmsAiSystemCommand: String, Codable, Sendable {
     case execApprovalsSet = "system.execApprovals.set"
 }
 
-public enum DmmsAiNotificationPriority: String, Codable, Sendable {
+public enum DryadsAiNotificationPriority: String, Codable, Sendable {
     case passive
     case active
     case timeSensitive
 }
 
-public enum DmmsAiNotificationDelivery: String, Codable, Sendable {
+public enum DryadsAiNotificationDelivery: String, Codable, Sendable {
     case system
     case overlay
     case auto
 }
 
-public struct DmmsAiSystemRunParams: Codable, Sendable, Equatable {
+public struct DryadsAiSystemRunParams: Codable, Sendable, Equatable {
     public var command: [String]
     public var rawCommand: String?
     public var cwd: String?
@@ -57,7 +57,7 @@ public struct DmmsAiSystemRunParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiSystemWhichParams: Codable, Sendable, Equatable {
+public struct DryadsAiSystemWhichParams: Codable, Sendable, Equatable {
     public var bins: [String]
 
     public init(bins: [String]) {
@@ -65,19 +65,19 @@ public struct DmmsAiSystemWhichParams: Codable, Sendable, Equatable {
     }
 }
 
-public struct DmmsAiSystemNotifyParams: Codable, Sendable, Equatable {
+public struct DryadsAiSystemNotifyParams: Codable, Sendable, Equatable {
     public var title: String
     public var body: String
     public var sound: String?
-    public var priority: DmmsAiNotificationPriority?
-    public var delivery: DmmsAiNotificationDelivery?
+    public var priority: DryadsAiNotificationPriority?
+    public var delivery: DryadsAiNotificationDelivery?
 
     public init(
         title: String,
         body: String,
         sound: String? = nil,
-        priority: DmmsAiNotificationPriority? = nil,
-        delivery: DmmsAiNotificationDelivery? = nil)
+        priority: DryadsAiNotificationPriority? = nil,
+        delivery: DryadsAiNotificationDelivery? = nil)
     {
         self.title = title
         self.body = body

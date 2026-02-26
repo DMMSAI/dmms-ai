@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiKit
+import DryadsAiKit
 
 @MainActor
 final class NodeCapabilityRouter {

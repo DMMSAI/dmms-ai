@@ -2,25 +2,25 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { expandHomePrefix, resolveRequiredHomeDir } from "../infra/home-dir.js";
-import type { DmmsAiConfig } from "./types.js";
+import type { DryadsAiConfig } from "./types.js";
 
 /**
- * Nix mode detection: When DMMS_AI_NIX_MODE=1, the gateway is running under Nix.
+ * Nix mode detection: When DRYADS_AI_NIX_MODE=1, the gateway is running under Nix.
  * In this mode:
  * - No auto-install flows should be attempted
  * - Missing dependencies should produce actionable Nix-specific error messages
  * - Config is managed externally (read-only from Nix perspective)
  */
 export function resolveIsNixMode(env: NodeJS.ProcessEnv = process.env): boolean {
-  return env.DMMS_AI_NIX_MODE === "1";
+  return env.DRYADS_AI_NIX_MODE === "1";
 }
 
 export const isNixMode = resolveIsNixMode();
 
 // Support historical (and occasionally misspelled) legacy state dirs.
 const LEGACY_STATE_DIRNAMES = [".openclaw", ".clawdbot", ".moldbot", ".moltbot"] as const;
-const NEW_STATE_DIRNAME = ".dmms-ai";
-const CONFIG_FILENAME = "dmms-ai.json";
+const NEW_STATE_DIRNAME = ".dryads-ai";
+const CONFIG_FILENAME = "dryads-ai.json";
 const LEGACY_CONFIG_FILENAMES = [
   "openclaw.json",
   "clawdbot.json",
@@ -32,7 +32,7 @@ function resolveDefaultHomeDir(): string {
   return resolveRequiredHomeDir(process.env, os.homedir);
 }
 
-/** Build a homedir thunk that respects DMMS_AI_HOME for the given env. */
+/** Build a homedir thunk that respects DRYADS_AI_HOME for the given env. */
 function envHomedir(env: NodeJS.ProcessEnv): () => string {
   return () => resolveRequiredHomeDir(env, os.homedir);
 }
@@ -59,15 +59,15 @@ export function resolveNewStateDir(homedir: () => string = resolveDefaultHomeDir
 
 /**
  * State directory for mutable data (sessions, logs, caches).
- * Can be overridden via DMMS_AI_STATE_DIR.
- * Default: ~/.dmms-ai
+ * Can be overridden via DRYADS_AI_STATE_DIR.
+ * Default: ~/.dryads-ai
  */
 export function resolveStateDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = envHomedir(env),
 ): string {
   const effectiveHomedir = () => resolveRequiredHomeDir(env, homedir);
-  const override = env.DMMS_AI_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
+  const override = env.DRYADS_AI_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
   if (override) {
     return resolveUserPath(override, env, effectiveHomedir);
   }
@@ -114,14 +114,14 @@ export const STATE_DIR = resolveStateDir();
 
 /**
  * Config file path (JSON5).
- * Can be overridden via DMMS_AI_CONFIG_PATH.
- * Default: ~/.dmms-ai/dmms-ai.json (or $DMMS_AI_STATE_DIR/dmms-ai.json)
+ * Can be overridden via DRYADS_AI_CONFIG_PATH.
+ * Default: ~/.dryads-ai/dryads-ai.json (or $DRYADS_AI_STATE_DIR/dryads-ai.json)
  */
 export function resolveCanonicalConfigPath(
   env: NodeJS.ProcessEnv = process.env,
   stateDir: string = resolveStateDir(env, envHomedir(env)),
 ): string {
-  const override = env.DMMS_AI_CONFIG_PATH?.trim() || env.CLAWDBOT_CONFIG_PATH?.trim();
+  const override = env.DRYADS_AI_CONFIG_PATH?.trim() || env.CLAWDBOT_CONFIG_PATH?.trim();
   if (override) {
     return resolveUserPath(override, env, envHomedir(env));
   }
@@ -158,11 +158,11 @@ export function resolveConfigPath(
   stateDir: string = resolveStateDir(env, envHomedir(env)),
   homedir: () => string = envHomedir(env),
 ): string {
-  const override = env.DMMS_AI_CONFIG_PATH?.trim();
+  const override = env.DRYADS_AI_CONFIG_PATH?.trim();
   if (override) {
     return resolveUserPath(override, env, homedir);
   }
-  const stateOverride = env.DMMS_AI_STATE_DIR?.trim();
+  const stateOverride = env.DRYADS_AI_STATE_DIR?.trim();
   const candidates = [
     path.join(stateDir, CONFIG_FILENAME),
     ...LEGACY_CONFIG_FILENAMES.map((name) => path.join(stateDir, name)),
@@ -198,15 +198,15 @@ export function resolveDefaultConfigCandidates(
   homedir: () => string = envHomedir(env),
 ): string[] {
   const effectiveHomedir = () => resolveRequiredHomeDir(env, homedir);
-  const explicit = env.DMMS_AI_CONFIG_PATH?.trim() || env.CLAWDBOT_CONFIG_PATH?.trim();
+  const explicit = env.DRYADS_AI_CONFIG_PATH?.trim() || env.CLAWDBOT_CONFIG_PATH?.trim();
   if (explicit) {
     return [resolveUserPath(explicit, env, effectiveHomedir)];
   }
 
   const candidates: string[] = [];
-  const dmmsAiStateDir = env.DMMS_AI_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
-  if (dmmsAiStateDir) {
-    const resolved = resolveUserPath(dmmsAiStateDir, env, effectiveHomedir);
+  const dryadsAiStateDir = env.DRYADS_AI_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
+  if (dryadsAiStateDir) {
+    const resolved = resolveUserPath(dryadsAiStateDir, env, effectiveHomedir);
     candidates.push(path.join(resolved, CONFIG_FILENAME));
     candidates.push(...LEGACY_CONFIG_FILENAMES.map((name) => path.join(resolved, name)));
   }
@@ -223,12 +223,12 @@ export const DEFAULT_GATEWAY_PORT = 18789;
 
 /**
  * Gateway lock directory (ephemeral).
- * Default: os.tmpdir()/dmms-ai-<uid> (uid suffix when available).
+ * Default: os.tmpdir()/dryads-ai-<uid> (uid suffix when available).
  */
 export function resolveGatewayLockDir(tmpdir: () => string = os.tmpdir): string {
   const base = tmpdir();
   const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
-  const suffix = uid != null ? `dmms-ai-${uid}` : "dmms-ai";
+  const suffix = uid != null ? `dryads-ai-${uid}` : "dryads-ai";
   return path.join(base, suffix);
 }
 
@@ -238,14 +238,14 @@ const OAUTH_FILENAME = "oauth.json";
  * OAuth credentials storage directory.
  *
  * Precedence:
- * - `DMMS_AI_OAUTH_DIR` (explicit override)
+ * - `DRYADS_AI_OAUTH_DIR` (explicit override)
  * - `$*_STATE_DIR/credentials` (canonical server/default)
  */
 export function resolveOAuthDir(
   env: NodeJS.ProcessEnv = process.env,
   stateDir: string = resolveStateDir(env, envHomedir(env)),
 ): string {
-  const override = env.DMMS_AI_OAUTH_DIR?.trim();
+  const override = env.DRYADS_AI_OAUTH_DIR?.trim();
   if (override) {
     return resolveUserPath(override, env, envHomedir(env));
   }
@@ -260,10 +260,10 @@ export function resolveOAuthPath(
 }
 
 export function resolveGatewayPort(
-  cfg?: DmmsAiConfig,
+  cfg?: DryadsAiConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): number {
-  const envRaw = env.DMMS_AI_GATEWAY_PORT?.trim() || env.CLAWDBOT_GATEWAY_PORT?.trim();
+  const envRaw = env.DRYADS_AI_GATEWAY_PORT?.trim() || env.CLAWDBOT_GATEWAY_PORT?.trim();
   if (envRaw) {
     const parsed = Number.parseInt(envRaw, 10);
     if (Number.isFinite(parsed) && parsed > 0) {

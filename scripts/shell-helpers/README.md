@@ -2,7 +2,7 @@
 
 Stop typing `docker-compose` commands. Just type `clawdock-start`.
 
-Inspired by Simon Willison's [Running DMMS AI in Docker](https://til.simonwillison.net/llms/dmms-ai-docker).
+Inspired by Simon Willison's [Running Dryads AI in Docker](https://til.simonwillison.net/llms/dryads-ai-docker).
 
 - [Quickstart](#quickstart)
 - [Available Commands](#available-commands)
@@ -25,7 +25,7 @@ Inspired by Simon Willison's [Running DMMS AI in Docker](https://til.simonwillis
 **Install:**
 
 ```bash
-mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/dmms-ai/dmms-ai/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/dryads-ai/dryads-ai/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 ```
 
 ```bash
@@ -38,9 +38,9 @@ echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc && source ~/.zshrc
 clawdock-help
 ```
 
-On first command, ClawDock auto-detects your DMMS AI directory:
+On first command, ClawDock auto-detects your Dryads AI directory:
 
-- Checks common paths (`~/dmms-ai`, `~/workspace/dmms-ai`, etc.)
+- Checks common paths (`~/dryads-ai`, `~/workspace/dryads-ai`, etc.)
 - If found, asks you to confirm
 - Saves to `~/.clawdock/config`
 
@@ -87,7 +87,7 @@ clawdock-approve <request-id>
 | Command                   | Description                                    |
 | ------------------------- | ---------------------------------------------- |
 | `clawdock-shell`          | Interactive shell inside the gateway container |
-| `clawdock-cli <command>`  | Run DMMS AI CLI commands                       |
+| `clawdock-cli <command>`  | Run Dryads AI CLI commands                     |
 | `clawdock-exec <command>` | Execute arbitrary commands in the container    |
 
 ### Web UI & Devices
@@ -117,8 +117,8 @@ clawdock-approve <request-id>
 | -------------------- | ----------------------------------------- |
 | `clawdock-health`    | Run gateway health check                  |
 | `clawdock-token`     | Display the gateway authentication token  |
-| `clawdock-cd`        | Jump to the DMMS AI project directory     |
-| `clawdock-config`    | Open the DMMS AI config directory         |
+| `clawdock-cd`        | Jump to the Dryads AI project directory   |
+| `clawdock-config`    | Open the Dryads AI config directory       |
 | `clawdock-workspace` | Open the workspace directory              |
 | `clawdock-help`      | Show all available commands with examples |
 
@@ -155,7 +155,7 @@ clawdock-shell
 **Inside the container, login to WhatsApp:**
 
 ```bash
-dmms-ai channels login --channel whatsapp --verbose
+dryads-ai channels login --channel whatsapp --verbose
 ```
 
 Scan the QR code with WhatsApp on your phone.
@@ -163,7 +163,7 @@ Scan the QR code with WhatsApp on your phone.
 **Verify connection:**
 
 ```bash
-dmms-ai status
+dryads-ai status
 ```
 
 ### Troubleshooting Device Pairing
@@ -193,7 +193,7 @@ clawdock-fix-token
 This will:
 
 1. Read the token from your `.env` file
-2. Configure it in the DMMS AI config
+2. Configure it in the Dryads AI config
 3. Restart the gateway
 4. Verify the configuration
 
@@ -209,7 +209,7 @@ docker ps
 
 - Docker and Docker Compose installed
 - Bash or Zsh shell
-- DMMS AI project (from `docker-setup.sh`)
+- Dryads AI project (from `docker-setup.sh`)
 
 ## Development
 

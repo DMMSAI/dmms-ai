@@ -8,14 +8,14 @@ title: "Hooks"
 
 # Hooks
 
-Hooks provide an extensible event-driven system for automating actions in response to agent commands and events. Hooks are automatically discovered from directories and can be managed via CLI commands, similar to how skills work in DMMS AI.
+Hooks provide an extensible event-driven system for automating actions in response to agent commands and events. Hooks are automatically discovered from directories and can be managed via CLI commands, similar to how skills work in Dryads AI.
 
 ## Getting Oriented
 
 Hooks are small scripts that run when something happens. There are two kinds:
 
 - **Hooks** (this page): run inside the Gateway when agent events fire, like `/new`, `/reset`, `/stop`, or lifecycle events.
-- **Webhooks**: external HTTP webhooks that let other systems trigger work in DMMS AI. See [Webhook Hooks](/automation/webhook) or use `dmms-ai webhooks` for Gmail helper commands.
+- **Webhooks**: external HTTP webhooks that let other systems trigger work in Dryads AI. See [Webhook Hooks](/automation/webhook) or use `dryads-ai webhooks` for Gmail helper commands.
 
 Hooks can also be bundled inside plugins; see [Plugins](/tools/plugin#plugin-hooks).
 
@@ -35,54 +35,54 @@ The hooks system allows you to:
 - Save session context to memory when `/new` is issued
 - Log all commands for auditing
 - Trigger custom automations on agent lifecycle events
-- Extend DMMS AI's behavior without modifying core code
+- Extend Dryads AI's behavior without modifying core code
 
 ## Getting Started
 
 ### Bundled Hooks
 
-DMMS AI ships with four bundled hooks that are automatically discovered:
+Dryads AI ships with four bundled hooks that are automatically discovered:
 
-- **💾 session-memory**: Saves session context to your agent workspace (default `~/.dmms-ai/workspace/memory/`) when you issue `/new`
+- **💾 session-memory**: Saves session context to your agent workspace (default `~/.dryads-ai/workspace/memory/`) when you issue `/new`
 - **📎 bootstrap-extra-files**: Injects additional workspace bootstrap files from configured glob/path patterns during `agent:bootstrap`
-- **📝 command-logger**: Logs all command events to `~/.dmms-ai/logs/commands.log`
+- **📝 command-logger**: Logs all command events to `~/.dryads-ai/logs/commands.log`
 - **🚀 boot-md**: Runs `BOOT.md` when the gateway starts (requires internal hooks enabled)
 
 List available hooks:
 
 ```bash
-dmms-ai hooks list
+dryads-ai hooks list
 ```
 
 Enable a hook:
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
 Check hook status:
 
 ```bash
-dmms-ai hooks check
+dryads-ai hooks check
 ```
 
 Get detailed information:
 
 ```bash
-dmms-ai hooks info session-memory
+dryads-ai hooks info session-memory
 ```
 
 ### Onboarding
 
-During onboarding (`dmms-ai onboard`), you'll be prompted to enable recommended hooks. The wizard automatically discovers eligible hooks and presents them for selection.
+During onboarding (`dryads-ai onboard`), you'll be prompted to enable recommended hooks. The wizard automatically discovers eligible hooks and presents them for selection.
 
 ## Hook Discovery
 
 Hooks are automatically discovered from three directories (in order of precedence):
 
 1. **Workspace hooks**: `<workspace>/hooks/` (per-agent, highest precedence)
-2. **Managed hooks**: `~/.dmms-ai/hooks/` (user-installed, shared across workspaces)
-3. **Bundled hooks**: `<dmms-ai>/dist/hooks/bundled/` (shipped with DMMS AI)
+2. **Managed hooks**: `~/.dryads-ai/hooks/` (user-installed, shared across workspaces)
+3. **Bundled hooks**: `<dryads-ai>/dist/hooks/bundled/` (shipped with Dryads AI)
 
 Managed hook directories can be either a **single hook** or a **hook pack** (package directory).
 
@@ -96,11 +96,11 @@ my-hook/
 
 ## Hook Packs (npm/archives)
 
-Hook packs are standard npm packages that export one or more hooks via `dmms-ai.hooks` in
+Hook packs are standard npm packages that export one or more hooks via `dryads-ai.hooks` in
 `package.json`. Install them with:
 
 ```bash
-dmms-ai hooks install <path-or-spec>
+dryads-ai hooks install <path-or-spec>
 ```
 
 Npm specs are registry-only (package name + optional version/tag). Git/URL/file specs are rejected.
@@ -111,16 +111,16 @@ Example `package.json`:
 {
   "name": "@acme/my-hooks",
   "version": "0.1.0",
-  "dmms-ai": {
+  "dryads-ai": {
     "hooks": ["./hooks/my-hook", "./hooks/other-hook"]
   }
 }
 ```
 
 Each entry points to a hook directory containing `HOOK.md` and `handler.ts` (or `index.ts`).
-Hook packs can ship dependencies; they will be installed under `~/.dmms-ai/hooks/<id>`.
+Hook packs can ship dependencies; they will be installed under `~/.dryads-ai/hooks/<id>`.
 
-Security note: `dmms-ai hooks install` installs dependencies with `npm install --ignore-scripts`
+Security note: `dryads-ai hooks install` installs dependencies with `npm install --ignore-scripts`
 (no lifecycle scripts). Keep hook pack dependency trees "pure JS/TS" and avoid packages that rely
 on `postinstall` builds.
 
@@ -134,9 +134,9 @@ The `HOOK.md` file contains metadata in YAML frontmatter plus Markdown documenta
 ---
 name: my-hook
 description: "Short description of what this hook does"
-homepage: https://docs.dmms-ai.com/automation/hooks#my-hook
+homepage: https://docs.dryads-ai.com/automation/hooks#my-hook
 metadata:
-  { "dmms-ai": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "dryads-ai": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 
 # My Hook
@@ -160,7 +160,7 @@ No configuration needed.
 
 ### Metadata Fields
 
-The `metadata.dmms-ai` object supports:
+The `metadata.dryads-ai` object supports:
 
 - **`emoji`**: Display emoji for CLI (e.g., `"💾"`)
 - **`events`**: Array of events to listen for (e.g., `["command:new", "command:reset"]`)
@@ -221,7 +221,7 @@ Each event includes:
     senderId?: string,
     workspaceDir?: string,
     bootstrapFiles?: WorkspaceBootstrapFile[],
-    cfg?: DmmsAiConfig,
+    cfg?: DryadsAiConfig,
     // Message events (see Message Events section for full details):
     from?: string,             // message:received
     to?: string,               // message:sent
@@ -319,7 +319,7 @@ export default handler;
 
 ### Tool Result Hooks (Plugin API)
 
-These hooks are not event-stream listeners; they let plugins synchronously adjust tool results before DMMS AI persists them.
+These hooks are not event-stream listeners; they let plugins synchronously adjust tool results before Dryads AI persists them.
 
 - **`tool_result_persist`**: transform tool results before they are written to the session transcript. Must be synchronous; return the updated tool result payload or `undefined` to keep it as-is. See [Agent Loop](/concepts/agent-loop).
 
@@ -336,13 +336,13 @@ Planned event types:
 ### 1. Choose Location
 
 - **Workspace hooks** (`<workspace>/hooks/`): Per-agent, highest precedence
-- **Managed hooks** (`~/.dmms-ai/hooks/`): Shared across workspaces
+- **Managed hooks** (`~/.dryads-ai/hooks/`): Shared across workspaces
 
 ### 2. Create Directory Structure
 
 ```bash
-mkdir -p ~/.dmms-ai/hooks/my-hook
-cd ~/.dmms-ai/hooks/my-hook
+mkdir -p ~/.dryads-ai/hooks/my-hook
+cd ~/.dryads-ai/hooks/my-hook
 ```
 
 ### 3. Create HOOK.md
@@ -351,7 +351,7 @@ cd ~/.dmms-ai/hooks/my-hook
 ---
 name: my-hook
 description: "Does something useful"
-metadata: { "dmms-ai": { "emoji": "🎯", "events": ["command:new"] } }
+metadata: { "dryads-ai": { "emoji": "🎯", "events": ["command:new"] } }
 ---
 
 # My Custom Hook
@@ -380,10 +380,10 @@ export default handler;
 
 ```bash
 # Verify hook is discovered
-dmms-ai hooks list
+dryads-ai hooks list
 
 # Enable it
-dmms-ai hooks enable my-hook
+dryads-ai hooks enable my-hook
 
 # Restart your gateway process (menu bar app restart on macOS, or restart your dev process)
 
@@ -479,46 +479,46 @@ Note: `module` must be a workspace-relative path. Absolute paths and traversal o
 
 ```bash
 # List all hooks
-dmms-ai hooks list
+dryads-ai hooks list
 
 # Show only eligible hooks
-dmms-ai hooks list --eligible
+dryads-ai hooks list --eligible
 
 # Verbose output (show missing requirements)
-dmms-ai hooks list --verbose
+dryads-ai hooks list --verbose
 
 # JSON output
-dmms-ai hooks list --json
+dryads-ai hooks list --json
 ```
 
 ### Hook Information
 
 ```bash
 # Show detailed info about a hook
-dmms-ai hooks info session-memory
+dryads-ai hooks info session-memory
 
 # JSON output
-dmms-ai hooks info session-memory --json
+dryads-ai hooks info session-memory --json
 ```
 
 ### Check Eligibility
 
 ```bash
 # Show eligibility summary
-dmms-ai hooks check
+dryads-ai hooks check
 
 # JSON output
-dmms-ai hooks check --json
+dryads-ai hooks check --json
 ```
 
 ### Enable/Disable
 
 ```bash
 # Enable a hook
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 
 # Disable a hook
-dmms-ai hooks disable command-logger
+dryads-ai hooks disable command-logger
 ```
 
 ## Bundled hook reference
@@ -531,7 +531,7 @@ Saves session context to memory when you issue `/new`.
 
 **Requirements**: `workspace.dir` must be configured
 
-**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.dmms-ai/workspace`)
+**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.dryads-ai/workspace`)
 
 **What it does**:
 
@@ -559,7 +559,7 @@ Saves session context to memory when you issue `/new`.
 **Enable**:
 
 ```bash
-dmms-ai hooks enable session-memory
+dryads-ai hooks enable session-memory
 ```
 
 ### bootstrap-extra-files
@@ -600,7 +600,7 @@ Injects additional bootstrap files (for example monorepo-local `AGENTS.md` / `TO
 **Enable**:
 
 ```bash
-dmms-ai hooks enable bootstrap-extra-files
+dryads-ai hooks enable bootstrap-extra-files
 ```
 
 ### command-logger
@@ -611,7 +611,7 @@ Logs all command events to a centralized audit file.
 
 **Requirements**: None
 
-**Output**: `~/.dmms-ai/logs/commands.log`
+**Output**: `~/.dryads-ai/logs/commands.log`
 
 **What it does**:
 
@@ -630,19 +630,19 @@ Logs all command events to a centralized audit file.
 
 ```bash
 # View recent commands
-tail -n 20 ~/.dmms-ai/logs/commands.log
+tail -n 20 ~/.dryads-ai/logs/commands.log
 
 # Pretty-print with jq
-cat ~/.dmms-ai/logs/commands.log | jq .
+cat ~/.dryads-ai/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.dmms-ai/logs/commands.log | jq .
+grep '"action":"new"' ~/.dryads-ai/logs/commands.log | jq .
 ```
 
 **Enable**:
 
 ```bash
-dmms-ai hooks enable command-logger
+dryads-ai hooks enable command-logger
 ```
 
 ### boot-md
@@ -663,7 +663,7 @@ Internal hooks must be enabled for this to run.
 **Enable**:
 
 ```bash
-dmms-ai hooks enable boot-md
+dryads-ai hooks enable boot-md
 ```
 
 ## Best Practices
@@ -720,13 +720,13 @@ const handler: HookHandler = async (event) => {
 Specify exact events in metadata when possible:
 
 ```yaml
-metadata: { "dmms-ai": { "events": ["command:new"] } } # Specific
+metadata: { "dryads-ai": { "events": ["command:new"] } } # Specific
 ```
 
 Rather than:
 
 ```yaml
-metadata: { "dmms-ai": { "events": ["command"] } } # General - more overhead
+metadata: { "dryads-ai": { "events": ["command"] } } # General - more overhead
 ```
 
 ## Debugging
@@ -747,7 +747,7 @@ Registered hook: boot-md -> gateway:startup
 List all discovered hooks:
 
 ```bash
-dmms-ai hooks list --verbose
+dryads-ai hooks list --verbose
 ```
 
 ### Check Registration
@@ -766,7 +766,7 @@ const handler: HookHandler = async (event) => {
 Check why a hook isn't eligible:
 
 ```bash
-dmms-ai hooks info my-hook
+dryads-ai hooks info my-hook
 ```
 
 Look for missing requirements in the output.
@@ -782,7 +782,7 @@ Monitor gateway logs to see hook execution:
 ./scripts/clawlog.sh -f
 
 # Other platforms
-tail -f ~/.dmms-ai/gateway.log
+tail -f ~/.dryads-ai/gateway.log
 ```
 
 ### Test Hooks Directly
@@ -858,21 +858,21 @@ Session reset
 1. Check directory structure:
 
    ```bash
-   ls -la ~/.dmms-ai/hooks/my-hook/
+   ls -la ~/.dryads-ai/hooks/my-hook/
    # Should show: HOOK.md, handler.ts
    ```
 
 2. Verify HOOK.md format:
 
    ```bash
-   cat ~/.dmms-ai/hooks/my-hook/HOOK.md
+   cat ~/.dryads-ai/hooks/my-hook/HOOK.md
    # Should have YAML frontmatter with name and metadata
    ```
 
 3. List all discovered hooks:
 
    ```bash
-   dmms-ai hooks list
+   dryads-ai hooks list
    ```
 
 ### Hook Not Eligible
@@ -880,7 +880,7 @@ Session reset
 Check requirements:
 
 ```bash
-dmms-ai hooks info my-hook
+dryads-ai hooks info my-hook
 ```
 
 Look for missing:
@@ -895,7 +895,7 @@ Look for missing:
 1. Verify hook is enabled:
 
    ```bash
-   dmms-ai hooks list
+   dryads-ai hooks list
    # Should show ✓ next to enabled hooks
    ```
 
@@ -943,8 +943,8 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 1. Create hook directory:
 
    ```bash
-   mkdir -p ~/.dmms-ai/hooks/my-hook
-   mv ./hooks/handlers/my-handler.ts ~/.dmms-ai/hooks/my-hook/handler.ts
+   mkdir -p ~/.dryads-ai/hooks/my-hook
+   mv ./hooks/handlers/my-handler.ts ~/.dryads-ai/hooks/my-hook/handler.ts
    ```
 
 2. Create HOOK.md:
@@ -953,7 +953,7 @@ node -e "import('./path/to/handler.ts').then(console.log)"
    ---
    name: my-hook
    description: "My custom hook"
-   metadata: { "dmms-ai": { "emoji": "🎯", "events": ["command:new"] } }
+   metadata: { "dryads-ai": { "emoji": "🎯", "events": ["command:new"] } }
    ---
 
    # My Hook
@@ -979,7 +979,7 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 4. Verify and restart your gateway process:
 
    ```bash
-   dmms-ai hooks list
+   dryads-ai hooks list
    # Should show: 🎯 my-hook ✓
    ```
 
@@ -994,6 +994,6 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 ## See Also
 
 - [CLI Reference: hooks](/cli/hooks)
-- [Bundled Hooks README](https://github.com/dmms-ai/dmms-ai/tree/main/src/hooks/bundled)
+- [Bundled Hooks README](https://github.com/dryads-ai/dryads-ai/tree/main/src/hooks/bundled)
 - [Webhook Hooks](/automation/webhook)
 - [Configuration](/gateway/configuration#hooks)

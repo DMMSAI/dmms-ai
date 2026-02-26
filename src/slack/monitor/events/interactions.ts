@@ -4,8 +4,8 @@ import { enqueueSystemEvent } from "../../../infra/system-events.js";
 import { parseSlackModalPrivateMetadata } from "../../modal-metadata.js";
 import type { SlackMonitorContext } from "../context.js";
 
-// Prefix for DMMS AI-generated action IDs to scope our handler
-const DMMS_AI_ACTION_PREFIX = "dmms-ai:";
+// Prefix for Dryads AI-generated action IDs to scope our handler
+const DRYADS_AI_ACTION_PREFIX = "dryads-ai:";
 
 type InteractionMessageBlock = {
   type?: string;
@@ -380,11 +380,11 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
     return;
   }
 
-  // Handle Block Kit button clicks from DMMS AI-generated messages
+  // Handle Block Kit button clicks from Dryads AI-generated messages
   // Only matches action_ids that start with our prefix to avoid interfering
   // with other Slack integrations or future features
   ctx.app.action(
-    new RegExp(`^${DMMS_AI_ACTION_PREFIX}`),
+    new RegExp(`^${DRYADS_AI_ACTION_PREFIX}`),
     async (args: SlackActionMiddlewareArgs) => {
       const { ack, body, action, respond } = args;
       const typedBody = body as unknown as {
@@ -538,9 +538,9 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
     return;
   }
 
-  // Handle DMMS AI modal submissions with callback_ids scoped by our prefix.
+  // Handle Dryads AI modal submissions with callback_ids scoped by our prefix.
   ctx.app.view(
-    new RegExp(`^${DMMS_AI_ACTION_PREFIX}`),
+    new RegExp(`^${DRYADS_AI_ACTION_PREFIX}`),
     async ({ ack, body }: { ack: () => Promise<void>; body: unknown }) => {
       await ack();
 
@@ -613,7 +613,7 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
 
   // Handle modal close events so agent workflows can react to cancelled forms.
   viewClosed(
-    new RegExp(`^${DMMS_AI_ACTION_PREFIX}`),
+    new RegExp(`^${DRYADS_AI_ACTION_PREFIX}`),
     async ({ ack, body }: { ack: () => Promise<void>; body: unknown }) => {
       await ack();
 

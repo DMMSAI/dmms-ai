@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你想快速检查运行中的 Gateway 网关健康状态
-summary: "`dmms-ai health` 的 CLI 参考（通过 RPC 获取 Gateway 网关健康端点）"
+summary: "`dryads-ai health` 的 CLI 参考（通过 RPC 获取 Gateway 网关健康端点）"
 title: health
 x-i18n:
   generated_at: "2026-02-03T07:44:55Z"
@@ -12,14 +12,14 @@ x-i18n:
   workflow: 15
 ---
 
-# `dmms-ai health`
+# `dryads-ai health`
 
 从运行中的 Gateway 网关获取健康状态。
 
 ```bash
-dmms-ai health
-dmms-ai health --json
-dmms-ai health --verbose
+dryads-ai health
+dryads-ai health --json
+dryads-ai health --verbose
 ```
 
 注意：

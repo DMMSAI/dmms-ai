@@ -15,14 +15,14 @@ x-i18n:
 
 # OpenResponses API（HTTP）
 
-DMMS AI 的 Gateway 网关可以提供兼容 OpenResponses 的 `POST /v1/responses` 端点。
+Dryads AI 的 Gateway 网关可以提供兼容 OpenResponses 的 `POST /v1/responses` 端点。
 
 此端点**默认禁用**。请先在配置中启用。
 
 - `POST /v1/responses`
 - 与 Gateway 网关相同的端口（WS + HTTP 多路复用）：`http://<gateway-host>:<port>/v1/responses`
 
-底层实现中，请求作为正常的 Gateway 网关智能体运行执行（与 `dmms-ai agent` 相同的代码路径），因此路由/权限/配置与你的 Gateway 网关一致。
+底层实现中，请求作为正常的 Gateway 网关智能体运行执行（与 `dryads-ai agent` 相同的代码路径），因此路由/权限/配置与你的 Gateway 网关一致。
 
 ## 认证
 
@@ -32,23 +32,23 @@ DMMS AI 的 Gateway 网关可以提供兼容 OpenResponses 的 `POST /v1/respons
 
 说明：
 
-- 当 `gateway.auth.mode="token"` 时，使用 `gateway.auth.token`（或 `DMMS_AI_GATEWAY_TOKEN`）。
-- 当 `gateway.auth.mode="password"` 时，使用 `gateway.auth.password`（或 `DMMS_AI_GATEWAY_PASSWORD`）。
+- 当 `gateway.auth.mode="token"` 时，使用 `gateway.auth.token`（或 `DRYADS_AI_GATEWAY_TOKEN`）。
+- 当 `gateway.auth.mode="password"` 时，使用 `gateway.auth.password`（或 `DRYADS_AI_GATEWAY_PASSWORD`）。
 
 ## 选择智能体
 
 无需自定义头：在 OpenResponses `model` 字段中编码智能体 id：
 
-- `model: "dmms-ai:<agentId>"`（示例：`"dmms-ai:main"`、`"dmms-ai:beta"`）
+- `model: "dryads-ai:<agentId>"`（示例：`"dryads-ai:main"`、`"dryads-ai:beta"`）
 - `model: "agent:<agentId>"`（别名）
 
-或通过头指定特定的 DMMS AI 智能体：
+或通过头指定特定的 Dryads AI 智能体：
 
-- `x-dmms-ai-agent-id: <agentId>`（默认：`main`）
+- `x-dryads-ai-agent-id: <agentId>`（默认：`main`）
 
 高级：
 
-- `x-dmms-ai-session-key: <sessionKey>` 完全控制会话路由。
+- `x-dryads-ai-session-key: <sessionKey>` 完全控制会话路由。
 
 ## 启用端点
 
@@ -295,9 +295,9 @@ URL 获取默认值：
 curl -sS http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-dmms-ai-agent-id: main' \
+  -H 'x-dryads-ai-agent-id: main' \
   -d '{
-    "model": "dmms-ai",
+    "model": "dryads-ai",
     "input": "hi"
   }'
 ```
@@ -308,9 +308,9 @@ curl -sS http://127.0.0.1:18789/v1/responses \
 curl -N http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-dmms-ai-agent-id: main' \
+  -H 'x-dryads-ai-agent-id: main' \
   -d '{
-    "model": "dmms-ai",
+    "model": "dryads-ai",
     "stream": true,
     "input": "hi"
   }'

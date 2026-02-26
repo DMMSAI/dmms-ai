@@ -24,27 +24,27 @@ function isBatchSafe(value: string): boolean {
 }
 
 function resolveSystemdUnit(env: NodeJS.ProcessEnv): string {
-  const override = env.DMMS_AI_SYSTEMD_UNIT?.trim();
+  const override = env.DRYADS_AI_SYSTEMD_UNIT?.trim();
   if (override) {
     return override.endsWith(".service") ? override : `${override}.service`;
   }
-  return `${resolveGatewaySystemdServiceName(env.DMMS_AI_PROFILE)}.service`;
+  return `${resolveGatewaySystemdServiceName(env.DRYADS_AI_PROFILE)}.service`;
 }
 
 function resolveLaunchdLabel(env: NodeJS.ProcessEnv): string {
-  const override = env.DMMS_AI_LAUNCHD_LABEL?.trim();
+  const override = env.DRYADS_AI_LAUNCHD_LABEL?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayLaunchAgentLabel(env.DMMS_AI_PROFILE);
+  return resolveGatewayLaunchAgentLabel(env.DRYADS_AI_PROFILE);
 }
 
 function resolveWindowsTaskName(env: NodeJS.ProcessEnv): string {
-  const override = env.DMMS_AI_WINDOWS_TASK_NAME?.trim();
+  const override = env.DRYADS_AI_WINDOWS_TASK_NAME?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayWindowsTaskName(env.DMMS_AI_PROFILE);
+  return resolveGatewayWindowsTaskName(env.DRYADS_AI_PROFILE);
 }
 
 /**
@@ -67,7 +67,7 @@ export async function prepareRestartScript(
     if (platform === "linux") {
       const unitName = resolveSystemdUnit(env);
       const escaped = shellEscape(unitName);
-      filename = `dmms-ai-restart-${timestamp}.sh`;
+      filename = `dryads-ai-restart-${timestamp}.sh`;
       scriptContent = `#!/bin/sh
 # Standalone restart script — survives parent process termination.
 # Wait briefly to ensure file locks are released after update.
@@ -81,7 +81,7 @@ rm -f "$0"
       const escaped = shellEscape(label);
       // Fallback to 501 if getuid is not available (though it should be on macOS)
       const uid = process.getuid ? process.getuid() : 501;
-      filename = `dmms-ai-restart-${timestamp}.sh`;
+      filename = `dryads-ai-restart-${timestamp}.sh`;
       scriptContent = `#!/bin/sh
 # Standalone restart script — survives parent process termination.
 # Wait briefly to ensure file locks are released after update.
@@ -95,7 +95,7 @@ rm -f "$0"
       if (!isBatchSafe(taskName)) {
         return null;
       }
-      filename = `dmms-ai-restart-${timestamp}.bat`;
+      filename = `dryads-ai-restart-${timestamp}.bat`;
       scriptContent = `@echo off
 REM Standalone restart script — survives parent process termination.
 REM Wait briefly to ensure file locks are released after update.

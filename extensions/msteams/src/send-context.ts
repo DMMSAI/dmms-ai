@@ -1,8 +1,8 @@
 import {
   resolveChannelMediaMaxBytes,
-  type DmmsAiConfig,
+  type DryadsAiConfig,
   type PluginRuntime,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import type {
@@ -92,7 +92,7 @@ async function findConversationReference(recipient: {
 }
 
 export async function resolveMSTeamsSendContext(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   to: string;
 }): Promise<MSTeamsProactiveContext> {
   const msteamsCfg = params.cfg.channels?.msteams;

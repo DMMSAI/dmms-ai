@@ -1,6 +1,6 @@
 import CoreImage
 import Combine
-import DmmsAiKit
+import DryadsAiKit
 import PhotosUI
 import SwiftUI
 import UIKit
@@ -304,7 +304,7 @@ struct OnboardingWizardView: View {
                 .font(.largeTitle.weight(.bold))
                 .padding(.bottom, 8)
 
-            Text("Connect to your DMMS AI gateway")
+            Text("Connect to your Dryads AI gateway")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -542,14 +542,14 @@ struct OnboardingWizardView: View {
                         if let id = self.issue.requestId, !id.isEmpty {
                             return "Request ID: \(id)"
                         }
-                        return "Request ID: check `dmms-ai devices list`."
+                        return "Request ID: check `dryads-ai devices list`."
                     }()
                     Text(
                         "Approve this device on the gateway.\n"
-                            + "1) `dmms-ai devices approve` (or `dmms-ai devices approve <requestId>`)\n"
+                            + "1) `dryads-ai devices approve` (or `dryads-ai devices approve <requestId>`)\n"
                             + "2) `/pair approve` in Telegram\n"
                             + "\(requestLine)\n"
-                            + "DMMS AI will also retry automatically when you return to this app.")
+                            + "Dryads AI will also retry automatically when you return to this app.")
                 }
             }
 
@@ -606,7 +606,7 @@ struct OnboardingWizardView: View {
             Button {
                 self.onClose()
             } label: {
-                Text("Open DMMS AI")
+                Text("Open Dryads AI")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -747,12 +747,12 @@ struct OnboardingWizardView: View {
                     self.manualPort = port
                     self.manualTLS = useTLS
                 case .discovered:
-                    self.manualHost = "dmms-ai.local"
+                    self.manualHost = "dryads-ai.local"
                     self.manualPort = 18789
                     self.manualTLS = true
                 }
             } else {
-                self.manualHost = "dmms-ai.local"
+                self.manualHost = "dryads-ai.local"
                 self.manualPort = 18789
                 self.manualTLS = true
             }
@@ -761,7 +761,7 @@ struct OnboardingWizardView: View {
         if self.selectedMode == nil {
             self.selectedMode = OnboardingStateStore.lastMode()
         }
-        if self.selectedMode == .developerLocal && self.manualHost == "dmms-ai.local" {
+        if self.selectedMode == .developerLocal && self.manualHost == "dryads-ai.local" {
             self.manualHost = "localhost"
             self.manualTLS = false
         }
@@ -816,15 +816,15 @@ struct OnboardingWizardView: View {
 
     private func applyModeDefaults(_ mode: OnboardingConnectionMode) {
         let host = self.manualHost.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let hostIsDefaultLike = host.isEmpty || host == "dmms-ai.local" || host == "localhost"
+        let hostIsDefaultLike = host.isEmpty || host == "dryads-ai.local" || host == "localhost"
 
         switch mode {
         case .homeNetwork:
-            if hostIsDefaultLike { self.manualHost = "dmms-ai.local" }
+            if hostIsDefaultLike { self.manualHost = "dryads-ai.local" }
             self.manualTLS = true
             if self.manualPort <= 0 || self.manualPort > 65535 { self.manualPort = 18789 }
         case .remoteDomain:
-            if host == "dmms-ai.local" || host == "localhost" { self.manualHost = "" }
+            if host == "dryads-ai.local" || host == "localhost" { self.manualHost = "" }
             self.manualTLS = true
             if self.manualPort <= 0 || self.manualPort > 65535 { self.manualPort = 18789 }
         case .developerLocal:

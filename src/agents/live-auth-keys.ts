@@ -1,7 +1,7 @@
 import { normalizeProviderId } from "./model-selection.js";
 
 const KEY_SPLIT_RE = /[\s,;]+/g;
-const GOOGLE_LIVE_SINGLE_KEY = "DMMS_AI_LIVE_GEMINI_KEY";
+const GOOGLE_LIVE_SINGLE_KEY = "DRYADS_AI_LIVE_GEMINI_KEY";
 
 const PROVIDER_PREFIX_OVERRIDES: Record<string, string> = {
   google: "GEMINI",
@@ -18,8 +18,8 @@ type ProviderApiKeyConfig = {
 
 const PROVIDER_API_KEY_CONFIG: Record<string, Omit<ProviderApiKeyConfig, "fallbackVars">> = {
   anthropic: {
-    liveSingle: "DMMS_AI_LIVE_ANTHROPIC_KEY",
-    listVar: "DMMS_AI_LIVE_ANTHROPIC_KEYS",
+    liveSingle: "DRYADS_AI_LIVE_ANTHROPIC_KEY",
+    listVar: "DRYADS_AI_LIVE_ANTHROPIC_KEYS",
     primaryVar: "ANTHROPIC_API_KEY",
     prefixedVar: "ANTHROPIC_API_KEY_",
   },
@@ -36,7 +36,7 @@ const PROVIDER_API_KEY_CONFIG: Record<string, Omit<ProviderApiKeyConfig, "fallba
     prefixedVar: "GEMINI_API_KEY_",
   },
   openai: {
-    liveSingle: "DMMS_AI_LIVE_OPENAI_KEY",
+    liveSingle: "DRYADS_AI_LIVE_OPENAI_KEY",
     listVar: "OPENAI_API_KEYS",
     primaryVar: "OPENAI_API_KEY",
     prefixedVar: "OPENAI_API_KEY_",
@@ -73,7 +73,7 @@ function resolveProviderApiKeyConfig(provider: string): ProviderApiKeyConfig {
   const custom = PROVIDER_API_KEY_CONFIG[normalized];
   const base = PROVIDER_PREFIX_OVERRIDES[normalized] ?? normalized.toUpperCase().replace(/-/g, "_");
 
-  const liveSingle = custom?.liveSingle ?? `DMMS_AI_LIVE_${base}_KEY`;
+  const liveSingle = custom?.liveSingle ?? `DRYADS_AI_LIVE_${base}_KEY`;
   const listVar = custom?.listVar ?? `${base}_API_KEYS`;
   const primaryVar = custom?.primaryVar ?? `${base}_API_KEY`;
   const prefixedVar = custom?.prefixedVar ?? `${base}_API_KEY_`;

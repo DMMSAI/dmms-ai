@@ -246,12 +246,12 @@ describe("resolveConfigEnvVars", () => {
       const config = {
         gateway: {
           auth: {
-            token: "${DMMS_AI_GATEWAY_TOKEN}",
+            token: "${DRYADS_AI_GATEWAY_TOKEN}",
           },
         },
       };
       const result = resolveConfigEnvVars(config, {
-        DMMS_AI_GATEWAY_TOKEN: "secret-token",
+        DRYADS_AI_GATEWAY_TOKEN: "secret-token",
       });
       expect(result).toEqual({
         gateway: {

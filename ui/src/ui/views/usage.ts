@@ -519,7 +519,7 @@ export function renderUsage(props: UsageProps) {
                   class="usage-export-item"
                   @click=${() =>
                     downloadTextFile(
-                      `dmms-ai-usage-sessions-${exportStamp}.csv`,
+                      `dryads-ai-usage-sessions-${exportStamp}.csv`,
                       buildSessionsCsv(filteredSessions),
                       "text/csv",
                     )}
@@ -531,7 +531,7 @@ export function renderUsage(props: UsageProps) {
                   class="usage-export-item"
                   @click=${() =>
                     downloadTextFile(
-                      `dmms-ai-usage-daily-${exportStamp}.csv`,
+                      `dryads-ai-usage-daily-${exportStamp}.csv`,
                       buildDailyCsv(filteredDaily),
                       "text/csv",
                     )}
@@ -543,7 +543,7 @@ export function renderUsage(props: UsageProps) {
                   class="usage-export-item"
                   @click=${() =>
                     downloadTextFile(
-                      `dmms-ai-usage-${exportStamp}.json`,
+                      `dryads-ai-usage-${exportStamp}.json`,
                       JSON.stringify(
                         {
                           totals: displayTotals,

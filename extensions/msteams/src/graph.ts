@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "dmms-ai/plugin-sdk";
+import type { MSTeamsConfig } from "dryads-ai/plugin-sdk";
 import { GRAPH_ROOT } from "./attachments/shared.js";
 import { loadMSTeamsSdkWithAuth } from "./sdk.js";
 import { resolveMSTeamsCredentials } from "./token.js";

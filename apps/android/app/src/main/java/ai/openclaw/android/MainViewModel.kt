@@ -1,13 +1,13 @@
-package ai.dmmsai.android
+package ai.dryadsai.android
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import ai.dmmsai.android.gateway.GatewayEndpoint
-import ai.dmmsai.android.chat.OutgoingAttachment
-import ai.dmmsai.android.node.CameraCaptureManager
-import ai.dmmsai.android.node.CanvasController
-import ai.dmmsai.android.node.ScreenRecordManager
-import ai.dmmsai.android.node.SmsManager
+import ai.dryadsai.android.gateway.GatewayEndpoint
+import ai.dryadsai.android.chat.OutgoingAttachment
+import ai.dryadsai.android.node.CameraCaptureManager
+import ai.dryadsai.android.node.CanvasController
+import ai.dryadsai.android.node.ScreenRecordManager
+import ai.dryadsai.android.node.SmsManager
 import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {

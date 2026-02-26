@@ -1,13 +1,13 @@
 ---
 title: "Configuration Reference"
-description: "Complete field-by-field reference for ~/.dmms-ai/dmms-ai.json"
+description: "Complete field-by-field reference for ~/.dryads-ai/dryads-ai.json"
 ---
 
 # Configuration Reference
 
-Every field available in `~/.dmms-ai/dmms-ai.json`. For a task-oriented overview, see [Configuration](/gateway/configuration).
+Every field available in `~/.dryads-ai/dryads-ai.json`. For a task-oriented overview, see [Configuration](/gateway/configuration).
 
-Config format is **JSON5** (comments + trailing commas allowed). All fields are optional — DMMS AI uses safe defaults when omitted.
+Config format is **JSON5** (comments + trailing commas allowed). All fields are optional — Dryads AI uses safe defaults when omitted.
 
 ---
 
@@ -83,7 +83,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
         default: {},
         personal: {},
         biz: {
-          // authDir: "~/.dmms-ai/credentials/whatsapp/biz",
+          // authDir: "~/.dryads-ai/credentials/whatsapp/biz",
         },
       },
     },
@@ -92,7 +92,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 ```
 
 - Outbound commands default to account `default` if present; otherwise the first configured account id (sorted).
-- Legacy single-account Baileys auth dir is migrated by `dmms-ai doctor` into `whatsapp/default`.
+- Legacy single-account Baileys auth dir is migrated by `dryads-ai doctor` into `whatsapp/default`.
 - Per-account overrides: `channels.whatsapp.accounts.<id>.sendReadReceipts`, `channels.whatsapp.accounts.<id>.dmPolicy`, `channels.whatsapp.accounts.<id>.allowFrom`.
 
 </Accordion>
@@ -188,10 +188,10 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
       replyToMode: "off", // off | first | all
       dmPolicy: "pairing",
       allowFrom: ["1234567890", "steipete"],
-      dm: { enabled: true, groupEnabled: false, groupChannels: ["dmms-ai-dm"] },
+      dm: { enabled: true, groupEnabled: false, groupChannels: ["dryads-ai-dm"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-dmms-ai",
+          slug: "friends-of-dryads-ai",
           requireMention: false,
           reactionNotifications: "own",
           users: ["987654321098765432"],
@@ -310,7 +310,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
       },
       slashCommand: {
         enabled: true,
-        name: "dmms-ai",
+        name: "dryads-ai",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -341,7 +341,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 
 ### Mattermost
 
-Mattermost ships as a plugin: `dmms-ai plugins install @dmms-ai/mattermost`.
+Mattermost ships as a plugin: `dryads-ai plugins install @dryads-ai/mattermost`.
 
 ```json5
 {
@@ -380,7 +380,7 @@ Chat modes: `oncall` (respond on @-mention, default), `onmessage` (every message
 
 ### iMessage
 
-DMMS AI spawns `imsg rpc` (JSON-RPC over stdio). No daemon or port required.
+Dryads AI spawns `imsg rpc` (JSON-RPC over stdio). No daemon or port required.
 
 ```json5
 {
@@ -459,7 +459,7 @@ Group messages default to **require mention** (metadata mention or regex pattern
     groupChat: { historyLimit: 50 },
   },
   agents: {
-    list: [{ id: "main", groupChat: { mentionPatterns: ["@dmms-ai", "dmms-ai"] } }],
+    list: [{ id: "main", groupChat: { mentionPatterns: ["@dryads-ai", "dryads-ai"] } }],
   },
 }
 ```
@@ -501,7 +501,7 @@ Include your own number in `allowFrom` to enable self-chat mode (ignores native 
     list: [
       {
         id: "main",
-        groupChat: { mentionPatterns: ["reisponde", "@dmms-ai"] },
+        groupChat: { mentionPatterns: ["reisponde", "@dryads-ai"] },
       },
     ],
   },
@@ -536,7 +536,7 @@ Include your own number in `allowFrom` to enable self-chat mode (ignores native 
 - Override per channel: `channels.discord.commands.native` (bool or `"auto"`). `false` clears previously registered commands.
 - `channels.telegram.customCommands` adds extra Telegram bot menu entries.
 - `bash: true` enables `! <cmd>` for host shell. Requires `tools.elevated.enabled` and sender in `tools.elevated.allowFrom.<channel>`.
-- `config: true` enables `/config` (reads/writes `dmms-ai.json`).
+- `config: true` enables `/config` (reads/writes `dryads-ai.json`).
 - `channels.<provider>.configWrites` gates config mutations per channel (default: true).
 - `allowFrom` is per-provider. When set, it is the **only** authorization source (channel allowlists/pairing and `useAccessGroups` are ignored).
 - `useAccessGroups: false` allows commands to bypass access-group policies when `allowFrom` is not set.
@@ -549,21 +549,21 @@ Include your own number in `allowFrom` to enable self-chat mode (ignores native 
 
 ### `agents.defaults.workspace`
 
-Default: `~/.dmms-ai/workspace`.
+Default: `~/.dryads-ai/workspace`.
 
 ```json5
 {
-  agents: { defaults: { workspace: "~/.dmms-ai/workspace" } },
+  agents: { defaults: { workspace: "~/.dryads-ai/workspace" } },
 }
 ```
 
 ### `agents.defaults.repoRoot`
 
-Optional repository root shown in the system prompt's Runtime line. If unset, DMMS AI auto-detects by walking upward from the workspace.
+Optional repository root shown in the system prompt's Runtime line. If unset, Dryads AI auto-detects by walking upward from the workspace.
 
 ```json5
 {
-  agents: { defaults: { repoRoot: "~/Projects/dmms-ai" } },
+  agents: { defaults: { repoRoot: "~/Projects/dryads-ai" } },
 }
 ```
 
@@ -661,7 +661,7 @@ Time format in system prompt. Default: `auto` (OS preference).
 }
 ```
 
-- `model.primary`: format `provider/model` (e.g. `anthropic/claude-opus-4-6`). If you omit the provider, DMMS AI assumes `anthropic` (deprecated).
+- `model.primary`: format `provider/model` (e.g. `anthropic/claude-opus-4-6`). If you omit the provider, Dryads AI assumes `anthropic` (deprecated).
 - `models`: the configured model catalog and allowlist for `/model`. Each entry can include `alias` (shortcut) and `params` (provider-specific: `temperature`, `maxTokens`).
 - `imageModel`: only used if the primary model lacks image input.
 - `maxConcurrent`: max parallel agent runs across sessions (each session still serialized). Default: 1.
@@ -865,10 +865,10 @@ Optional **Docker sandboxing** for the embedded agent. See [Sandboxing](/gateway
         mode: "non-main", // off | non-main | all
         scope: "agent", // session | agent | shared
         workspaceAccess: "none", // none | ro | rw
-        workspaceRoot: "~/.dmms-ai/sandboxes",
+        workspaceRoot: "~/.dryads-ai/sandboxes",
         docker: {
-          image: "dmms-ai-sandbox:bookworm-slim",
-          containerPrefix: "dmms-ai-sbx-",
+          image: "dryads-ai-sandbox:bookworm-slim",
+          containerPrefix: "dryads-ai-sbx-",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -886,14 +886,14 @@ Optional **Docker sandboxing** for the embedded agent. See [Sandboxing](/gateway
             nproc: 256,
           },
           seccompProfile: "/path/to/seccomp.json",
-          apparmorProfile: "dmms-ai-sandbox",
+          apparmorProfile: "dryads-ai-sandbox",
           dns: ["1.1.1.1", "8.8.8.8"],
           extraHosts: ["internal.service:10.0.0.5"],
           binds: ["/home/user/source:/source:rw"],
         },
         browser: {
           enabled: false,
-          image: "dmms-ai-sandbox-browser:bookworm-slim",
+          image: "dryads-ai-sandbox-browser:bookworm-slim",
           cdpPort: 9222,
           vncPort: 5900,
           noVncPort: 6080,
@@ -937,7 +937,7 @@ Optional **Docker sandboxing** for the embedded agent. See [Sandboxing](/gateway
 
 **Workspace access:**
 
-- `none`: per-scope sandbox workspace under `~/.dmms-ai/sandboxes`
+- `none`: per-scope sandbox workspace under `~/.dryads-ai/sandboxes`
 - `ro`: sandbox workspace at `/workspace`, agent workspace mounted read-only at `/agent`
 - `rw`: agent workspace mounted read/write at `/workspace`
 
@@ -979,8 +979,8 @@ scripts/sandbox-browser-setup.sh   # optional browser image
         id: "main",
         default: true,
         name: "Main Agent",
-        workspace: "~/.dmms-ai/workspace",
-        agentDir: "~/.dmms-ai/agents/main/agent",
+        workspace: "~/.dryads-ai/workspace",
+        agentDir: "~/.dryads-ai/agents/main/agent",
         model: "anthropic/claude-opus-4-6", // or { primary, fallbacks }
         identity: {
           name: "Samantha",
@@ -988,7 +988,7 @@ scripts/sandbox-browser-setup.sh   # optional browser image
           emoji: "🦥",
           avatar: "avatars/samantha.png",
         },
-        groupChat: { mentionPatterns: ["@dmms-ai"] },
+        groupChat: { mentionPatterns: ["@dryads-ai"] },
         sandbox: { mode: "off" },
         subagents: { allowAgents: ["*"] },
         tools: {
@@ -1020,8 +1020,8 @@ Run multiple isolated agents inside one Gateway. See [Multi-Agent](/concepts/mul
 {
   agents: {
     list: [
-      { id: "home", default: true, workspace: "~/.dmms-ai/workspace-home" },
-      { id: "work", workspace: "~/.dmms-ai/workspace-work" },
+      { id: "home", default: true, workspace: "~/.dryads-ai/workspace-home" },
+      { id: "work", workspace: "~/.dryads-ai/workspace-work" },
     ],
   },
   bindings: [
@@ -1059,7 +1059,7 @@ Within each tier, the first matching `bindings` entry wins.
     list: [
       {
         id: "personal",
-        workspace: "~/.dmms-ai/workspace-personal",
+        workspace: "~/.dryads-ai/workspace-personal",
         sandbox: { mode: "off" },
       },
     ],
@@ -1077,7 +1077,7 @@ Within each tier, the first matching `bindings` entry wins.
     list: [
       {
         id: "family",
-        workspace: "~/.dmms-ai/workspace-family",
+        workspace: "~/.dryads-ai/workspace-family",
         sandbox: { mode: "all", scope: "agent", workspaceAccess: "ro" },
         tools: {
           allow: [
@@ -1106,7 +1106,7 @@ Within each tier, the first matching `bindings` entry wins.
     list: [
       {
         id: "public",
-        workspace: "~/.dmms-ai/workspace-public",
+        workspace: "~/.dryads-ai/workspace-public",
         sandbox: { mode: "all", scope: "agent", workspaceAccess: "none" },
         tools: {
           allow: [
@@ -1169,7 +1169,7 @@ See [Multi-Agent Sandbox & Tools](/tools/multi-agent-sandbox-tools) for preceden
       group: { mode: "idle", idleMinutes: 120 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.dmms-ai/agents/{agentId}/sessions/sessions.json",
+    store: "~/.dryads-ai/agents/{agentId}/sessions/sessions.json",
     maintenance: {
       mode: "warn", // warn | enforce
       pruneAfter: "30d",
@@ -1277,7 +1277,7 @@ Batches rapid text-only messages from the same sender into a single agent turn. 
       modelOverrides: { enabled: true },
       maxTextLength: 4000,
       timeoutMs: 30000,
-      prefsPath: "~/.dmms-ai/settings/tts.json",
+      prefsPath: "~/.dryads-ai/settings/tts.json",
       elevenlabs: {
         apiKey: "elevenlabs_api_key",
         baseUrl: "https://api.elevenlabs.io",
@@ -1362,7 +1362,7 @@ Defaults for Talk mode (macOS/iOS/Android).
 | `group:automation` | `cron`, `gateway`                                                                        |
 | `group:messaging`  | `message`                                                                                |
 | `group:nodes`      | `nodes`                                                                                  |
-| `group:dmms-ai`    | All built-in tools (excludes provider plugins)                                           |
+| `group:dryads-ai`  | All built-in tools (excludes provider plugins)                                           |
 
 ### `tools.allow` / `tools.deny`
 
@@ -1606,7 +1606,7 @@ Notes:
 
 ## Custom providers and base URLs
 
-DMMS AI uses the pi-coding-agent model catalog. Add custom providers via `models.providers` in config or `~/.dmms-ai/agents/<agentId>/agent/models.json`.
+Dryads AI uses the pi-coding-agent model catalog. Add custom providers via `models.providers` in config or `~/.dryads-ai/agents/<agentId>/agent/models.json`.
 
 ```json5
 {
@@ -1635,7 +1635,7 @@ DMMS AI uses the pi-coding-agent model catalog. Add custom providers via `models
 ```
 
 - Use `authHeader: true` + `headers` for custom auth needs.
-- Override agent config root with `DMMS_AI_AGENT_DIR` (or `PI_CODING_AGENT_DIR`).
+- Override agent config root with `DRYADS_AI_AGENT_DIR` (or `PI_CODING_AGENT_DIR`).
 
 ### Provider examples
 
@@ -1690,7 +1690,7 @@ Use `cerebras/zai-glm-4.7` for Cerebras; `zai/glm-4.7` for Z.AI direct.
 }
 ```
 
-Set `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`). Shortcut: `dmms-ai onboard --auth-choice opencode-zen`.
+Set `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`). Shortcut: `dryads-ai onboard --auth-choice opencode-zen`.
 
 </Accordion>
 
@@ -1707,7 +1707,7 @@ Set `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`). Shortcut: `dmms-ai onboard -
 }
 ```
 
-Set `ZAI_API_KEY`. `z.ai/*` and `z-ai/*` are accepted aliases. Shortcut: `dmms-ai onboard --auth-choice zai-api-key`.
+Set `ZAI_API_KEY`. `z.ai/*` and `z-ai/*` are accepted aliases. Shortcut: `dryads-ai onboard --auth-choice zai-api-key`.
 
 - General endpoint: `https://api.z.ai/api/paas/v4`
 - Coding endpoint (default): `https://api.z.ai/api/coding/paas/v4`
@@ -1750,7 +1750,7 @@ Set `ZAI_API_KEY`. `z.ai/*` and `z-ai/*` are accepted aliases. Shortcut: `dmms-a
 }
 ```
 
-For the China endpoint: `baseUrl: "https://api.moonshot.cn/v1"` or `dmms-ai onboard --auth-choice moonshot-api-key-cn`.
+For the China endpoint: `baseUrl: "https://api.moonshot.cn/v1"` or `dryads-ai onboard --auth-choice moonshot-api-key-cn`.
 
 </Accordion>
 
@@ -1768,7 +1768,7 @@ For the China endpoint: `baseUrl: "https://api.moonshot.cn/v1"` or `dmms-ai onbo
 }
 ```
 
-Anthropic-compatible, built-in provider. Shortcut: `dmms-ai onboard --auth-choice kimi-code-api-key`.
+Anthropic-compatible, built-in provider. Shortcut: `dryads-ai onboard --auth-choice kimi-code-api-key`.
 
 </Accordion>
 
@@ -1807,7 +1807,7 @@ Anthropic-compatible, built-in provider. Shortcut: `dmms-ai onboard --auth-choic
 }
 ```
 
-Base URL should omit `/v1` (Anthropic client appends it). Shortcut: `dmms-ai onboard --auth-choice synthetic-api-key`.
+Base URL should omit `/v1` (Anthropic client appends it). Shortcut: `dryads-ai onboard --auth-choice synthetic-api-key`.
 
 </Accordion>
 
@@ -1847,7 +1847,7 @@ Base URL should omit `/v1` (Anthropic client appends it). Shortcut: `dmms-ai onb
 }
 ```
 
-Set `MINIMAX_API_KEY`. Shortcut: `dmms-ai onboard --auth-choice minimax-api`.
+Set `MINIMAX_API_KEY`. Shortcut: `dryads-ai onboard --auth-choice minimax-api`.
 
 </Accordion>
 
@@ -1911,7 +1911,7 @@ See [Local Models](/gateway/local-models). TL;DR: run MiniMax M2.1 via LM Studio
 }
 ```
 
-- Loaded from `~/.dmms-ai/extensions`, `<workspace>/.dmms-ai/extensions`, plus `plugins.load.paths`.
+- Loaded from `~/.dryads-ai/extensions`, `<workspace>/.dryads-ai/extensions`, plus `plugins.load.paths`.
 - **Config changes require a gateway restart.**
 - `allow`: optional allowlist (only listed plugins load). `deny` wins.
 
@@ -1928,7 +1928,7 @@ See [Plugins](/tools/plugin).
     evaluateEnabled: true,
     defaultProfile: "chrome",
     profiles: {
-      dmms-ai: { cdpPort: 18800, color: "#FF4500" },
+      dryads-ai: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       remote: { cdpUrl: "http://10.0.0.42:9222", color: "#00AA00" },
     },
@@ -1955,7 +1955,7 @@ See [Plugins](/tools/plugin).
   ui: {
     seamColor: "#FF4500",
     assistant: {
-      name: "DMMS AI",
+      name: "Dryads AI",
       avatar: "CB", // emoji, short text, image URL, or data URI
     },
   },
@@ -1978,7 +1978,7 @@ See [Plugins](/tools/plugin).
     auth: {
       mode: "token", // token | password | trusted-proxy
       token: "your-token",
-      // password: "your-password", // or DMMS_AI_GATEWAY_PASSWORD
+      // password: "your-password", // or DRYADS_AI_GATEWAY_PASSWORD
       // trustedProxy: { userHeader: "x-forwarded-user" }, // for mode=trusted-proxy; see /gateway/trusted-proxy-auth
       allowTailscale: true,
       rateLimit: {
@@ -1994,7 +1994,7 @@ See [Plugins](/tools/plugin).
     },
     controlUi: {
       enabled: true,
-      basePath: "/dmms-ai",
+      basePath: "/dryads-ai",
       // root: "dist/control-ui",
       // allowInsecureAuth: false,
       // dangerouslyDisableDeviceAuth: false,
@@ -2019,7 +2019,7 @@ See [Plugins](/tools/plugin).
 <Accordion title="Gateway field details">
 
 - `mode`: `local` (run gateway) or `remote` (connect to remote gateway). Gateway refuses to start unless `local`.
-- `port`: single multiplexed port for WS + HTTP. Precedence: `--port` > `DMMS_AI_GATEWAY_PORT` > `gateway.port` > `18789`.
+- `port`: single multiplexed port for WS + HTTP. Precedence: `--port` > `DRYADS_AI_GATEWAY_PORT` > `gateway.port` > `18789`.
 - `bind`: `auto`, `loopback` (default), `lan` (`0.0.0.0`), `tailnet` (Tailscale IP only), or `custom`.
 - **Auth**: required by default. Non-loopback binds require a shared token/password. Onboarding wizard generates a token by default.
 - `auth.mode: "trusted-proxy"`: delegate auth to an identity-aware reverse proxy and trust identity headers from `gateway.trustedProxies` (see [Trusted Proxy Auth](/gateway/trusted-proxy-auth)).
@@ -2049,12 +2049,12 @@ See [Plugins](/tools/plugin).
 Run multiple gateways on one host with unique ports and state dirs:
 
 ```bash
-DMMS_AI_CONFIG_PATH=~/.dmms-ai/a.json \
-DMMS_AI_STATE_DIR=~/.dmms-ai-a \
-dmms-ai gateway --port 19001
+DRYADS_AI_CONFIG_PATH=~/.dryads-ai/a.json \
+DRYADS_AI_STATE_DIR=~/.dryads-ai-a \
+dryads-ai gateway --port 19001
 ```
 
-Convenience flags: `--dev` (uses `~/.dmms-ai-dev` + port `19001`), `--profile <name>` (uses `~/.dmms-ai-<name>`).
+Convenience flags: `--dev` (uses `~/.dryads-ai-dev` + port `19001`), `--profile <name>` (uses `~/.dryads-ai-<name>`).
 
 See [Multiple Gateways](/gateway/multiple-gateways).
 
@@ -2074,7 +2074,7 @@ See [Multiple Gateways](/gateway/multiple-gateways).
     allowedSessionKeyPrefixes: ["hook:"],
     allowedAgentIds: ["hooks", "main"],
     presets: ["gmail"],
-    transformsDir: "~/.dmms-ai/hooks/transforms",
+    transformsDir: "~/.dryads-ai/hooks/transforms",
     mappings: [
       {
         match: { path: "gmail" },
@@ -2093,7 +2093,7 @@ See [Multiple Gateways](/gateway/multiple-gateways).
 }
 ```
 
-Auth: `Authorization: Bearer <token>` or `x-dmms-ai-token: <token>`.
+Auth: `Authorization: Bearer <token>` or `x-dryads-ai-token: <token>`.
 
 **Endpoints:**
 
@@ -2125,7 +2125,7 @@ Auth: `Authorization: Bearer <token>` or `x-dmms-ai-token: <token>`.
 {
   hooks: {
     gmail: {
-      account: "dmms-ai@gmail.com",
+      account: "dryads-ai@gmail.com",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
       pushToken: "shared-push-token",
@@ -2142,7 +2142,7 @@ Auth: `Authorization: Bearer <token>` or `x-dmms-ai-token: <token>`.
 }
 ```
 
-- Gateway auto-starts `gog gmail watch serve` on boot when configured. Set `DMMS_AI_SKIP_GMAIL_WATCHER=1` to disable.
+- Gateway auto-starts `gog gmail watch serve` on boot when configured. Set `DRYADS_AI_SKIP_GMAIL_WATCHER=1` to disable.
 - Don't run a separate `gog gmail watch serve` alongside the Gateway.
 
 ---
@@ -2152,22 +2152,22 @@ Auth: `Authorization: Bearer <token>` or `x-dmms-ai-token: <token>`.
 ```json5
 {
   canvasHost: {
-    root: "~/.dmms-ai/workspace/canvas",
+    root: "~/.dryads-ai/workspace/canvas",
     liveReload: true,
-    // enabled: false, // or DMMS_AI_SKIP_CANVAS_HOST=1
+    // enabled: false, // or DRYADS_AI_SKIP_CANVAS_HOST=1
   },
 }
 ```
 
 - Serves agent-editable HTML/CSS/JS and A2UI over HTTP under the Gateway port:
-  - `http://<gateway-host>:<gateway.port>/__dmmsai__/canvas/`
-  - `http://<gateway-host>:<gateway.port>/__dmmsai__/a2ui/`
+  - `http://<gateway-host>:<gateway.port>/__dryadsai__/canvas/`
+  - `http://<gateway-host>:<gateway.port>/__dryadsai__/a2ui/`
 - Local-only: keep `gateway.bind: "loopback"` (default).
 - Non-loopback binds: canvas routes require Gateway auth (token/password/trusted-proxy), same as other Gateway HTTP surfaces.
 - Node WebViews typically don't send auth headers; after a node is paired and connected, the Gateway allows a private-IP fallback so the node can load canvas/A2UI without leaking secrets into URLs.
 - Injects live-reload client into served HTML.
 - Auto-creates starter `index.html` when empty.
-- Also serves A2UI at `/__dmmsai__/a2ui/`.
+- Also serves A2UI at `/__dryadsai__/a2ui/`.
 - Changes require a gateway restart.
 - Disable live reload for large directories or `EMFILE` errors.
 
@@ -2189,7 +2189,7 @@ Auth: `Authorization: Bearer <token>` or `x-dmms-ai-token: <token>`.
 
 - `minimal` (default): omit `cliPath` + `sshPort` from TXT records.
 - `full`: include `cliPath` + `sshPort`.
-- Hostname defaults to `dmms-ai`. Override with `DMMS_AI_MDNS_HOSTNAME`.
+- Hostname defaults to `dryads-ai`. Override with `DRYADS_AI_MDNS_HOSTNAME`.
 
 ### Wide-area (DNS-SD)
 
@@ -2201,9 +2201,9 @@ Auth: `Authorization: Bearer <token>` or `x-dmms-ai-token: <token>`.
 }
 ```
 
-Writes a unicast DNS-SD zone under `~/.dmms-ai/dns/`. For cross-network discovery, pair with a DNS server (CoreDNS recommended) + Tailscale split DNS.
+Writes a unicast DNS-SD zone under `~/.dryads-ai/dns/`. For cross-network discovery, pair with a DNS server (CoreDNS recommended) + Tailscale split DNS.
 
-Setup: `dmms-ai dns setup --apply`.
+Setup: `dryads-ai dns setup --apply`.
 
 ---
 
@@ -2227,7 +2227,7 @@ Setup: `dmms-ai dns setup --apply`.
 ```
 
 - Inline env vars are only applied if the process env is missing the key.
-- `.env` files: CWD `.env` + `~/.dmms-ai/.env` (neither overrides existing vars).
+- `.env` files: CWD `.env` + `~/.dryads-ai/.env` (neither overrides existing vars).
 - `shellEnv`: imports missing expected keys from your login shell profile.
 - See [Environment](/help/environment) for full precedence.
 
@@ -2238,7 +2238,7 @@ Reference env vars in any config string with `${VAR_NAME}`:
 ```json5
 {
   gateway: {
-    auth: { token: "${DMMS_AI_GATEWAY_TOKEN}" },
+    auth: { token: "${DRYADS_AI_GATEWAY_TOKEN}" },
   },
 }
 ```
@@ -2267,7 +2267,7 @@ Reference env vars in any config string with `${VAR_NAME}`:
 ```
 
 - Per-agent auth profiles stored at `<agentDir>/auth-profiles.json`.
-- Legacy OAuth imports from `~/.dmms-ai/credentials/oauth.json`.
+- Legacy OAuth imports from `~/.dryads-ai/credentials/oauth.json`.
 - See [OAuth](/concepts/oauth).
 
 ---
@@ -2278,7 +2278,7 @@ Reference env vars in any config string with `${VAR_NAME}`:
 {
   logging: {
     level: "info",
-    file: "/tmp/dmms-ai/dmms-ai.log",
+    file: "/tmp/dryads-ai/dryads-ai.log",
     consoleLevel: "info",
     consoleStyle: "pretty", // pretty | compact | json
     redactSensitive: "tools", // off | tools
@@ -2287,7 +2287,7 @@ Reference env vars in any config string with `${VAR_NAME}`:
 }
 ```
 
-- Default log file: `/tmp/dmms-ai/dmms-ai-YYYY-MM-DD.log`.
+- Default log file: `/tmp/dryads-ai/dryads-ai-YYYY-MM-DD.log`.
 - Set `logging.file` for a stable path.
 - `consoleLevel` bumps to `debug` when `--verbose`.
 
@@ -2341,7 +2341,7 @@ Written by the macOS onboarding assistant. Derives defaults:
 
 ## Bridge (legacy, removed)
 
-Current builds no longer include the TCP bridge. Nodes connect over the Gateway WebSocket. `bridge.*` keys are no longer part of the config schema (validation fails until removed; `dmms-ai doctor --fix` can strip unknown keys).
+Current builds no longer include the TCP bridge. Nodes connect over the Gateway WebSocket. `bridge.*` keys are no longer part of the config schema (validation fails until removed; `dryads-ai doctor --fix` can strip unknown keys).
 
 <Accordion title="Legacy bridge config (historical reference)">
 
@@ -2419,7 +2419,7 @@ Template placeholders expanded in `tools.media.*.models[].args`:
 Split config into multiple files:
 
 ```json5
-// ~/.dmms-ai/dmms-ai.json
+// ~/.dryads-ai/dryads-ai.json
 {
   gateway: { port: 18789 },
   agents: { $include: "./agents.json5" },

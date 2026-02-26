@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "dmms-ai/plugin-sdk";
+import type { BaseProbeResult } from "dryads-ai/plugin-sdk";
 import { createMatrixClient, isBunRuntime } from "./client.js";
 
 export type MatrixProbe = BaseProbeResult & {

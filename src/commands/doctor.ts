@@ -9,13 +9,13 @@ import {
   resolveHooksGmailModel,
 } from "../agents/model-selection.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { CONFIG_PATH, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
 import { logConfigUpdated } from "../config/logging.js";
 import { resolveGatewayService } from "../daemon/service.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { buildGatewayConnectionDetails } from "../gateway/call.js";
-import { resolveDmmsAiPackageRoot } from "../infra/dmms-ai-root.js";
+import { resolveDryadsAiPackageRoot } from "../infra/dryads-ai-root.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { defaultRuntime } from "../runtime.js";
 import { note } from "../terminal/note.js";
@@ -60,7 +60,7 @@ import { ensureSystemdUserLingerInteractive } from "./systemd-linger.js";
 const intro = (message: string) => clackIntro(stylePromptTitle(message) ?? message);
 const outro = (message: string) => clackOutro(stylePromptTitle(message) ?? message);
 
-function resolveMode(cfg: DmmsAiConfig): "local" | "remote" {
+function resolveMode(cfg: DryadsAiConfig): "local" | "remote" {
   return cfg.gateway?.mode === "remote" ? "remote" : "local";
 }
 
@@ -70,9 +70,9 @@ export async function doctorCommand(
 ) {
   const prompter = createDoctorPrompter({ runtime, options });
   printWizardHeader(runtime);
-  intro("DMMS AI doctor");
+  intro("Dryads AI doctor");
 
-  const root = await resolveDmmsAiPackageRoot({
+  const root = await resolveDryadsAiPackageRoot({
     moduleUrl: import.meta.url,
     argv1: process.argv[1],
     cwd: process.cwd(),
@@ -97,7 +97,7 @@ export async function doctorCommand(
     options,
     confirm: (p) => prompter.confirm(p),
   });
-  let cfg: DmmsAiConfig = configResult.cfg;
+  let cfg: DryadsAiConfig = configResult.cfg;
   const cfgForPersistence = structuredClone(cfg);
   const sourceConfigValid = configResult.sourceConfigValid ?? true;
 
@@ -105,11 +105,11 @@ export async function doctorCommand(
   if (!cfg.gateway?.mode) {
     const lines = [
       "gateway.mode is unset; gateway start will be blocked.",
-      `Fix: run ${formatCliCommand("dmms-ai configure")} and set Gateway mode (local/remote).`,
-      `Or set directly: ${formatCliCommand("dmms-ai config set gateway.mode local")}`,
+      `Fix: run ${formatCliCommand("dryads-ai configure")} and set Gateway mode (local/remote).`,
+      `Or set directly: ${formatCliCommand("dryads-ai config set gateway.mode local")}`,
     ];
     if (!fs.existsSync(configPath)) {
-      lines.push(`Missing config: run ${formatCliCommand("dmms-ai setup")} first.`);
+      lines.push(`Missing config: run ${formatCliCommand("dryads-ai setup")} first.`);
     }
     note(lines.join("\n"), "Gateway");
   }
@@ -296,7 +296,7 @@ export async function doctorCommand(
       runtime.log(`Backup: ${shortenHomePath(backupPath)}`);
     }
   } else {
-    runtime.log(`Run "${formatCliCommand("dmms-ai doctor --fix")}" to apply changes.`);
+    runtime.log(`Run "${formatCliCommand("dryads-ai doctor --fix")}" to apply changes.`);
   }
 
   if (options.workspaceSuggestions !== false) {

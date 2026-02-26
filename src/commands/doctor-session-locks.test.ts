@@ -17,16 +17,16 @@ describe("noteSessionLockHealth", () => {
 
   beforeEach(async () => {
     note.mockReset();
-    prevStateDir = process.env.DMMS_AI_STATE_DIR;
-    root = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-doctor-locks-"));
-    process.env.DMMS_AI_STATE_DIR = root;
+    prevStateDir = process.env.DRYADS_AI_STATE_DIR;
+    root = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-doctor-locks-"));
+    process.env.DRYADS_AI_STATE_DIR = root;
   });
 
   afterEach(async () => {
     if (prevStateDir === undefined) {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     } else {
-      process.env.DMMS_AI_STATE_DIR = prevStateDir;
+      process.env.DRYADS_AI_STATE_DIR = prevStateDir;
     }
     await fs.rm(root, { recursive: true, force: true });
   });

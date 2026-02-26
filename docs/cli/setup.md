@@ -1,14 +1,14 @@
 ---
-summary: "CLI reference for `dmms-ai setup` (initialize config + workspace)"
+summary: "CLI reference for `dryads-ai setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `dmms-ai setup`
+# `dryads-ai setup`
 
-Initialize `~/.dmms-ai/dmms-ai.json` and the agent workspace.
+Initialize `~/.dryads-ai/dryads-ai.json` and the agent workspace.
 
 Related:
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-dmms-ai setup
-dmms-ai setup --workspace ~/.dmms-ai/workspace
+dryads-ai setup
+dryads-ai setup --workspace ~/.dryads-ai/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-dmms-ai setup --wizard
+dryads-ai setup --wizard
 ```

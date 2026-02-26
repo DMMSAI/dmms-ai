@@ -16,7 +16,7 @@ async function makeTempDir(prefix = "case") {
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-archive-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-archive-"));
 });
 
 afterAll(async () => {

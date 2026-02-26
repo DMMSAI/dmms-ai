@@ -1,6 +1,6 @@
-import type { DmmsAiConfig } from "./types.js";
+import type { DryadsAiConfig } from "./types.js";
 
-export function collectConfigEnvVars(cfg?: DmmsAiConfig): Record<string, string> {
+export function collectConfigEnvVars(cfg?: DryadsAiConfig): Record<string, string> {
   const envConfig = cfg?.env;
   if (!envConfig) {
     return {};
@@ -30,7 +30,10 @@ export function collectConfigEnvVars(cfg?: DmmsAiConfig): Record<string, string>
   return entries;
 }
 
-export function applyConfigEnvVars(cfg: DmmsAiConfig, env: NodeJS.ProcessEnv = process.env): void {
+export function applyConfigEnvVars(
+  cfg: DryadsAiConfig,
+  env: NodeJS.ProcessEnv = process.env,
+): void {
   const entries = collectConfigEnvVars(cfg);
   for (const [key, value] of Object.entries(entries)) {
     if (env[key]?.trim()) {

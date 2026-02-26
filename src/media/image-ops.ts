@@ -25,8 +25,8 @@ function isBun(): boolean {
 
 function prefersSips(): boolean {
   return (
-    process.env.DMMS_AI_IMAGE_BACKEND === "sips" ||
-    (process.env.DMMS_AI_IMAGE_BACKEND !== "sharp" && isBun() && process.platform === "darwin")
+    process.env.DRYADS_AI_IMAGE_BACKEND === "sips" ||
+    (process.env.DRYADS_AI_IMAGE_BACKEND !== "sharp" && isBun() && process.platform === "darwin")
   );
 }
 
@@ -134,7 +134,7 @@ function readJpegExifOrientation(buffer: Buffer): number | null {
 }
 
 async function withTempDir<T>(fn: (dir: string) => Promise<T>): Promise<T> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-img-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-img-"));
   try {
     return await fn(dir);
   } finally {

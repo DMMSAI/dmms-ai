@@ -177,7 +177,7 @@ export async function agentsAddCommand(
 
   const prompter = createClackPrompter();
   try {
-    await prompter.intro("Add DMMS AI agent");
+    await prompter.intro("Add Dryads AI agent");
     const name =
       nameInput ??
       (await prompter.text({
@@ -333,7 +333,7 @@ export async function agentsAddCommand(
         await prompter.note(
           [
             "Routing unchanged. Add bindings when you're ready.",
-            "Docs: https://docs.dmms-ai.com/concepts/multi-agent",
+            "Docs: https://docs.dryads-ai.com/concepts/multi-agent",
           ].join("\n"),
           "Routing",
         );

@@ -46,7 +46,7 @@ describe("channel registry helpers", () => {
     );
     expect(line).not.toContain("Docs:");
     expect(line).toContain("/channels/telegram");
-    expect(line).toContain("https://dmms-ai.com");
+    expect(line).toContain("https://dryads-ai.com");
   });
 });
 

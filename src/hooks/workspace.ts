@@ -1,13 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { MANIFEST_KEY } from "../compat/legacy-names.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { CONFIG_DIR, resolveUserPath } from "../utils.js";
 import { resolveBundledHooksDir } from "./bundled-dir.js";
 import { shouldIncludeHook } from "./config.js";
 import {
   parseFrontmatter,
-  resolveDmmsAiMetadata,
+  resolveDryadsAiMetadata,
   resolveHookInvocationPolicy,
 } from "./frontmatter.js";
 import type {
@@ -25,7 +25,7 @@ type HookPackageManifest = {
 
 function filterHookEntries(
   entries: HookEntry[],
-  config?: DmmsAiConfig,
+  config?: DryadsAiConfig,
   eligibility?: HookEligibilityContext,
 ): HookEntry[] {
   return entries.filter((entry) => shouldIncludeHook({ entry, config, eligibility }));
@@ -198,7 +198,7 @@ export function loadHookEntriesFromDir(params: {
         pluginId: params.pluginId,
       },
       frontmatter,
-      metadata: resolveDmmsAiMetadata(frontmatter),
+      metadata: resolveDryadsAiMetadata(frontmatter),
       invocation: resolveHookInvocationPolicy(frontmatter),
     };
     return entry;
@@ -208,7 +208,7 @@ export function loadHookEntriesFromDir(params: {
 function loadHookEntries(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedHooksDir?: string;
     bundledHooksDir?: string;
   },
@@ -224,23 +224,23 @@ function loadHookEntries(
   const bundledHooks = bundledHooksDir
     ? loadHooksFromDir({
         dir: bundledHooksDir,
-        source: "dmms-ai-bundled",
+        source: "dryads-ai-bundled",
       })
     : [];
   const extraHooks = extraDirs.flatMap((dir) => {
     const resolved = resolveUserPath(dir);
     return loadHooksFromDir({
       dir: resolved,
-      source: "dmms-ai-workspace", // Extra dirs treated as workspace
+      source: "dryads-ai-workspace", // Extra dirs treated as workspace
     });
   });
   const managedHooks = loadHooksFromDir({
     dir: managedHooksDir,
-    source: "dmms-ai-managed",
+    source: "dryads-ai-managed",
   });
   const workspaceHooks = loadHooksFromDir({
     dir: workspaceHooksDir,
-    source: "dmms-ai-workspace",
+    source: "dryads-ai-workspace",
   });
 
   const merged = new Map<string, Hook>();
@@ -269,7 +269,7 @@ function loadHookEntries(
     return {
       hook,
       frontmatter,
-      metadata: resolveDmmsAiMetadata(frontmatter),
+      metadata: resolveDryadsAiMetadata(frontmatter),
       invocation: resolveHookInvocationPolicy(frontmatter),
     };
   });
@@ -278,7 +278,7 @@ function loadHookEntries(
 export function buildWorkspaceHookSnapshot(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedHooksDir?: string;
     bundledHooksDir?: string;
     entries?: HookEntry[];
@@ -302,7 +302,7 @@ export function buildWorkspaceHookSnapshot(
 export function loadWorkspaceHookEntries(
   workspaceDir: string,
   opts?: {
-    config?: DmmsAiConfig;
+    config?: DryadsAiConfig;
     managedHooksDir?: string;
     bundledHooksDir?: string;
   },

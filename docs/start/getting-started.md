@@ -1,5 +1,5 @@
 ---
-summary: "Get DMMS AI installed and run your first chat in minutes."
+summary: "Get Dryads AI installed and run your first chat in minutes."
 read_when:
   - First time setup from zero
   - You want the fastest path to a working chat
@@ -11,9 +11,9 @@ title: "Getting Started"
 Goal: go from zero to a first working chat with minimal setup.
 
 <Info>
-Fastest chat: open the Control UI (no channel setup needed). Run `dmms-ai dashboard`
+Fastest chat: open the Control UI (no channel setup needed). Run `dryads-ai dashboard`
 and chat in the browser, or open `http://127.0.0.1:18789/` on the
-<Tooltip headline="Gateway host" tip="The machine running the DMMS AI gateway service.">gateway host</Tooltip>.
+<Tooltip headline="Gateway host" tip="The machine running the Dryads AI gateway service.">gateway host</Tooltip>.
 Docs: [Dashboard](/web/dashboard) and [Control UI](/web/control-ui).
 </Info>
 
@@ -28,11 +28,11 @@ Check your Node version with `node --version` if you are unsure.
 ## Quick setup (CLI)
 
 <Steps>
-  <Step title="Install DMMS AI (recommended)">
+  <Step title="Install Dryads AI (recommended)">
     <Tabs>
       <Tab title="macOS/Linux">
         ```bash
-        curl -fsSL https://dmms-ai.com/install.sh | bash
+        curl -fsSL https://dryads-ai.com/install.sh | bash
         ```
         <img
   src="/assets/install-script.svg"
@@ -42,7 +42,7 @@ Check your Node version with `node --version` if you are unsure.
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        iwr -useb https://dmms-ai.com/install.ps1 | iex
+        iwr -useb https://dryads-ai.com/install.ps1 | iex
         ```
       </Tab>
     </Tabs>
@@ -54,7 +54,7 @@ Check your Node version with `node --version` if you are unsure.
   </Step>
   <Step title="Run the onboarding wizard">
     ```bash
-    dmms-ai onboard --install-daemon
+    dryads-ai onboard --install-daemon
     ```
 
     The wizard configures auth, gateway settings, and optional channels.
@@ -65,13 +65,13 @@ Check your Node version with `node --version` if you are unsure.
     If you installed the service, it should already be running:
 
     ```bash
-    dmms-ai gateway status
+    dryads-ai gateway status
     ```
 
   </Step>
   <Step title="Open the Control UI">
     ```bash
-    dmms-ai dashboard
+    dryads-ai dashboard
     ```
   </Step>
 </Steps>
@@ -87,7 +87,7 @@ If the Control UI loads, your Gateway is ready for use.
     Useful for quick tests or troubleshooting.
 
     ```bash
-    dmms-ai gateway --port 18789
+    dryads-ai gateway --port 18789
     ```
 
   </Accordion>
@@ -95,7 +95,7 @@ If the Control UI loads, your Gateway is ready for use.
     Requires a configured channel.
 
     ```bash
-    dmms-ai message send --target +15555550123 --message "Hello from DMMS AI"
+    dryads-ai message send --target +15555550123 --message "Hello from Dryads AI"
     ```
 
   </Accordion>
@@ -103,11 +103,11 @@ If the Control UI loads, your Gateway is ready for use.
 
 ## Useful environment variables
 
-If you run DMMS AI as a service account or want custom config/state locations:
+If you run Dryads AI as a service account or want custom config/state locations:
 
-- `DMMS_AI_HOME` sets the home directory used for internal path resolution.
-- `DMMS_AI_STATE_DIR` overrides the state directory.
-- `DMMS_AI_CONFIG_PATH` overrides the config file path.
+- `DRYADS_AI_HOME` sets the home directory used for internal path resolution.
+- `DRYADS_AI_STATE_DIR` overrides the state directory.
+- `DRYADS_AI_CONFIG_PATH` overrides the config file path.
 
 Full environment variable reference: [Environment vars](/help/environment).
 

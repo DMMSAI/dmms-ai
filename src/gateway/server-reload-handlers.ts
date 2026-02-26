@@ -95,17 +95,17 @@ export function createGatewayReloadHandlers(params: {
         cfg: nextConfig,
         log: params.logHooks,
         onSkipped: () =>
-          params.logHooks.info("skipping gmail watcher restart (DMMS_AI_SKIP_GMAIL_WATCHER=1)"),
+          params.logHooks.info("skipping gmail watcher restart (DRYADS_AI_SKIP_GMAIL_WATCHER=1)"),
       });
     }
 
     if (plan.restartChannels.size > 0) {
       if (
-        isTruthyEnvValue(process.env.DMMS_AI_SKIP_CHANNELS) ||
-        isTruthyEnvValue(process.env.DMMS_AI_SKIP_PROVIDERS)
+        isTruthyEnvValue(process.env.DRYADS_AI_SKIP_CHANNELS) ||
+        isTruthyEnvValue(process.env.DRYADS_AI_SKIP_PROVIDERS)
       ) {
         params.logChannels.info(
-          "skipping channel reload (DMMS_AI_SKIP_CHANNELS=1 or DMMS_AI_SKIP_PROVIDERS=1)",
+          "skipping channel reload (DRYADS_AI_SKIP_CHANNELS=1 or DRYADS_AI_SKIP_PROVIDERS=1)",
         );
       } else {
         const restartChannel = async (name: ChannelKind) => {

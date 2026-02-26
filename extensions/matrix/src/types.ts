@@ -1,4 +1,4 @@
-import type { DmPolicy, GroupPolicy } from "dmms-ai/plugin-sdk";
+import type { DmPolicy, GroupPolicy } from "dryads-ai/plugin-sdk";
 export type { DmPolicy, GroupPolicy };
 
 export type ReplyToMode = "off" | "first" | "all";

@@ -1,7 +1,7 @@
 import type { Api, Model } from "@mariozechner/pi-ai";
-import type { DmmsAiConfig } from "../../config/config.js";
+import type { DryadsAiConfig } from "../../config/config.js";
 import type { ModelDefinitionConfig } from "../../config/types.js";
-import { resolveDmmsAiAgentDir } from "../agent-paths.js";
+import { resolveDryadsAiAgentDir } from "../agent-paths.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../defaults.js";
 import { buildModelAliasLines } from "../model-alias-lines.js";
 import { normalizeModelCompat } from "../model-compat.js";
@@ -44,14 +44,14 @@ export function resolveModel(
   provider: string,
   modelId: string,
   agentDir?: string,
-  cfg?: DmmsAiConfig,
+  cfg?: DryadsAiConfig,
 ): {
   model?: Model<Api>;
   error?: string;
   authStorage: AuthStorage;
   modelRegistry: ModelRegistry;
 } {
-  const resolvedAgentDir = agentDir ?? resolveDmmsAiAgentDir();
+  const resolvedAgentDir = agentDir ?? resolveDryadsAiAgentDir();
   const authStorage = discoverAuthStorage(resolvedAgentDir);
   const modelRegistry = discoverModels(authStorage, resolvedAgentDir);
   const model = modelRegistry.find(provider, modelId) as Model<Api> | null;
@@ -110,17 +110,17 @@ export function resolveModel(
  * error.  This detects known providers that require opt-in auth and adds
  * a hint.
  *
- * See: https://github.com/dmms-ai/dmms-ai/issues/17328
+ * See: https://github.com/dryads-ai/dryads-ai/issues/17328
  */
 const LOCAL_PROVIDER_HINTS: Record<string, string> = {
   ollama:
     "Ollama requires authentication to be registered as a provider. " +
-    'Set OLLAMA_API_KEY="ollama-local" (any value works) or run "dmms-ai configure". ' +
-    "See: https://docs.dmms-ai.com/providers/ollama",
+    'Set OLLAMA_API_KEY="ollama-local" (any value works) or run "dryads-ai configure". ' +
+    "See: https://docs.dryads-ai.com/providers/ollama",
   vllm:
     "vLLM requires authentication to be registered as a provider. " +
-    'Set VLLM_API_KEY (any value works) or run "dmms-ai configure". ' +
-    "See: https://docs.dmms-ai.com/providers/vllm",
+    'Set VLLM_API_KEY (any value works) or run "dryads-ai configure". ' +
+    "See: https://docs.dryads-ai.com/providers/vllm",
 };
 
 function buildUnknownModelError(provider: string, modelId: string): string {

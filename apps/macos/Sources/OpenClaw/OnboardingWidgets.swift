@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-struct GlowingDmmsAiIcon: View {
+struct GlowingDryadsAiIcon: View {
     @Environment(\.scenePhase) private var scenePhase
 
     let size: CGFloat

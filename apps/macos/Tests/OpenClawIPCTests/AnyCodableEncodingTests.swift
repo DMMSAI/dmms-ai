@@ -1,8 +1,8 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import Foundation
 import Testing
 
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct AnyCodableEncodingTests {
     @Test func encodesSwiftArrayAndDictionaryValues() throws {
@@ -12,7 +12,7 @@ import Testing
             "null": NSNull(),
         ]
 
-        let data = try JSONEncoder().encode(DmmsAiProtocol.AnyCodable(payload))
+        let data = try JSONEncoder().encode(DryadsAiProtocol.AnyCodable(payload))
         let obj = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
 
         #expect(obj["tags"] as? [String] == ["node", "ios"])
@@ -25,7 +25,7 @@ import Testing
             "items": [1, "two", NSNull(), ["ok": true]],
         ]
 
-        let data = try JSONEncoder().encode(DmmsAiProtocol.AnyCodable(payload))
+        let data = try JSONEncoder().encode(DryadsAiProtocol.AnyCodable(payload))
         let obj = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
 
         let items = try #require(obj["items"] as? [Any])

@@ -1,14 +1,14 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 private struct KeychainEntry: Hashable {
     let service: String
     let account: String
 }
 
-private let gatewayService = "ai.dmmsai.gateway"
-private let nodeService = "ai.dmmsai.node"
+private let gatewayService = "ai.dryadsai.gateway"
+private let nodeService = "ai.dryadsai.node"
 private let instanceIdEntry = KeychainEntry(service: nodeService, account: "instanceId")
 private let preferredGatewayEntry = KeychainEntry(service: gatewayService, account: "preferredStableID")
 private let lastGatewayEntry = KeychainEntry(service: gatewayService, account: "lastDiscoveredStableID")

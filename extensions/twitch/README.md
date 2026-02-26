@@ -1,17 +1,17 @@
-# @dmms-ai/twitch
+# @dryads-ai/twitch
 
-Twitch channel plugin for DMMS AI.
+Twitch channel plugin for Dryads AI.
 
 ## Install (local checkout)
 
 ```bash
-dmms-ai plugins install ./extensions/twitch
+dryads-ai plugins install ./extensions/twitch
 ```
 
 ## Install (npm)
 
 ```bash
-dmms-ai plugins install @dmms-ai/twitch
+dryads-ai plugins install @dryads-ai/twitch
 ```
 
 Onboarding: select Twitch and confirm the install prompt to fetch the plugin automatically.
@@ -27,7 +27,7 @@ Minimal config (simplified single-account):
   channels: {
     twitch: {
       enabled: true,
-      username: "dmms-ai",
+      username: "dryads-ai",
       accessToken: "oauth:abc123...", // OAuth Access Token (add oauth: prefix)
       clientId: "xyz789...", // Client ID from Token Generator
       channel: "vevisk", // Channel to join (required)
@@ -52,13 +52,13 @@ Multi-account config (advanced):
       enabled: true,
       accounts: {
         default: {
-          username: "dmms-ai",
+          username: "dryads-ai",
           accessToken: "oauth:abc123...",
           clientId: "xyz789...",
           channel: "vevisk",
         },
         channel2: {
-          username: "dmms-ai",
+          username: "dryads-ai",
           accessToken: "oauth:def456...",
           clientId: "uvw012...",
           channel: "secondchannel",
@@ -80,7 +80,7 @@ Multi-account config (advanced):
 
 ## Full documentation
 
-See https://docs.dmms-ai.com/channels/twitch for:
+See https://docs.dryads-ai.com/channels/twitch for:
 
 - Token refresh setup
 - Access control patterns

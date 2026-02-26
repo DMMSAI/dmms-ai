@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import DMMS AI
+@testable import Dryads AI
 
 @Suite struct GatewayEnvironmentTests {
     @Test func semverParsesCommonForms() {
@@ -34,7 +34,7 @@ import Testing
     @Test func gatewayPortDefaultsAndRespectsOverride() async {
         let configPath = TestIsolation.tempConfigPath()
         await TestIsolation.withIsolatedState(
-            env: ["DMMS_AI_CONFIG_PATH": configPath],
+            env: ["DRYADS_AI_CONFIG_PATH": configPath],
             defaults: ["gatewayPort": nil])
         {
             let defaultPort = GatewayEnvironment.gatewayPort()

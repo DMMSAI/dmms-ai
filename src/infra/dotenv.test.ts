@@ -32,13 +32,13 @@ async function withIsolatedEnvAndCwd(run: () => Promise<void>) {
 }
 
 describe("loadDotEnv", () => {
-  it("loads ~/.dmms-ai/.env as fallback without overriding CWD .env", async () => {
+  it("loads ~/.dryads-ai/.env as fallback without overriding CWD .env", async () => {
     await withIsolatedEnvAndCwd(async () => {
-      const base = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-dotenv-test-"));
+      const base = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-dotenv-test-"));
       const cwdDir = path.join(base, "cwd");
       const stateDir = path.join(base, "state");
 
-      process.env.DMMS_AI_STATE_DIR = stateDir;
+      process.env.DRYADS_AI_STATE_DIR = stateDir;
 
       await writeEnvFile(path.join(stateDir, ".env"), "FOO=from-global\nBAR=1\n");
       await writeEnvFile(path.join(cwdDir, ".env"), "FOO=from-cwd\n");
@@ -56,11 +56,11 @@ describe("loadDotEnv", () => {
 
   it("does not override an already-set env var from the shell", async () => {
     await withIsolatedEnvAndCwd(async () => {
-      const base = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-dotenv-test-"));
+      const base = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-dotenv-test-"));
       const cwdDir = path.join(base, "cwd");
       const stateDir = path.join(base, "state");
 
-      process.env.DMMS_AI_STATE_DIR = stateDir;
+      process.env.DRYADS_AI_STATE_DIR = stateDir;
       process.env.FOO = "from-shell";
 
       await writeEnvFile(path.join(stateDir, ".env"), "FOO=from-global\n");

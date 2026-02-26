@@ -18,4 +18,4 @@ export {
   validateConfigObjectRawWithPlugins,
   validateConfigObjectWithPlugins,
 } from "./validation.js";
-export { DmmsAiSchema } from "./zod-schema.js";
+export { DryadsAiSchema } from "./zod-schema.js";

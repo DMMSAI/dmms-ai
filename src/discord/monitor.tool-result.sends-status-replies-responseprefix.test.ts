@@ -29,10 +29,10 @@ const BASE_CFG: Config = {
   agents: {
     defaults: {
       model: { primary: "anthropic/claude-opus-4-5" },
-      workspace: "/tmp/dmms-ai",
+      workspace: "/tmp/dryads-ai",
     },
   },
-  session: { store: "/tmp/dmms-ai-sessions.json" },
+  session: { store: "/tmp/dryads-ai-sessions.json" },
 };
 
 const CATEGORY_GUILD_CFG = {

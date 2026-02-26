@@ -17,7 +17,7 @@ function makeSnapshot() {
     valid: true,
     issues: [],
     legacyIssues: [],
-    path: "/tmp/dmms-ai.json",
+    path: "/tmp/dryads-ai.json",
   };
 }
 

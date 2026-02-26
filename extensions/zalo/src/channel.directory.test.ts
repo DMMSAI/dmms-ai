@@ -1,4 +1,4 @@
-import type { DmmsAiConfig, RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { DryadsAiConfig, RuntimeEnv } from "dryads-ai/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import { zaloPlugin } from "./channel.js";
 
@@ -18,7 +18,7 @@ describe("zalo directory", () => {
           allowFrom: ["zalo:123", "zl:234", "345"],
         },
       },
-    } as unknown as DmmsAiConfig;
+    } as unknown as DryadsAiConfig;
 
     expect(zaloPlugin.directory).toBeTruthy();
     expect(zaloPlugin.directory?.listPeers).toBeTruthy();

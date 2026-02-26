@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { resolveHomeDir, resolveUserPath, shortenHomeInString } from "../utils.js";
 
@@ -10,7 +10,7 @@ export type RemovalResult = {
   skipped?: boolean;
 };
 
-export function collectWorkspaceDirs(cfg: DmmsAiConfig | undefined): string[] {
+export function collectWorkspaceDirs(cfg: DryadsAiConfig | undefined): string[] {
   const dirs = new Set<string>();
   const defaults = cfg?.agents?.defaults;
   if (typeof defaults?.workspace === "string" && defaults.workspace.trim()) {
@@ -30,7 +30,7 @@ export function collectWorkspaceDirs(cfg: DmmsAiConfig | undefined): string[] {
 }
 
 export function buildCleanupPlan(params: {
-  cfg: DmmsAiConfig | undefined;
+  cfg: DryadsAiConfig | undefined;
   stateDir: string;
   configPath: string;
   oauthDir: string;

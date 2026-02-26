@@ -1,4 +1,4 @@
-import DmmsAiKit
+import DryadsAiKit
 import SwiftUI
 import WebKit
 
@@ -125,7 +125,7 @@ final class ScreenWebViewCoordinator: NSObject {
 
 // MARK: - Navigation Delegate
 
-/// Handles navigation policy to intercept dmms-ai:// deep links from canvas
+/// Handles navigation policy to intercept dryads-ai:// deep links from canvas
 @MainActor
 private final class ScreenNavigationDelegate: NSObject, WKNavigationDelegate {
     weak var controller: ScreenController?
@@ -140,8 +140,8 @@ private final class ScreenNavigationDelegate: NSObject, WKNavigationDelegate {
             return
         }
 
-        // Intercept dmms-ai:// deep links.
-        if url.scheme?.lowercased() == "dmms-ai" {
+        // Intercept dryads-ai:// deep links.
+        if url.scheme?.lowercased() == "dryads-ai" {
             decisionHandler(.cancel)
             self.controller?.onDeepLink?(url)
             return
@@ -169,7 +169,7 @@ private final class ScreenNavigationDelegate: NSObject, WKNavigationDelegate {
 }
 
 private final class CanvasA2UIActionMessageHandler: NSObject, WKScriptMessageHandler {
-    static let messageName = "dmmsAiCanvasA2UIAction"
+    static let messageName = "dryadsAiCanvasA2UIAction"
     static let handlerNames = [messageName]
 
     weak var controller: ScreenController?

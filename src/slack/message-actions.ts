@@ -1,9 +1,9 @@
 import { createActionGate } from "../agents/tools/common.js";
 import type { ChannelMessageActionName, ChannelToolSend } from "../channels/plugins/types.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { listEnabledSlackAccounts } from "./accounts.js";
 
-export function listSlackMessageActions(cfg: DmmsAiConfig): ChannelMessageActionName[] {
+export function listSlackMessageActions(cfg: DryadsAiConfig): ChannelMessageActionName[] {
   const accounts = listEnabledSlackAccounts(cfg).filter(
     (account) => account.botTokenSource !== "none",
   );

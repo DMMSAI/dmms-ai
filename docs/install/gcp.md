@@ -1,19 +1,19 @@
 ---
-summary: "Run DMMS AI Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
+summary: "Run Dryads AI Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
 read_when:
-  - You want DMMS AI running 24/7 on GCP
+  - You want Dryads AI running 24/7 on GCP
   - You want a production-grade, always-on Gateway on your own VM
   - You want full control over persistence, binaries, and restart behavior
 title: "GCP"
 ---
 
-# DMMS AI on GCP Compute Engine (Docker, Production VPS Guide)
+# Dryads AI on GCP Compute Engine (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent DMMS AI Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Dryads AI Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want "DMMS AI 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
+If you want "Dryads AI 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
 Pricing varies by machine type and region; pick the smallest VM that fits your workload and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
@@ -21,8 +21,8 @@ Pricing varies by machine type and region; pick the smallest VM that fits your w
 - Create a GCP project and enable billing
 - Create a Compute Engine VM
 - Install Docker (isolated app runtime)
-- Start the DMMS AI Gateway in Docker
-- Persist `~/.dmms-ai` + `~/.dmms-ai/workspace` on the host (survives restarts/rebuilds)
+- Start the Dryads AI Gateway in Docker
+- Persist `~/.dryads-ai` + `~/.dryads-ai/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -42,7 +42,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 2. Create Compute Engine VM (e2-small, Debian 12, 20GB)
 3. SSH into the VM
 4. Install Docker
-5. Clone DMMS AI repository
+5. Clone Dryads AI repository
 6. Create persistent host directories
 7. Configure `.env` and `docker-compose.yml`
 8. Bake required binaries, build, and launch
@@ -89,8 +89,8 @@ All steps can be done via the web UI at [https://console.cloud.google.com](https
 **CLI:**
 
 ```bash
-gcloud projects create my-dmms-ai-project --name="DMMS AI Gateway"
-gcloud config set project my-dmms-ai-project
+gcloud projects create my-dryads-ai-project --name="Dryads AI Gateway"
+gcloud config set project my-dryads-ai-project
 ```
 
 Enable billing at [https://console.cloud.google.com/billing](https://console.cloud.google.com/billing) (required for Compute Engine).
@@ -122,7 +122,7 @@ gcloud services enable compute.googleapis.com
 **CLI:**
 
 ```bash
-gcloud compute instances create dmms-ai-gateway \
+gcloud compute instances create dryads-ai-gateway \
   --zone=us-central1-a \
   --machine-type=e2-small \
   --boot-disk-size=20GB \
@@ -133,7 +133,7 @@ gcloud compute instances create dmms-ai-gateway \
 **Console:**
 
 1. Go to Compute Engine > VM instances > Create instance
-2. Name: `dmms-ai-gateway`
+2. Name: `dryads-ai-gateway`
 3. Region: `us-central1`, Zone: `us-central1-a`
 4. Machine type: `e2-small`
 5. Boot disk: Debian 12, 20GB
@@ -146,7 +146,7 @@ gcloud compute instances create dmms-ai-gateway \
 **CLI:**
 
 ```bash
-gcloud compute ssh dmms-ai-gateway --zone=us-central1-a
+gcloud compute ssh dryads-ai-gateway --zone=us-central1-a
 ```
 
 **Console:**
@@ -175,7 +175,7 @@ exit
 Then SSH back in:
 
 ```bash
-gcloud compute ssh dmms-ai-gateway --zone=us-central1-a
+gcloud compute ssh dryads-ai-gateway --zone=us-central1-a
 ```
 
 Verify:
@@ -187,11 +187,11 @@ docker compose version
 
 ---
 
-## 6) Clone the DMMS AI repository
+## 6) Clone the Dryads AI repository
 
 ```bash
-git clone https://github.com/dmms-ai/dmms-ai.git
-cd dmms-ai
+git clone https://github.com/dryads-ai/dryads-ai.git
+cd dryads-ai
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -204,8 +204,8 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p ~/.dmms-ai
-mkdir -p ~/.dmms-ai/workspace
+mkdir -p ~/.dryads-ai
+mkdir -p ~/.dryads-ai/workspace
 ```
 
 ---
@@ -215,16 +215,16 @@ mkdir -p ~/.dmms-ai/workspace
 Create `.env` in the repository root.
 
 ```bash
-DMMS_AI_IMAGE=dmms-ai:latest
-DMMS_AI_GATEWAY_TOKEN=change-me-now
-DMMS_AI_GATEWAY_BIND=lan
-DMMS_AI_GATEWAY_PORT=18789
+DRYADS_AI_IMAGE=dryads-ai:latest
+DRYADS_AI_GATEWAY_TOKEN=change-me-now
+DRYADS_AI_GATEWAY_BIND=lan
+DRYADS_AI_GATEWAY_PORT=18789
 
-DMMS_AI_CONFIG_DIR=/home/$USER/.dmms-ai
-DMMS_AI_WORKSPACE_DIR=/home/$USER/.dmms-ai/workspace
+DRYADS_AI_CONFIG_DIR=/home/$USER/.dryads-ai
+DRYADS_AI_WORKSPACE_DIR=/home/$USER/.dryads-ai/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.dmms-ai
+XDG_CONFIG_HOME=/home/node/.dryads-ai
 ```
 
 Generate strong secrets:
@@ -243,8 +243,8 @@ Create or update `docker-compose.yml`.
 
 ```yaml
 services:
-  dmms-ai-gateway:
-    image: ${DMMS_AI_IMAGE}
+  dryads-ai-gateway:
+    image: ${DRYADS_AI_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -253,28 +253,28 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - DMMS_AI_GATEWAY_BIND=${DMMS_AI_GATEWAY_BIND}
-      - DMMS_AI_GATEWAY_PORT=${DMMS_AI_GATEWAY_PORT}
-      - DMMS_AI_GATEWAY_TOKEN=${DMMS_AI_GATEWAY_TOKEN}
+      - DRYADS_AI_GATEWAY_BIND=${DRYADS_AI_GATEWAY_BIND}
+      - DRYADS_AI_GATEWAY_PORT=${DRYADS_AI_GATEWAY_PORT}
+      - DRYADS_AI_GATEWAY_TOKEN=${DRYADS_AI_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${DMMS_AI_CONFIG_DIR}:/home/node/.dmms-ai
-      - ${DMMS_AI_WORKSPACE_DIR}:/home/node/.dmms-ai/workspace
+      - ${DRYADS_AI_CONFIG_DIR}:/home/node/.dryads-ai
+      - ${DRYADS_AI_WORKSPACE_DIR}:/home/node/.dryads-ai/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VM; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${DMMS_AI_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${DRYADS_AI_GATEWAY_PORT}:18789"
     command:
       [
         "node",
         "dist/index.js",
         "gateway",
         "--bind",
-        "${DMMS_AI_GATEWAY_BIND}",
+        "${DRYADS_AI_GATEWAY_BIND}",
         "--port",
-        "${DMMS_AI_GATEWAY_PORT}",
+        "${DRYADS_AI_GATEWAY_PORT}",
       ]
 ```
 
@@ -347,15 +347,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d dmms-ai-gateway
+docker compose up -d dryads-ai-gateway
 ```
 
 Verify binaries:
 
 ```bash
-docker compose exec dmms-ai-gateway which gog
-docker compose exec dmms-ai-gateway which goplaces
-docker compose exec dmms-ai-gateway which wacli
+docker compose exec dryads-ai-gateway which gog
+docker compose exec dryads-ai-gateway which goplaces
+docker compose exec dryads-ai-gateway which wacli
 ```
 
 Expected output:
@@ -371,7 +371,7 @@ Expected output:
 ## 12) Verify Gateway
 
 ```bash
-docker compose logs -f dmms-ai-gateway
+docker compose logs -f dryads-ai-gateway
 ```
 
 Success:
@@ -387,7 +387,7 @@ Success:
 Create an SSH tunnel to forward the Gateway port:
 
 ```bash
-gcloud compute ssh dmms-ai-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18789
+gcloud compute ssh dryads-ai-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18789
 ```
 
 Open in your browser:
@@ -400,30 +400,30 @@ Paste your gateway token.
 
 ## What persists where (source of truth)
 
-DMMS AI runs in Docker, but Docker is not the source of truth.
+Dryads AI runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
-| Component           | Location                         | Persistence mechanism  | Notes                           |
-| ------------------- | -------------------------------- | ---------------------- | ------------------------------- |
-| Gateway config      | `/home/node/.dmms-ai/`           | Host volume mount      | Includes `dmms-ai.json`, tokens |
-| Model auth profiles | `/home/node/.dmms-ai/`           | Host volume mount      | OAuth tokens, API keys          |
-| Skill configs       | `/home/node/.dmms-ai/skills/`    | Host volume mount      | Skill-level state               |
-| Agent workspace     | `/home/node/.dmms-ai/workspace/` | Host volume mount      | Code and agent artifacts        |
-| WhatsApp session    | `/home/node/.dmms-ai/`           | Host volume mount      | Preserves QR login              |
-| Gmail keyring       | `/home/node/.dmms-ai/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
-| External binaries   | `/usr/local/bin/`                | Docker image           | Must be baked at build time     |
-| Node runtime        | Container filesystem             | Docker image           | Rebuilt every image build       |
-| OS packages         | Container filesystem             | Docker image           | Do not install at runtime       |
-| Docker container    | Ephemeral                        | Restartable            | Safe to destroy                 |
+| Component           | Location                           | Persistence mechanism  | Notes                             |
+| ------------------- | ---------------------------------- | ---------------------- | --------------------------------- |
+| Gateway config      | `/home/node/.dryads-ai/`           | Host volume mount      | Includes `dryads-ai.json`, tokens |
+| Model auth profiles | `/home/node/.dryads-ai/`           | Host volume mount      | OAuth tokens, API keys            |
+| Skill configs       | `/home/node/.dryads-ai/skills/`    | Host volume mount      | Skill-level state                 |
+| Agent workspace     | `/home/node/.dryads-ai/workspace/` | Host volume mount      | Code and agent artifacts          |
+| WhatsApp session    | `/home/node/.dryads-ai/`           | Host volume mount      | Preserves QR login                |
+| Gmail keyring       | `/home/node/.dryads-ai/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`   |
+| External binaries   | `/usr/local/bin/`                  | Docker image           | Must be baked at build time       |
+| Node runtime        | Container filesystem               | Docker image           | Rebuilt every image build         |
+| OS packages         | Container filesystem               | Docker image           | Do not install at runtime         |
+| Docker container    | Ephemeral                          | Restartable            | Safe to destroy                   |
 
 ---
 
 ## Updates
 
-To update DMMS AI on the VM:
+To update Dryads AI on the VM:
 
 ```bash
-cd ~/dmms-ai
+cd ~/dryads-ai
 git pull
 docker compose build
 docker compose up -d
@@ -453,15 +453,15 @@ If using e2-micro and hitting OOM, upgrade to e2-small or e2-medium:
 
 ```bash
 # Stop the VM first
-gcloud compute instances stop dmms-ai-gateway --zone=us-central1-a
+gcloud compute instances stop dryads-ai-gateway --zone=us-central1-a
 
 # Change machine type
-gcloud compute instances set-machine-type dmms-ai-gateway \
+gcloud compute instances set-machine-type dryads-ai-gateway \
   --zone=us-central1-a \
   --machine-type=e2-small
 
 # Start the VM
-gcloud compute instances start dmms-ai-gateway --zone=us-central1-a
+gcloud compute instances start dryads-ai-gateway --zone=us-central1-a
 ```
 
 ---
@@ -475,15 +475,15 @@ For automation or CI/CD pipelines, create a dedicated service account with minim
 1. Create a service account:
 
    ```bash
-   gcloud iam service-accounts create dmms-ai-deploy \
-     --display-name="DMMS AI Deployment"
+   gcloud iam service-accounts create dryads-ai-deploy \
+     --display-name="Dryads AI Deployment"
    ```
 
 2. Grant Compute Instance Admin role (or narrower custom role):
 
    ```bash
-   gcloud projects add-iam-policy-binding my-dmms-ai-project \
-     --member="serviceAccount:dmms-ai-deploy@my-dmms-ai-project.iam.gserviceaccount.com" \
+   gcloud projects add-iam-policy-binding my-dryads-ai-project \
+     --member="serviceAccount:dryads-ai-deploy@my-dryads-ai-project.iam.gserviceaccount.com" \
      --role="roles/compute.instanceAdmin.v1"
    ```
 

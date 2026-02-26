@@ -1,11 +1,11 @@
 import Foundation
 
-public struct DmmsAiChatSessionsDefaults: Codable, Sendable {
+public struct DryadsAiChatSessionsDefaults: Codable, Sendable {
     public let model: String?
     public let contextTokens: Int?
 }
 
-public struct DmmsAiChatSessionEntry: Codable, Identifiable, Sendable, Hashable {
+public struct DryadsAiChatSessionEntry: Codable, Identifiable, Sendable, Hashable {
     public var id: String { self.key }
 
     public let key: String
@@ -31,10 +31,10 @@ public struct DmmsAiChatSessionEntry: Codable, Identifiable, Sendable, Hashable 
     public let contextTokens: Int?
 }
 
-public struct DmmsAiChatSessionsListResponse: Codable, Sendable {
+public struct DryadsAiChatSessionsListResponse: Codable, Sendable {
     public let ts: Double?
     public let path: String?
     public let count: Int?
-    public let defaults: DmmsAiChatSessionsDefaults?
-    public let sessions: [DmmsAiChatSessionEntry]
+    public let defaults: DryadsAiChatSessionsDefaults?
+    public let sessions: [DryadsAiChatSessionEntry]
 }

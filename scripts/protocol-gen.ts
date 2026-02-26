@@ -14,8 +14,8 @@ async function writeJsonSchema() {
 
   const rootSchema = {
     $schema: "http://json-schema.org/draft-07/schema#",
-    $id: "https://dmms-ai.com/protocol.schema.json",
-    title: "DMMS AI Gateway Protocol",
+    $id: "https://dryads-ai.com/protocol.schema.json",
+    title: "Dryads AI Gateway Protocol",
     description: "Handshake, request/response, and event frames for the Gateway WebSocket.",
     oneOf: [
       { $ref: "#/definitions/RequestFrame" },

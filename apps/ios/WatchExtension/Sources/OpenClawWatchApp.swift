@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct DmmsAiWatchApp: App {
+struct DryadsAiWatchApp: App {
     @State private var inboxStore = WatchInboxStore()
     @State private var receiver: WatchConnectivityReceiver?
 

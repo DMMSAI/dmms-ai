@@ -15,7 +15,7 @@ x-i18n:
 
 # Skills 配置
 
-所有 Skills 相关配置都位于 `~/.dmms-ai/dmms-ai.json` 中的 `skills` 下。
+所有 Skills 相关配置都位于 `~/.dryads-ai/dryads-ai.json` 中的 `skills` 下。
 
 ```json5
 {
@@ -63,7 +63,7 @@ x-i18n:
 
 ## 注意事项
 
-- `entries` 下的键默认映射到 Skills 名称。如果 Skills 定义了 `metadata.dmms-ai.skillKey`，则使用该键。
+- `entries` 下的键默认映射到 Skills 名称。如果 Skills 定义了 `metadata.dryads-ai.skillKey`，则使用该键。
 - 启用监视器后，Skills 的更改会在下一个智能体轮次被获取。
 
 ### 沙箱隔离的 Skills + 环境变量

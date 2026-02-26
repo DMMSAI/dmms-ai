@@ -72,7 +72,7 @@ describe("subtitleForTab", () => {
 
   it("returns descriptive subtitles", () => {
     expect(subtitleForTab("chat")).toContain("chat session");
-    expect(subtitleForTab("config")).toContain("dmms-ai.json");
+    expect(subtitleForTab("config")).toContain("dryads-ai.json");
   });
 });
 
@@ -94,7 +94,7 @@ describe("normalizeBasePath", () => {
   });
 
   it("handles nested paths", () => {
-    expect(normalizeBasePath("/apps/dmms-ai")).toBe("/apps/dmms-ai");
+    expect(normalizeBasePath("/apps/dryads-ai")).toBe("/apps/dryads-ai");
   });
 });
 
@@ -121,7 +121,7 @@ describe("pathForTab", () => {
 
   it("prepends base path", () => {
     expect(pathForTab("chat", "/ui")).toBe("/ui/chat");
-    expect(pathForTab("sessions", "/apps/dmms-ai")).toBe("/apps/dmms-ai/sessions");
+    expect(pathForTab("sessions", "/apps/dryads-ai")).toBe("/apps/dryads-ai/sessions");
   });
 });
 
@@ -138,7 +138,7 @@ describe("tabFromPath", () => {
 
   it("handles base paths", () => {
     expect(tabFromPath("/ui/chat", "/ui")).toBe("chat");
-    expect(tabFromPath("/apps/dmms-ai/sessions", "/apps/dmms-ai")).toBe("sessions");
+    expect(tabFromPath("/apps/dryads-ai/sessions", "/apps/dryads-ai")).toBe("sessions");
   });
 
   it("returns null for unknown path", () => {
@@ -163,7 +163,7 @@ describe("inferBasePathFromPathname", () => {
 
   it("infers base path from nested paths", () => {
     expect(inferBasePathFromPathname("/ui/chat")).toBe("/ui");
-    expect(inferBasePathFromPathname("/apps/dmms-ai/sessions")).toBe("/apps/dmms-ai");
+    expect(inferBasePathFromPathname("/apps/dryads-ai/sessions")).toBe("/apps/dryads-ai");
   });
 
   it("handles index.html suffix", () => {

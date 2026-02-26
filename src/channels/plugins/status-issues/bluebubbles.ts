@@ -72,7 +72,7 @@ export function collectBlueBubblesStatusIssues(
         accountId,
         kind: "config",
         message: "Not configured (missing serverUrl or password).",
-        fix: "Run: dmms-ai channels add bluebubbles --http-url <server-url> --password <password>",
+        fix: "Run: dryads-ai channels add bluebubbles --http-url <server-url> --password <password>",
       });
       continue;
     }

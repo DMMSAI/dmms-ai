@@ -16,29 +16,29 @@ Start at [/help/troubleshooting](/help/troubleshooting) if you want the fast tri
 Run these first, in this order:
 
 ```bash
-dmms-ai status
-dmms-ai gateway status
-dmms-ai logs --follow
-dmms-ai doctor
-dmms-ai channels status --probe
+dryads-ai status
+dryads-ai gateway status
+dryads-ai logs --follow
+dryads-ai doctor
+dryads-ai channels status --probe
 ```
 
 Expected healthy signals:
 
-- `dmms-ai gateway status` shows `Runtime: running` and `RPC probe: ok`.
-- `dmms-ai doctor` reports no blocking config/service issues.
-- `dmms-ai channels status --probe` shows connected/ready channels.
+- `dryads-ai gateway status` shows `Runtime: running` and `RPC probe: ok`.
+- `dryads-ai doctor` reports no blocking config/service issues.
+- `dryads-ai channels status --probe` shows connected/ready channels.
 
 ## No replies
 
 If channels are up but nothing answers, check routing and policy before reconnecting anything.
 
 ```bash
-dmms-ai status
-dmms-ai channels status --probe
-dmms-ai pairing list <channel>
-dmms-ai config get channels
-dmms-ai logs --follow
+dryads-ai status
+dryads-ai channels status --probe
+dryads-ai pairing list <channel>
+dryads-ai config get channels
+dryads-ai logs --follow
 ```
 
 Look for:
@@ -64,11 +64,11 @@ Related:
 When dashboard/control UI will not connect, validate URL, auth mode, and secure context assumptions.
 
 ```bash
-dmms-ai gateway status
-dmms-ai status
-dmms-ai logs --follow
-dmms-ai doctor
-dmms-ai gateway status --json
+dryads-ai gateway status
+dryads-ai status
+dryads-ai logs --follow
+dryads-ai doctor
+dryads-ai gateway status --json
 ```
 
 Look for:
@@ -94,11 +94,11 @@ Related:
 Use this when service is installed but process does not stay up.
 
 ```bash
-dmms-ai gateway status
-dmms-ai status
-dmms-ai logs --follow
-dmms-ai doctor
-dmms-ai gateway status --deep
+dryads-ai gateway status
+dryads-ai status
+dryads-ai logs --follow
+dryads-ai doctor
+dryads-ai gateway status --deep
 ```
 
 Look for:
@@ -109,7 +109,7 @@ Look for:
 
 Common signatures:
 
-- `Gateway start blocked: set gateway.mode=local` → local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `dmms-ai configure`). If you are running DMMS AI via Podman using the dedicated `dmms-ai` user, the config lives at `~dmms-ai/.dmms-ai/dmms-ai.json`.
+- `Gateway start blocked: set gateway.mode=local` → local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `dryads-ai configure`). If you are running Dryads AI via Podman using the dedicated `dryads-ai` user, the config lives at `~dryads-ai/.dryads-ai/dryads-ai.json`.
 - `refusing to bind gateway ... without auth` → non-loopback bind without token/password.
 - `another gateway instance is already listening` / `EADDRINUSE` → port conflict.
 
@@ -124,11 +124,11 @@ Related:
 If channel state is connected but message flow is dead, focus on policy, permissions, and channel specific delivery rules.
 
 ```bash
-dmms-ai channels status --probe
-dmms-ai pairing list <channel>
-dmms-ai status --deep
-dmms-ai logs --follow
-dmms-ai config get channels
+dryads-ai channels status --probe
+dryads-ai pairing list <channel>
+dryads-ai status --deep
+dryads-ai logs --follow
+dryads-ai config get channels
 ```
 
 Look for:
@@ -155,11 +155,11 @@ Related:
 If cron or heartbeat did not run or did not deliver, verify scheduler state first, then delivery target.
 
 ```bash
-dmms-ai cron status
-dmms-ai cron list
-dmms-ai cron runs --id <jobId> --limit 20
-dmms-ai system heartbeat last
-dmms-ai logs --follow
+dryads-ai cron status
+dryads-ai cron list
+dryads-ai cron runs --id <jobId> --limit 20
+dryads-ai system heartbeat last
+dryads-ai logs --follow
 ```
 
 Look for:
@@ -186,11 +186,11 @@ Related:
 If a node is paired but tools fail, isolate foreground, permission, and approval state.
 
 ```bash
-dmms-ai nodes status
-dmms-ai nodes describe --node <idOrNameOrIp>
-dmms-ai approvals get --node <idOrNameOrIp>
-dmms-ai logs --follow
-dmms-ai status
+dryads-ai nodes status
+dryads-ai nodes describe --node <idOrNameOrIp>
+dryads-ai approvals get --node <idOrNameOrIp>
+dryads-ai logs --follow
+dryads-ai status
 ```
 
 Look for:
@@ -217,11 +217,11 @@ Related:
 Use this when browser tool actions fail even though the gateway itself is healthy.
 
 ```bash
-dmms-ai browser status
-dmms-ai browser start --browser-profile dmms-ai
-dmms-ai browser profiles
-dmms-ai logs --follow
-dmms-ai doctor
+dryads-ai browser status
+dryads-ai browser start --browser-profile dryads-ai
+dryads-ai browser profiles
+dryads-ai logs --follow
+dryads-ai doctor
 ```
 
 Look for:
@@ -250,10 +250,10 @@ Most post-upgrade breakage is config drift or stricter defaults now being enforc
 ### 1) Auth and URL override behavior changed
 
 ```bash
-dmms-ai gateway status
-dmms-ai config get gateway.mode
-dmms-ai config get gateway.remote.url
-dmms-ai config get gateway.auth.mode
+dryads-ai gateway status
+dryads-ai config get gateway.mode
+dryads-ai config get gateway.remote.url
+dryads-ai config get gateway.auth.mode
 ```
 
 What to check:
@@ -269,10 +269,10 @@ Common signatures:
 ### 2) Bind and auth guardrails are stricter
 
 ```bash
-dmms-ai config get gateway.bind
-dmms-ai config get gateway.auth.token
-dmms-ai gateway status
-dmms-ai logs --follow
+dryads-ai config get gateway.bind
+dryads-ai config get gateway.auth.token
+dryads-ai gateway status
+dryads-ai logs --follow
 ```
 
 What to check:
@@ -288,10 +288,10 @@ Common signatures:
 ### 3) Pairing and device identity state changed
 
 ```bash
-dmms-ai devices list
-dmms-ai pairing list <channel>
-dmms-ai logs --follow
-dmms-ai doctor
+dryads-ai devices list
+dryads-ai pairing list <channel>
+dryads-ai logs --follow
+dryads-ai doctor
 ```
 
 What to check:
@@ -307,8 +307,8 @@ Common signatures:
 If the service config and runtime still disagree after checks, reinstall service metadata from the same profile/state directory:
 
 ```bash
-dmms-ai gateway install --force
-dmms-ai gateway restart
+dryads-ai gateway install --force
+dryads-ai gateway restart
 ```
 
 Related:

@@ -1,5 +1,5 @@
 import Observation
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 
 extension OnboardingView {

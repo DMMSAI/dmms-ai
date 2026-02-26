@@ -1,9 +1,12 @@
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 
 export type PluginInstallUpdate = PluginInstallRecord & { pluginId: string };
 
-export function recordPluginInstall(cfg: DmmsAiConfig, update: PluginInstallUpdate): DmmsAiConfig {
+export function recordPluginInstall(
+  cfg: DryadsAiConfig,
+  update: PluginInstallUpdate,
+): DryadsAiConfig {
   const { pluginId, ...record } = update;
   const installs = {
     ...cfg.plugins?.installs,

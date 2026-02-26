@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiProtocol
+import DryadsAiProtocol
 
 struct SkillsStatusReport: Codable {
     let workspaceDir: String

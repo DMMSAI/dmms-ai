@@ -6,8 +6,8 @@
     {
       "layers" : [
         {
-          "image-name" : "dmms-ai-mac.png",
-          "name" : "dmms-ai-mac",
+          "image-name" : "dryads-ai-mac.png",
+          "name" : "dryads-ai-mac",
           "position" : {
             "scale" : 1.07,
             "translation-in-points" : [

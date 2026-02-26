@@ -1,13 +1,13 @@
 import AppKit
 import Combine
 import Observation
-import DmmsAiChatUI
-import DmmsAiDiscovery
-import DmmsAiIPC
+import DryadsAiChatUI
+import DryadsAiDiscovery
+import DryadsAiIPC
 import SwiftUI
 
 enum UIStrings {
-    static let welcomeTitle = "Welcome to DMMS AI"
+    static let welcomeTitle = "Welcome to Dryads AI"
 }
 
 @MainActor
@@ -18,7 +18,7 @@ final class OnboardingController {
     func show() {
         if ProcessInfo.processInfo.isNixMode {
             // Nix mode is fully declarative; onboarding would suggest interactive setup that doesn't apply.
-            UserDefaults.standard.set(true, forKey: "dmms-ai.onboardingSeen")
+            UserDefaults.standard.set(true, forKey: "dryads-ai.onboardingSeen")
             UserDefaults.standard.set(currentOnboardingVersion, forKey: onboardingVersionKey)
             AppStateStore.shared.onboardingSeen = true
             return
@@ -79,7 +79,7 @@ struct OnboardingView: View {
     @State var anthropicAuthVerificationAttempted = false
     @State var anthropicAuthVerificationFailed = false
     @State var anthropicAuthVerifiedAt: Date?
-    @State var anthropicAuthDetectedStatus: DmmsAiOAuthStore.AnthropicOAuthStatus = .missingFile
+    @State var anthropicAuthDetectedStatus: DryadsAiOAuthStore.AnthropicOAuthStatus = .missingFile
     @State var anthropicAuthAutoDetectClipboard = true
     @State var anthropicAuthAutoConnectClipboard = true
     @State var anthropicAuthLastPasteboardChangeCount = NSPasteboard.general.changeCount
@@ -90,7 +90,7 @@ struct OnboardingView: View {
     @State var showAdvancedConnection = false
     @State var preferredGatewayID: String?
     @State var gatewayDiscovery: GatewayDiscoveryModel
-    @State var onboardingChatModel: DmmsAiChatViewModel
+    @State var onboardingChatModel: DryadsAiChatViewModel
     @State var onboardingSkillsModel = SkillsSettingsModel()
     @State var onboardingWizard = OnboardingWizardModel()
     @State var didLoadOnboardingSkills = false
@@ -168,7 +168,7 @@ struct OnboardingView: View {
 
     var devLinkCommand: String {
         let version = GatewayEnvironment.expectedGatewayVersionString() ?? "latest"
-        return "npm install -g dmms-ai@\(version)"
+        return "npm install -g dryads-ai@\(version)"
     }
 
     struct LocalGatewayProbe: Equatable {
@@ -189,7 +189,7 @@ struct OnboardingView: View {
         self.permissionMonitor = permissionMonitor
         self._gatewayDiscovery = State(initialValue: discoveryModel)
         self._onboardingChatModel = State(
-            initialValue: DmmsAiChatViewModel(
+            initialValue: DryadsAiChatViewModel(
                 sessionKey: "onboarding",
                 transport: MacGatewayChatTransport()))
     }

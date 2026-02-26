@@ -228,7 +228,7 @@ describe("provider usage loading", () => {
     await withTempHome(
       async (tempHome) => {
         const agentDir = path.join(
-          process.env.DMMS_AI_STATE_DIR ?? path.join(tempHome, ".dmms-ai"),
+          process.env.DRYADS_AI_STATE_DIR ?? path.join(tempHome, ".dryads-ai"),
           "agents",
           "main",
           "agent",
@@ -297,9 +297,9 @@ describe("provider usage loading", () => {
       },
       {
         env: {
-          DMMS_AI_STATE_DIR: (home) => path.join(home, ".dmms-ai"),
+          DRYADS_AI_STATE_DIR: (home) => path.join(home, ".dryads-ai"),
         },
-        prefix: "dmms-ai-provider-usage-",
+        prefix: "dryads-ai-provider-usage-",
       },
     );
   });

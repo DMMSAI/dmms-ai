@@ -79,11 +79,11 @@ export function pickProbeHostForBind(
 }
 
 const SAFE_DAEMON_ENV_KEYS = [
-  "DMMS_AI_PROFILE",
-  "DMMS_AI_STATE_DIR",
-  "DMMS_AI_CONFIG_PATH",
-  "DMMS_AI_GATEWAY_PORT",
-  "DMMS_AI_NIX_MODE",
+  "DRYADS_AI_PROFILE",
+  "DRYADS_AI_STATE_DIR",
+  "DRYADS_AI_CONFIG_PATH",
+  "DRYADS_AI_GATEWAY_PORT",
+  "DRYADS_AI_NIX_MODE",
 ];
 
 export function filterDaemonEnv(env: Record<string, string> | undefined): Record<string, string> {
@@ -132,7 +132,7 @@ export function renderRuntimeHints(
     }
   })();
   if (runtime.missingUnit) {
-    hints.push(`Service not installed. Run: ${formatCliCommand("dmms-ai gateway install", env)}`);
+    hints.push(`Service not installed. Run: ${formatCliCommand("dryads-ai gateway install", env)}`);
     if (fileLog) {
       hints.push(`File logs: ${fileLog}`);
     }
@@ -147,10 +147,10 @@ export function renderRuntimeHints(
       hints.push(`Launchd stdout (if installed): ${logs.stdoutPath}`);
       hints.push(`Launchd stderr (if installed): ${logs.stderrPath}`);
     } else if (process.platform === "linux") {
-      const unit = resolveGatewaySystemdServiceName(env.DMMS_AI_PROFILE);
+      const unit = resolveGatewaySystemdServiceName(env.DRYADS_AI_PROFILE);
       hints.push(`Logs: journalctl --user -u ${unit}.service -n 200 --no-pager`);
     } else if (process.platform === "win32") {
-      const task = resolveGatewayWindowsTaskName(env.DMMS_AI_PROFILE);
+      const task = resolveGatewayWindowsTaskName(env.DRYADS_AI_PROFILE);
       hints.push(`Logs: schtasks /Query /TN "${task}" /V /FO LIST`);
     }
   }
@@ -159,10 +159,10 @@ export function renderRuntimeHints(
 
 export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.env): string[] {
   const base = [
-    formatCliCommand("dmms-ai gateway install", env),
-    formatCliCommand("dmms-ai gateway", env),
+    formatCliCommand("dryads-ai gateway install", env),
+    formatCliCommand("dryads-ai gateway", env),
   ];
-  const profile = env.DMMS_AI_PROFILE;
+  const profile = env.DRYADS_AI_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);

@@ -123,7 +123,7 @@ export function installWebMonitorInboxUnitTestHooks(opts?: { authDir?: boolean }
     const { resetWebInboundDedupe } = await import("./inbound.js");
     resetWebInboundDedupe();
     if (createAuthDir) {
-      authDir = fsSync.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-auth-"));
+      authDir = fsSync.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-auth-"));
     } else {
       authDir = undefined;
     }

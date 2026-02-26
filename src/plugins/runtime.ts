@@ -1,6 +1,6 @@
 import { createEmptyPluginRegistry, type PluginRegistry } from "./registry.js";
 
-const REGISTRY_STATE = Symbol.for("dmms-ai.pluginRegistryState");
+const REGISTRY_STATE = Symbol.for("dryads-ai.pluginRegistryState");
 
 type RegistryState = {
   registry: PluginRegistry | null;

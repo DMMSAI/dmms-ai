@@ -1,4 +1,4 @@
-import DmmsAiDiscovery
+import DryadsAiDiscovery
 import SwiftUI
 
 struct GatewayDiscoveryInlineList: View {
@@ -134,6 +134,6 @@ struct GatewayDiscoveryMenu: View {
         } label: {
             Image(systemName: "dot.radiowaves.left.and.right")
         }
-        .help("Discover DMMS AI gateways on your LAN")
+        .help("Discover Dryads AI gateways on your LAN")
     }
 }

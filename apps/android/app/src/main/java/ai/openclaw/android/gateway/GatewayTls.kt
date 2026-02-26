@@ -1,4 +1,4 @@
-package ai.dmmsai.android.gateway
+package ai.dryadsai.android.gateway
 
 import android.annotation.SuppressLint
 import kotlinx.coroutines.Dispatchers

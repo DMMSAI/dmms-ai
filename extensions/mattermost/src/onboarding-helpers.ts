@@ -1,1 +1,1 @@
-export { promptAccountId } from "dmms-ai/plugin-sdk";
+export { promptAccountId } from "dryads-ai/plugin-sdk";

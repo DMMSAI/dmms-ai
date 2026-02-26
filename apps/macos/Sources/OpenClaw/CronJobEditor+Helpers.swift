@@ -1,5 +1,5 @@
 import Foundation
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 
 extension CronJobEditor {

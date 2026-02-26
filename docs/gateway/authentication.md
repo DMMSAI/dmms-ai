@@ -8,7 +8,7 @@ title: "Authentication"
 
 # Authentication
 
-DMMS AI supports OAuth and API keys for model providers. For Anthropic
+Dryads AI supports OAuth and API keys for model providers. For Anthropic
 accounts, we recommend using an **API key**. For Claude subscription access,
 use the long‑lived token created by `claude setup-token`.
 
@@ -20,18 +20,18 @@ layout.
 If you’re using Anthropic directly, use an API key.
 
 1. Create an API key in the Anthropic Console.
-2. Put it on the **gateway host** (the machine running `dmms-ai gateway`).
+2. Put it on the **gateway host** (the machine running `dryads-ai gateway`).
 
 ```bash
 export ANTHROPIC_API_KEY="..."
-dmms-ai models status
+dryads-ai models status
 ```
 
 3. If the Gateway runs under systemd/launchd, prefer putting the key in
-   `~/.dmms-ai/.env` so the daemon can read it:
+   `~/.dryads-ai/.env` so the daemon can read it:
 
 ```bash
-cat >> ~/.dmms-ai/.env <<'EOF'
+cat >> ~/.dryads-ai/.env <<'EOF'
 ANTHROPIC_API_KEY=...
 EOF
 ```
@@ -39,15 +39,15 @@ EOF
 Then restart the daemon (or restart your Gateway process) and re-check:
 
 ```bash
-dmms-ai models status
-dmms-ai doctor
+dryads-ai models status
+dryads-ai doctor
 ```
 
 If you’d rather not manage env vars yourself, the onboarding wizard can store
-API keys for daemon use: `dmms-ai onboard`.
+API keys for daemon use: `dryads-ai onboard`.
 
 See [Help](/help) for details on env inheritance (`env.shellEnv`,
-`~/.dmms-ai/.env`, systemd/launchd).
+`~/.dryads-ai/.env`, systemd/launchd).
 
 ## Anthropic: setup-token (subscription auth)
 
@@ -58,16 +58,16 @@ subscription, the setup-token flow is also supported. Run it on the **gateway ho
 claude setup-token
 ```
 
-Then paste it into DMMS AI:
+Then paste it into Dryads AI:
 
 ```bash
-dmms-ai models auth setup-token --provider anthropic
+dryads-ai models auth setup-token --provider anthropic
 ```
 
 If the token was created on another machine, paste it manually:
 
 ```bash
-dmms-ai models auth paste-token --provider anthropic
+dryads-ai models auth paste-token --provider anthropic
 ```
 
 If you see an Anthropic error like:
@@ -81,14 +81,14 @@ This credential is only authorized for use with Claude Code and cannot be used f
 Manual token entry (any provider; writes `auth-profiles.json` + updates config):
 
 ```bash
-dmms-ai models auth paste-token --provider anthropic
-dmms-ai models auth paste-token --provider openrouter
+dryads-ai models auth paste-token --provider anthropic
+dryads-ai models auth paste-token --provider openrouter
 ```
 
 Automation-friendly check (exit `1` when expired/missing, `2` when expiring):
 
 ```bash
-dmms-ai models status --check
+dryads-ai models status --check
 ```
 
 Optional ops scripts (systemd/Termux) are documented here:
@@ -99,8 +99,8 @@ Optional ops scripts (systemd/Termux) are documented here:
 ## Checking model auth status
 
 ```bash
-dmms-ai models status
-dmms-ai doctor
+dryads-ai models status
+dryads-ai doctor
 ```
 
 ## API key rotation behavior (gateway)
@@ -109,13 +109,13 @@ Some providers support retrying a request with alternative keys when an API call
 hits a provider rate limit.
 
 - Priority order:
-  - `DMMS_AI_LIVE_<PROVIDER>_KEY` (single override)
+  - `DRYADS_AI_LIVE_<PROVIDER>_KEY` (single override)
   - `<PROVIDER>_API_KEYS`
   - `<PROVIDER>_API_KEY`
   - `<PROVIDER>_API_KEY_*`
 - Google providers also include `GOOGLE_API_KEY` as an additional fallback.
 - The same key list is deduplicated before use.
-- DMMS AI retries with the next key only for rate-limit errors (for example
+- Dryads AI retries with the next key only for rate-limit errors (for example
   `429`, `rate_limit`, `quota`, `resource exhausted`).
 - Non-rate-limit errors are not retried with alternate keys.
 - If all keys fail, the final error from the last attempt is returned.
@@ -133,9 +133,9 @@ Use `/model` (or `/model list`) for a compact picker; use `/model status` for th
 Set an explicit auth profile order override for an agent (stored in that agent’s `auth-profiles.json`):
 
 ```bash
-dmms-ai models auth order get --provider anthropic
-dmms-ai models auth order set --provider anthropic anthropic:default
-dmms-ai models auth order clear --provider anthropic
+dryads-ai models auth order get --provider anthropic
+dryads-ai models auth order set --provider anthropic anthropic:default
+dryads-ai models auth order clear --provider anthropic
 ```
 
 Use `--agent <id>` to target a specific agent; omit it to use the configured default agent.
@@ -148,12 +148,12 @@ If the Anthropic token profile is missing, run `claude setup-token` on the
 **gateway host**, then re-check:
 
 ```bash
-dmms-ai models status
+dryads-ai models status
 ```
 
 ### Token expiring/expired
 
-Run `dmms-ai models status` to confirm which profile is expiring. If the profile
+Run `dryads-ai models status` to confirm which profile is expiring. If the profile
 is missing, rerun `claude setup-token` and paste the token again.
 
 ## Requirements

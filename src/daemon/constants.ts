@@ -1,13 +1,13 @@
 // Default service labels (canonical + legacy compatibility)
-export const GATEWAY_LAUNCH_AGENT_LABEL = "ai.dmmsai.gateway";
-export const GATEWAY_SYSTEMD_SERVICE_NAME = "dmms-ai-gateway";
-export const GATEWAY_WINDOWS_TASK_NAME = "DMMS AI Gateway";
-export const GATEWAY_SERVICE_MARKER = "dmms-ai";
+export const GATEWAY_LAUNCH_AGENT_LABEL = "ai.dryadsai.gateway";
+export const GATEWAY_SYSTEMD_SERVICE_NAME = "dryads-ai-gateway";
+export const GATEWAY_WINDOWS_TASK_NAME = "Dryads AI Gateway";
+export const GATEWAY_SERVICE_MARKER = "dryads-ai";
 export const GATEWAY_SERVICE_KIND = "gateway";
-export const NODE_LAUNCH_AGENT_LABEL = "ai.dmmsai.node";
-export const NODE_SYSTEMD_SERVICE_NAME = "dmms-ai-node";
-export const NODE_WINDOWS_TASK_NAME = "DMMS AI Node";
-export const NODE_SERVICE_MARKER = "dmms-ai";
+export const NODE_LAUNCH_AGENT_LABEL = "ai.dryadsai.node";
+export const NODE_SYSTEMD_SERVICE_NAME = "dryads-ai-node";
+export const NODE_WINDOWS_TASK_NAME = "Dryads AI Node";
+export const NODE_SERVICE_MARKER = "dryads-ai";
 export const NODE_SERVICE_KIND = "node";
 export const NODE_WINDOWS_TASK_SCRIPT_NAME = "node.cmd";
 export const LEGACY_GATEWAY_LAUNCH_AGENT_LABELS: string[] = [];
@@ -32,7 +32,7 @@ export function resolveGatewayLaunchAgentLabel(profile?: string): string {
   if (!normalized) {
     return GATEWAY_LAUNCH_AGENT_LABEL;
   }
-  return `ai.dmmsai.${normalized}`;
+  return `ai.dryadsai.${normalized}`;
 }
 
 export function resolveLegacyGatewayLaunchAgentLabels(profile?: string): string[] {
@@ -45,7 +45,7 @@ export function resolveGatewaySystemdServiceName(profile?: string): string {
   if (!suffix) {
     return GATEWAY_SYSTEMD_SERVICE_NAME;
   }
-  return `dmms-ai-gateway${suffix}`;
+  return `dryads-ai-gateway${suffix}`;
 }
 
 export function resolveGatewayWindowsTaskName(profile?: string): string {
@@ -53,7 +53,7 @@ export function resolveGatewayWindowsTaskName(profile?: string): string {
   if (!normalized) {
     return GATEWAY_WINDOWS_TASK_NAME;
   }
-  return `DMMS AI Gateway (${normalized})`;
+  return `Dryads AI Gateway (${normalized})`;
 }
 
 export function formatGatewayServiceDescription(params?: {
@@ -70,9 +70,9 @@ export function formatGatewayServiceDescription(params?: {
     parts.push(`v${version}`);
   }
   if (parts.length === 0) {
-    return "DMMS AI Gateway";
+    return "Dryads AI Gateway";
   }
-  return `DMMS AI Gateway (${parts.join(", ")})`;
+  return `Dryads AI Gateway (${parts.join(", ")})`;
 }
 
 export function resolveGatewayServiceDescription(params: {
@@ -83,8 +83,9 @@ export function resolveGatewayServiceDescription(params: {
   return (
     params.description ??
     formatGatewayServiceDescription({
-      profile: params.env.DMMS_AI_PROFILE,
-      version: params.environment?.DMMS_AI_SERVICE_VERSION ?? params.env.DMMS_AI_SERVICE_VERSION,
+      profile: params.env.DRYADS_AI_PROFILE,
+      version:
+        params.environment?.DRYADS_AI_SERVICE_VERSION ?? params.env.DRYADS_AI_SERVICE_VERSION,
     })
   );
 }
@@ -104,7 +105,7 @@ export function resolveNodeWindowsTaskName(): string {
 export function formatNodeServiceDescription(params?: { version?: string }): string {
   const version = params?.version?.trim();
   if (!version) {
-    return "DMMS AI Node Host";
+    return "Dryads AI Node Host";
   }
-  return `DMMS AI Node Host (v${version})`;
+  return `Dryads AI Node Host (v${version})`;
 }

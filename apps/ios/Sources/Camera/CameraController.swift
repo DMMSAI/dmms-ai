@@ -1,5 +1,5 @@
 import AVFoundation
-import DmmsAiKit
+import DryadsAiKit
 import Foundation
 
 actor CameraController {
@@ -36,7 +36,7 @@ actor CameraController {
         }
     }
 
-    func snap(params: DmmsAiCameraSnapParams) async throws -> (
+    func snap(params: DryadsAiCameraSnapParams) async throws -> (
         format: String,
         base64: String,
         width: Int,
@@ -105,7 +105,7 @@ actor CameraController {
             height: res.heightPx)
     }
 
-    func clip(params: DmmsAiCameraClipParams) async throws -> (
+    func clip(params: DryadsAiCameraClipParams) async throws -> (
         format: String,
         base64: String,
         durationMs: Int,
@@ -157,9 +157,9 @@ actor CameraController {
         await Self.warmUpCaptureSession()
 
         let movURL = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-camera-\(UUID().uuidString).mov")
+            .appendingPathComponent("dryads-ai-camera-\(UUID().uuidString).mov")
         let mp4URL = FileManager().temporaryDirectory
-            .appendingPathComponent("dmms-ai-camera-\(UUID().uuidString).mp4")
+            .appendingPathComponent("dryads-ai-camera-\(UUID().uuidString).mp4")
 
         defer {
             try? FileManager().removeItem(at: movURL)
@@ -217,7 +217,7 @@ actor CameraController {
     }
 
     private nonisolated static func pickCamera(
-        facing: DmmsAiCameraFacing,
+        facing: DryadsAiCameraFacing,
         deviceId: String?) -> AVCaptureDevice?
     {
         if let deviceId, !deviceId.isEmpty {

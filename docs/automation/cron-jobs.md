@@ -22,7 +22,7 @@ Troubleshooting: [/automation/troubleshooting](/automation/troubleshooting)
 ## TL;DR
 
 - Cron runs **inside the Gateway** (not inside the model).
-- Jobs persist under `~/.dmms-ai/cron/` so restarts don’t lose schedules.
+- Jobs persist under `~/.dryads-ai/cron/` so restarts don’t lose schedules.
 - Two execution styles:
   - **Main session**: enqueue a system event, then run on the next heartbeat.
   - **Isolated**: run a dedicated agent turn in `cron:<jobId>`, with delivery (announce by default or none).
@@ -35,7 +35,7 @@ Troubleshooting: [/automation/troubleshooting](/automation/troubleshooting)
 Create a one-shot reminder, verify it exists, and run it immediately:
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Reminder" \
   --at "2026-02-01T16:00:00Z" \
   --session main \
@@ -43,15 +43,15 @@ dmms-ai cron add \
   --wake now \
   --delete-after-run
 
-dmms-ai cron list
-dmms-ai cron run <job-id>
-dmms-ai cron runs --id <job-id>
+dryads-ai cron list
+dryads-ai cron run <job-id>
+dryads-ai cron runs --id <job-id>
 ```
 
 Schedule a recurring isolated job with delivery:
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Morning brief" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -68,9 +68,9 @@ For the canonical JSON shapes and examples, see [JSON schema for tool calls](/au
 
 ## Where cron jobs are stored
 
-Cron jobs are persisted on the Gateway host at `~/.dmms-ai/cron/jobs.json` by default.
+Cron jobs are persisted on the Gateway host at `~/.dryads-ai/cron/jobs.json` by default.
 The Gateway loads the file into memory and writes it back on changes, so manual edits
-are only safe when the Gateway is stopped. Prefer `dmms-ai cron add/edit` or the cron
+are only safe when the Gateway is stopped. Prefer `dryads-ai cron add/edit` or the cron
 tool call API for changes.
 
 ## Beginner-friendly overview
@@ -120,7 +120,7 @@ Cron supports three schedule kinds:
 Cron expressions use `croner`. If a timezone is omitted, the Gateway host’s
 local timezone is used.
 
-To reduce top-of-hour load spikes across many gateways, DMMS AI applies a
+To reduce top-of-hour load spikes across many gateways, Dryads AI applies a
 deterministic per-job stagger window of up to 5 minutes for recurring
 top-of-hour expressions (for example `0 * * * *`, `0 */2 * * *`). Fixed-hour
 expressions such as `0 7 * * *` remain exact.
@@ -187,7 +187,7 @@ Delivery config:
 Announce delivery suppresses messaging tool sends for the run; use `delivery.channel`/`delivery.to`
 to target the chat instead. When `delivery.mode = "none"`, no summary is posted to the main session.
 
-If `delivery` is omitted for isolated jobs, DMMS AI defaults to `announce`.
+If `delivery` is omitted for isolated jobs, Dryads AI defaults to `announce`.
 
 #### Announce delivery flow
 
@@ -348,8 +348,8 @@ Notes:
 
 ## Storage & history
 
-- Job store: `~/.dmms-ai/cron/jobs.json` (Gateway-managed JSON).
-- Run history: `~/.dmms-ai/cron/runs/<jobId>.jsonl` (JSONL, auto-pruned).
+- Job store: `~/.dryads-ai/cron/jobs.json` (Gateway-managed JSON).
+- Run history: `~/.dryads-ai/cron/runs/<jobId>.jsonl` (JSONL, auto-pruned).
 - Override store path: `cron.store` in config.
 
 ## Configuration
@@ -358,7 +358,7 @@ Notes:
 {
   cron: {
     enabled: true, // default true
-    store: "~/.dmms-ai/cron/jobs.json",
+    store: "~/.dryads-ai/cron/jobs.json",
     maxConcurrentRuns: 1, // default 1
     webhook: "https://example.invalid/legacy", // deprecated fallback for stored notify:true jobs
     webhookToken: "replace-with-dedicated-webhook-token", // optional bearer token for webhook mode
@@ -378,14 +378,14 @@ Webhook behavior:
 Disable cron entirely:
 
 - `cron.enabled: false` (config)
-- `DMMS_AI_SKIP_CRON=1` (env)
+- `DRYADS_AI_SKIP_CRON=1` (env)
 
 ## CLI quickstart
 
 One-shot reminder (UTC ISO, auto-delete after success):
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Send reminder" \
   --at "2026-01-12T18:00:00Z" \
   --session main \
@@ -397,7 +397,7 @@ dmms-ai cron add \
 One-shot reminder (main session, wake immediately):
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Calendar check" \
   --at "20m" \
   --session main \
@@ -408,7 +408,7 @@ dmms-ai cron add \
 Recurring isolated job (announce to WhatsApp):
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Morning status" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -422,7 +422,7 @@ dmms-ai cron add \
 Recurring cron job with explicit 30-second stagger:
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Minute watcher" \
   --cron "0 * * * * *" \
   --tz "UTC" \
@@ -435,7 +435,7 @@ dmms-ai cron add \
 Recurring isolated job (deliver to a Telegram topic):
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Nightly summary (topic)" \
   --cron "0 22 * * *" \
   --tz "America/Los_Angeles" \
@@ -449,7 +449,7 @@ dmms-ai cron add \
 Isolated job with model and thinking override:
 
 ```bash
-dmms-ai cron add \
+dryads-ai cron add \
   --name "Deep analysis" \
   --cron "0 6 * * 1" \
   --tz "America/Los_Angeles" \
@@ -466,24 +466,24 @@ Agent selection (multi-agent setups):
 
 ```bash
 # Pin a job to agent "ops" (falls back to default if that agent is missing)
-dmms-ai cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
+dryads-ai cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
 
 # Switch or clear the agent on an existing job
-dmms-ai cron edit <jobId> --agent ops
-dmms-ai cron edit <jobId> --clear-agent
+dryads-ai cron edit <jobId> --agent ops
+dryads-ai cron edit <jobId> --clear-agent
 ```
 
 Manual run (force is the default, use `--due` to only run when due):
 
 ```bash
-dmms-ai cron run <jobId>
-dmms-ai cron run <jobId> --due
+dryads-ai cron run <jobId>
+dryads-ai cron run <jobId> --due
 ```
 
 Edit an existing job (patch fields):
 
 ```bash
-dmms-ai cron edit <jobId> \
+dryads-ai cron edit <jobId> \
   --message "Updated prompt" \
   --model "opus" \
   --thinking low
@@ -492,38 +492,38 @@ dmms-ai cron edit <jobId> \
 Force an existing cron job to run exactly on schedule (no stagger):
 
 ```bash
-dmms-ai cron edit <jobId> --exact
+dryads-ai cron edit <jobId> --exact
 ```
 
 Run history:
 
 ```bash
-dmms-ai cron runs --id <jobId> --limit 50
+dryads-ai cron runs --id <jobId> --limit 50
 ```
 
 Immediate system event without creating a job:
 
 ```bash
-dmms-ai system event --mode now --text "Next heartbeat: check battery."
+dryads-ai system event --mode now --text "Next heartbeat: check battery."
 ```
 
 ## Gateway API surface
 
 - `cron.list`, `cron.status`, `cron.add`, `cron.update`, `cron.remove`
 - `cron.run` (force or due), `cron.runs`
-  For immediate system events without a job, use [`dmms-ai system event`](/cli/system).
+  For immediate system events without a job, use [`dryads-ai system event`](/cli/system).
 
 ## Troubleshooting
 
 ### “Nothing runs”
 
-- Check cron is enabled: `cron.enabled` and `DMMS_AI_SKIP_CRON`.
+- Check cron is enabled: `cron.enabled` and `DRYADS_AI_SKIP_CRON`.
 - Check the Gateway is running continuously (cron runs inside the Gateway process).
 - For `cron` schedules: confirm timezone (`--tz`) vs the host timezone.
 
 ### A recurring job keeps delaying after failures
 
-- DMMS AI applies exponential retry backoff for recurring jobs after consecutive errors:
+- Dryads AI applies exponential retry backoff for recurring jobs after consecutive errors:
   30s, 1m, 5m, 15m, then 60m between retries.
 - Backoff resets automatically after the next successful run.
 - One-shot (`at`) jobs disable after a terminal run (`ok`, `error`, or `skipped`) and do not retry.

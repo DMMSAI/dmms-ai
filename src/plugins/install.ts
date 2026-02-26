@@ -64,14 +64,14 @@ function validatePluginId(pluginId: string): string | null {
   return null;
 }
 
-async function ensureDmmsAiExtensions(manifest: PackageManifest) {
+async function ensureDryadsAiExtensions(manifest: PackageManifest) {
   const extensions = manifest[MANIFEST_KEY]?.extensions;
   if (!Array.isArray(extensions)) {
-    throw new Error("package.json missing dmms-ai.extensions");
+    throw new Error("package.json missing dryads-ai.extensions");
   }
   const list = extensions.map((e) => (typeof e === "string" ? e.trim() : "")).filter(Boolean);
   if (list.length === 0) {
-    throw new Error("package.json dmms-ai.extensions is empty");
+    throw new Error("package.json dryads-ai.extensions is empty");
   }
   return list;
 }
@@ -160,7 +160,7 @@ async function installPluginFromPackageDir(params: {
 
   let extensions: string[];
   try {
-    extensions = await ensureDmmsAiExtensions(manifest);
+    extensions = await ensureDryadsAiExtensions(manifest);
   } catch (err) {
     return { ok: false, error: String(err) };
   }
@@ -209,12 +209,12 @@ async function installPluginFromPackageDir(params: {
       );
     } else if (scanSummary.warn > 0) {
       logger.warn?.(
-        `Plugin "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "dmms-ai security audit --deep" for details.`,
+        `Plugin "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "dryads-ai security audit --deep" for details.`,
       );
     }
   } catch (err) {
     logger.warn?.(
-      `Plugin "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "dmms-ai security audit --deep" after install.`,
+      `Plugin "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "dryads-ai security audit --deep" after install.`,
     );
   }
 
@@ -307,7 +307,7 @@ export async function installPluginFromArchive(params: {
   }
   const archivePath = archivePathResult.path;
 
-  return await withTempDir("dmms-ai-plugin-", async (tmpDir) => {
+  return await withTempDir("dryads-ai-plugin-", async (tmpDir) => {
     const extractDir = path.join(tmpDir, "extract");
     await fs.mkdir(extractDir, { recursive: true });
 
@@ -429,7 +429,7 @@ export async function installPluginFromNpmSpec(params: {
     return { ok: false, error: specError };
   }
 
-  return await withTempDir("dmms-ai-npm-pack-", async (tmpDir) => {
+  return await withTempDir("dryads-ai-npm-pack-", async (tmpDir) => {
     logger.info?.(`Downloading ${spec}…`);
     const packedResult = await packNpmSpecToArchive({
       spec,

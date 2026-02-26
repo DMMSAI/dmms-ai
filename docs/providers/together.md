@@ -1,7 +1,7 @@
 ---
 summary: "Together AI setup (auth + model selection)"
 read_when:
-  - You want to use Together AI with DMMS AI
+  - You want to use Together AI with Dryads AI
   - You need the API key env var or CLI auth choice
 ---
 
@@ -18,7 +18,7 @@ The [Together AI](https://together.ai) provides access to leading open-source mo
 1. Set the API key (recommended: store it for the Gateway):
 
 ```bash
-dmms-ai onboard --auth-choice together-api-key
+dryads-ai onboard --auth-choice together-api-key
 ```
 
 2. Set a default model:
@@ -36,7 +36,7 @@ dmms-ai onboard --auth-choice together-api-key
 ## Non-interactive example
 
 ```bash
-dmms-ai onboard --non-interactive \
+dryads-ai onboard --non-interactive \
   --mode local \
   --auth-choice together-api-key \
   --together-api-key "$TOGETHER_API_KEY"

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import { installModelsConfigTestHooks, withModelsTempHome } from "./models-config.e2e-harness.js";
 
 describe("models-config", () => {
@@ -9,10 +9,10 @@ describe("models-config", () => {
 
   it("normalizes gemini 3 ids to preview for google providers", async () => {
     await withModelsTempHome(async () => {
-      const { ensureDmmsAiModelsJson } = await import("./models-config.js");
-      const { resolveDmmsAiAgentDir } = await import("./agent-paths.js");
+      const { ensureDryadsAiModelsJson } = await import("./models-config.js");
+      const { resolveDryadsAiAgentDir } = await import("./agent-paths.js");
 
-      const cfg: DmmsAiConfig = {
+      const cfg: DryadsAiConfig = {
         models: {
           providers: {
             google: {
@@ -46,9 +46,9 @@ describe("models-config", () => {
         },
       };
 
-      await ensureDmmsAiModelsJson(cfg);
+      await ensureDryadsAiModelsJson(cfg);
 
-      const modelPath = path.join(resolveDmmsAiAgentDir(), "models.json");
+      const modelPath = path.join(resolveDryadsAiAgentDir(), "models.json");
       const raw = await fs.readFile(modelPath, "utf8");
       const parsed = JSON.parse(raw) as {
         providers: Record<string, { models: Array<{ id: string }> }>;

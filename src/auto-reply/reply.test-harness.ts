@@ -8,8 +8,8 @@ type HomeEnvSnapshot = {
   USERPROFILE: string | undefined;
   HOMEDRIVE: string | undefined;
   HOMEPATH: string | undefined;
-  DMMS_AI_STATE_DIR: string | undefined;
-  DMMS_AI_AGENT_DIR: string | undefined;
+  DRYADS_AI_STATE_DIR: string | undefined;
+  DRYADS_AI_AGENT_DIR: string | undefined;
   PI_CODING_AGENT_DIR: string | undefined;
 };
 
@@ -19,8 +19,8 @@ function snapshotHomeEnv(): HomeEnvSnapshot {
     USERPROFILE: process.env.USERPROFILE,
     HOMEDRIVE: process.env.HOMEDRIVE,
     HOMEPATH: process.env.HOMEPATH,
-    DMMS_AI_STATE_DIR: process.env.DMMS_AI_STATE_DIR,
-    DMMS_AI_AGENT_DIR: process.env.DMMS_AI_AGENT_DIR,
+    DRYADS_AI_STATE_DIR: process.env.DRYADS_AI_STATE_DIR,
+    DRYADS_AI_AGENT_DIR: process.env.DRYADS_AI_AGENT_DIR,
     PI_CODING_AGENT_DIR: process.env.PI_CODING_AGENT_DIR,
   };
 }
@@ -52,13 +52,15 @@ export function createTempHomeHarness(options: { prefix: string; beforeEachCase?
 
   async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
     const home = path.join(fixtureRoot, `case-${++caseId}`);
-    await fs.mkdir(path.join(home, ".dmms-ai", "agents", "main", "sessions"), { recursive: true });
+    await fs.mkdir(path.join(home, ".dryads-ai", "agents", "main", "sessions"), {
+      recursive: true,
+    });
     const envSnapshot = snapshotHomeEnv();
     process.env.HOME = home;
     process.env.USERPROFILE = home;
-    process.env.DMMS_AI_STATE_DIR = path.join(home, ".dmms-ai");
-    process.env.DMMS_AI_AGENT_DIR = path.join(home, ".dmms-ai", "agent");
-    process.env.PI_CODING_AGENT_DIR = path.join(home, ".dmms-ai", "agent");
+    process.env.DRYADS_AI_STATE_DIR = path.join(home, ".dryads-ai");
+    process.env.DRYADS_AI_AGENT_DIR = path.join(home, ".dryads-ai", "agent");
+    process.env.PI_CODING_AGENT_DIR = path.join(home, ".dryads-ai", "agent");
 
     if (process.platform === "win32") {
       const match = home.match(/^([A-Za-z]:)(.*)$/);
@@ -84,7 +86,7 @@ export function makeReplyConfig(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "dmms-ai"),
+        workspace: path.join(home, "dryads-ai"),
       },
     },
     channels: {

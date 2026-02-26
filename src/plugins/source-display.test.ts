@@ -6,12 +6,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "bundled",
-        source: "/opt/homebrew/lib/node_modules/dmms-ai/extensions/bluebubbles/index.ts",
+        source: "/opt/homebrew/lib/node_modules/dryads-ai/extensions/bluebubbles/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/dmms-ai/extensions",
-        global: "/Users/x/.dmms-ai/extensions",
-        workspace: "/Users/x/ws/.dmms-ai/extensions",
+        stock: "/opt/homebrew/lib/node_modules/dryads-ai/extensions",
+        global: "/Users/x/.dryads-ai/extensions",
+        workspace: "/Users/x/ws/.dryads-ai/extensions",
       },
     );
     expect(out.value).toBe("stock:bluebubbles/index.ts");
@@ -22,12 +22,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "workspace",
-        source: "/Users/x/ws/.dmms-ai/extensions/matrix/index.ts",
+        source: "/Users/x/ws/.dryads-ai/extensions/matrix/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/dmms-ai/extensions",
-        global: "/Users/x/.dmms-ai/extensions",
-        workspace: "/Users/x/ws/.dmms-ai/extensions",
+        stock: "/opt/homebrew/lib/node_modules/dryads-ai/extensions",
+        global: "/Users/x/.dryads-ai/extensions",
+        workspace: "/Users/x/ws/.dryads-ai/extensions",
       },
     );
     expect(out.value).toBe("workspace:matrix/index.ts");
@@ -38,12 +38,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "global",
-        source: "/Users/x/.dmms-ai/extensions/zalo/index.js",
+        source: "/Users/x/.dryads-ai/extensions/zalo/index.js",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/dmms-ai/extensions",
-        global: "/Users/x/.dmms-ai/extensions",
-        workspace: "/Users/x/ws/.dmms-ai/extensions",
+        stock: "/opt/homebrew/lib/node_modules/dryads-ai/extensions",
+        global: "/Users/x/.dryads-ai/extensions",
+        workspace: "/Users/x/ws/.dryads-ai/extensions",
       },
     );
     expect(out.value).toBe("global:zalo/index.js");

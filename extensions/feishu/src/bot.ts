@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "dmms-ai/plugin-sdk";
+import type { ClawdbotConfig, RuntimeEnv } from "dryads-ai/plugin-sdk";
 import {
   buildAgentMediaPayload,
   buildPendingHistoryContextFromMap,
@@ -6,7 +6,7 @@ import {
   clearHistoryEntriesIfEnabled,
   DEFAULT_GROUP_HISTORY_LIMIT,
   type HistoryEntry,
-} from "dmms-ai/plugin-sdk";
+} from "dryads-ai/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { tryRecordMessage } from "./dedup.js";

@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "dmms-ai/plugin-sdk";
+import type { PluginRuntime } from "dryads-ai/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { setMSTeamsRuntime } from "./runtime.js";
 

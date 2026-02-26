@@ -8,17 +8,17 @@ plugins {
 }
 
 android {
-  namespace = "ai.dmmsai.android"
+  namespace = "ai.dryadsai.android"
   compileSdk = 36
 
   sourceSets {
     getByName("main") {
-      assets.srcDir(file("../../shared/DmmsAiKit/Sources/DmmsAiKit/Resources"))
+      assets.srcDir(file("../../shared/DryadsAiKit/Sources/DryadsAiKit/Resources"))
     }
   }
 
   defaultConfig {
-    applicationId = "ai.dmmsai.android"
+    applicationId = "ai.dryadsai.android"
     minSdk = 31
     targetSdk = 36
     versionCode = 202602180
@@ -84,7 +84,7 @@ androidComponents {
         val versionName = output.versionName.orNull ?: "0"
         val buildType = variant.buildType
 
-        val outputFileName = "dmms-ai-${versionName}-${buildType}.apk"
+        val outputFileName = "dryads-ai-${versionName}-${buildType}.apk"
         output.outputFileName = outputFileName
       }
   }

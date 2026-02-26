@@ -1,19 +1,19 @@
 /**
- * Hook system for DMMS AI agent events
+ * Hook system for Dryads AI agent events
  *
  * Provides an extensible event-driven hook system for agent events
  * like command processing, session lifecycle, etc.
  */
 
 import type { WorkspaceBootstrapFile } from "../agents/workspace.js";
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 
 export type InternalHookEventType = "command" | "session" | "agent" | "gateway" | "message";
 
 export type AgentBootstrapHookContext = {
   workspaceDir: string;
   bootstrapFiles: WorkspaceBootstrapFile[];
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   sessionKey?: string;
   sessionId?: string;
   agentId?: string;

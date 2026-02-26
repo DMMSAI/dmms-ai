@@ -1,5 +1,5 @@
 import { resolveGatewayPort } from "../../config/config.js";
-import type { DmmsAiConfig, ConfigFileSnapshot } from "../../config/types.js";
+import type { DryadsAiConfig, ConfigFileSnapshot } from "../../config/types.js";
 import type { GatewayProbeResult } from "../../gateway/probe.js";
 import { pickPrimaryTailnetIPv4 } from "../../infra/tailnet.js";
 import { colorize, theme } from "../../terminal/theme.js";
@@ -88,7 +88,7 @@ function normalizeWsUrl(value: string): string | null {
   return trimmed;
 }
 
-export function resolveTargets(cfg: DmmsAiConfig, explicitUrl?: string): GatewayStatusTarget[] {
+export function resolveTargets(cfg: DryadsAiConfig, explicitUrl?: string): GatewayStatusTarget[] {
   const targets: GatewayStatusTarget[] = [];
   const add = (t: GatewayStatusTarget) => {
     if (!targets.some((x) => x.url === t.url)) {
@@ -145,7 +145,7 @@ export function sanitizeSshTarget(value: unknown): string | null {
 }
 
 export function resolveAuthForTarget(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   target: GatewayStatusTarget,
   overrides: { token?: string; password?: string },
 ): { token?: string; password?: string } {
@@ -166,8 +166,8 @@ export function resolveAuthForTarget(
     };
   }
 
-  const envToken = process.env.DMMS_AI_GATEWAY_TOKEN?.trim() || "";
-  const envPassword = process.env.DMMS_AI_GATEWAY_PASSWORD?.trim() || "";
+  const envToken = process.env.DRYADS_AI_GATEWAY_TOKEN?.trim() || "";
+  const envPassword = process.env.DRYADS_AI_GATEWAY_PASSWORD?.trim() || "";
   const cfgToken =
     typeof cfg.gateway?.auth?.token === "string" ? cfg.gateway.auth.token.trim() : "";
   const cfgPassword =
@@ -244,7 +244,7 @@ export function extractConfigSummary(snapshotUnknown: unknown): GatewayConfigSum
   };
 }
 
-export function buildNetworkHints(cfg: DmmsAiConfig) {
+export function buildNetworkHints(cfg: DryadsAiConfig) {
   const tailnetIPv4 = pickPrimaryTailnetIPv4();
   const port = resolveGatewayPort(cfg);
   return {

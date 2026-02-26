@@ -10,16 +10,16 @@ title: "Logging"
 
 For a user-facing overview (CLI + Control UI + config), see [/logging](/logging).
 
-DMMS AI has two log “surfaces”:
+Dryads AI has two log “surfaces”:
 
 - **Console output** (what you see in the terminal / Debug UI).
 - **File logs** (JSON lines) written by the gateway logger.
 
 ## File-based logger
 
-- Default rolling log file is under `/tmp/dmms-ai/` (one file per day): `dmms-ai-YYYY-MM-DD.log`
+- Default rolling log file is under `/tmp/dryads-ai/` (one file per day): `dryads-ai-YYYY-MM-DD.log`
   - Date uses the gateway host's local timezone.
-- The log file path and level can be configured via `~/.dmms-ai/dmms-ai.json`:
+- The log file path and level can be configured via `~/.dryads-ai/dryads-ai.json`:
   - `logging.file`
   - `logging.level`
 
@@ -29,7 +29,7 @@ The Control UI Logs tab tails this file via the gateway (`logs.tail`).
 CLI can do the same:
 
 ```bash
-dmms-ai logs --follow
+dryads-ai logs --follow
 ```
 
 **Verbose vs. log levels**
@@ -73,7 +73,7 @@ The gateway prints WebSocket protocol logs in two modes:
 
 ### WS log style
 
-`dmms-ai gateway` supports a per-gateway style switch:
+`dryads-ai gateway` supports a per-gateway style switch:
 
 - `--ws-log auto` (default): normal mode is optimized; verbose mode uses compact output
 - `--ws-log compact`: compact output (paired request/response) when verbose
@@ -84,13 +84,13 @@ Examples:
 
 ```bash
 # optimized (only errors/slow)
-dmms-ai gateway
+dryads-ai gateway
 
 # show all WS traffic (paired)
-dmms-ai gateway --verbose --ws-log compact
+dryads-ai gateway --verbose --ws-log compact
 
 # show all WS traffic (full meta)
-dmms-ai gateway --verbose --ws-log full
+dryads-ai gateway --verbose --ws-log full
 ```
 
 ## Console formatting (subsystem logging)

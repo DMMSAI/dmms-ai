@@ -28,13 +28,13 @@ title: "Strict Config Validation"
 - `plugins.entries.<id>.config` must be validated by the plugin’s schema.
   - If a plugin lacks a schema, **reject plugin load** and surface a clear error.
 - Unknown `channels.<id>` keys are errors unless a plugin manifest declares the channel id.
-- Plugin manifests (`dmms-ai.plugin.json`) are required for all plugins.
+- Plugin manifests (`dryads-ai.plugin.json`) are required for all plugins.
 
 ## Plugin schema enforcement
 
 - Each plugin provides a strict JSON Schema for its config (inline in the manifest).
 - Plugin load flow:
-  1. Resolve plugin manifest + schema (`dmms-ai.plugin.json`).
+  1. Resolve plugin manifest + schema (`dryads-ai.plugin.json`).
   2. Validate config against the schema.
   3. If missing schema or invalid config: block plugin load, record error.
 - Error message includes:
@@ -48,8 +48,8 @@ title: "Strict Config Validation"
 - Doctor runs **every time** config is loaded (dry-run by default).
 - If config invalid:
   - Print a summary + actionable errors.
-  - Instruct: `dmms-ai doctor --fix`.
-- `dmms-ai doctor --fix`:
+  - Instruct: `dryads-ai doctor --fix`.
+- `dryads-ai doctor --fix`:
   - Applies migrations.
   - Removes unknown keys.
   - Writes updated config.
@@ -58,14 +58,14 @@ title: "Strict Config Validation"
 
 Allowed (diagnostic-only):
 
-- `dmms-ai doctor`
-- `dmms-ai logs`
-- `dmms-ai health`
-- `dmms-ai help`
-- `dmms-ai status`
-- `dmms-ai gateway status`
+- `dryads-ai doctor`
+- `dryads-ai logs`
+- `dryads-ai health`
+- `dryads-ai help`
+- `dryads-ai status`
+- `dryads-ai gateway status`
 
-Everything else must hard-fail with: “Config invalid. Run `dmms-ai doctor --fix`.”
+Everything else must hard-fail with: “Config invalid. Run `dryads-ai doctor --fix`.”
 
 ## Error UX format
 

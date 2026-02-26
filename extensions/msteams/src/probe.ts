@@ -1,4 +1,4 @@
-import type { BaseProbeResult, MSTeamsConfig } from "dmms-ai/plugin-sdk";
+import type { BaseProbeResult, MSTeamsConfig } from "dryads-ai/plugin-sdk";
 import { formatUnknownError } from "./errors.js";
 import { loadMSTeamsSdkWithAuth } from "./sdk.js";
 import { resolveMSTeamsCredentials } from "./token.js";

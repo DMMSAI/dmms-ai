@@ -1,4 +1,4 @@
-# Google Antigravity Auth (DMMS AI plugin)
+# Google Antigravity Auth (Dryads AI plugin)
 
 OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 
@@ -7,7 +7,7 @@ OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-dmms-ai plugins enable google-antigravity-auth
+dryads-ai plugins enable google-antigravity-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-dmms-ai models auth login --provider google-antigravity --set-default
+dryads-ai models auth login --provider google-antigravity --set-default
 ```
 
 ## Notes

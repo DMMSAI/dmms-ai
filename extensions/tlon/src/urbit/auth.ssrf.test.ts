@@ -1,5 +1,5 @@
-import type { LookupFn } from "dmms-ai/plugin-sdk";
-import { SsrFBlockedError } from "dmms-ai/plugin-sdk";
+import type { LookupFn } from "dryads-ai/plugin-sdk";
+import { SsrFBlockedError } from "dryads-ai/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { authenticate } from "./auth.js";
 

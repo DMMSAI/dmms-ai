@@ -4,7 +4,7 @@ import {
   getFrontmatterString,
   normalizeStringList,
   parseFrontmatterBool,
-  resolveDmmsAiManifestBlock,
+  resolveDryadsAiManifestBlock,
 } from "./frontmatter.js";
 import { resolveNodeIdFromCandidates } from "./node-match.js";
 
@@ -66,18 +66,20 @@ describe("shared/frontmatter", () => {
     expect(parseFrontmatterBool(undefined, true)).toBe(true);
   });
 
-  test("resolveDmmsAiManifestBlock parses JSON5 metadata and picks dmms-ai block", () => {
+  test("resolveDryadsAiManifestBlock parses JSON5 metadata and picks dryads-ai block", () => {
     const frontmatter = {
-      metadata: '{ "dmms-ai": { foo: 1, bar: "baz" } }',
+      metadata: '{ "dryads-ai": { foo: 1, bar: "baz" } }',
     };
-    expect(resolveDmmsAiManifestBlock({ frontmatter })).toEqual({ foo: 1, bar: "baz" });
+    expect(resolveDryadsAiManifestBlock({ frontmatter })).toEqual({ foo: 1, bar: "baz" });
   });
 
-  test("resolveDmmsAiManifestBlock returns undefined for invalid input", () => {
-    expect(resolveDmmsAiManifestBlock({ frontmatter: {} })).toBeUndefined();
-    expect(resolveDmmsAiManifestBlock({ frontmatter: { metadata: "not-json5" } })).toBeUndefined();
+  test("resolveDryadsAiManifestBlock returns undefined for invalid input", () => {
+    expect(resolveDryadsAiManifestBlock({ frontmatter: {} })).toBeUndefined();
     expect(
-      resolveDmmsAiManifestBlock({ frontmatter: { metadata: "{ nope: { a: 1 } }" } }),
+      resolveDryadsAiManifestBlock({ frontmatter: { metadata: "not-json5" } }),
+    ).toBeUndefined();
+    expect(
+      resolveDryadsAiManifestBlock({ frontmatter: { metadata: "{ nope: { a: 1 } }" } }),
     ).toBeUndefined();
   });
 });

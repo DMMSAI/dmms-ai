@@ -1,10 +1,10 @@
-# @dmms-ai/nostr
+# @dryads-ai/nostr
 
-Nostr DM channel plugin for DMMS AI using NIP-04 encrypted direct messages.
+Nostr DM channel plugin for Dryads AI using NIP-04 encrypted direct messages.
 
 ## Overview
 
-This extension adds Nostr as a messaging channel to DMMS AI. It enables your bot to:
+This extension adds Nostr as a messaging channel to Dryads AI. It enables your bot to:
 
 - Receive encrypted DMs from Nostr users
 - Send encrypted responses back
@@ -13,7 +13,7 @@ This extension adds Nostr as a messaging channel to DMMS AI. It enables your bot
 ## Installation
 
 ```bash
-dmms-ai plugins install @dmms-ai/nostr
+dryads-ai plugins install @dryads-ai/nostr
 ```
 
 ## Quick Setup
@@ -90,7 +90,7 @@ dmms-ai plugins install @dmms-ai/nostr
 # Using strfry
 docker run -p 7777:7777 ghcr.io/hoytech/strfry
 
-# Configure dmms-ai to use local relay
+# Configure dryads-ai to use local relay
 "relays": ["ws://localhost:7777"]
 ```
 

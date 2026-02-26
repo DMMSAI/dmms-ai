@@ -3,14 +3,16 @@ import { describe, expect, it } from "vitest";
 import { expandHomePrefix, resolveEffectiveHomeDir, resolveRequiredHomeDir } from "./home-dir.js";
 
 describe("resolveEffectiveHomeDir", () => {
-  it("prefers DMMS_AI_HOME over HOME and USERPROFILE", () => {
+  it("prefers DRYADS_AI_HOME over HOME and USERPROFILE", () => {
     const env = {
-      DMMS_AI_HOME: "/srv/dmms-ai-home",
+      DRYADS_AI_HOME: "/srv/dryads-ai-home",
       HOME: "/home/other",
       USERPROFILE: "C:/Users/other",
     } as NodeJS.ProcessEnv;
 
-    expect(resolveEffectiveHomeDir(env, () => "/fallback")).toBe(path.resolve("/srv/dmms-ai-home"));
+    expect(resolveEffectiveHomeDir(env, () => "/fallback")).toBe(
+      path.resolve("/srv/dryads-ai-home"),
+    );
   });
 
   it("falls back to HOME then USERPROFILE then homedir", () => {
@@ -25,9 +27,9 @@ describe("resolveEffectiveHomeDir", () => {
     );
   });
 
-  it("expands DMMS_AI_HOME when set to ~", () => {
+  it("expands DRYADS_AI_HOME when set to ~", () => {
     const env = {
-      DMMS_AI_HOME: "~/svc",
+      DRYADS_AI_HOME: "~/svc",
       HOME: "/home/alice",
     } as NodeJS.ProcessEnv;
 
@@ -44,17 +46,17 @@ describe("resolveRequiredHomeDir", () => {
     ).toBe(process.cwd());
   });
 
-  it("returns a fully resolved path for DMMS_AI_HOME", () => {
+  it("returns a fully resolved path for DRYADS_AI_HOME", () => {
     const result = resolveRequiredHomeDir(
-      { DMMS_AI_HOME: "/custom/home" } as NodeJS.ProcessEnv,
+      { DRYADS_AI_HOME: "/custom/home" } as NodeJS.ProcessEnv,
       () => "/fallback",
     );
     expect(result).toBe(path.resolve("/custom/home"));
   });
 
-  it("returns cwd when DMMS_AI_HOME is tilde-only and no fallback home exists", () => {
+  it("returns cwd when DRYADS_AI_HOME is tilde-only and no fallback home exists", () => {
     expect(
-      resolveRequiredHomeDir({ DMMS_AI_HOME: "~" } as NodeJS.ProcessEnv, () => {
+      resolveRequiredHomeDir({ DRYADS_AI_HOME: "~" } as NodeJS.ProcessEnv, () => {
         throw new Error("no home");
       }),
     ).toBe(process.cwd());
@@ -64,9 +66,9 @@ describe("resolveRequiredHomeDir", () => {
 describe("expandHomePrefix", () => {
   it("expands tilde using effective home", () => {
     const value = expandHomePrefix("~/x", {
-      env: { DMMS_AI_HOME: "/srv/dmms-ai-home" } as NodeJS.ProcessEnv,
+      env: { DRYADS_AI_HOME: "/srv/dryads-ai-home" } as NodeJS.ProcessEnv,
     });
-    expect(value).toBe(`${path.resolve("/srv/dmms-ai-home")}/x`);
+    expect(value).toBe(`${path.resolve("/srv/dryads-ai-home")}/x`);
   });
 
   it("keeps non-tilde values unchanged", () => {

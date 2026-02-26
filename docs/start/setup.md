@@ -1,5 +1,5 @@
 ---
-summary: "Advanced setup and development workflows for DMMS AI"
+summary: "Advanced setup and development workflows for Dryads AI"
 read_when:
   - Setting up a new machine
   - You want “latest + greatest” without breaking your personal setup
@@ -17,7 +17,7 @@ Last updated: 2026-01-01
 
 ## TL;DR
 
-- **Tailoring lives outside the repo:** `~/.dmms-ai/workspace` (workspace) + `~/.dmms-ai/dmms-ai.json` (config).
+- **Tailoring lives outside the repo:** `~/.dryads-ai/workspace` (workspace) + `~/.dryads-ai/dryads-ai.json` (config).
 - **Stable workflow:** install the macOS app; let it run the bundled Gateway.
 - **Bleeding edge workflow:** run the Gateway yourself via `pnpm gateway:watch`, then let the macOS app attach in Local mode.
 
@@ -31,51 +31,51 @@ Last updated: 2026-01-01
 
 If you want “100% tailored to me” _and_ easy updates, keep your customization in:
 
-- **Config:** `~/.dmms-ai/dmms-ai.json` (JSON/JSON5-ish)
-- **Workspace:** `~/.dmms-ai/workspace` (skills, prompts, memories; make it a private git repo)
+- **Config:** `~/.dryads-ai/dryads-ai.json` (JSON/JSON5-ish)
+- **Workspace:** `~/.dryads-ai/workspace` (skills, prompts, memories; make it a private git repo)
 
 Bootstrap once:
 
 ```bash
-dmms-ai setup
+dryads-ai setup
 ```
 
 From inside this repo, use the local CLI entry:
 
 ```bash
-dmms-ai setup
+dryads-ai setup
 ```
 
-If you don’t have a global install yet, run it via `pnpm dmms-ai setup`.
+If you don’t have a global install yet, run it via `pnpm dryads-ai setup`.
 
 ## Run the Gateway from this repo
 
 After `pnpm build`, you can run the packaged CLI directly:
 
 ```bash
-node dmms-ai.mjs gateway --port 18789 --verbose
+node dryads-ai.mjs gateway --port 18789 --verbose
 ```
 
 ## Stable workflow (macOS app first)
 
-1. Install + launch **DmmsAi.app** (menu bar).
+1. Install + launch **DryadsAi.app** (menu bar).
 2. Complete the onboarding/permissions checklist (TCC prompts).
 3. Ensure Gateway is **Local** and running (the app manages it).
 4. Link surfaces (example: WhatsApp):
 
 ```bash
-dmms-ai channels login
+dryads-ai channels login
 ```
 
 5. Sanity check:
 
 ```bash
-dmms-ai health
+dryads-ai health
 ```
 
 If onboarding is not available in your build:
 
-- Run `dmms-ai setup`, then `dmms-ai channels login`, then start the Gateway manually (`dmms-ai gateway`).
+- Run `dryads-ai setup`, then `dryads-ai channels login`, then start the Gateway manually (`dryads-ai gateway`).
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
@@ -100,7 +100,7 @@ pnpm gateway:watch
 
 ### 2) Point the macOS app at your running Gateway
 
-In **DmmsAi.app**:
+In **DryadsAi.app**:
 
 - Connection Mode: **Local**
   The app will attach to the running gateway on the configured port.
@@ -111,33 +111,33 @@ In **DmmsAi.app**:
 - Or via CLI:
 
 ```bash
-dmms-ai health
+dryads-ai health
 ```
 
 ### Common footguns
 
 - **Wrong port:** Gateway WS defaults to `ws://127.0.0.1:18789`; keep app + CLI on the same port.
 - **Where state lives:**
-  - Credentials: `~/.dmms-ai/credentials/`
-  - Sessions: `~/.dmms-ai/agents/<agentId>/sessions/`
-  - Logs: `/tmp/dmms-ai/`
+  - Credentials: `~/.dryads-ai/credentials/`
+  - Sessions: `~/.dryads-ai/agents/<agentId>/sessions/`
+  - Logs: `/tmp/dryads-ai/`
 
 ## Credential storage map
 
 Use this when debugging auth or deciding what to back up:
 
-- **WhatsApp**: `~/.dmms-ai/credentials/whatsapp/<accountId>/creds.json`
+- **WhatsApp**: `~/.dryads-ai/credentials/whatsapp/<accountId>/creds.json`
 - **Telegram bot token**: config/env or `channels.telegram.tokenFile`
 - **Discord bot token**: config/env (token file not yet supported)
 - **Slack tokens**: config/env (`channels.slack.*`)
-- **Pairing allowlists**: `~/.dmms-ai/credentials/<channel>-allowFrom.json`
-- **Model auth profiles**: `~/.dmms-ai/agents/<agentId>/agent/auth-profiles.json`
-- **Legacy OAuth import**: `~/.dmms-ai/credentials/oauth.json`
+- **Pairing allowlists**: `~/.dryads-ai/credentials/<channel>-allowFrom.json`
+- **Model auth profiles**: `~/.dryads-ai/agents/<agentId>/agent/auth-profiles.json`
+- **Legacy OAuth import**: `~/.dryads-ai/credentials/oauth.json`
   More detail: [Security](/gateway/security#credential-storage-map).
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/.dmms-ai/workspace` and `~/.dmms-ai/` as “your stuff”; don’t put personal prompts/config into the `dmms-ai` repo.
+- Keep `~/.dryads-ai/workspace` and `~/.dryads-ai/` as “your stuff”; don’t put personal prompts/config into the `dryads-ai` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)
@@ -158,5 +158,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [DMMS AI assistant setup](/start/dmms-ai)
+- [Dryads AI assistant setup](/start/dryads-ai)
 - [macOS app](/platforms/macos) (gateway lifecycle)

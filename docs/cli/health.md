@@ -1,18 +1,18 @@
 ---
-summary: "CLI reference for `dmms-ai health` (gateway health endpoint via RPC)"
+summary: "CLI reference for `dryads-ai health` (gateway health endpoint via RPC)"
 read_when:
   - You want to quickly check the running Gateway’s health
 title: "health"
 ---
 
-# `dmms-ai health`
+# `dryads-ai health`
 
 Fetch health from the running Gateway.
 
 ```bash
-dmms-ai health
-dmms-ai health --json
-dmms-ai health --verbose
+dryads-ai health
+dryads-ai health --json
+dryads-ai health --verbose
 ```
 
 Notes:

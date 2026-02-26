@@ -1,7 +1,7 @@
 {
-  "name": "@dmms-ai/msteams",
+  "name": "@dryads-ai/msteams",
   "version": "2026.2.18",
-  "description": "DMMS AI Microsoft Teams channel plugin",
+  "description": "Dryads AI Microsoft Teams channel plugin",
   "type": "module",
   "dependencies": {
     "@microsoft/agents-hosting": "^1.2.3",
@@ -10,9 +10,9 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "dmms-ai": "workspace:*"
+    "dryads-ai": "workspace:*"
   },
-  "dmms-ai": {
+  "dryads-ai": {
     "extensions": [
       "./index.ts"
     ],
@@ -29,7 +29,7 @@
       "order": 60
     },
     "install": {
-      "npmSpec": "@dmms-ai/msteams",
+      "npmSpec": "@dryads-ai/msteams",
       "localPath": "extensions/msteams",
       "defaultChoice": "npm"
     }

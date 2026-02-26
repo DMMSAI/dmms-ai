@@ -3,9 +3,9 @@ import { encodePairingSetupCode, resolvePairingSetupFromConfig } from "./setup-c
 
 describe("pairing setup code", () => {
   beforeEach(() => {
-    vi.stubEnv("DMMS_AI_GATEWAY_TOKEN", "");
+    vi.stubEnv("DRYADS_AI_GATEWAY_TOKEN", "");
     vi.stubEnv("CLAWDBOT_GATEWAY_TOKEN", "");
-    vi.stubEnv("DMMS_AI_GATEWAY_PASSWORD", "");
+    vi.stubEnv("DRYADS_AI_GATEWAY_PASSWORD", "");
     vi.stubEnv("CLAWDBOT_GATEWAY_PASSWORD", "");
   });
 
@@ -55,7 +55,7 @@ describe("pairing setup code", () => {
       },
       {
         env: {
-          DMMS_AI_GATEWAY_TOKEN: "new-token",
+          DRYADS_AI_GATEWAY_TOKEN: "new-token",
         },
       },
     );

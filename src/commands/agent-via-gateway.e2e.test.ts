@@ -11,7 +11,7 @@ vi.mock("./agent.js", () => ({
   agentCommand: vi.fn(),
 }));
 
-import type { DmmsAiConfig } from "../config/config.js";
+import type { DryadsAiConfig } from "../config/config.js";
 import * as configModule from "../config/config.js";
 import { callGateway } from "../gateway/call.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -26,7 +26,7 @@ const runtime: RuntimeEnv = {
 
 const configSpy = vi.spyOn(configModule, "loadConfig");
 
-function mockConfig(storePath: string, overrides?: Partial<DmmsAiConfig>) {
+function mockConfig(storePath: string, overrides?: Partial<DryadsAiConfig>) {
   configSpy.mockReturnValue({
     agents: {
       defaults: {
@@ -45,9 +45,9 @@ function mockConfig(storePath: string, overrides?: Partial<DmmsAiConfig>) {
 
 async function withTempStore(
   fn: (ctx: { dir: string; store: string }) => Promise<void>,
-  overrides?: Partial<DmmsAiConfig>,
+  overrides?: Partial<DryadsAiConfig>,
 ) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dmms-ai-agent-cli-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dryads-ai-agent-cli-"));
   const store = path.join(dir, "sessions.json");
   mockConfig(store, overrides);
   try {

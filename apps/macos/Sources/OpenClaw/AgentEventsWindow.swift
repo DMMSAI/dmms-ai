@@ -1,4 +1,4 @@
-import DmmsAiProtocol
+import DryadsAiProtocol
 import SwiftUI
 
 @MainActor
@@ -81,7 +81,7 @@ private struct EventRow: View {
         return f.string(from: date)
     }
 
-    private func prettyJSON(_ dict: [String: DmmsAiProtocol.AnyCodable]) -> String? {
+    private func prettyJSON(_ dict: [String: DryadsAiProtocol.AnyCodable]) -> String? {
         let normalized = dict.mapValues { $0.value }
         guard JSONSerialization.isValidJSONObject(normalized),
               let data = try? JSONSerialization.data(withJSONObject: normalized, options: [.prettyPrinted]),
@@ -99,8 +99,8 @@ struct AgentEventsWindow_Previews: PreviewProvider {
             stream: "tool",
             ts: Date().timeIntervalSince1970 * 1000,
             data: [
-                "phase": DmmsAiProtocol.AnyCodable("start"),
-                "name": DmmsAiProtocol.AnyCodable("bash"),
+                "phase": DryadsAiProtocol.AnyCodable("start"),
+                "name": DryadsAiProtocol.AnyCodable("bash"),
             ],
             summary: nil)
         AgentEventStore.shared.append(sample)

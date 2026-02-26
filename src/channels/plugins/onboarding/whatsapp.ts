@@ -1,7 +1,7 @@
 import path from "node:path";
 import { loginWeb } from "../../../channel-web.js";
 import { formatCliCommand } from "../../../cli/command-format.js";
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 import { mergeWhatsAppConfig } from "../../../config/merge-config.js";
 import type { DmPolicy } from "../../../config/types.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../routing/session-key.js";
@@ -19,19 +19,19 @@ import { mergeAllowFromEntries, promptAccountId } from "./helpers.js";
 
 const channel = "whatsapp" as const;
 
-function setWhatsAppDmPolicy(cfg: DmmsAiConfig, dmPolicy: DmPolicy): DmmsAiConfig {
+function setWhatsAppDmPolicy(cfg: DryadsAiConfig, dmPolicy: DmPolicy): DryadsAiConfig {
   return mergeWhatsAppConfig(cfg, { dmPolicy });
 }
 
-function setWhatsAppAllowFrom(cfg: DmmsAiConfig, allowFrom?: string[]): DmmsAiConfig {
+function setWhatsAppAllowFrom(cfg: DryadsAiConfig, allowFrom?: string[]): DryadsAiConfig {
   return mergeWhatsAppConfig(cfg, { allowFrom }, { unsetOnUndefined: ["allowFrom"] });
 }
 
-function setWhatsAppSelfChatMode(cfg: DmmsAiConfig, selfChatMode: boolean): DmmsAiConfig {
+function setWhatsAppSelfChatMode(cfg: DryadsAiConfig, selfChatMode: boolean): DryadsAiConfig {
   return mergeWhatsAppConfig(cfg, { selfChatMode });
 }
 
-async function detectWhatsAppLinked(cfg: DmmsAiConfig, accountId: string): Promise<boolean> {
+async function detectWhatsAppLinked(cfg: DryadsAiConfig, accountId: string): Promise<boolean> {
   const { authDir } = resolveWhatsAppAuthDir({ cfg, accountId });
   const credsPath = path.join(authDir, "creds.json");
   return await pathExists(credsPath);
@@ -44,7 +44,7 @@ async function promptWhatsAppOwnerAllowFrom(params: {
   const { prompter, existingAllowFrom } = params;
 
   await prompter.note(
-    "We need the sender/owner number so DMMS AI can allowlist you.",
+    "We need the sender/owner number so Dryads AI can allowlist you.",
     "WhatsApp number",
   );
   const entry = await prompter.text({
@@ -80,12 +80,12 @@ async function promptWhatsAppOwnerAllowFrom(params: {
 }
 
 async function applyWhatsAppOwnerAllowlist(params: {
-  cfg: DmmsAiConfig;
+  cfg: DryadsAiConfig;
   prompter: WizardPrompter;
   existingAllowFrom: string[];
   title: string;
   messageLines: string[];
-}): Promise<DmmsAiConfig> {
+}): Promise<DryadsAiConfig> {
   const { normalized, allowFrom } = await promptWhatsAppOwnerAllowFrom({
     prompter: params.prompter,
     existingAllowFrom: params.existingAllowFrom,
@@ -101,11 +101,11 @@ async function applyWhatsAppOwnerAllowlist(params: {
 }
 
 async function promptWhatsAppAllowFrom(
-  cfg: DmmsAiConfig,
+  cfg: DryadsAiConfig,
   _runtime: RuntimeEnv,
   prompter: WizardPrompter,
   options?: { forceAllowlist?: boolean },
-): Promise<DmmsAiConfig> {
+): Promise<DryadsAiConfig> {
   const existingPolicy = cfg.channels?.whatsapp?.dmPolicy ?? "pairing";
   const existingAllowFrom = cfg.channels?.whatsapp?.allowFrom ?? [];
   const existingLabel = existingAllowFrom.length > 0 ? existingAllowFrom.join(", ") : "unset";
@@ -138,7 +138,7 @@ async function promptWhatsAppAllowFrom(
     message: "WhatsApp phone setup",
     options: [
       { value: "personal", label: "This is my personal phone number" },
-      { value: "separate", label: "Separate phone just for DMMS AI" },
+      { value: "separate", label: "Separate phone just for Dryads AI" },
     ],
   });
 
@@ -335,7 +335,7 @@ export const whatsappOnboardingAdapter: ChannelOnboardingAdapter = {
       }
     } else if (!linked) {
       await prompter.note(
-        `Run \`${formatCliCommand("dmms-ai channels login")}\` later to link WhatsApp.`,
+        `Run \`${formatCliCommand("dryads-ai channels login")}\` later to link WhatsApp.`,
         "WhatsApp",
       );
     }

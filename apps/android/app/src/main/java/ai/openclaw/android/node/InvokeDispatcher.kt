@@ -1,12 +1,12 @@
-package ai.dmmsai.android.node
+package ai.dryadsai.android.node
 
-import ai.dmmsai.android.gateway.GatewaySession
-import ai.dmmsai.android.protocol.DmmsAiCanvasA2UICommand
-import ai.dmmsai.android.protocol.DmmsAiCanvasCommand
-import ai.dmmsai.android.protocol.DmmsAiCameraCommand
-import ai.dmmsai.android.protocol.DmmsAiLocationCommand
-import ai.dmmsai.android.protocol.DmmsAiScreenCommand
-import ai.dmmsai.android.protocol.DmmsAiSmsCommand
+import ai.dryadsai.android.gateway.GatewaySession
+import ai.dryadsai.android.protocol.DryadsAiCanvasA2UICommand
+import ai.dryadsai.android.protocol.DryadsAiCanvasCommand
+import ai.dryadsai.android.protocol.DryadsAiCameraCommand
+import ai.dryadsai.android.protocol.DryadsAiLocationCommand
+import ai.dryadsai.android.protocol.DryadsAiScreenCommand
+import ai.dryadsai.android.protocol.DryadsAiSmsCommand
 
 class InvokeDispatcher(
   private val canvas: CanvasController,
@@ -24,10 +24,10 @@ class InvokeDispatcher(
   suspend fun handleInvoke(command: String, paramsJson: String?): GatewaySession.InvokeResult {
     // Check foreground requirement for canvas/camera/screen commands
     if (
-      command.startsWith(DmmsAiCanvasCommand.NamespacePrefix) ||
-        command.startsWith(DmmsAiCanvasA2UICommand.NamespacePrefix) ||
-        command.startsWith(DmmsAiCameraCommand.NamespacePrefix) ||
-        command.startsWith(DmmsAiScreenCommand.NamespacePrefix)
+      command.startsWith(DryadsAiCanvasCommand.NamespacePrefix) ||
+        command.startsWith(DryadsAiCanvasA2UICommand.NamespacePrefix) ||
+        command.startsWith(DryadsAiCameraCommand.NamespacePrefix) ||
+        command.startsWith(DryadsAiScreenCommand.NamespacePrefix)
     ) {
       if (!isForeground()) {
         return GatewaySession.InvokeResult.error(
@@ -38,7 +38,7 @@ class InvokeDispatcher(
     }
 
     // Check camera enabled
-    if (command.startsWith(DmmsAiCameraCommand.NamespacePrefix) && !cameraEnabled()) {
+    if (command.startsWith(DryadsAiCameraCommand.NamespacePrefix) && !cameraEnabled()) {
       return GatewaySession.InvokeResult.error(
         code = "CAMERA_DISABLED",
         message = "CAMERA_DISABLED: enable Camera in Settings",
@@ -46,7 +46,7 @@ class InvokeDispatcher(
     }
 
     // Check location enabled
-    if (command.startsWith(DmmsAiLocationCommand.NamespacePrefix) && !locationEnabled()) {
+    if (command.startsWith(DryadsAiLocationCommand.NamespacePrefix) && !locationEnabled()) {
       return GatewaySession.InvokeResult.error(
         code = "LOCATION_DISABLED",
         message = "LOCATION_DISABLED: enable Location in Settings",
@@ -55,18 +55,18 @@ class InvokeDispatcher(
 
     return when (command) {
       // Canvas commands
-      DmmsAiCanvasCommand.Present.rawValue -> {
+      DryadsAiCanvasCommand.Present.rawValue -> {
         val url = CanvasController.parseNavigateUrl(paramsJson)
         canvas.navigate(url)
         GatewaySession.InvokeResult.ok(null)
       }
-      DmmsAiCanvasCommand.Hide.rawValue -> GatewaySession.InvokeResult.ok(null)
-      DmmsAiCanvasCommand.Navigate.rawValue -> {
+      DryadsAiCanvasCommand.Hide.rawValue -> GatewaySession.InvokeResult.ok(null)
+      DryadsAiCanvasCommand.Navigate.rawValue -> {
         val url = CanvasController.parseNavigateUrl(paramsJson)
         canvas.navigate(url)
         GatewaySession.InvokeResult.ok(null)
       }
-      DmmsAiCanvasCommand.Eval.rawValue -> {
+      DryadsAiCanvasCommand.Eval.rawValue -> {
         val js =
           CanvasController.parseEvalJs(paramsJson)
             ?: return GatewaySession.InvokeResult.error(
@@ -84,7 +84,7 @@ class InvokeDispatcher(
           }
         GatewaySession.InvokeResult.ok("""{"result":${result.toJsonString()}}""")
       }
-      DmmsAiCanvasCommand.Snapshot.rawValue -> {
+      DryadsAiCanvasCommand.Snapshot.rawValue -> {
         val snapshotParams = CanvasController.parseSnapshotParams(paramsJson)
         val base64 =
           try {
@@ -103,7 +103,7 @@ class InvokeDispatcher(
       }
 
       // A2UI commands
-      DmmsAiCanvasA2UICommand.Reset.rawValue -> {
+      DryadsAiCanvasA2UICommand.Reset.rawValue -> {
         val a2uiUrl = a2uiHandler.resolveA2uiHostUrl()
           ?: return GatewaySession.InvokeResult.error(
             code = "A2UI_HOST_NOT_CONFIGURED",
@@ -119,7 +119,7 @@ class InvokeDispatcher(
         val res = canvas.eval(A2UIHandler.a2uiResetJS)
         GatewaySession.InvokeResult.ok(res)
       }
-      DmmsAiCanvasA2UICommand.Push.rawValue, DmmsAiCanvasA2UICommand.PushJSONL.rawValue -> {
+      DryadsAiCanvasA2UICommand.Push.rawValue, DryadsAiCanvasA2UICommand.PushJSONL.rawValue -> {
         val messages =
           try {
             a2uiHandler.decodeA2uiMessages(command, paramsJson)
@@ -147,17 +147,17 @@ class InvokeDispatcher(
       }
 
       // Camera commands
-      DmmsAiCameraCommand.Snap.rawValue -> cameraHandler.handleSnap(paramsJson)
-      DmmsAiCameraCommand.Clip.rawValue -> cameraHandler.handleClip(paramsJson)
+      DryadsAiCameraCommand.Snap.rawValue -> cameraHandler.handleSnap(paramsJson)
+      DryadsAiCameraCommand.Clip.rawValue -> cameraHandler.handleClip(paramsJson)
 
       // Location command
-      DmmsAiLocationCommand.Get.rawValue -> locationHandler.handleLocationGet(paramsJson)
+      DryadsAiLocationCommand.Get.rawValue -> locationHandler.handleLocationGet(paramsJson)
 
       // Screen command
-      DmmsAiScreenCommand.Record.rawValue -> screenHandler.handleScreenRecord(paramsJson)
+      DryadsAiScreenCommand.Record.rawValue -> screenHandler.handleScreenRecord(paramsJson)
 
       // SMS command
-      DmmsAiSmsCommand.Send.rawValue -> smsHandler.handleSmsSend(paramsJson)
+      DryadsAiSmsCommand.Send.rawValue -> smsHandler.handleSmsSend(paramsJson)
 
       // Debug commands
       "debug.ed25519" -> debugHandler.handleEd25519()

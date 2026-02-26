@@ -16,16 +16,16 @@ describe("restart sentinel", () => {
   let tempDir: string;
 
   beforeEach(async () => {
-    prevStateDir = process.env.DMMS_AI_STATE_DIR;
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dmms-ai-sentinel-"));
-    process.env.DMMS_AI_STATE_DIR = tempDir;
+    prevStateDir = process.env.DRYADS_AI_STATE_DIR;
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dryads-ai-sentinel-"));
+    process.env.DRYADS_AI_STATE_DIR = tempDir;
   });
 
   afterEach(async () => {
     if (prevStateDir) {
-      process.env.DMMS_AI_STATE_DIR = prevStateDir;
+      process.env.DRYADS_AI_STATE_DIR = prevStateDir;
     } else {
-      delete process.env.DMMS_AI_STATE_DIR;
+      delete process.env.DRYADS_AI_STATE_DIR;
     }
     await fs.rm(tempDir, { recursive: true, force: true });
   });

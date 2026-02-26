@@ -1,11 +1,11 @@
 import type { CliDeps } from "../../../cli/deps.js";
 import { createDefaultDeps } from "../../../cli/deps.js";
-import type { DmmsAiConfig } from "../../../config/config.js";
+import type { DryadsAiConfig } from "../../../config/config.js";
 import { runBootOnce } from "../../../gateway/boot.js";
 import type { HookHandler } from "../../hooks.js";
 
 type BootHookContext = {
-  cfg?: DmmsAiConfig;
+  cfg?: DryadsAiConfig;
   workspaceDir?: string;
   deps?: CliDeps;
 };
