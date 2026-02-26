@@ -70,7 +70,7 @@ const LOBSTER_ASCII = [
   "██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██",
   "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██",
   "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
-  "                  🦞 OPENCLAW 🦞                    ",
+  "                  🦞 DRYADS AI 🦞                    ",
   " ",
 ];
 
@@ -94,11 +94,11 @@ export function formatCliBannerArt(options: BannerOptions = {}): string {
   };
 
   const colored = LOBSTER_ASCII.map((line) => {
-    if (line.includes("OPENCLAW")) {
+    if (line.includes("DRYADS AI")) {
       return (
         theme.muted("              ") +
         theme.accent("🦞") +
-        theme.info(" OPENCLAW ") +
+        theme.info(" DRYADS AI ") +
         theme.accent("🦞")
       );
     }

@@ -128,7 +128,7 @@ export function renderApp(state: AppViewState) {
               <img src=${basePath ? `${basePath}/favicon.svg` : "/favicon.svg"} alt="Dryads AI" />
             </div>
             <div class="brand-text">
-              <div class="brand-title">OPENCLAW</div>
+              <div class="brand-title">DRYADS AI</div>
               <div class="brand-sub">Gateway Dashboard</div>
             </div>
           </div>
